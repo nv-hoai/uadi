@@ -15,7 +15,7 @@ for (const file of fs.readdirSync(path.join(root, "schemas")).filter((name) => n
 test("minimal project context fixture validates", () => {
   const schema = JSON.parse(fs.readFileSync(path.join(root, "schemas/project-context.schema.json"), "utf8"));
   const fixture = JSON.parse(fs.readFileSync(path.join(root, "examples/minimal/project-context.json"), "utf8"));
-  assert.equal(ajv.validate(schema, fixture), true, JSON.stringify(ajv.errors, null, 2));
+  const validate = ajv.getSchema(schema.$id);\n  assert.ok(validate, `Schema not registered: ${schema.$id}`);\n  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
 });
 
 test("minimal discovery fixture validates", () => {
@@ -28,5 +28,5 @@ test("discovery fixture rejects unsupported readiness values", () => {
   const schema = JSON.parse(fs.readFileSync(path.join(root, "schemas/discovery-result.schema.json"), "utf8"));
   const fixture = JSON.parse(fs.readFileSync(path.join(root, "examples/minimal/discovery-result.json"), "utf8"));
   fixture.readiness = "READY_MAYBE";
-  assert.equal(ajv.validate(schema, fixture), false);
+  const validate = ajv.getSchema(schema.$id);\n  assert.ok(validate, `Schema not registered: ${schema.$id}`);\n  assert.equal(validate(fixture), false);
 });
