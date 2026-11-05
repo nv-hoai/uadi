@@ -13,7 +13,8 @@ jobs:
           node-version: 20
       - run: npm install
       - run: npm test
-      - run: npm run validate -- examples/minimal/project-context.json examples/minimal/discovery-result.json
+      - run: npm run validate -- examples/minimal/project-context.json examples/minimal/discovery-result.json examples/minimal/design-specification.json
+      - run: npm run prototype:check -- examples/minimal/design-specification.json
       - name: Type-check React renderer
         working-directory: renderers/react
         run: npm install && npm run typecheck
