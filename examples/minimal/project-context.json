@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "sample-service-portal",
+  "name": "Service Portal Example",
+  "scope": "PROJECT",
+  "description": "Illustrative project context for validating the UADI discovery workflow.",
+  "product_type": "Customer self-service web portal",
+  "platforms": [
+    "WEB"
+  ],
+  "business_goals": [
+    "Help customers complete common service tasks without contacting support."
+  ],
+  "users": [
+    {
+      "name": "Existing customers",
+      "description": "Customers managing an active service account.",
+      "needs": [
+        "Understand current account status",
+        "Complete common tasks with clear feedback"
+      ]
+    }
+  ],
+  "constraints": {
+    "framework": null,
+    "component_library": null,
+    "brand_guidelines": null,
+    "accessibility_level": "WCAG 2.2 AA",
+    "technical_constraints": []
+  },
+  "design_preferences": {
+    "style": null,
+    "theme": "SYSTEM",
+    "density": "COMFORTABLE"
+  }
+}
