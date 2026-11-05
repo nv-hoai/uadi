@@ -5,13 +5,19 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc --noEmit false --outDir dist --declaration"
+    "build": "tsc --noEmit false --outDir dist --declaration",
+    "dev": "vite --host 127.0.0.1",
+    "test": "playwright test"
   },
   "dependencies": {
     "react": "^19.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.51.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.1.0"
   }
 }
