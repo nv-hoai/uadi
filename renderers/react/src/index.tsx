@@ -13,7 +13,7 @@ function FormField({ section, actions }: { section: UdsSection; actions: UadiRen
 }
 function Section({ section, actions }: { section: UdsSection; actions: UadiRenderActions }): ReactNode {
  switch (section.component_id) {
-  case "uadi.layout.page-shell": return <main className="uadi-page-shell">{section.content_intent ?? "Page content"}</main>;
+  case "uadi.layout.page-shell": return <div className="uadi-page-shell">{section.content_intent ?? "Page content"}</div>;
   case "uadi.navigation.primary": {
    const items = Array.isArray(section.layout?.items) ? section.layout.items : [];
    return <nav aria-label="Primary navigation"><ul>{items.map((item, index) => {
@@ -39,7 +39,7 @@ export function UadiPrototype({ spec, actions = {} }: { spec: UdsSpecification; 
  const wiredActions: UadiRenderActions = { ...actions, onNavigate: (destination) => { setActivePage(destination); actions.onNavigate?.(destination); } };
  return <div className="uadi-prototype" data-spec-id={spec.spec_id} data-spec-version={spec.version}>
   <nav aria-label="Prototype pages"><ul>{spec.pages.map((item) => <li key={item.page_id}><button type="button" aria-current={item.page_id === page.page_id ? "page" : undefined} onClick={() => setActivePage(item.page_id)}>{item.name}</button></li>)}</ul></nav>
-  <article aria-label={page.name}><header><h1>{page.name}</h1>{page.purpose ? <p>{page.purpose}</p> : null}</header>{page.sections.map((section) => renderSection(section, wiredActions))}</article>
+  <main aria-label={page.name}><header><h1>{page.name}</h1>{page.purpose ? <p>{page.purpose}</p> : null}</header>{page.sections.map((section) => renderSection(section, wiredActions))}</main>
  </div>;
 }
 export function renderUds(spec: UdsSpecification): ReactNode { return <UadiPrototype spec={spec} />; }
