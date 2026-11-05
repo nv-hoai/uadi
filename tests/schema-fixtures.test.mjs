@@ -52,11 +52,11 @@ test("revision schema enforces immutable revision metadata shape", () => {
   fixture.parent_revision_id = "proposal-1@0";
   assert.equal(validate(fixture), false);
 });
-test("gate result schema validates evidence bound to a precise artifact revision", () => {
-  const fixture = { gateId: "SCHEMA_ARTIFACT", status: "PASS", artifactId: "proposal-1", artifactVersion: 1, artifactSha256: "a".repeat(64), evaluator: "RULE_ENGINE", checks: [{ checkId: "schema", status: "PASS", message: "schema valid", evidence: ["ci://run/123"] }], evidence: ["ci://run/123"], evaluatedAt: "2026-10-01T00:00:00Z" };
+test("gate result schema requires a trusted Ed25519 attestation", () => {
+  const fixture = { gateId: "SCHEMA_ARTIFACT", status: "PASS", artifactId: "proposal-1", artifactVersion: 1, artifactSha256: "a".repeat(64), evaluator: "RULE_ENGINE", checks: [{ checkId: "schema", status: "PASS", message: "schema valid", evidence: ["ci://run/123"] }], evidence: ["ci://run/123"], evaluatedAt: "2026-10-01T00:00:00Z", attestation: { algorithm: "Ed25519", keyId: "ci-key-1", signature: "c2lnbmF0dXJl" } };
   const validate = validatorFor("schemas/gate-result.schema.json");
   assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
-  fixture.artifactSha256 = "not-a-digest";
+  delete fixture.attestation;
   assert.equal(validate(fixture), false);
 });
 test("quality evidence schema rejects missing or malformed provenance", () => {
