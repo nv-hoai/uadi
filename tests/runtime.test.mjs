@@ -11,7 +11,7 @@ test("revision chain is immutable, linked and tamper-evident", () => {
   const history = appendRevision([], first);
   const second = createRevision({ artifact: { title: "B" }, artifactType: "proposal", artifactId: "p-1", version: 2, parentRevisionId: first.revision_id });
   assert.equal(appendRevision(history, second).length, 2);
-  assert.throws(() => appendRevision(history, { ...second, parent_revision_id: "wrong" }), /parent/);
+  assert.throws(() => appendRevision(history, { ...second, revision_id: "p-1@2-invalid", parent_revision_id: "wrong" }), /parent/);
   assert.equal(verifyRevision({ ...first, artifact: { title: "tampered" } }), false);
 });
 test("feedback creates a new revision only for exact latest target", () => {
