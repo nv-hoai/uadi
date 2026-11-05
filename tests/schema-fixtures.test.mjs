@@ -43,3 +43,16 @@ test("discovery fixture rejects unsupported readiness values", () => {
   const validate = validatorFor("schemas/discovery-result.schema.json");
   assert.equal(validate(fixture), false);
 });
+
+test("minimal UDS fixture validates", () => {
+  const fixture = JSON.parse(fs.readFileSync(path.join(root, "examples/minimal/design-specification.json"), "utf8"));
+  const validate = validatorFor("schemas/design-specification.schema.json");
+  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
+});
+test("revision schema enforces immutable revision metadata shape", () => {
+  const fixture = { revision_id: "proposal-1@1", artifact_id: "proposal-1", artifact_type: "proposal", version: 1, parent_revision_id: null, created_at: "2026-01-01T00:00:00Z", content_sha256: "a".repeat(64), artifact: { title: "Draft" } };
+  const validate = validatorFor("schemas/artifact-revision.schema.json");
+  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
+  fixture.parent_revision_id = "proposal-1@0";
+  assert.equal(validate(fixture), false);
+});
