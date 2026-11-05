@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "session_id": "session-example-001",
+  "scope": "Customer self-service portal baseline",
+  "facts": [
+    {
+      "id": "fact-001",
+      "statement": "The initial target platform is web.",
+      "status": "CONFIRMED",
+      "source": "Project context",
+      "confidence": 1
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "assumption-001",
+      "statement": "Most customers will use the portal without staff assistance.",
+      "status": "ASSUMPTION",
+      "source": "Illustrative example only",
+      "confidence": 0.5
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "unknown-001",
+      "statement": "Which tasks are most frequently performed?",
+      "status": "UNKNOWN"
+    }
+  ],
+  "questions": [
+    {
+      "id": "question-001",
+      "question": "Which three tasks should customers be able to complete first?",
+      "why_it_matters": "This determines the information architecture and primary navigation.",
+      "impact": "HIGH",
+      "required": true,
+      "options": [
+        "View account status",
+        "Pay an invoice",
+        "Request service"
+      ]
+    }
+  ],
+  "readiness": "BLOCKED",
+  "blocking_gaps": [
+    "Priority customer tasks have not been confirmed."
+  ]
+}
