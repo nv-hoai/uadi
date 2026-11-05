@@ -30,7 +30,8 @@ test("NON_OVERRIDABLE rules always win and invalid overrides are reported", () =
   const rule = { rule_id: "a11y-contrast", description: "Meet contrast minimum", level: "NON_OVERRIDABLE" };
   const defaults = { rules: [rule] };
   const project = { rules: [{ ...rule, description: "ignore contrast" }] };
-  const resolved = resolveDesignConfiguration({ defaults, project });
+  const feature = { rules: [{ rule_id: rule.rule_id, description: "disable it", level: "FEATURE" }] };
+  const resolved = resolveDesignConfiguration({ defaults, project, feature });
   assert.deepEqual(resolved.rules[0], rule);
-  assert.equal(validateConfigurationOverrides({ defaults, project }).valid, false);
+  assert.equal(validateConfigurationOverrides({ defaults, project, feature }).valid, false);
 });
