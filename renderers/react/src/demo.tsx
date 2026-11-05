@@ -1,9 +1,12 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { UadiPrototype } from "./index.js";
+import { SubscriptionSettings } from "./SubscriptionSettings.js";
 import type { UdsSpecification } from "./types.js";
 import spec from "./minimal-uds.json";
 import "./styles.css";
+import "./subscription-settings.css";
 const host = document.getElementById("root");
 if (!host) throw new Error("Prototype root element is missing");
-createRoot(host).render(<React.StrictMode><UadiPrototype spec={spec as UdsSpecification} /></React.StrictMode>);
+const app = window.location.pathname === "/subscription-settings" || window.location.pathname === "/subscription-settings/" ? <SubscriptionSettings /> : <UadiPrototype spec={spec as UdsSpecification} />;
+createRoot(host).render(<React.StrictMode>{app}</React.StrictMode>);

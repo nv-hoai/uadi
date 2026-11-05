@@ -11,7 +11,7 @@ This benchmark tests whether UADI improves an agent's design work—not whether 
 5. Record elapsed time, tool calls if available, implementation result and checks actually run.
 6. Compare scores and reviewer notes. Do not claim an improvement from a single run; repeat with multiple tasks and runs.
 
-Use the task in [subscription-settings.md](subscription-settings.md).
+Use the task in [subscription-settings.md](subscription-settings.md). A working [reference implementation](../examples/subscription-settings/README.md) is available to inspect its interaction model and rationale; do not treat it as the only acceptable design.
 
 ## Scoring rubric
 
