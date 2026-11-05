@@ -57,8 +57,7 @@ UADI adapts the depth of this workflow to the task. A small UI change should sta
 - `schemas/` and `templates/` — portable design artifacts and UDS contracts.
 - `component-catalog/` and `renderers/` — reusable component concepts and the first React renderer.
 - `examples/` — examples to learn from and adapt.
-- `scripts/` — optional local validation tools.
-- `runtime/` — optional advanced utilities; not required for normal use.
+- `scripts/` — optional local validation and installation tools.
 
 ## Install into an AI agent
 
@@ -85,9 +84,9 @@ The React renderer and browser tests are optional development tooling. See [the 
 
 ## Design quality principles
 
-UADI prioritizes product understanding, UX reasoning, design judgment, visual intelligence and execution quality. Its quality checklist is guidance for better work—not a mandatory ten-step release bureaucracy.
+UADI prioritizes product understanding, UX reasoning, design judgment, visual intelligence and execution quality. Its quality checklist is guidance for better work—not a mandatory release pipeline.
 
-Human owners remain in control of product decisions. Git history is sufficient for ordinary project traceability. Advanced signed attestations, governance and continuous regression utilities are optional extensions for teams that need them.
+Human owners remain in control of product decisions. Use the host project's normal review process and Git history; UADI does not impose a separate approval or release system.
 
 ## Learn more
 

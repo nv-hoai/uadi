@@ -12,7 +12,7 @@ The agent demonstrates stronger product understanding, UX reasoning, design judg
 
 ## Phase 3 — Reusable design intelligence
 
-Patterns and project decisions can be reused across features and sessions through simple files and repository conventions. Optional evaluation, regression and governance tools support teams with more demanding needs.
+Patterns and project decisions can be reused across features and sessions through simple files and repository conventions. Optional evaluation and regression practices support teams with more demanding needs.
 
 ## Completion evidence
 
@@ -23,4 +23,4 @@ Evaluate phases through:
 - Before/after examples and repeatable evaluation tasks.
 - Setup time and number of required dependencies.
 
-The existence of schemas, scripts or gates alone does not mean a phase is complete. Do not describe UADI as production-ready based only on repository checkboxes.
+The existence of schemas or scripts alone does not mean a phase is complete. Do not describe UADI as production-ready based only on repository checkboxes.

@@ -1,11 +1,18 @@
-# Validation and governance
-UADI separates portable checks from checks that require a host environment.
+# Validation
+
+UADI keeps validation proportional to the work. Use the checks that fit the artifact or implementation being changed.
+
 ## Repository checks
-- JSON Schema validation: npm run validate -- <artifact.json>
-- Unit/fixture tests: npm test
-- Prototype contract: node scripts/prototype-check.mjs <uds.json>
-- React renderer types: npm install && npm run typecheck in renderers/react
+
+- JSON Schema validation: `npm run validate -- <artifact.json>`
+- Unit and fixture tests: `npm test`
+- Prototype contract: `npm run prototype:check -- <uds.json>`
+- React renderer types/build: `npm run typecheck && npm run build` in `renderers/react`
+
 ## Host-required checks
-A host integration should run production build, browser accessibility, responsive viewport, keyboard interaction, visual regression, and sandbox security checks. These are not asserted by repository-only CI.
-## Approval and rollback
-Approval must be verified by the host against the exact proposal ID/version. Rollback creates a new published revision referencing a previously approved configuration; history is never rewritten.
+
+A host integration may add browser accessibility, responsive viewport, keyboard interaction and visual regression checks. Execution of generated source requires a separately isolated environment controlled by the host.
+
+## Review and history
+
+Use the project's normal human review, Git and pull request process. UADI does not require a separate approval record, release gate evaluator, signed evidence ledger or custom rollback runtime.
