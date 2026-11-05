@@ -1,16 +1,23 @@
 schema_version: "1.0.0"
 project_id: replace-with-stable-project-id
 name: Replace with product name
-description: ""
-product:
-  problem: ""
-  value_proposition: ""
-  business_goals: []
-users: []
+scope: PROJECT
+description: null
+product_type: null
 platforms:
-  - web
-constraints: []
-preferences: {}
-assumptions: []
-sources: []
-updated_at: "2026-01-01T00:00:00Z"
+  - WEB
+business_goals: []
+users:
+  - name: Primary user group
+    description: null
+    needs: []
+constraints:
+  framework: null
+  component_library: null
+  brand_guidelines: null
+  accessibility_level: WCAG 2.2 AA
+  technical_constraints: []
+design_preferences:
+  style: null
+  theme: SYSTEM
+  density: COMFORTABLE
