@@ -31,6 +31,12 @@ test("minimal discovery fixture validates", () => {
   assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
 });
 
+test("starter component catalog validates", () => {
+  const fixture = JSON.parse(fs.readFileSync(path.join(root, "component-catalog/catalog.json"), "utf8"));
+  const validate = validatorFor("schemas/component-catalog.schema.json");
+  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
+});
+
 test("discovery fixture rejects unsupported readiness values", () => {
   const fixture = JSON.parse(fs.readFileSync(path.join(root, "examples/minimal/discovery-result.json"), "utf8"));
   fixture.readiness = "READY_MAYBE";
