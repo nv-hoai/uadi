@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uadi.dev/schemas/design-proposal.schema.json",
+  "title": "UADI Design Proposal",
+  "type": "object",
+  "required": ["schema_version", "proposal_id", "session_id", "version", "name", "direction", "rationale", "tradeoffs", "approval_status"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "proposal_id": { "type": "string", "minLength": 1 },
+    "session_id": { "type": "string", "minLength": 1 },
+    "version": { "type": "integer", "minimum": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "direction": { "type": "string", "minLength": 1 },
+    "rationale": {
+      "type": "object",
+      "required": ["summary", "ux_strategy"],
+      "properties": {
+        "summary": { "type": "string" },
+        "target_users": { "type": "array", "items": { "type": "string" } },
+        "ux_strategy": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "visual_system": { "type": "object" },
+    "layout": { "type": "object" },
+    "component_guidelines": { "type": "array", "items": { "type": "object" } },
+    "interaction_guidelines": { "type": "array", "items": { "type": "object" } },
+    "tradeoffs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["benefit", "cost"],
+        "properties": {
+          "benefit": { "type": "string" },
+          "cost": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "prototype": {
+      "type": "object",
+      "properties": {
+        "status": { "enum": ["NOT_GENERATED", "GENERATING", "READY", "FAILED"] },
+        "artifact_path": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "approval_status": { "enum": ["PENDING", "APPROVED", "REJECTED", "SUPERSEDED"] }
+  },
+  "additionalProperties": false
+}
