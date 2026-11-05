@@ -1,17 +1,32 @@
 # UADI Design Intelligence Benchmark
 
-This benchmark tests whether UADI improves an agent's design work—not whether it follows more steps.
+This benchmark asks whether UADI helps the same AI agent produce better product understanding, UX decisions and interface outcomes without disproportionate time or process overhead. It evaluates outcomes, not checklist compliance or artifact count.
 
-## Run a paired comparison
+## Task set
 
-1. Choose one host agent and model. Keep model version, tool access, temperature/settings and task context the same.
-2. Run the task once without UADI and once with UADI. Start each run from the same clean project snapshot.
-3. Randomize which output is reviewed first. Remove labels that reveal which run used UADI.
-4. Have at least two reviewers score each output independently using the rubric below.
-5. Record elapsed time, tool calls if available, implementation result and checks actually run.
-6. Compare scores and reviewer notes. Do not claim an improvement from a single run; repeat with multiple tasks and runs.
+Use all three tasks for a representative evaluation:
 
-Use the task in [subscription-settings.md](subscription-settings.md). A working [reference implementation](../examples/subscription-settings/README.md) is available to inspect its interaction model and rationale; do not treat it as the only acceptable design.
+1. [Subscription settings](subscription-settings.md) — permissions, billing, sensitive actions and responsive settings.
+2. [First-run onboarding](tasks/product-onboarding.md) — activation, progressive disclosure, optional setup and role understanding.
+3. [Operations dashboard](tasks/operations-dashboard.md) — metric comprehension, information density, comparisons and investigation flow.
+
+The [subscription settings reference implementation](../examples/subscription-settings/README.md) is one example, not the expected visual answer. Do not show it to the agent during a benchmark run.
+
+## Paired study protocol
+
+For each task, run at least three paired repetitions (nine pairs total):
+
+1. Pin one host agent, exact model/version, settings and tool access for the entire study.
+2. Start every run from the same clean project snapshot for that task. Do not let one condition inherit files or context from the other.
+3. Run one baseline condition without UADI and one treatment condition with the installed UADI skill. Keep task prompt and time budget identical.
+4. Randomize condition order per pair. Reset the working directory between runs.
+5. Preserve prompts, transcripts, changed files, rendered screenshots and test outputs for both conditions.
+6. Have at least two reviewers independently score both outputs. Hide condition labels and randomize review order.
+7. Reviewers score the delivered product, not whether the agent mentioned UADI or followed its playbook.
+8. Record elapsed time and checks actually executed. Do not count unrun tests as passing.
+9. Repeat for all tasks. Report missing runs, deviations and failed implementations.
+
+Use the same reviewers for both conditions in a pair. Reviewers should score independently before discussing disagreements.
 
 ## Scoring rubric
 
@@ -25,32 +40,39 @@ Score each dimension from 0 to 4:
 
 | Dimension | Weight | What reviewers assess |
 |---|---:|---|
-| Product understanding | 15% | Correctly identifies users, goals, constraints and business context |
-| UX reasoning | 20% | Task flow, information architecture, friction, edge cases |
-| Design judgment | 15% | Appropriate choices, meaningful trade-offs, rationale |
-| Visual hierarchy | 15% | Scanability, typography, spacing, density and visual coherence |
-| Interaction completeness | 15% | States, feedback, validation, recovery and predictable behavior |
-| Accessibility and responsiveness | 10% | Keyboard, semantics, contrast and relevant viewport behavior |
-| Implementation quality | 10% | Working result, maintainability and fit with existing conventions |
+| Product understanding | 15% | Correct users, goals, domain rules, constraints; facts separated from assumptions |
+| UX reasoning | 20% | Task flow, information architecture, friction, edge cases and recovery |
+| Design judgment | 15% | Contextual choices, alternatives, rationale and trade-offs |
+| Visual hierarchy | 15% | Composition, scanability, typography, spacing, density and visual coherence |
+| Interaction completeness | 15% | States, feedback, validation, permissions and predictable behavior |
+| Accessibility and responsiveness | 10% | Semantics, keyboard, contrast and relevant viewport behavior |
+| Implementation quality | 10% | Working result, maintainability and fit with project conventions |
 
 Weighted score = sum of (dimension score / 4 × dimension weight). Maximum 100.
 
-## Results template
+## Record and calculate results
 
-| Run | Product | UX | Judgment | Visual | Interaction | A11y/responsive | Implementation | Weighted total |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Without UADI | | | | | | | | |
-| With UADI | | | | | | | | |
+Start with [results.template.json](results.template.json). Add one entry per paired run. Each condition must contain elapsed time in seconds and at least two independent reviewer IDs with all seven 0–4 dimension scores.
 
-Also record:
-- Host agent and model/version.
-- Run date and project snapshot identifier.
-- Reviewer notes and highest-impact defects.
-- Time to first useful result and total completion time.
-- Tests actually executed and their outcomes.
+The same reviewer IDs must appear in both conditions for a pair. Keep IDs anonymous (for example, R1 and R2); do not store personal information.
 
-## Interpretation
+Run the scorer:
 
-A higher score is not automatically a win if it required disproportionate time or produced unnecessary artifacts. Review quality, task completion and effort together. Report sample size and variation. Keep raw outputs so results can be independently inspected.
+~~~bash
+node scripts/score-benchmark.mjs benchmarks/my-study.json
+npm test
+~~~
 
-This is an evaluation protocol, not a claim that UADI already outperforms a baseline.
+The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/losses, per-dimension deltas and elapsed-time change. It rejects incomplete scores, mismatched reviewer panels and malformed pairs. A negative time-change percentage means the UADI condition was faster; a positive value means it took longer.
+
+## Interpretation and reporting
+
+- Report pair count, task count, agent/model/version, reviewer count and project snapshot.
+- Include per-task results and reviewer disagreement, not only the overall mean.
+- Preserve raw outputs and evidence so another reviewer can inspect them.
+- A higher quality score with much longer completion time may not be a practical win.
+- The scorer provides descriptive arithmetic only. It does not calculate statistical significance, correct for reviewer bias or prove causation.
+- Do not generalize from one model, one task set or one study.
+- Do not claim UADI improves results until real paired runs have been completed and reviewed.
+
+No empirical result is included in this repository yet. The benchmark tasks and scorer make evaluation repeatable; they are not evidence of improvement by themselves.
