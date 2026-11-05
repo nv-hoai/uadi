@@ -12,21 +12,28 @@ for (const file of fs.readdirSync(path.join(root, "schemas")).filter((name) => n
   ajv.addSchema(JSON.parse(fs.readFileSync(path.join(root, "schemas", file), "utf8")));
 }
 
+function validatorFor(schemaPath) {
+  const schema = JSON.parse(fs.readFileSync(path.join(root, schemaPath), "utf8"));
+  const validate = ajv.getSchema(schema.$id);
+  assert.ok(validate, `Schema not registered: ${schema.$id}`);
+  return validate;
+}
+
 test("minimal project context fixture validates", () => {
-  const schema = JSON.parse(fs.readFileSync(path.join(root, "schemas/project-context.schema.json"), "utf8"));
   const fixture = JSON.parse(fs.readFileSync(path.join(root, "examples/minimal/project-context.json"), "utf8"));
-  const validate = ajv.getSchema(schema.$id);\n  assert.ok(validate, `Schema not registered: ${schema.$id}`);\n  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
+  const validate = validatorFor("schemas/project-context.schema.json");
+  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
 });
 
 test("minimal discovery fixture validates", () => {
-  const schema = JSON.parse(fs.readFileSync(path.join(root, "schemas/discovery-result.schema.json"), "utf8"));
   const fixture = JSON.parse(fs.readFileSync(path.join(root, "examples/minimal/discovery-result.json"), "utf8"));
-  assert.equal(ajv.validate(schema, fixture), true, JSON.stringify(ajv.errors, null, 2));
+  const validate = validatorFor("schemas/discovery-result.schema.json");
+  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
 });
 
 test("discovery fixture rejects unsupported readiness values", () => {
-  const schema = JSON.parse(fs.readFileSync(path.join(root, "schemas/discovery-result.schema.json"), "utf8"));
   const fixture = JSON.parse(fs.readFileSync(path.join(root, "examples/minimal/discovery-result.json"), "utf8"));
   fixture.readiness = "READY_MAYBE";
-  const validate = ajv.getSchema(schema.$id);\n  assert.ok(validate, `Schema not registered: ${schema.$id}`);\n  assert.equal(validate(fixture), false);
+  const validate = validatorFor("schemas/discovery-result.schema.json");
+  assert.equal(validate(fixture), false);
 });
