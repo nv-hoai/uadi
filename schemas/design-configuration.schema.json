@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uadi.dev/schemas/design-configuration.schema.json",
+  "title": "UADI Design Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "config_id",
+    "version",
+    "scope",
+    "status",
+    "source",
+    "inheritance",
+    "tokens",
+    "rules"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "config_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "level"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string"
+        },
+        "feature_id": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "PROJECT",
+            "FEATURE"
+          ]
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "DRAFT",
+        "APPROVED",
+        "PUBLISHED",
+        "SUPERSEDED"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proposal_id",
+        "proposal_version",
+        "approval_id"
+      ],
+      "properties": {
+        "proposal_id": {
+          "type": "string"
+        },
+        "proposal_version": {
+          "type": "integer"
+        },
+        "approval_id": {
+          "type": "string"
+        }
+      }
+    },
+    "inheritance": {
+      "type": "string",
+      "enum": [
+        "UADI_DEFAULTS",
+        "PROJECT_CONFIGURATION",
+        "FEATURE_OVERRIDE"
+      ]
+    },
+    "tokens": {
+      "type": "object"
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "rule_id",
+          "description",
+          "level"
+        ],
+        "properties": {
+          "rule_id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string",
+            "enum": [
+              "NON_OVERRIDABLE",
+              "PROJECT",
+              "FEATURE"
+            ]
+          },
+          "category": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "supersedes": {
+      "type": "string"
+    }
+  }
+}
