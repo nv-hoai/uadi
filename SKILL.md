@@ -34,6 +34,10 @@ Read this file, then read [Design Intelligence](docs/DESIGN-INTELLIGENCE.md). Lo
 - Accessibility is part of design quality, not a final cosmetic pass.
 - Explain uncertainty; do not invent user research or claim unperformed tests.
 
+## Practical UX reasoning
+
+For substantial journeys or complex screens, use the [UX Reasoning Playbook](intelligence/UX-REASONING-PLAYBOOK.md). Consult the [pattern library](intelligence/patterns/README.md) when a pattern matches the user problem; adapt it to context rather than copying it mechanically. Keep small tasks lightweight.
+
 ## Working with artifacts
 
 Use UDS, schemas, templates and the component catalog when they help preserve intent or consistency. Do not create every possible artifact for a trivial task. Keep useful project decisions in the repository so another agent or session can continue.
