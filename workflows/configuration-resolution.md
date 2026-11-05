@@ -1,0 +1,2 @@
+# Workflow: Resolve design configuration
+Resolve layers in this order: Feature Override > Project Configuration > UADI Defaults. Deep-merge token objects; scalar and array values are replaced by the higher-precedence layer. A NON_OVERRIDABLE rule is always sourced from UADI defaults and cannot be changed or removed by project or feature layers. Reject conflicting overrides and report rule ID and scope. Only approved/published configurations may be consumed as authoritative design-system state.
