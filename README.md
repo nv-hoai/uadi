@@ -51,7 +51,7 @@ Read [SKILL.md](SKILL.md) for the agent entry point, [docs/ARCHITECTURE.md](docs
 
 ## Current status
 
-Early MVP foundation and design-intelligence contracts are in place. The React renderer, configuration resolver, broader compatibility tests, and host-specific adapters remain planned work. Schema validity is not a substitute for usability, accessibility, authorization, or runtime testing.
+Early MVP foundation and design-intelligence contracts are in place. The React renderer has a type-checked static foundation for the starter catalog; stateful interactions, production styling, configuration resolution, broader compatibility tests, and host-specific adapters remain planned work. Schema validity is not a substitute for usability, accessibility, authorization, or runtime testing.
 
 ## License
 
