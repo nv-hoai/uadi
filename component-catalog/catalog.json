@@ -1,0 +1,108 @@
+{
+  "catalog_version": "1.0.0",
+  "components": [
+    {
+      "component_id": "uadi.layout.page-shell",
+      "name": "Page Shell",
+      "category": "layout",
+      "purpose": "Defines the primary page frame and content region.",
+      "slots": [
+        "header",
+        "navigation",
+        "main",
+        "footer"
+      ],
+      "states": [],
+      "accessibility": [
+        "Use landmark regions with meaningful labels when multiple landmarks exist."
+      ],
+      "responsive_behavior": "Reflow navigation and content without horizontal page scrolling."
+    },
+    {
+      "component_id": "uadi.navigation.primary",
+      "name": "Primary Navigation",
+      "category": "navigation",
+      "purpose": "Provides access to top-level product destinations.",
+      "slots": [
+        "items"
+      ],
+      "states": [
+        "default",
+        "current",
+        "expanded",
+        "collapsed"
+      ],
+      "accessibility": [
+        "Keyboard operable; current destination is programmatically identified.",
+        "Expanded state is exposed to assistive technology."
+      ],
+      "responsive_behavior": "May collapse to a disclosure control on narrow viewports."
+    },
+    {
+      "component_id": "uadi.feedback.alert",
+      "name": "Feedback Alert",
+      "category": "feedback",
+      "purpose": "Communicates important status, warning, or error information.",
+      "slots": [
+        "title",
+        "message",
+        "actions"
+      ],
+      "states": [
+        "info",
+        "success",
+        "warning",
+        "error"
+      ],
+      "accessibility": [
+        "Do not rely on color alone to convey severity.",
+        "Use an appropriate live region for dynamically announced messages."
+      ],
+      "responsive_behavior": "Content wraps and actions remain reachable at narrow widths."
+    },
+    {
+      "component_id": "uadi.form.field",
+      "name": "Form Field",
+      "category": "input",
+      "purpose": "Collects one user-provided value with a persistent label and contextual guidance.",
+      "slots": [
+        "label",
+        "control",
+        "hint",
+        "error"
+      ],
+      "states": [
+        "default",
+        "focused",
+        "invalid",
+        "disabled",
+        "readonly"
+      ],
+      "accessibility": [
+        "Associate label, hint, and error text programmatically.",
+        "Expose invalid state and move focus appropriately after submission."
+      ],
+      "responsive_behavior": "Control fills available width without clipping labels or errors."
+    },
+    {
+      "component_id": "uadi.data.empty-state",
+      "name": "Empty State",
+      "category": "content",
+      "purpose": "Explains why a collection has no content and offers a relevant next step.",
+      "slots": [
+        "illustration",
+        "title",
+        "description",
+        "action"
+      ],
+      "states": [
+        "default"
+      ],
+      "accessibility": [
+        "Action has a descriptive accessible name.",
+        "Illustration is decorative unless it conveys unique information."
+      ],
+      "responsive_behavior": "Maintain readable measure and stack action content on small screens."
+    }
+  ]
+}
