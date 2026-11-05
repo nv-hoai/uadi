@@ -106,4 +106,4 @@ Human owners remain in control of product decisions. Use the host project's norm
 
 ## License
 
-No license has been selected yet. Public visibility does not grant permission to reuse or redistribute this project. See [LICENSE-DECISION.md](LICENSE-DECISION.md).
+UADI is released under the [MIT License](LICENSE). You may use, modify and distribute it under the terms of that license.
