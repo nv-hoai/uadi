@@ -7,7 +7,6 @@
   "scripts": {
     "install:skill": "node scripts/install-skill.mjs",
     "validate": "node scripts/validate.mjs",
-    "gates:check": "node scripts/check-gates.mjs",
     "prototype:check": "node scripts/prototype-check.mjs",
     "test": "node --test"
   },

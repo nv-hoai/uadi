@@ -12,5 +12,3 @@ Use this checklist after meaningful design or implementation work. Select the ch
 8. What limitations or assumptions remain?
 
 Fix the highest-impact issues first. Run schema, build, browser or accessibility checks when relevant and available. State clearly which checks were actually executed.
-
-The ten-gate release evaluator, signed attestations and evidence ledger are optional advanced tooling. They are not required to use UADI or complete an ordinary design task.

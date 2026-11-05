@@ -10,20 +10,20 @@
 - DesignSpecification (UDS): framework-neutral pages, sections, components, tokens, interactions, and responsive/accessibility requirements.
 - PrototypeArtifact: generated source, build status, preview instructions, and validation findings.
 - DesignFeedback: reviewer, target version, categorized requests, and decision.
-- ApprovalRecord: approver, proposal/version, decision, timestamp, and note.
-- DesignConfiguration: approved tokens, patterns, component rules, UX rules, and inheritance metadata.
-- ValidationReport: checks, findings, severity, evidence, and remediation guidance.
+- DesignConfiguration: reusable tokens, patterns, component rules, UX rules, and inheritance metadata.
+- ValidationReport: relevant checks, findings, severity, and remediation guidance.
 
 ## Relationships
 Project → Features, Sessions, Project Configurations.
 Session → Discovery Result → Analysis → Proposal(s).
 Proposal → UDS → Prototype(s).
-Proposal version → Feedback and revisions.
-Proposal version → Approval Record → Published Design Configuration.
+Proposal → Feedback and subsequent Git revisions.
 Feature Configuration inherits Project Configuration and applies permitted overrides.
 
 ## Versioning
-Every artifact includes schema_version. Proposal versions are immutable integers. Configurations have immutable version identifiers. Feedback and approval target exact proposal versions. Schema changes require migration notes and compatibility tests.
+
+Use Git commits and pull requests as the default revision history. Give important design artifacts clear names and preserve meaningful alternatives when comparison matters. Avoid custom revision ledgers or immutable version machinery unless a concrete integration requires them.
 
 ## Provenance
+
 For important context fields, preserve whether a value came from an owner, repository inspection, an external source, or an agent assumption. Record confidence where useful. Never present assumptions as confirmed requirements.

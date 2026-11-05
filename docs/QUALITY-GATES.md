@@ -1,6 +1,6 @@
 # Design Quality Checklist
 
-This checklist helps an agent and human reviewer improve design outcomes. It is not a mandatory release pipeline, does not require signed attestations, and does not need all items for every small task.
+Use this checklist to improve design outcomes. It is a reasoning aid, not a mandatory release pipeline; adapt it to the scope and risk of the task.
 
 ## Product and UX
 
@@ -44,8 +44,4 @@ Run only checks relevant to the change:
 - Accessibility tooling when available.
 - Visual comparison when a meaningful baseline exists.
 
-Never claim a check passed unless it was actually run. A checklist is a reasoning aid, not proof of execution.
-
-## Advanced assurance (optional)
-
-Teams with stricter release requirements may separately adopt the advanced runtime utilities, evidence ledger, signed attestations, ten-gate release contract and continuous governance documentation. These are optional extensions and are not prerequisites for using UADI.
+Never claim a check passed unless it was actually run. Prefer the project's existing test and review process over adding a new release mechanism.
