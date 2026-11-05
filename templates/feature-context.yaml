@@ -1,0 +1,20 @@
+schema_version: "1.0.0"
+project_id: reference-project-id
+name: Feature name
+scope: FEATURE
+description: ""
+product_type: null
+platforms:
+  - WEB
+business_goals: []
+users: []
+constraints:
+  framework: null
+  component_library: null
+  brand_guidelines: null
+  accessibility_level: WCAG 2.2 AA
+  technical_constraints: []
+design_preferences:
+  style: null
+  theme: SYSTEM
+  density: COMFORTABLE
