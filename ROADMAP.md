@@ -24,7 +24,7 @@ UADI is successful when it measurably improves the design quality of the AI agen
 - [ ] Improve design alternatives, rationale and trade-off analysis.
 - [ ] Strengthen visual hierarchy, composition, typography, spacing and responsive guidance.
 - [ ] Expand reusable patterns and component examples.
-- [ ] Add representative before/after evaluations and practical design benchmarks.
+- [ ] Run paired benchmarks with and without UADI across representative tasks.
 - [ ] Improve accessibility and interaction review guidance.
 
 **Success signal:** Blind or structured reviews show more useful, coherent and usable results than the same agent working without UADI.
