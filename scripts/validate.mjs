@@ -22,7 +22,7 @@ let failed = false;
 for (const target of targets) {
   const absolute = path.resolve(root, target);
   const artifact = JSON.parse(fs.readFileSync(absolute, "utf8"));
-  const schemaName = path.basename(target).replace(/\.json$/, ".schema.json");
+  const schemaName = path.basename(path.dirname(target)) === "component-catalog"\n    ? "component-catalog.schema.json"\n    : path.basename(target).replace(/\.json$/, ".schema.json");
   const schemaPath = path.join(schemaDir, schemaName);
   if (!fs.existsSync(schemaPath)) {
     console.error(`No matching schema: ${schemaName}`);
