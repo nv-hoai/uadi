@@ -1,17 +1,9 @@
-# UADI React Renderer (prototype)
-
-This is the first framework adapter for rendering a subset of UDS component IDs as a static React preview.
-
-## Scope
-- Maps stable catalog IDs to React elements.
-- Fails explicitly for unsupported component IDs rather than silently dropping them.
-- Renders basic semantic landmarks and placeholder controls for the starter catalog.
-
-## Limitations
-This is a renderer foundation, not a production UI kit. It does not yet implement real application state, navigation routing, form submission, visual token theming, responsive CSS, or automated accessibility conformance. The generated UI must be completed and tested for the target product.
-
-## Check
-```bash
-npm install
-npm run typecheck
-```
+# UADI React renderer
+A first renderer for validated UDS artifacts. It maps stable catalog IDs to React components, provides page navigation and controlled form-field state, and exposes navigation/field-change callbacks. It is a prototype renderer, not a production application framework.
+## Contract
+- Call UadiPrototype with a validated UdsSpecification.
+- Use page_id values as navigation destinations for in-prototype navigation.
+- Supply onNavigate and onFieldChange callbacks to integrate host behavior.
+- Unsupported catalog IDs fail explicitly; do not silently substitute arbitrary markup.
+- Run npm install and npm run typecheck in this directory.
+Generated source remains untrusted and must be built in a constrained environment without production secrets.
