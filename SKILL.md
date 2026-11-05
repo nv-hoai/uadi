@@ -1,6 +1,6 @@
 ---
 name: uadi
-description: Design intelligence for AI agents. Understand products, reason about UX, explore design directions, create specifications and build better interfaces.
+description: Design intelligence for AI agents. Understand products, reason about UX, explore design directions and create better interfaces.
 ---
 
 # UADI — Design Intelligence
@@ -8,17 +8,19 @@ description: Design intelligence for AI agents. Understand products, reason abou
 Use UADI when the user asks you to design, improve, review or prototype a product experience or interface.
 
 ## Start here
-Read this file, then read [Design Intelligence](docs/DESIGN-INTELLIGENCE.md). Load only the relevant workflow or reference when needed. Do not make the user configure UADI infrastructure.
+Read this file, then [Design Intelligence](docs/DESIGN-INTELLIGENCE.md). For substantial or unfamiliar work, load the relevant playbooks from `intelligence/`: product understanding before UX decisions, UX reasoning for journeys and interaction, and visual design before implementation. Consult only relevant patterns. Do not make the user configure UADI infrastructure.
 
 ## Default behavior
-1. **Understand the task.** Inspect the existing product, code, conventions and context before asking questions.
-2. **Clarify only what matters.** Ask concise questions when missing information would materially change the design. Otherwise state reasonable assumptions and proceed.
-3. **Reason about users and outcomes.** Identify user needs, primary tasks, business goals, constraints and likely friction.
-4. **Make design decisions.** Choose patterns based on the problem, not habit. Explain important rationale and trade-offs.
-5. **Explore when valuable.** For substantial or ambiguous work, propose 2–3 genuinely different directions. For small changes, do not manufacture alternatives.
-6. **Specify before complex implementation.** Capture structure, hierarchy, content, states, responsive behavior and interactions in UDS when it improves clarity or reuse.
-7. **Build and inspect.** Use the host agent's normal tools and project conventions. Preview the result when possible.
-8. **Evaluate and improve.** Review usability, hierarchy, consistency, accessibility, responsiveness and edge cases. Fix meaningful issues before handing off.
+1. **Understand the product.** Inspect relevant product docs, current UI, routes, domain types, permissions, tests and design conventions before asking questions. Build a compact model of users, jobs, product rules and success outcomes.
+2. **Separate evidence.** Distinguish confirmed facts, observed implementation, assumptions and unknowns. Never invent research, analytics, business policies or backend behavior.
+3. **Clarify only what matters.** Ask concise questions when missing information would materially change the experience. Otherwise state a reasonable assumption and proceed.
+4. **Reason about users and outcomes.** Identify the real user task, business goal, constraints, decision points, friction and recovery paths.
+5. **Make design decisions.** Choose patterns based on the problem, not habit. Explain important rationale and trade-offs.
+6. **Explore when valuable.** For substantial or ambiguous work, propose 2–3 genuinely different directions. For small changes, do not manufacture alternatives.
+7. **Design the visual experience.** Establish hierarchy, composition, typography, spacing, color roles and responsive behavior that fit the product and content. Avoid generic dashboard or card-heavy defaults.
+8. **Specify before complex implementation.** Capture structure, hierarchy, content, states, responsive behavior and interactions in UDS when it improves clarity or reuse.
+9. **Build and inspect.** Use the host agent's normal tools and project conventions. Preview the actual result when possible; inspect narrow and wide layouts and important interactions.
+10. **Evaluate and improve.** Review usability, visual hierarchy, consistency, accessibility, responsiveness and edge cases. Fix meaningful issues before handoff.
 
 ## Design principles
 - Solve the user's problem before decorating the interface.
@@ -31,8 +33,12 @@ Read this file, then read [Design Intelligence](docs/DESIGN-INTELLIGENCE.md). Lo
 - Accessibility is part of design quality, not a final cosmetic pass.
 - Explain uncertainty; do not invent user research or claim unperformed tests.
 
-## Practical UX reasoning
-For substantial journeys or complex screens, use the [UX Reasoning Playbook](intelligence/UX-REASONING-PLAYBOOK.md). Consult the [pattern library](intelligence/patterns/README.md) when a pattern matches the user problem; adapt it to context rather than copying it mechanically. Keep small tasks lightweight.
+## Practical reasoning
+- Use [Product Understanding](intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md) when the product, users, roles or business rules are unclear.
+- Use the [UX Reasoning Playbook](intelligence/UX-REASONING-PLAYBOOK.md) for meaningful journeys, complex screens or consequential interactions.
+- Use [Visual Design](intelligence/VISUAL-DESIGN-PLAYBOOK.md) when setting or improving visual direction and composition.
+- Consult the [pattern library](intelligence/patterns/README.md) when a pattern matches the user problem; adapt it to context rather than copying it mechanically.
+- Keep small tasks lightweight; do not produce every artifact or run every checklist for a minor change.
 
 ## Working with artifacts
 Use UDS, schemas, templates and the component catalog when they help preserve intent or consistency. Do not create every possible artifact for a trivial task. Keep useful project decisions in the repository so another agent or session can continue.

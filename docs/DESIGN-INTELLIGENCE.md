@@ -4,15 +4,11 @@ UADI exists to improve the design decisions an AI agent makes—not to add proce
 
 ## 1. Product understanding
 
-Before choosing UI, understand:
+Start by inspecting the relevant product evidence: product documentation, existing screens, domain types, routes, permissions, tests, content and design conventions. Understand the user, their situation, the job they need to complete, the product's value, important domain rules and what success means.
 
-- Who the users are and what they are trying to accomplish.
-- The product's purpose, value proposition and business context.
-- The most important user journeys and jobs to be done.
-- The constraints: platform, data, content, brand, technology and time.
-- What success looks like and how it could be observed.
+Separate confirmed facts from observed implementation, assumptions and unknowns. Existing UI is evidence of current behavior, not proof of intended behavior. Do not invent research, analytics or business policy. Ask only questions whose answers could materially change the design.
 
-Do not invent research. Label assumptions and ask only for information that could change the solution.
+Use the [Product Understanding Playbook](../intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md) when product context or domain rules are unclear.
 
 ## 2. UX reasoning
 
@@ -44,18 +40,11 @@ Offer multiple directions when they represent real strategic or interaction diff
 
 ## 4. Visual intelligence
 
-Use visual choices to communicate meaning and hierarchy:
+Use visual choices to communicate meaning and hierarchy. Establish a clear information and action hierarchy; use deliberate typography, spacing and alignment; assign semantic color roles; balance density with scanning; and use composition, grouping and contrast to clarify relationships.
 
-- Establish a clear information and action hierarchy.
-- Use typography with deliberate roles and readable line lengths.
-- Apply spacing and alignment consistently.
-- Use color for meaning, emphasis and state—not decoration alone.
-- Balance density with scanning and comprehension.
-- Use composition, grouping and contrast to clarify relationships.
-- Keep components and patterns coherent across screens.
-- Make responsive adaptation intentional rather than merely shrinking desktop layouts.
+Fit the visual language to the product, audience, content and task. Avoid generic dashboard aesthetics, repetitive card grids and decorative effects that compete with information. Make responsive adaptation intentional rather than merely shrinking desktop layouts.
 
-Avoid generic dashboard aesthetics when the product calls for a different visual language.
+Use the [Visual Design Playbook](../intelligence/VISUAL-DESIGN-PLAYBOOK.md) when setting a direction or improving composition. Inspect the rendered interface when preview tools are available; source review alone cannot verify visual behavior.
 
 ## 5. Design execution
 
@@ -89,8 +78,9 @@ When trade-offs arise, prioritize:
 
 A strong UADI result should make it easier to answer:
 - Why is this the right experience for these users?
+- Which product facts and rules support the design?
 - What user problem does each important element solve?
 - What alternatives were considered?
 - What trade-offs were accepted?
 - How does the interface behave outside the happy path?
-- What was actually implemented and validated?
+- Was the rendered result inspected, and what was actually validated?
