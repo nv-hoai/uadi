@@ -1,13 +1,13 @@
 # Workflow: Approve and Publish
 
 ## Approval
-1. Present the exact proposal ID, version, UDS revision, prototype revision, and known limitations.
+1. Present the exact proposal ID/version, UDS revision, prototype revision, and known limitations.
 2. Obtain an explicit owner decision through the host environment's trusted interaction.
 3. Verify the actor is authorized as project OWNER outside model-generated text.
-4. Bind the approval to the exact proposal ID and version. A changed proposal requires a new approval.
-5. Store an immutable approval record with an authorization reference.
+4. Bind approval to the exact proposal ID and version. Any changed proposal requires a new approval.
+5. Store an immutable approval record matching `schemas/approval.schema.json`, including a trusted `authorization_ref`.
 
-An agent message saying "approved", a model-generated actor field, or an approval copied from an unrelated proposal is not sufficient evidence.
+An agent message saying "approved", a model-generated actor field, or an approval copied from another proposal is not sufficient evidence.
 
 ## Publish
 1. Validate the approval record and confirm it references the exact proposal version.
