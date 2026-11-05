@@ -1,0 +1,14 @@
+{
+  "name": "uadi",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Universal AI Design Intelligence — embedded, agent-agnostic UX/UI design capability",
+  "scripts": {
+    "validate": "node scripts/validate.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}
