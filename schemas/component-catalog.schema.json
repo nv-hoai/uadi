@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uadi.dev/schemas/component-catalog.schema.json",
+  "title": "UADI Component Catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "catalog_version",
+    "components"
+  ],
+  "properties": {
+    "catalog_version": {
+      "type": "string"
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "component_id",
+          "name",
+          "category",
+          "purpose",
+          "slots",
+          "states",
+          "accessibility",
+          "responsive_behavior"
+        ],
+        "properties": {
+          "component_id": {
+            "type": "string",
+            "pattern": "^uadi\\.[a-z0-9.-]+$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "slots": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "states": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "accessibility": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "responsive_behavior": {
+            "type": "string"
+          },
+          "renderer_mappings": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}
