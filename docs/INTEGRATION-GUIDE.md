@@ -2,14 +2,27 @@
 
 UADI is a set of instructions, design knowledge, workflows and optional artifacts. It runs inside the AI agent and coding environment you already use.
 
-## Basic integration
+## One-command installation
 
-1. Make the UADI repository available in the project workspace, or copy the skill and relevant reference files into the agent's supported skills/instructions location.
-2. Ask the agent to read `SKILL.md`.
-3. Give it a design task in normal language.
-4. Let the agent use its existing filesystem, terminal, editor and preview tools.
+From the UADI repository root, run one of:
 
-Example request:
+```bash
+node scripts/install-skill.mjs --agent codex
+node scripts/install-skill.mjs --agent claude
+node scripts/install-skill.mjs --agent cursor
+```
+
+Or install for all supported hosts:
+
+```bash
+node scripts/install-skill.mjs --agent all
+```
+
+The installer copies the core skill and its referenced design-quality documents into the current project's native skill directory. It uses Node.js built-ins only; no `npm install` is needed. Existing files are preserved unless you explicitly pass `--force`.
+
+## Use
+
+Start or refresh the host agent and ask it to use UADI. For example:
 
 ```text
 Use UADI to redesign the settings experience.
@@ -17,9 +30,15 @@ Inspect the existing product first, identify the biggest UX problems,
 propose a better structure, implement it, and review the result.
 ```
 
-## Host compatibility
+## Host skill locations
 
-UADI is intentionally agent-agnostic. Cursor, Claude Code, Codex and other coding agents can use the same core instructions. The exact installation path depends on each host's skill or project-rules conventions; keep host-specific adapters small and outside the design knowledge itself.
+| Host | Project skill directory |
+|---|---|
+| OpenAI Codex | `.agents/skills/uadi/` |
+| Claude Code | `.claude/skills/uadi/` |
+| Cursor | `.cursor/skills/uadi/` |
+
+See [adapter instructions](../adapters/README.md) for details.
 
 ## What the host provides
 
@@ -27,14 +46,7 @@ The host agent already provides the model, conversation, file access and coding 
 
 ## No infrastructure setup
 
-A normal UADI workflow does not require:
-- A UADI account or hosted service.
-- A backend or database.
-- An identity provider or signing key.
-- An MCP server.
-- A separate orchestration runtime.
-
-Use the project's existing Git workflow for history and collaboration.
+A normal UADI workflow does not require a UADI account or hosted service, backend, database, identity provider, signing key or MCP server. Use the project's existing Git workflow for history and collaboration.
 
 ## Optional validation tools
 

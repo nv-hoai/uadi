@@ -59,6 +59,17 @@ UADI adapts the depth of this workflow to the task. A small UI change should sta
 - `scripts/` — optional local validation tools.
 - `runtime/` — optional advanced utilities; not required for normal use.
 
+## Install into an AI agent
+
+From this repository root:
+
+```bash
+node scripts/install-skill.mjs --agent codex
+# or: --agent claude | cursor | all
+```
+
+The installer uses Node.js built-ins only and copies the skill plus its core references into the host's project skill directory. It preserves existing files unless `--force` is supplied. See [all adapter instructions](adapters/README.md).
+
 ## Optional local validation
 
 The design capability itself does not require installation. If you want to validate repository artifacts:
