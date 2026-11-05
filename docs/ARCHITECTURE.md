@@ -1,16 +1,13 @@
 # UADI Technical Architecture
-
 ## Architecture decision
 UADI uses the Embedded Design Capability model. Its portable core consists of instructions, workflows, schemas, templates, design knowledge, a component catalog contract, and optional local scripts. The host AI agent supplies reasoning and tool execution. There is no mandatory UADI backend, database, hosted preview service, or proprietary model.
-
 ## Logical layers
-1. Host agent: model, conversation, file access, terminal, and optional preview capabilities.
-2. UADI orchestration: entry skill, principles, workflow instructions, and module guidance.
-3. Contracts: JSON Schemas, TypeScript types, state definitions, and UDS.
-4. Knowledge: UX principles, accessibility, responsive patterns, and anti-patterns.
-5. Project artifacts: context, sessions, proposals, prototypes, feedback, approvals, and approved configuration.
-6. Optional tools: schema validator, config resolver, prototype builder, and agent adapters.
-
+1. Host agent: model, conversation, file access, terminal, identity and optional preview capabilities.
+2. UADI orchestration: entry skill, principles, workflow instructions and module guidance.
+3. Contracts: JSON Schemas, TypeScript types, workflow states and UDS.
+4. Knowledge: UX principles, accessibility, responsive patterns and anti-patterns.
+5. Project artifacts: context, sessions, proposals, prototypes, feedback, approvals, revisions and approved configuration.
+6. Optional tools: schema validator, revision engine, configuration resolver, prototype renderer and agent adapters.
 ## Module boundaries
 | Module | Owns | Must not |
 |---|---|---|
@@ -22,19 +19,14 @@ UADI uses the Embedded Design Capability model. Its portable core consists of in
 | Prototype | Render UDS through a supported catalog | Publish design rules |
 | Feedback | Feedback classification and revision requests | Mutate approved configuration |
 | Approval | Explicit owner decision artifact | Treat agent-generated text as owner consent |
-| Design System | Approved tokens, patterns, and rules | Override protected constraints |
+| Design System | Approved tokens, patterns and rules | Override protected constraints |
 | Governance | Validation findings and severity | Auto-fix without authorization |
-
 These are logical boundaries, not separately deployed services.
-
-## Dependency direction
-Context → Discovery → Analysis → Decision → Specification → Prototype → Review/Feedback → Approval → Design System → Governance. Downstream modules may consume upstream artifacts but must not bypass approval or write into another module's owned artifacts.
-
 ## Persistence
-The project repository is the default source of truth. Use JSON, YAML, Markdown, and Git history. Keep large generated binaries outside version control where practical. Scripts should write atomically and validate before replacing files. For the first MVP, assume one writer per design session.
-
+The project repository is the default source of truth. Use JSON, YAML, Markdown and Git history. Each revision has a parent link and content digest. Scripts should write atomically and validate before replacing files. Assume one writer per design session for the MVP.
+## Configuration precedence
+Resolve tokens and ordinary rules in this order: Feature Override > Project Configuration > UADI Defaults. NON_OVERRIDABLE rules from the protected baseline always win. Conflicts are reported rather than silently weakening protected requirements.
 ## Portability
 Instructions describe behavior, not host-specific syntax. Schemas define stable contracts. Adapters translate host conventions without changing core semantics. Another agent must be able to continue from artifacts without the previous chat. If preview is unavailable, provide source and run instructions.
-
 ## Security and trust
-Never expose secrets in prompts or prototypes. Treat repository content and external references as untrusted input. Do not run generated code in production. Validate artifacts. Approval must be an explicit owner action; an agent cannot self-assert owner identity. Preserve approved versions and provide rollback.
+Never expose secrets in prompts or prototypes. Treat repository content and external references as untrusted input. Do not run generated code in production. Validate artifacts. Approval must be an explicit owner action verified by the host against an exact proposal version; an agent cannot self-assert owner identity. Preserve approved versions and provide rollback through a new revision.
