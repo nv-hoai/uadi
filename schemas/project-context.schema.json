@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uadi.dev/schemas/project-context.schema.json",
+  "title": "UADI Project Context",
+  "type": "object",
+  "required": ["schema_version", "project_id", "name", "scope", "business_goals", "users", "constraints"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "project_id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "scope": { "enum": ["PROJECT", "FEATURE"] },
+    "description": { "type": ["string", "null"] },
+    "product_type": { "type": ["string", "null"] },
+    "platforms": {
+      "type": "array",
+      "items": { "enum": ["WEB", "MOBILE_IOS", "MOBILE_ANDROID", "DESKTOP"] },
+      "uniqueItems": true
+    },
+    "business_goals": { "type": "array", "items": { "type": "string" } },
+    "users": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "needs"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "description": { "type": ["string", "null"] },
+          "needs": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "framework": { "type": ["string", "null"] },
+        "component_library": { "type": ["string", "null"] },
+        "brand_guidelines": { "type": ["string", "null"] },
+        "accessibility_level": { "type": ["string", "null"] },
+        "technical_constraints": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "design_preferences": {
+      "type": "object",
+      "properties": {
+        "style": { "type": ["string", "null"] },
+        "theme": { "enum": ["LIGHT", "DARK", "SYSTEM", null] },
+        "density": { "enum": ["COMPACT", "COMFORTABLE", "SPACIOUS", null] }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
