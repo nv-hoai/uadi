@@ -13,11 +13,14 @@ test.beforeEach(async ({ page }) => {
 test("prototype renders, supports keyboard and field interaction", async ({ page }) => {
  await page.goto("/");
  await expect(page.getByRole("heading", { name: "Home" })).toBeVisible();
+ const navButton = page.getByRole("button", { name: "Home" });
  const field = page.getByRole("textbox", { name: "Email address *" });
+ await page.keyboard.press("Tab");
+ await expect(navButton).toBeFocused();
+ await page.keyboard.press("Tab");
+ await expect(field).toBeFocused();
  await field.fill("owner@example.com");
  await expect(field).toHaveValue("owner@example.com");
- await field.press("Tab");
- await expect(page.locator(":focus")).toBeVisible();
 });
 test("prototype has no serious or critical axe violations", async ({ page }) => {
  await page.goto("/");
