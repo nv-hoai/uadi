@@ -13,7 +13,7 @@ test.beforeEach(async ({ page }) => {
 test("prototype renders, supports keyboard and field interaction", async ({ page }) => {
  await page.goto("/");
  await expect(page.getByRole("heading", { name: "Home" })).toBeVisible();
- const navButton = page.getByRole("button", { name: "Home" });
+ const navButton = page.getByRole("navigation", { name: "Prototype pages" }).getByRole("button", { name: "Home" });
  const field = page.getByRole("textbox", { name: "Email address *" });
  await page.keyboard.press("Tab");
  await expect(navButton).toBeFocused();
