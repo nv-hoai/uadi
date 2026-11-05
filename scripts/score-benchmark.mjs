@@ -123,6 +123,9 @@ export function scoreBenchmark(input) {
   };
 }
 
+import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
+
 async function main() {
   const inputPath = process.argv[2];
   if (!inputPath || inputPath === "--help" || inputPath === "-h") {
@@ -131,12 +134,11 @@ async function main() {
     return;
   }
   const { readFile } = await import("node:fs/promises");
-  const { resolve } = await import("node:path");
   const input = JSON.parse(await readFile(resolve(inputPath), "utf8"));
   console.log(JSON.stringify(scoreBenchmark(input), null, 2));
 }
 
-if (process.argv[1] && new URL(import.meta.url).pathname === process.argv[1]) {
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   main().catch((error) => {
     console.error("Benchmark scoring failed: " + error.message);
     process.exitCode = 1;
