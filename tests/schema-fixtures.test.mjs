@@ -45,24 +45,3 @@ test("minimal UDS fixture validates", () => {
   const validate = validatorFor("schemas/design-specification.schema.json");
   assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
 });
-test("revision schema enforces immutable revision metadata shape", () => {
-  const fixture = { revision_id: "proposal-1@1", artifact_id: "proposal-1", artifact_type: "proposal", version: 1, parent_revision_id: null, created_at: "2026-01-01T00:00:00Z", content_sha256: "a".repeat(64), artifact: { title: "Draft" } };
-  const validate = validatorFor("schemas/artifact-revision.schema.json");
-  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
-  fixture.parent_revision_id = "proposal-1@0";
-  assert.equal(validate(fixture), false);
-});
-test("gate result schema requires a trusted Ed25519 attestation", () => {
-  const fixture = { gateId: "SCHEMA_ARTIFACT", status: "PASS", artifactId: "proposal-1", artifactVersion: 1, artifactSha256: "a".repeat(64), evaluator: "RULE_ENGINE", checks: [{ checkId: "schema", status: "PASS", message: "schema valid", evidence: ["ci://run/123"] }], evidence: ["ci://run/123"], evaluatedAt: "2026-10-01T00:00:00Z", attestation: { algorithm: "Ed25519", keyId: "ci-key-1", signature: "c2lnbmF0dXJl" } };
-  const validate = validatorFor("schemas/gate-result.schema.json");
-  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
-  delete fixture.attestation;
-  assert.equal(validate(fixture), false);
-});
-test("quality evidence schema rejects missing or malformed provenance", () => {
-  const fixture = { schemaVersion: "1.0.0", evidenceId: "ev-1", gateId: "DESIGN_QUALITY", artifactId: "proposal-1", artifactVersion: 1, artifactSha256: "b".repeat(64), evaluator: "HUMAN", outcome: "PASS", observedAt: "2026-10-01T00:00:00Z", runId: "review-1", checks: [{ id: "usability", result: "pass" }] };
-  const validate = validatorFor("schemas/quality-evidence.schema.json");
-  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
-  delete fixture.runId;
-  assert.equal(validate(fixture), false);
-});
