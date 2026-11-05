@@ -6,11 +6,17 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            renderers/react/package-lock.json
       - run: npm install
       - run: npm test
       - run: npm run validate -- examples/minimal/project-context.json examples/minimal/discovery-result.json examples/minimal/design-specification.json
@@ -18,3 +24,21 @@ jobs:
       - name: Type-check and build React renderer
         working-directory: renderers/react
         run: npm install && npm run typecheck && npm run build
+      - name: Install isolated Chromium runtime
+        working-directory: renderers/react
+        run: npx playwright install --with-deps chromium
+      - name: Run browser, accessibility and visual smoke tests
+        working-directory: renderers/react
+        env:
+          CI: "true"
+        run: npm test
+      - name: Upload browser screenshots and Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: uadi-browser-validation
+          path: |
+            renderers/react/test-results/
+            renderers/react/playwright-report/
+          if-no-files-found: ignore
+          retention-days: 14
