@@ -15,6 +15,6 @@ jobs:
       - run: npm test
       - run: npm run validate -- examples/minimal/project-context.json examples/minimal/discovery-result.json examples/minimal/design-specification.json
       - run: npm run prototype:check -- examples/minimal/design-specification.json
-      - name: Type-check React renderer
+      - name: Type-check and build React renderer
         working-directory: renderers/react
-        run: npm install && npm run typecheck
+        run: npm install && npm run typecheck && npm run build
