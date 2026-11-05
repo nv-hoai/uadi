@@ -8,6 +8,22 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const INSTALLER = path.join(ROOT, "scripts/install-skill.mjs");
+const INSTALLED_FILES = [
+  "SKILL.md",
+  "docs/DESIGN-INTELLIGENCE.md",
+  "docs/QUALITY-GATES.md",
+  "intelligence/README.md",
+  "intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md",
+  "intelligence/UX-REASONING-PLAYBOOK.md",
+  "intelligence/VISUAL-DESIGN-PLAYBOOK.md",
+  "intelligence/patterns/README.md",
+  "intelligence/patterns/settings-information-architecture.md",
+  "intelligence/patterns/permission-aware-actions.md",
+  "intelligence/patterns/destructive-actions.md",
+  "intelligence/patterns/status-and-recovery.md",
+  "intelligence/patterns/data-tables-and-filtering.md",
+  "intelligence/patterns/forms-and-validation.md"
+];
 
 async function withTempDir(run) {
   const dir = await mkdtemp(path.join(os.tmpdir(), "uadi-install-"));
@@ -18,24 +34,29 @@ async function withTempDir(run) {
   }
 }
 
-test("installs the core skill files for Codex", async () => {
+test("installs the complete portable design skill for Codex", async () => {
   await withTempDir(async (cwd) => {
     const result = spawnSync(process.execPath, [INSTALLER, "--agent", "codex", "--cwd", cwd], { encoding: "utf8" });
     assert.equal(result.status, 0, result.stderr);
-    for (const file of ["SKILL.md", "docs/DESIGN-INTELLIGENCE.md", "docs/QUALITY-GATES.md"]) {
+    for (const file of INSTALLED_FILES) {
       const installed = await readFile(path.join(cwd, ".agents/skills/uadi", file), "utf8");
       const source = await readFile(path.join(ROOT, file), "utf8");
-      assert.equal(installed, source);
+      assert.equal(installed, source, `Installed copy differs: ${file}`);
     }
   });
 });
 
-test("all installs into each supported agent directory", async () => {
+test("all installs the complete skill into each supported agent directory", async () => {
   await withTempDir(async (cwd) => {
     const result = spawnSync(process.execPath, [INSTALLER, "--agent", "all", "--cwd", cwd], { encoding: "utf8" });
     assert.equal(result.status, 0, result.stderr);
     for (const dir of [".agents/skills/uadi", ".claude/skills/uadi", ".cursor/skills/uadi"]) {
-      assert.match(await readFile(path.join(cwd, dir, "SKILL.md"), "utf8"), /UADI — Design Intelligence/);
+      for (const file of INSTALLED_FILES) {
+        assert.equal(
+          await readFile(path.join(cwd, dir, file), "utf8"),
+          await readFile(path.join(ROOT, file), "utf8")
+        );
+      }
     }
   });
 });

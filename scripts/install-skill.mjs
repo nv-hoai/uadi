@@ -7,7 +7,18 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SKILL_FILES = [
   "SKILL.md",
   "docs/DESIGN-INTELLIGENCE.md",
-  "docs/QUALITY-GATES.md"
+  "docs/QUALITY-GATES.md",
+  "intelligence/README.md",
+  "intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md",
+  "intelligence/UX-REASONING-PLAYBOOK.md",
+  "intelligence/VISUAL-DESIGN-PLAYBOOK.md",
+  "intelligence/patterns/README.md",
+  "intelligence/patterns/settings-information-architecture.md",
+  "intelligence/patterns/permission-aware-actions.md",
+  "intelligence/patterns/destructive-actions.md",
+  "intelligence/patterns/status-and-recovery.md",
+  "intelligence/patterns/data-tables-and-filtering.md",
+  "intelligence/patterns/forms-and-validation.md"
 ];
 const TARGETS = {
   codex: ".agents/skills/uadi",
@@ -19,14 +30,14 @@ function parseArgs(args) {
   const options = { agent: null, cwd: process.cwd(), force: false, help: false };
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
-    if (arg === "--help" || arg === "-h") options.help = true;
-    else if (arg === "--force") options.force = true;
-    else if (arg === "--agent" || arg === "--cwd") {
+    if (args[i] === "--help" || args[i] === "-h") options.help = true;
+    else if (args[i] === "--force") options.force = true;
+    else if (args[i] === "--agent" || args[i] === "--cwd") {
       const value = args[++i];
-      if (!value || value.startsWith("--")) throw new Error(`Missing value for ${arg}`);
-      options[arg === "--agent" ? "agent" : "cwd"] = value;
+      if (!value || value.startsWith("--")) throw new Error(`Missing value for ${args[i - 1]}`);
+      options[args[i - 1] === "--agent" ? "agent" : "cwd"] = value;
     } else {
-      throw new Error(`Unknown option: ${arg}`);
+      throw new Error(`Unknown option: ${args[i]}`);
     }
   }
   return options;
@@ -45,8 +56,8 @@ Options:
             files are preserved and reported as skipped.
   --help    Show this help.
 
-The installer copies only SKILL.md and the two core design references.
-It does not install dependencies, change agent settings, or contact a server.`);
+The installer copies the skill, product/UX/visual playbooks and UX pattern
+library. It does not install dependencies, change agent settings, or contact a server.`);
 }
 
 export async function installSkill({ agent, cwd = process.cwd(), force = false, root = ROOT }) {

@@ -18,12 +18,12 @@ UADI is successful when it measurably improves the design quality of the AI agen
 
 **Goal:** Make the agent noticeably better at understanding products and designing usable interfaces.
 
-- [x] Practical UX reasoning playbook and contextual patterns.
-- [ ] Improve product discovery and context synthesis.
+- [x] Practical product understanding, UX reasoning and visual design playbooks.
+- [x] Contextual patterns for settings, permissions, destructive actions, recovery, tables and forms.
+- [ ] Improve end-to-end product discovery and context synthesis through representative worked examples.
 - [ ] Deepen UX reasoning, task flows, edge cases and content design.
 - [ ] Improve design alternatives, rationale and trade-off analysis.
-- [ ] Strengthen visual hierarchy, composition, typography, spacing and responsive guidance.
-- [ ] Expand reusable patterns and component examples.
+- [ ] Expand reusable visual and interaction patterns with implementation examples.
 - [ ] Run paired benchmarks with and without UADI across representative tasks.
 - [ ] Improve accessibility and interaction review guidance.
 

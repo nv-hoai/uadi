@@ -2,21 +2,22 @@
 
 **Give your AI agent better product, UX and visual design judgment.**
 
-UADI is a lightweight design capability you add to an existing AI coding agent. It helps the agent understand a product, reason about user experience, explore design directions, specify design intent and build better interfaces.
+UADI is a lightweight design capability you add to an existing AI coding agent. It helps the agent understand a product, reason about user experience, make design decisions, compose a coherent visual system and build better interfaces.
 
 UADI is a repository of design intelligence—not another agent, SaaS, backend or design platform.
 
 ## Why UADI
 
-Without a design process, an agent often jumps from a short prompt straight into UI code. UADI teaches it to:
+Without design guidance, an agent often jumps from a short prompt straight into UI code. Its output may look plausible while missing product rules, user goals, interaction states, visual hierarchy, accessibility or product fit.
 
-- Understand the product, its users and the real problem.
+UADI helps the agent:
+
+- Understand the product, its users, domain rules and business context.
 - Identify UX risks and missing requirements before coding.
-- Explore meaningfully different design directions.
-- Explain design decisions and trade-offs.
-- Define framework-neutral design intent before implementation.
-- Build, review and improve a working prototype.
-- Reuse consistent patterns instead of inventing every screen from scratch.
+- Explore meaningful design directions and explain trade-offs.
+- Compose hierarchy, typography, spacing and visual language intentionally.
+- Build, inspect and improve a working interface.
+- Reuse contextual patterns instead of inventing every screen from scratch.
 
 **The goal is not more process. The goal is better design output.**
 
@@ -29,9 +30,10 @@ Without a design process, an agent often jumps from a short prompt straight into
 Example:
 
 ```text
-Use UADI to design the onboarding experience for this product.
-First understand the product and users, then identify UX risks,
-propose 2–3 distinct directions, and build the strongest option.
+Use UADI to improve the onboarding experience for this product.
+First inspect the product, users and important business rules.
+Then identify UX risks, recommend a coherent visual direction,
+implement the strongest approach and inspect the rendered result.
 ```
 
 You can also ask for focused work:
@@ -46,12 +48,12 @@ No UADI account, server, database, API key, MCP server or identity provider is r
 
 **Understand → Analyze → Explore → Specify → Build → Review → Improve**
 
-UADI adapts the depth of this workflow to the task. A small UI change should stay lightweight; a new product experience deserves deeper discovery and alternatives.
+UADI adapts the depth of this workflow to the task. A small UI change should stay lightweight; a new product experience deserves deeper product understanding, UX reasoning and visual design.
 
 ## What is inside
 
 - `SKILL.md` — the entry point for an AI agent.
-- `intelligence/` — practical UX reasoning playbook and contextual pattern library.
+- `intelligence/` — product understanding, UX reasoning and visual design playbooks plus contextual patterns.
 - `docs/` — product vision, architecture, integration and quality guidance.
 - `workflows/` — practical design workflows.
 - `schemas/` and `templates/` — portable design artifacts and UDS contracts.
@@ -68,7 +70,7 @@ node scripts/install-skill.mjs --agent codex
 # or: --agent claude | cursor | all
 ```
 
-The installer uses Node.js built-ins only and copies the skill plus its core references into the host's project skill directory. It preserves existing files unless `--force` is supplied. See [supported agent installation](adapters/README.md).
+The installer uses Node.js built-ins only and copies the complete portable skill, including its playbooks and pattern library, into the host's project skill directory. It preserves existing files unless `--force` is supplied. See [supported agent installation](adapters/README.md).
 
 ## Optional local validation
 
@@ -92,6 +94,10 @@ Human owners remain in control of product decisions. Use the host project's norm
 
 - [Agent instructions](docs/AGENT-INSTRUCTIONS.md)
 - [Design Intelligence](docs/DESIGN-INTELLIGENCE.md)
+- [Product Understanding](intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md)
+- [UX Reasoning](intelligence/UX-REASONING-PLAYBOOK.md)
+- [Visual Design](intelligence/VISUAL-DESIGN-PLAYBOOK.md)
+- [UX Pattern Library](intelligence/patterns/README.md)
 - [Integration guide](docs/INTEGRATION-GUIDE.md)
 - [UDS and architecture](docs/ARCHITECTURE.md)
 - [Design quality checklist](docs/QUALITY-GATES.md)
