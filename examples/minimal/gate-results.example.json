@@ -1,0 +1,9 @@
+{
+  "artifact": {
+    "artifactId": "proposal-example",
+    "version": 1,
+    "contentSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "note": "Illustrative fixture only. These synthetic PASS records are not evidence that a real proposal passed UADI gates.",
+  "gateResults": []
+}

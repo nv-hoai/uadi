@@ -31,11 +31,13 @@ test("prototype has no serious or critical axe violations", async ({ page }) => 
  const blockers = results.violations.filter((item) => ["critical", "serious"].includes(item.impact ?? ""));
  expect(blockers.map((item) => ({ id: item.id, help: item.help, nodes: item.nodes.length }))).toEqual([]);
 });
-test("mobile layout fits viewport without horizontal overflow", async ({ page }) => {
- await page.setViewportSize({ width: 375, height: 812 });
- await page.goto("/");
- const dimensions = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
- expect(dimensions.scroll).toBeLessThanOrEqual(dimensions.client);
+test("responsive layout fits mobile, tablet and desktop viewports", async ({ page }) => {
+ for (const viewport of [{ width: 375, height: 812 }, { width: 768, height: 1024 }, { width: 1280, height: 900 }]) {
+  await page.setViewportSize(viewport);
+  await page.goto("/");
+  const dimensions = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
+  expect(dimensions.scroll, `horizontal overflow at ${viewport.width}px`).toBeLessThanOrEqual(dimensions.client);
+ }
 });
 test("capture deterministic desktop screenshot", async ({ page }, testInfo) => {
  await page.setViewportSize({ width: 1280, height: 900 });
@@ -45,7 +47,6 @@ test("capture deterministic desktop screenshot", async ({ page }, testInfo) => {
  await page.screenshot({ path: output, fullPage: true, animations: "disabled" });
  expect((await fs.stat(output)).size).toBeGreaterThan(1000);
 });
-
 test("desktop rendering stays within the committed visual baseline", async ({ page }, testInfo) => {
  await page.setViewportSize({ width: 1280, height: 900 });
  await page.goto("/");

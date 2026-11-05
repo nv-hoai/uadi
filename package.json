@@ -6,6 +6,7 @@
   "description": "Universal AI Design Intelligence — embedded, agent-agnostic UX/UI design capability",
   "scripts": {
     "validate": "node scripts/validate.mjs",
+    "gates:check": "node scripts/check-gates.mjs",
     "prototype:check": "node scripts/prototype-check.mjs",
     "test": "node --test"
   },
