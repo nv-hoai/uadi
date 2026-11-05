@@ -68,7 +68,7 @@ export function SubscriptionSettings(): ReactNode {
           <span className="sample-label"><span aria-hidden="true">●</span> Sample workspace</span>
         </div>
 
-        <div className="billing-demo-controls" aria-label="Prototype controls">
+        <div className="billing-demo-controls" role="group" aria-label="Prototype controls">
           <span>Preview as</span>
           <div className="billing-segment" role="group" aria-label="Preview role">
             <button type="button" aria-pressed={role === "owner"} onClick={() => { setRole("owner"); setNotice(""); }}>Owner</button>

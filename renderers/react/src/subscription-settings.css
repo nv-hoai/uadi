@@ -25,7 +25,7 @@
 .billing-heading-row h1 { margin:0; color:#1d2938; font-size:30px; line-height:1.15; letter-spacing:-1.1px; }
 .billing-subtitle { margin:9px 0 0; color:#667384; font-size:13px; }
 .sample-label { flex:none; padding:7px 10px; border:1px solid #e5e9e5; border-radius:6px; color:#65766d; background:#fff; font-size:11px; }
-.sample-label span { color:#6b9c7c; font-size:8px; vertical-align:2px; margin-right:4px; }
+.sample-label span { color:#47765f; font-size:8px; vertical-align:2px; margin-right:4px; }
 .billing-demo-controls { display:flex; align-items:center; gap:12px; padding:10px 13px; margin-bottom:18px; border:1px dashed #cbd6d0; border-radius:8px; background:#f0f4f1; color:#66756d; font-size:12px; }
 .billing-segment,.billing-period { display:flex; padding:3px; gap:3px; border:1px solid #e5e9ee; border-radius:7px; background:#fff; }
 .billing-segment button,.billing-period button { min-height:28px; padding:4px 11px; border:0; border-radius:5px; color:#667384; background:transparent; font:inherit; cursor:pointer; }
@@ -58,7 +58,7 @@
 .section-heading h2,.cancel-section h2 { margin:0; color:#263447; font-size:16px; letter-spacing:-.3px; }
 .section-heading p,.cancel-section p { margin:5px 0 0; color:#667384; font-size:11px; }
 .billing-period button { min-height:30px; padding:5px 10px; }
-.billing-period button span { margin-left:4px; color:#4f8968; font-size:9px; font-weight:750; }
+.billing-period button span { margin-left:4px; color:#35674d; font-size:9px; font-weight:750; }
 .plan-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
 .plan-card { position:relative; min-width:0; padding:18px 16px 15px; border:1px solid #e7eaee; border-radius:9px; background:#fff; }
 .plan-card-current { border:1.5px solid #7d9c8d; box-shadow:0 0 0 2px rgba(93,139,113,.08); }
@@ -68,7 +68,7 @@
 .plan-card-price { color:#273649; font-size:22px; font-weight:750; letter-spacing:-.7px; }
 .plan-card-price small { color:#667384; font-size:10px; font-weight:500; letter-spacing:0; }
 .plan-seat { margin:14px 0 16px; color:#667487; font-size:10px; }
-.plan-seat span { margin-right:5px; color:#56866b; font-weight:800; }
+.plan-seat span { margin-right:5px; color:#35674d; font-weight:800; }
 .plan-button { width:100%; min-height:34px; border:1px solid #426d5a; border-radius:6px; color:#fff; background:#426d5a; font-size:10px; font-weight:700; cursor:pointer; }
 .plan-button:hover:not(:disabled) { background:#315744; }
 .plan-button-current { border-color:#dfe8e2; color:#557362; background:#edf3ef; cursor:default; }
@@ -78,7 +78,7 @@
 .pricing-disclaimer { margin:9px 0 0; color:#687384; font-size:10px; }
 .selection-review { display:flex; justify-content:space-between; align-items:center; gap:15px; padding:13px 15px; margin-top:12px; border:1px solid #dce7df; border-radius:8px; background:#f3f7f4; }
 .selection-review strong { color:#315a47; font-size:12px; }
-.selection-review p { margin:4px 0 0; color:#75857b; font-size:10px; }
+.selection-review p { margin:4px 0 0; color:#5c6d60; font-size:10px; }
 .payment-card { display:flex; align-items:center; gap:14px; padding:15px 17px; }
 .card-symbol { display:grid; place-items:center; width:42px; height:29px; border:1px solid #e6e9ed; border-radius:5px; color:#315a8a; font-size:11px; font-style:italic; font-weight:800; }
 .payment-details { display:flex; flex:1; flex-direction:column; gap:4px; }
@@ -86,28 +86,28 @@
 .payment-details span { color:#687384; font-size:10px; }
 .secondary-button { min-height:31px; padding:6px 12px; border:1px solid #dfe4e8; border-radius:6px; color:#536174; background:#fff; font-size:10px; font-weight:650; cursor:pointer; }
 .secondary-button:hover { border-color:#9eaea4; background:#f8faf8; }
-.payment-explainer { flex-basis:100%; padding:10px 0 0 56px; color:#728174; font-size:11px; }
+.payment-explainer { flex-basis:100%; padding:10px 0 0 56px; color:#53675a; font-size:11px; }
 .payment-card { flex-wrap:wrap; }
 .invoice-card { padding:0 16px; }
-.invoice-row { display:grid; grid-template-columns:1.2fr 1fr .8fr .7fr 34px; align-items:center; gap:12px; min-height:48px; border-top:1px solid #eff1f3; color:#768293; font-size:10px; }
+.invoice-row { display:grid; grid-template-columns:1.2fr 1fr .8fr .7fr 34px; align-items:center; gap:12px; min-height:48px; border-top:1px solid #eff1f3; color:#667384; font-size:10px; }
 .invoice-row:first-child { border-top:0; }
 .invoice-row strong { color:#465366; font-size:10px; }
 .invoice-header { min-height:35px; color:#687384; font-size:8px; font-weight:750; letter-spacing:.65px; }
 .paid-status { width:max-content; padding:4px 6px; border-radius:4px; color:#47805e; background:#edf5ef; font-size:9px; font-weight:700; }
-.invoice-row button { width:27px; height:27px; border:0; border-radius:5px; color:#718174; background:#f2f5f2; cursor:pointer; }
+.invoice-row button { width:27px; height:27px; border:0; border-radius:5px; color:#53675a; background:#f2f5f2; cursor:pointer; }
 .cancel-section { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:19px 0; margin-top:34px; border-top:1px solid #e5e8ec; border-bottom:1px solid #e5e8ec; }
 .cancel-section h2 { font-size:13px; }
 .cancel-section p { max-width:480px; line-height:1.5; }
 .cancel-button { min-height:33px; flex:none; padding:7px 12px; border:1px solid #ead8d5; border-radius:6px; color:#a14d45; background:#fff; font-size:10px; font-weight:650; cursor:pointer; }
 .cancel-button:hover:not(:disabled) { border-color:#d5aaa5; background:#fff9f8; }
-.cancel-button:disabled { color:#8b9990; border-color:#e1e8e3; background:#f2f6f3; cursor:not-allowed; }
+.cancel-button:disabled { color:#586a5f; border-color:#e1e8e3; background:#f2f6f3; cursor:not-allowed; }
 .billing-footer { padding:22px 0; color:#687384; font-size:10px; }
 .billing-footer a { color:#47765f; font-weight:650; text-decoration:none; }
 .billing-banner,.billing-notice { padding:12px 15px; margin-bottom:14px; border:1px solid #d8e7dc; border-radius:7px; color:#476d54; background:#f0f7f1; font-size:11px; line-height:1.5; }
 .billing-notice { border-color:#dce4eb; color:#52667b; background:#f3f6f9; }
 .dialog-backdrop { position:fixed; z-index:10; inset:0; display:grid; place-items:center; padding:20px; background:rgba(20,31,43,.48); }
 .cancel-dialog { position:relative; width:min(100%,470px); padding:28px; border-radius:12px; background:#fff; box-shadow:0 20px 60px rgba(12,25,37,.2); }
-.dialog-close { position:absolute; top:14px; right:15px; width:30px; height:30px; border:0; border-radius:6px; color:#788393; background:#f3f5f6; font-size:20px; cursor:pointer; }
+.dialog-close { position:absolute; top:14px; right:15px; width:30px; height:30px; border:0; border-radius:6px; color:#667384; background:#f3f5f6; font-size:20px; cursor:pointer; }
 .dialog-icon { display:grid; place-items:center; width:34px; height:34px; border-radius:50%; color:#a85a4e; background:#fbefed; font-weight:800; }
 .cancel-dialog h2 { margin:17px 0 8px; color:#253345; font-size:19px; letter-spacing:-.5px; }
 .cancel-dialog > p { color:#667384; font-size:12px; line-height:1.6; }
