@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "spec_id": "uds-minimal-001",
+  "proposal_id": "proposal-minimal-001",
+  "version": 1,
+  "target": {
+    "platform": "web",
+    "viewports": [
+      "mobile",
+      "desktop"
+    ]
+  },
+  "tokens": {
+    "color": {
+      "primary": "#2457A6",
+      "text": "#172033"
+    },
+    "spacing": {
+      "unit": 8
+    }
+  },
+  "pages": [
+    {
+      "page_id": "home",
+      "name": "Home",
+      "purpose": "Minimal prototype page",
+      "sections": [
+        {
+          "section_id": "shell",
+          "component_id": "uadi.layout.page-shell",
+          "content_intent": "Welcome to the example prototype."
+        },
+        {
+          "section_id": "navigation",
+          "component_id": "uadi.navigation.primary",
+          "layout": {
+            "items": [
+              {
+                "label": "Home",
+                "href": "home"
+              }
+            ]
+          }
+        },
+        {
+          "section_id": "email",
+          "component_id": "uadi.form.field",
+          "layout": {
+            "label": "Email address",
+            "type": "email",
+            "required": true,
+            "placeholder": "you@example.com"
+          }
+        }
+      ]
+    }
+  ],
+  "responsive": [
+    {
+      "breakpoint": "mobile",
+      "behavior": "Stack sections vertically"
+    },
+    {
+      "breakpoint": "desktop",
+      "behavior": "Use a centered content column"
+    }
+  ],
+  "accessibility": [
+    {
+      "requirement": "All controls are keyboard operable",
+      "level": "MUST"
+    },
+    {
+      "requirement": "Visible focus indicator",
+      "level": "MUST"
+    }
+  ]
+}
