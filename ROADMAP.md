@@ -1,34 +1,52 @@
-# UADI Three-Phase Roadmap
+# UADI Roadmap — Design Intelligence First
 
-A checked item means the portable repository capability and its tests/contracts exist. It does not imply that host infrastructure, credentials or manual audits have been deployed.
+UADI is successful when it measurably improves the design quality of the AI agents that use it. Roadmap priorities are based on user-visible design outcomes, not infrastructure or module count.
 
-## Phase 1 — MVP hardening
-- [x] Embedded, agent-agnostic architecture and artifact-driven workflows.
-- [x] Context/discovery/analysis/proposal/UDS schemas, validation and examples.
-- [x] Component catalog and React/TypeScript renderer with typecheck/build.
-- [x] Immutable revision chain with SHA-256 integrity and feedback lineage.
-- [x] Configuration inheritance, NON_OVERRIDABLE enforcement, governance and rollback.
-- [x] Exact proposal-version approval verification contract.
-- [x] Ten-gate release contract, exact artifact binding and append-only evidence primitives.
-- [x] Static secret/risky-source inspection with documented heuristic limitations.
-- [ ] Host-provided authenticated identity integration.
-- [ ] Hardened disposable runtime for executing arbitrary generated source.
+## Phase 1 — Useful and effortless
 
-## Phase 2 — Quality evaluation
-- [x] Weighted quality scoring that requires evidence per dimension.
-- [x] Gate evidence contract and Playwright Chromium smoke suite (keyboard, axe-core, responsive overflow, screenshot/visual comparison).
-- [x] Protected-path design drift classification.
-- [ ] Broader catalog component interaction and accessibility test coverage.
-- [ ] Firefox/WebKit and multiple viewport visual baselines.
-- [ ] Manual WCAG and assistive-technology audit on representative host products.
+**Goal:** Add UADI to an existing agent and get better design work immediately.
 
-## Phase 3 — Evidence-based continuous governance
-- [x] Immutable evidence record, duplicate prevention and artifact-digest freshness verification.
-- [x] Ten-gate aggregation that blocks missing, stale, mismatched, duplicate or non-passing results.
-- [x] Approved-baseline drift report and operational governance guidance.
-- [ ] Host CI/scheduler integration for recurring cross-feature regression checks.
-- [ ] Persistent evidence retention and operational dashboards in the host repository/tooling.
-- [ ] Calibrated quality thresholds using real owner review outcomes.
+- [x] Embedded, agent-agnostic capability with no required backend.
+- [x] Core design workflow and portable UDS contracts.
+- [x] React renderer foundation and optional local validation.
+- [ ] Concise onboarding and tested installation paths for popular agent environments.
+- [ ] Strong end-to-end examples that show the workflow on real product tasks.
+- [ ] Remove mandatory governance steps from the default agent experience.
 
-## Current maturity
-The portable foundations for all three phases are implemented. Phase 1 and Phase 2 still have explicit host/manual completion criteria; Phase 3 has the local evidence and drift primitives but not a deployed scheduler or monitoring service. UADI is an embedded capability package, not a hosted control plane, and should not be described as production-ready until the host-dependent items are satisfied.
+**Success signal:** A developer can make UADI available to an agent and use it without provisioning infrastructure or learning a complex framework.
+
+## Phase 2 — Better design decisions
+
+**Goal:** Make the agent noticeably better at understanding products and designing usable interfaces.
+
+- [ ] Improve product discovery and context synthesis.
+- [ ] Deepen UX reasoning, task flows, edge cases and content design.
+- [ ] Improve design alternatives, rationale and trade-off analysis.
+- [ ] Strengthen visual hierarchy, composition, typography, spacing and responsive guidance.
+- [ ] Expand reusable patterns and component examples.
+- [ ] Add representative before/after evaluations and practical design benchmarks.
+- [ ] Improve accessibility and interaction review guidance.
+
+**Success signal:** Blind or structured reviews show more useful, coherent and usable results than the same agent working without UADI.
+
+## Phase 3 — Reusable design intelligence
+
+**Goal:** Help agents carry good design decisions across features and projects without adding mandatory infrastructure.
+
+- [ ] Curate reusable product and UX patterns with context and applicability notes.
+- [ ] Improve project-level design memory through simple repository artifacts.
+- [ ] Detect inconsistencies with existing project conventions when relevant.
+- [ ] Build a repeatable evaluation set for design quality and regression.
+- [ ] Offer optional advanced governance and evidence tooling for teams that need it.
+
+**Success signal:** Design quality and consistency improve over repeated tasks while setup remains lightweight.
+
+## Explicit non-goals for the core
+
+- No UADI-hosted agent or SaaS.
+- No required backend, database, identity provider or key management.
+- No required MCP server or model-specific integration.
+- No mandatory signed attestations, release dashboard or continuous governance service.
+- No dedicated sandbox infrastructure requirement for ordinary design assistance.
+
+Advanced utilities may remain in the repository as optional tools. They must not block the core design experience.

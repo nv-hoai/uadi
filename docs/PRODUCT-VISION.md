@@ -1,36 +1,44 @@
 # UADI Product Vision
 
 ## Vision
-Make high-quality UX/UI design capability portable across AI agents. UADI embeds a disciplined design process into an existing agent rather than introducing another agent, hosted platform, or mandatory backend.
+
+Make every compatible AI coding agent a more thoughtful product designer.
 
 ## Problem
-AI agents can generate screens quickly, but project context, design rationale, interaction behavior, accessibility constraints, and approval decisions are often scattered across chat history. This causes repeated questions, inconsistent interfaces, and accidental promotion of suggestions into permanent design rules.
 
-## Product promise
-UADI turns design work into explicit, versioned project artifacts that any compatible agent can inspect, validate, continue, and improve.
+AI agents can generate interfaces quickly, but often jump to code before understanding users, product context and interaction problems. Their visual output may look plausible while missing task flow, content hierarchy, edge cases, accessibility or product fit.
 
-## Primary users
-- Product owners who need to make and retain design decisions.
-- Product teams using coding agents to explore and implement UX/UI.
-- Agent/tool builders who want a reusable design capability without adopting a specific model framework.
+## Solution
 
-## Non-goals
-- A standalone conversational agent or design SaaS.
-- A replacement for Figma or a full visual design editor.
-- A mandatory database, API server, MCP server, or agent framework.
-- Automatic approval or autonomous publication of design rules.
-- A promise that generated prototypes are production-ready.
+UADI embeds reusable Design Intelligence into existing agents. It improves how they understand products, reason about UX, make design decisions, compose visual systems and execute interfaces.
+
+## Target users
+
+Developers, product builders, designers and teams who use AI coding agents to create or improve digital products.
+
+## Differentiation
+
+UADI competes on the quality of the design decisions it enables—not on infrastructure, orchestration complexity or the number of governance features.
+
+## Core capabilities
+
+- Product and user understanding.
+- UX analysis and task-flow reasoning.
+- Meaningful design alternatives and rationale.
+- Framework-neutral design specification.
+- Visual and interaction design guidance.
+- Reusable patterns and component knowledge.
+- Prototype review and iterative improvement.
 
 ## Product principles
-1. Agent-, model-, and framework-agnostic core.
-2. Repository-first persistence; Git provides history.
-3. Discovery before detailed design; ask only decision-relevant questions.
-4. Generate alternatives with explicit rationale and trade-offs.
-5. Keep design intent in framework-neutral UDS.
-6. Make every proposal and revision traceable.
-7. The authorized human owner is the final decision-maker.
-8. Accessibility, security, and brand constraints may be non-overridable.
-9. Validate artifacts and generated code; never equate generation with correctness.
 
-## Success criteria
-A second compatible agent can continue a design session from repository artifacts alone; proposals can be compared; UDS can be validated; prototype revisions remain traceable; and only an authorized owner decision for an exact proposal version can publish configuration.
+- Install or import easily; no service to operate.
+- Work with existing agents and project conventions.
+- Adapt process depth to task complexity.
+- Keep design intent portable and reusable.
+- Make design quality observable through examples and evaluation.
+- Keep advanced governance optional.
+
+## Success
+
+A user should be able to add UADI to an agent, give it a real design task and see a more coherent, usable and context-appropriate result than without UADI.
