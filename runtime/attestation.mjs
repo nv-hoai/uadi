@@ -19,7 +19,7 @@ export function verifyGateAttestation(gateResult, { publicKey, expectedKeyId } =
     if (!gateResult?.attestation || gateResult.attestation.algorithm !== "Ed25519") return false;
     if (!gateResult.attestation.keyId || !gateResult.attestation.signature || !publicKey) return false;
     if (expectedKeyId && gateResult.attestation.keyId !== expectedKeyId) return false;
-    const key = createPublicKey(publicKey);
+    const key = publicKey?.type === "public" ? publicKey : createPublicKey(publicKey);
     const signature = Buffer.from(gateResult.attestation.signature, "base64");
     if (signature.length !== 64) return false;
     return verifySignature(null, Buffer.from(canonicalGatePayload(gateResult)), key, signature);
