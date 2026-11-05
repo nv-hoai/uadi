@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import fs from "node:fs/promises";
+import pixelmatch from "pixelmatch";
+import { PNG } from "pngjs";
 test.beforeEach(async ({ page }) => {
  await page.route("**/*", async (route) => {
   const url = new URL(route.request().url());
@@ -36,4 +38,26 @@ test("capture deterministic desktop screenshot", async ({ page }, testInfo) => {
  const output = testInfo.outputPath("uadi-desktop.png");
  await page.screenshot({ path: output, fullPage: true, animations: "disabled" });
  expect((await fs.stat(output)).size).toBeGreaterThan(1000);
+});
+
+test("desktop rendering stays within the committed visual baseline", async ({ page }, testInfo) => {
+ await page.setViewportSize({ width: 1280, height: 900 });
+ await page.goto("/");
+ await page.evaluate(() => document.fonts.ready);
+ const actualBuffer = await page.screenshot({ fullPage: false, animations: "disabled" });
+ const baselineSvg = await fs.readFile(new URL("./visual-baseline.svg", import.meta.url), "utf8");
+ const referencePage = await page.context().newPage();
+ await referencePage.setViewportSize({ width: 1280, height: 900 });
+ await referencePage.setContent(baselineSvg);
+ const expectedBuffer = await referencePage.screenshot({ fullPage: false });
+ await referencePage.close();
+ const actual = PNG.sync.read(actualBuffer);
+ const expected = PNG.sync.read(expectedBuffer);
+ expect(actual.width).toBe(expected.width);
+ expect(actual.height).toBe(expected.height);
+ const diff = new PNG({ width: actual.width, height: actual.height });
+ const mismatched = pixelmatch(actual.data, expected.data, diff.data, actual.width, actual.height, { threshold: 0.18, includeAA: false });
+ const ratio = mismatched / (actual.width * actual.height);
+ await fs.writeFile(testInfo.outputPath("uadi-visual-diff.png"), PNG.sync.write(diff));
+ expect(ratio, "visual difference ratio against tests/visual-baseline.svg").toBeLessThanOrEqual(0.38);
 });
