@@ -63,7 +63,7 @@ node scripts/score-benchmark.mjs benchmarks/my-study.json
 npm test
 ~~~
 
-The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/losses, per-dimension deltas and elapsed-time change. It rejects incomplete scores, mismatched reviewer panels and malformed pairs.
+The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/losses, per-dimension deltas and elapsed-time change. It rejects incomplete scores, mismatched reviewer panels and malformed pairs. A negative time-change percentage means the UADI condition was faster; a positive value means it took longer.
 
 ## Interpretation and reporting
 
