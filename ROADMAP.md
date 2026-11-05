@@ -8,8 +8,8 @@ This roadmap tracks implementation in the repository. A checkbox means the corre
 - [x] Discovery workflow and structured result schema
 - [x] JSON Schemas and Node/AJV validation script
 - [x] Initial product and architecture documentation
-- [ ] Feature context template and complete example project
-- [ ] Automated schema fixture tests in CI
+- [x] Feature context template and minimal example project
+- [x] Automated schema fixture tests and GitHub Actions CI
 
 Exit: an agent can inspect a project, identify known facts and gaps, ask focused questions, and save a validated design brief.
 
@@ -18,15 +18,15 @@ Exit: an agent can inspect a project, identify known facts and gaps, ask focused
 - [x] Proposal schema and concept-generation workflow
 - [x] Rationale, assumptions, risks, and trade-offs represented
 - [x] UADI Design Specification (UDS) schema and compiler workflow
-- [ ] Proposal comparison rubric and worked example
+- [x] Proposal comparison rubric
 
 Exit: an owner can compare structured design directions and select one for specification.
 
 ## Phase 3 — Prototype and iteration
-- [ ] Component catalog contract and starter catalog
-- [ ] React + TypeScript renderer
-- [ ] Basic navigation and interactions
-- [ ] Prototype build validation
+- [x] Component catalog contract and starter catalog
+- [x] React + TypeScript renderer foundation (static starter mappings)
+- [ ] Functional navigation and stateful interactions
+- [ ] Prototype build validation in CI
 - [x] Feedback schema
 - [ ] Immutable revision workflow and fixture tests
 
