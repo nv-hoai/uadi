@@ -1,29 +1,26 @@
-# UADI Three-Phase Completion Plan
+# UADI Phase Plan
 
-This plan distinguishes repository capabilities from host-dependent deployment attestations.
+The three phases describe product maturity, not infrastructure deployment.
 
-## Phase 1 — MVP hardening
-- [x] Portable, agent-agnostic embedded architecture; artifact-driven workflows and JSON Schema contracts.
-- [x] React/TypeScript renderer, build/typecheck and fixed-fixture browser harness.
-- [x] Immutable revisions, exact-version approval verification contract, configuration inheritance, governance and rollback utilities.
-- [x] Ten-gate contract, exact-artifact release evaluation and append-only evidence primitives.
-- [x] Static secret/risky-primitive inspection with explicit heuristic limitations.
-- [ ] Host deployment: hardened disposable runtime for arbitrary generated source.
-- [ ] Host deployment: real identity-provider adapter and authenticated owner identity.
+## Phase 1 — Useful and effortless
 
-## Phase 2 — Quality evaluation
-- [x] Evidence-backed weighted quality scoring with configurable thresholds.
-- [x] Gate-level UX/accessibility/visual evidence contract and current Playwright smoke coverage.
-- [x] Design drift detection with BLOCK/WARNING/INFO classifications.
-- [ ] Expand renderer tests into a maintained component-level catalog suite and cross-browser baselines.
-- [ ] Complete manual assistive-technology and WCAG audit on representative host products.
+A user can make UADI instructions available to a supported AI agent and ask for product or interface design work. The agent understands the task, follows an appropriately lightweight design workflow and produces a useful result. No UADI server, database, identity provider, signing key or MCP service is required.
 
-## Phase 3 — Continuous governance
-- [x] Immutable evidence records and exact digest freshness checks.
-- [x] Approved-baseline drift comparison and release gate aggregation.
-- [x] Documentation for operational metrics, regression strategy and host scheduling.
-- [ ] Connect host CI/scheduler to run recurring cross-feature checks and retain evidence.
-- [ ] Calibrate project quality thresholds using real owner review outcomes.
+## Phase 2 — Better design decisions
 
-## Completion criteria
-A repository checkbox means code/contracts/tests exist in this repository; it does not imply a deployed host service. Phase 1–3 portable foundations are implemented, while the explicitly unchecked items require host infrastructure, credentials, human audits or operational calibration. Do not claim full production readiness until those attestations exist.
+The agent demonstrates stronger product understanding, UX reasoning, design judgment, visual intelligence and execution. The repository includes practical examples and evaluations that make improvements visible.
+
+## Phase 3 — Reusable design intelligence
+
+Patterns and project decisions can be reused across features and sessions through simple files and repository conventions. Optional evaluation, regression and governance tools support teams with more demanding needs.
+
+## Completion evidence
+
+Evaluate phases through:
+- Successful first-use experience with a real host agent.
+- Quality and usefulness of generated design outcomes.
+- Human review of UX clarity, visual hierarchy, interaction and accessibility.
+- Before/after examples and repeatable evaluation tasks.
+- Setup time and number of required dependencies.
+
+The existence of schemas, scripts or gates alone does not mean a phase is complete. Do not describe UADI as production-ready based only on repository checkboxes.

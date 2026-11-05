@@ -1,16 +1,45 @@
-# Integrating UADI into an existing AI agent
-UADI is embedded capability, not a separately hosted agent or required backend. The host agent remains responsible for tool access, authenticated identity, user interaction, and execution policy.
-## Portable integration contract
-1. Load SKILL.md and relevant workflow instructions into the host's project context.
-2. Treat repository artifacts as durable state: context, discovery, analysis, proposal, UDS, feedback, revision history, approval, and published configuration.
-3. Validate artifacts with JSON Schemas before passing them between workflow stages.
-4. Keep generated source in a constrained workspace. Never expose production secrets or execute generated code with privileged credentials.
-5. Obtain owner approval outside model-authored text. Bind approval to the exact proposal ID and version and verify the actor through the host's authenticated identity.
-6. Commit each artifact revision; never overwrite approved or historical artifacts.
-## Host responsibilities
-The host adapter maps generic operations to filesystem, editor, terminal, identity, and confirmation capabilities. It must not change workflow semantics or allow model self-approval.
-## Host-specific notes
-- Cursor: load the skill and workflows as project rules; use repository files as source of truth.
-- Claude Code: expose the skill as project-level instructions and use filesystem/terminal tools.
-- Codex: load the same skill and schemas as repository context; use its workspace and review flow.
-- Other agents: implement the portable contract. MCP is optional, not a prerequisite.
+# Add UADI to an AI agent
+
+UADI is a set of instructions, design knowledge, workflows and optional artifacts. It runs inside the AI agent and coding environment you already use.
+
+## Basic integration
+
+1. Make the UADI repository available in the project workspace, or copy the skill and relevant reference files into the agent's supported skills/instructions location.
+2. Ask the agent to read `SKILL.md`.
+3. Give it a design task in normal language.
+4. Let the agent use its existing filesystem, terminal, editor and preview tools.
+
+Example request:
+
+```text
+Use UADI to redesign the settings experience.
+Inspect the existing product first, identify the biggest UX problems,
+propose a better structure, implement it, and review the result.
+```
+
+## Host compatibility
+
+UADI is intentionally agent-agnostic. Cursor, Claude Code, Codex and other coding agents can use the same core instructions. The exact installation path depends on each host's skill or project-rules conventions; keep host-specific adapters small and outside the design knowledge itself.
+
+## What the host provides
+
+The host agent already provides the model, conversation, file access and coding tools. A local preview or browser tool is useful for implementation review but is not required to read UADI or perform design reasoning.
+
+## No infrastructure setup
+
+A normal UADI workflow does not require:
+- A UADI account or hosted service.
+- A backend or database.
+- An identity provider or signing key.
+- An MCP server.
+- A separate orchestration runtime.
+
+Use the project's existing Git workflow for history and collaboration.
+
+## Optional validation tools
+
+The repository includes scripts, schemas and a React renderer. Use them when the project needs structured artifacts or executable prototype validation. They are development aids, not prerequisites for design assistance.
+
+## Safe execution
+
+Follow the host environment's normal security controls. Do not expose production secrets to generated code or run untrusted generated code in privileged environments. UADI does not provide a hardened multi-tenant sandbox.

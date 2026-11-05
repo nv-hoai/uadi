@@ -1,28 +1,24 @@
-# UADI Evidence-Based Quality and Continuous Governance
+# Optional Continuous Governance
 
-## Evidence model
-Each evaluation creates an immutable evidence record bound to artifact ID, version and SHA-256 content digest. Evidence includes evaluator type, run ID, timestamp, check outcomes and report/log references. A changed digest makes prior evidence stale for release decisions.
+This document describes optional practices for teams that need repeatable cross-feature quality checks. None of these practices is required for ordinary UADI use.
 
-## Quality dimensions
-Projects may score usability, requirement coverage, consistency, accessibility, responsive behavior, maintainability and risk. Scores use explicit weights and a 1–5 scale. Every dimension needs supporting evidence; the aggregate score never overrides hard blockers or owner approval.
+## Lightweight starting point
 
-## Design drift
-Compare the candidate configuration with the last approved baseline. Classify changed paths as:
-- BLOCK: protected or NON_OVERRIDABLE paths changed.
-- WARNING: governed design tokens, patterns or component contracts changed.
-- INFO: permitted evolution with no protected policy impact.
+- Keep design tokens and reusable patterns in the project repository.
+- Review meaningful changes against the current product conventions.
+- Run the project's existing tests and accessibility checks.
+- Use Git history and pull requests to discuss and preserve decisions.
 
-Drift detection reports differences; policy determines whether they require review, re-approval or rejection. It must not silently rewrite the approved baseline.
+## Advanced capabilities
 
-## Regression strategy
-- Re-run schema, governance and renderer contract checks on every relevant change.
-- Run component-level interaction/accessibility tests when a catalog component changes.
-- Run responsive and visual checks for supported viewport/browser combinations.
-- Compare feature changes against project-level design configuration.
-- Preserve prior approved baselines and create new versioned baselines only after owner approval.
+The repository includes optional utilities and contracts for immutable evidence, signed gate attestations, quality scoring, drift reports and release aggregation. Teams may adopt them when their risk, scale or compliance needs justify the extra setup.
 
-## Operational metrics
-Track gate pass/fail/block rates, stale evidence rate, escaped regressions, owner change-request rate, time-to-approval and recurring accessibility/visual findings. Metrics are trend signals, not substitutes for individual review.
+## Important boundaries
 
-## Limits
-Cross-feature monitoring requires a host scheduler or CI trigger. Live identity-provider verification, browser matrix execution and isolated execution require host infrastructure. UADI defines portable contracts and local evaluators; it does not ship a mandatory backend or hosted control plane.
+- A model's self-review is not independent test evidence.
+- Git history records changes but does not by itself prove a human approval event.
+- Signed attestations require a trusted host evaluator and protected key management.
+- Running untrusted generated source requires a separately hardened execution environment.
+- Continuous regression and evidence retention require host CI/storage choices.
+
+Do not introduce identity systems, signing infrastructure, dashboards or schedulers unless a concrete project requirement calls for them.

@@ -1,61 +1,91 @@
 # UADI — Universal AI Design Intelligence
 
-**An embedded, agent-agnostic UX/UI design capability for AI agents.**
+**Give your AI agent better product, UX and visual design judgment.**
 
-UADI gives an existing AI agent a repeatable, artifact-driven process for discovering product requirements, exploring design directions, specifying design intent, generating prototypes, collecting owner feedback, and publishing approved design rules.
+UADI is a lightweight design capability you add to an existing AI coding agent. It helps the agent understand a product, reason about user experience, explore design directions, specify design intent and build better interfaces.
 
-## What UADI is
-UADI is an **embedded capability**, not a hosted design platform or standalone AI agent. Its portable core is made of instructions, workflows, schemas, templates, design knowledge, a component catalog, and optional local scripts. The host agent supplies reasoning and tool execution.
+UADI is a repository of design intelligence—not another agent, SaaS, backend or design platform.
 
-## Core principles
-- **Agent-agnostic:** no dependency on one model, IDE, or agent framework.
-- **Artifact-driven:** project context, proposals, UDS, feedback, revisions, approvals and evidence live in versioned files.
-- **Human-in-the-loop:** the authorized product owner makes final design decisions.
-- **Portable:** another compatible agent can continue from repository artifacts without chat history.
-- **Framework-neutral intent:** UDS is the contract; React is the first renderer target.
-- **Governed:** immutable revisions, exact-version approval, configuration inheritance, non-overridable constraints and evidence-bound quality gates.
+## Why UADI
 
-## Design lifecycle
-Initialize → Discover → Analyze → Generate concepts → Specify → Prototype → Owner review → Iterate → Approve → Publish configuration → Continuous governance.
+Without a design process, an agent often jumps from a short prompt straight into UI code. UADI teaches it to:
 
-An agent must never approve its own proposal or silently modify an approved configuration.
+- Understand the product, its users and the real problem.
+- Identify UX risks and missing requirements before coding.
+- Explore meaningfully different design directions.
+- Explain design decisions and trade-offs.
+- Define framework-neutral design intent before implementation.
+- Build, review and improve a working prototype.
+- Reuse consistent patterns instead of inventing every screen from scratch.
 
-## Repository map
-- docs/: vision, architecture, integration, security, quality gates and continuous governance
-- workflows/: discovery through approval, revision, gate evaluation and rollback
-- schemas/: JSON Schema Draft 2020-12 contracts
-- runtime/: revision, configuration, approval, governance, gates, evidence, quality, attestation and drift utilities
-- renderers/react/: first React + TypeScript UDS renderer and isolated browser harness
-- component-catalog/: stable renderer-independent component IDs
-- scripts/ and tests/: validators and automated tests
-- examples/minimal/: validated starter artifacts
+**The goal is not more process. The goal is better design output.**
 
-## Quick start
-\`\`\`bash
+## Use UADI with your agent
+
+1. Add this repository to your project or make its instructions available to your coding agent.
+2. Ask the agent to read [SKILL.md](SKILL.md).
+3. Describe what you want to design.
+
+Example:
+
+```text
+Use UADI to design the onboarding experience for this product.
+First understand the product and users, then identify UX risks,
+propose 2–3 distinct directions, and build the strongest option.
+```
+
+You can also ask for focused work:
+
+```text
+Use UADI to review this dashboard and identify the five highest-impact UX improvements.
+```
+
+No UADI account, server, database, API key, MCP server or identity provider is required. The host agent uses its existing file, coding and preview capabilities.
+
+## The design workflow
+
+**Understand → Analyze → Explore → Specify → Build → Review → Improve**
+
+UADI adapts the depth of this workflow to the task. A small UI change should stay lightweight; a new product experience deserves deeper discovery and alternatives.
+
+## What is inside
+
+- `SKILL.md` — the entry point for an AI agent.
+- `intelligence/` and `docs/` — product, UX and visual design reasoning.
+- `workflows/` — practical design workflows.
+- `schemas/` and `templates/` — portable design artifacts and UDS contracts.
+- `component-catalog/` and `renderers/` — reusable component concepts and the first React renderer.
+- `examples/` — examples to learn from and adapt.
+- `scripts/` — optional local validation tools.
+- `runtime/` — optional advanced utilities; not required for normal use.
+
+## Optional local validation
+
+The design capability itself does not require installation. If you want to validate repository artifacts:
+
+```bash
 npm install
 npm test
 npm run validate -- examples/minimal/project-context.json examples/minimal/discovery-result.json examples/minimal/design-specification.json
-npm run prototype:check -- examples/minimal/design-specification.json
-cd renderers/react && npm install && npm run typecheck && npm run build
-npx playwright install chromium
-npm test
-\`\`\`
+```
 
-To evaluate a release report, provide the trusted host public key and its allowlisted key ID:
-\`\`\`bash
-npm run gates:check -- ./gate-release-report.json ./trusted-gate-key.pem production-ci-2026
-\`\`\`
-The private signing key must remain in the host's secret manager and must never be accessible to the model.
+The React renderer and browser tests are optional development tooling. See [the renderer guide](renderers/react/README.md).
 
-Read [SKILL.md](SKILL.md), [the architecture](docs/ARCHITECTURE.md), [the integration guide](docs/INTEGRATION-GUIDE.md), [quality gates](docs/QUALITY-GATES.md), [security boundary](docs/SECURITY-BOUNDARY.md), [continuous governance](docs/CONTINUOUS-GOVERNANCE.md), [browser validation](renderers/react/tests/README.md), and [the roadmap](ROADMAP.md).
+## Design quality principles
 
-## Browser and security boundary
-CI uses a fresh GitHub-hosted runner, a loopback-only Vite preview, and Chromium. The browser test guard aborts requests to non-loopback hosts. The preview consumes a fixed React renderer and JSON UDS fixture; it does not execute AI-generated source code or receive production secrets. CI runs axe-core WCAG 2.1 A/AA checks, keyboard interaction checks, mobile/tablet/desktop overflow checks, and a pixel-diff against a committed SVG desktop baseline. Screenshots and diff images are uploaded as a short-lived workflow artifact.
+UADI prioritizes product understanding, UX reasoning, design judgment, visual intelligence and execution quality. Its quality checklist is guidance for better work—not a mandatory ten-step release bureaucracy.
 
-Static source inspection is heuristic and is not a sandbox. This is an ephemeral test harness, not a public preview hosting service or hardened multi-tenant execution environment. Production execution of untrusted generated code still requires a dedicated disposable container/VM, no secrets, restricted egress, resource limits and a read-only base filesystem. See [the security boundary](docs/SECURITY-BOUNDARY.md).
+Human owners remain in control of product decisions. Git history is sufficient for ordinary project traceability. Advanced signed attestations, governance and continuous regression utilities are optional extensions for teams that need them.
 
-## Current status
-The repository contains portable foundations for the three UADI phases: ten-gate release evaluation, signed gate attestations, evidence-bound quality checks, immutable evidence records, quality scoring, design drift reporting, revision/governance controls and the React browser smoke suite. Host identity integration, hardened execution infrastructure, broader cross-browser/component coverage, manual WCAG audits, recurring CI scheduling and quality-threshold calibration still require deployment environments, credentials or human validation. Repository code does not attest to those external controls.
+## Learn more
+
+- [Agent instructions](docs/AGENT-INSTRUCTIONS.md)
+- [Design Intelligence](docs/DESIGN-INTELLIGENCE.md)
+- [Integration guide](docs/INTEGRATION-GUIDE.md)
+- [UDS and architecture](docs/ARCHITECTURE.md)
+- [Design quality checklist](docs/QUALITY-GATES.md)
+- [Roadmap](ROADMAP.md)
 
 ## License
-No license has been selected. Public visibility does not grant permission to reuse or redistribute this project. See [LICENSE-DECISION.md](LICENSE-DECISION.md).
+
+No license has been selected yet. Public visibility does not grant permission to reuse or redistribute this project. See [LICENSE-DECISION.md](LICENSE-DECISION.md).

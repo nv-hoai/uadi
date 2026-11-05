@@ -1,14 +1,16 @@
-# Quality gate workflow
+# Lightweight Design Review
 
-1. Resolve the artifact identity, version and canonical content digest.
-2. Determine which gates are affected by the artifact and its dependencies.
-3. Run independent validators/tests; collect check-level evidence and stable report references.
-4. Create one immutable gate result per gate and exact artifact revision.
-5. Reject duplicate, missing, stale or mismatched gate results.
-6. Require all ten gates to PASS for normal publication. Warnings require explicit policy handling; blockers cannot be waived by an agent.
-7. For Gate 9, obtain actor identity and role from the host authentication layer and verify approval against the exact proposal ID/version.
-8. Before Gate 10, compare candidate configuration with the last approved baseline and evaluate regression/drift.
-9. Publish only after release readiness is established. Preserve all evidence and previous approved revisions.
-10. On any artifact change, invalidate affected evidence and rerun dependent gates.
+Use this checklist after meaningful design or implementation work. Select the checks that fit the task; do not treat it as a mandatory release pipeline.
 
-The agent may explain failures and propose fixes. It cannot mark its own output as independently verified or approve itself.
+1. Does the result address the user's real goal?
+2. Is the primary user journey clear and efficient?
+3. Is information and visual hierarchy easy to understand?
+4. Are important states, errors and edge cases handled?
+5. Are components, tokens and patterns consistent with the product?
+6. Is the experience responsive and accessible for its intended users?
+7. Does the implementation work in the available preview or test environment?
+8. What limitations or assumptions remain?
+
+Fix the highest-impact issues first. Run schema, build, browser or accessibility checks when relevant and available. State clearly which checks were actually executed.
+
+The ten-gate release evaluator, signed attestations and evidence ledger are optional advanced tooling. They are not required to use UADI or complete an ordinary design task.
