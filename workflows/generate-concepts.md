@@ -1,12 +1,20 @@
 # Workflow: Generate Concepts
 
-Generate 2–3 materially different design proposals unless the owner explicitly asks for one.
+## Inputs
+A validated DiscoveryResult and DesignAnalysis, plus applicable project and feature context.
 
-For each proposal include:
-- A concise design thesis and target users.
-- UX strategy and key task flow.
-- Visual direction and layout principles.
-- Interaction principles and important states.
-- Strengths, trade-offs, risks, and assumptions.
+## Procedure
+1. Generate 2–3 materially different directions unless the owner explicitly requests one.
+2. Make alternatives different in information architecture, task flow, interaction model, or hierarchy—not merely colors.
+3. For each direction, create an immutable proposal using the existing `design-proposal.schema.json` contract:
+   - `proposal_id`, `session_id`, integer `version`, `name`, and concise `direction`.
+   - `rationale.summary`, `rationale.target_users`, and `rationale.ux_strategy`.
+   - `visual_system`, `layout`, `component_guidelines`, and `interaction_guidelines`.
+   - `tradeoffs`, each with both `benefit` and `cost`.
+   - `prototype.status` initially `NOT_GENERATED` and `approval_status` initially `PENDING`.
+4. Compare all directions against the same requirements, constraints, user tasks, and success measures.
+5. State assumptions and risks explicitly in the proposal narrative and comparison.
+6. Validate each proposal against `schemas/design-proposal.schema.json`.
 
-Make alternatives meaningfully different in information architecture, interaction model, or visual hierarchy—not merely different colors. Compare proposals against the same requirements and constraints. Do not claim user testing or evidence that does not exist. Save each proposal as an immutable version and validate it against design-proposal.schema.json.
+## Guardrails
+Do not claim user testing, analytics, or research that did not occur. The agent recommends; the owner chooses. A generated proposal is not approved.
