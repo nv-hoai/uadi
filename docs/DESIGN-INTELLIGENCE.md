@@ -16,6 +16,8 @@ Do not invent research. Label assumptions and ask only for information that coul
 
 ## 2. UX reasoning
 
+For substantial tasks, use the practical [UX Reasoning Playbook](../intelligence/UX-REASONING-PLAYBOOK.md) and select contextual guidance from the [pattern library](../intelligence/patterns/README.md). These are decision aids, not mandatory templates.
+
 Reason from user goals through tasks and interaction:
 
 - What does the user need to know at this moment?

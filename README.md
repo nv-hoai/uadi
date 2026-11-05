@@ -51,7 +51,8 @@ UADI adapts the depth of this workflow to the task. A small UI change should sta
 ## What is inside
 
 - `SKILL.md` — the entry point for an AI agent.
-- `intelligence/` and `docs/` — product, UX and visual design reasoning.
+- `intelligence/` — practical UX reasoning playbook and contextual pattern library.
+- `docs/` — product vision, architecture, workflows and quality guidance.
 - `workflows/` — practical design workflows.
 - `schemas/` and `templates/` — portable design artifacts and UDS contracts.
 - `component-catalog/` and `renderers/` — reusable component concepts and the first React renderer.
