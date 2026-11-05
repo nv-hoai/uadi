@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uadi.dev/schemas/design-specification.schema.json",
+  "title": "UADI Design Specification (UDS)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "spec_id",
+    "proposal_id",
+    "version",
+    "target",
+    "tokens",
+    "pages",
+    "accessibility",
+    "responsive"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "spec_id": {
+      "type": "string"
+    },
+    "proposal_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "platform",
+        "viewports"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string"
+        },
+        "viewports": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tokens": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      }
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "page_id",
+          "name",
+          "sections"
+        ],
+        "properties": {
+          "page_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "sections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "section_id",
+                "component_id"
+              ],
+              "properties": {
+                "section_id": {
+                  "type": "string"
+                },
+                "component_id": {
+                  "type": "string",
+                  "description": "Stable identifier from the UADI component catalog, not a framework component name."
+                },
+                "content_intent": {
+                  "type": "string"
+                },
+                "layout": {
+                  "type": "object"
+                },
+                "interactions": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/interaction"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responsive": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "breakpoint",
+          "behavior"
+        ],
+        "properties": {
+          "breakpoint": {
+            "type": "string"
+          },
+          "behavior": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "accessibility": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requirement",
+          "level"
+        ],
+        "properties": {
+          "requirement": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string",
+            "enum": [
+              "MUST",
+              "SHOULD"
+            ]
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "trigger",
+        "result"
+      ],
+      "properties": {
+        "trigger": {
+          "type": "string"
+        },
+        "result": {
+          "type": "string"
+        },
+        "state_change": {
+          "type": "string"
+        },
+        "keyboard_behavior": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
