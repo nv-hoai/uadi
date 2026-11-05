@@ -13,10 +13,13 @@ test.beforeEach(async ({ page }) => {
 test("prototype renders, supports keyboard and field interaction", async ({ page }) => {
  await page.goto("/");
  await expect(page.getByRole("heading", { name: "Home" })).toBeVisible();
- const navButton = page.getByRole("navigation", { name: "Prototype pages" }).getByRole("button", { name: "Home" });
+ const pageNavButton = page.getByRole("navigation", { name: "Prototype pages" }).getByRole("button", { name: "Home" });
+ const contentNavButton = page.getByRole("navigation", { name: "Primary navigation" }).getByRole("button", { name: "Home" });
  const field = page.getByRole("textbox", { name: "Email address *" });
  await page.keyboard.press("Tab");
- await expect(navButton).toBeFocused();
+ await expect(pageNavButton).toBeFocused();
+ await page.keyboard.press("Tab");
+ await expect(contentNavButton).toBeFocused();
  await page.keyboard.press("Tab");
  await expect(field).toBeFocused();
  await field.fill("owner@example.com");
