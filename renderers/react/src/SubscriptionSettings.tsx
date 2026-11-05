@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 
 type Plan = { name: string; members: number; monthly: number; annual: number; description: string };
@@ -17,6 +17,24 @@ export function SubscriptionSettings(): ReactNode {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [notice, setNotice] = useState("");
   const [paymentExpanded, setPaymentExpanded] = useState(false);
+  const dialogCloseRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!cancelOpen) return;
+    const previous = document.activeElement as HTMLElement | null;
+    dialogCloseRef.current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { setCancelOpen(false); return; }
+      if (event.key !== "Tab") return;
+      const dialog = dialogCloseRef.current?.closest("[role=dialog]");
+      const controls = dialog?.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])');
+      if (!controls?.length) return;
+      const first = controls[0], last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => { document.removeEventListener("keydown", onKeyDown); previous?.focus(); };
+  }, [cancelOpen]);
   const currentPlan = plans[1];
   const price = period === "annual" ? currentPlan.annual : currentPlan.monthly;
   const isOwner = role === "owner";
@@ -113,7 +131,7 @@ export function SubscriptionSettings(): ReactNode {
 
     {cancelOpen && <div className="dialog-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setCancelOpen(false); }}>
       <section className="cancel-dialog" role="dialog" aria-modal="true" aria-labelledby="cancel-dialog-title" aria-describedby="cancel-dialog-description">
-        <button type="button" className="dialog-close" aria-label="Close dialog" onClick={() => setCancelOpen(false)}>×</button>
+        <button ref={dialogCloseRef} type="button" className="dialog-close" aria-label="Close dialog" onClick={() => setCancelOpen(false)}>×</button>
         <span className="dialog-icon" aria-hidden="true">!</span><h2 id="cancel-dialog-title">Cancel your Pro plan?</h2>
         <p id="cancel-dialog-description">Your subscription will remain active until <strong>December 5, 2026</strong>. After that:</p>
         <ul><li>Your workspace moves to the Free plan.</li><li>Workspaces with more than 3 members will need to reduce their team size to keep access for everyone.</li><li>Your saved data remains available.</li></ul>

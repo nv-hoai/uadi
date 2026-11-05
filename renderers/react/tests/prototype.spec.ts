@@ -68,3 +68,55 @@ test("desktop rendering stays within the committed visual baseline", async ({ pa
  await fs.writeFile(testInfo.outputPath("uadi-visual-diff.png"), PNG.sync.write(diff));
  expect(ratio, "visual difference ratio against tests/visual-baseline.svg").toBeLessThanOrEqual(0.38);
 });
+
+test("subscription settings exposes clear owner and member permissions", async ({ page }) => {
+ await page.goto("/subscription-settings");
+ await expect(page.getByRole("heading", { name: "Plan & billing" })).toBeVisible();
+ await expect(page.getByRole("button", { name: "Cancel plan" })).toBeVisible();
+ await page.getByRole("button", { name: "Member", exact: true }).click();
+ await expect(page.getByText("Only workspace owners can cancel")).toBeVisible();
+ await expect(page.getByText("Owner can change plan").first()).toBeVisible();
+ await expect(page.getByRole("button", { name: "Cancel plan" })).toHaveCount(0);
+ await expect(page.getByRole("button", { name: "Update" })).toHaveCount(0);
+});
+
+test("subscription settings updates billing period and labels sample pricing", async ({ page }) => {
+ await page.goto("/subscription-settings");
+ await expect(page.getByText("$490", { exact: true }).first()).toBeVisible();
+ await page.getByRole("button", { name: "Monthly", exact: true }).click();
+ await expect(page.getByText("$49", { exact: true }).first()).toBeVisible();
+ await expect(page.getByText("Illustrative prices for this prototype only. Actual pricing and taxes depend on your agreement.")).toBeVisible();
+});
+
+test("cancellation requires deliberate confirmation and explains consequences", async ({ page }) => {
+ await page.goto("/subscription-settings");
+ await page.getByRole("button", { name: "Cancel plan" }).click();
+ const dialog = page.getByRole("dialog", { name: "Cancel your Pro plan?" });
+ await expect(dialog).toBeVisible();
+ await expect(dialog.getByText(/more than 3 members/)).toBeVisible();
+ await expect(dialog.getByText(/Demo interaction only/)).toBeVisible();
+ await expect(dialog.getByRole("button", { name: "Close dialog" })).toBeFocused();
+ await page.keyboard.press("Escape");
+ await expect(dialog).toHaveCount(0);
+ await expect(page.getByRole("button", { name: "Cancel plan" })).toBeFocused();
+ await page.getByRole("button", { name: "Cancel plan" }).click();
+ await page.getByRole("button", { name: "Confirm cancellation" }).click();
+ await expect(page.getByRole("status").filter({ hasText: "Cancellation scheduled" })).toBeVisible();
+ await expect(page.getByRole("button", { name: "Cancellation scheduled" })).toBeDisabled();
+});
+
+test("subscription settings passes serious and critical axe checks", async ({ page }) => {
+ await page.goto("/subscription-settings");
+ const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+ const blockers = results.violations.filter((item) => ["critical", "serious"].includes(item.impact ?? ""));
+ expect(blockers.map((item) => ({ id: item.id, help: item.help, nodes: item.nodes.length }))).toEqual([]);
+});
+
+test("subscription settings has no horizontal overflow on mobile or desktop", async ({ page }) => {
+ for (const viewport of [{ width: 375, height: 812 }, { width: 768, height: 1024 }, { width: 1280, height: 900 }]) {
+  await page.setViewportSize(viewport);
+  await page.goto("/subscription-settings");
+  const dimensions = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
+  expect(dimensions.scroll, "subscription settings horizontal overflow at " + viewport.width + "px").toBeLessThanOrEqual(dimensions.client);
+ }
+});
