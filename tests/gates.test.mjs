@@ -7,7 +7,7 @@ import { inspectGeneratedSource } from "../runtime/security-inspection.mjs";
 import { detectDesignDrift } from "../runtime/design-drift.mjs";
 
 const sha = "a".repeat(64);
-const artifact = { artifactId: "proposal-1", version: 2, contentSha256: sha, artifactSha256: sha };
+const artifact = { artifactId: "proposal-1", version: 2, artifactVersion: 2, contentSha256: sha, artifactSha256: sha };
 const makeGates = () => REQUIRED_GATES.map((gateId) => evaluateGate({
   gateId, artifactId: artifact.artifactId, artifactVersion: artifact.version, artifactSha256: sha,
   evaluator: "RULE_ENGINE", checks: [{ checkId: "baseline", status: "PASS", message: "check passed" }]
