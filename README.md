@@ -52,7 +52,7 @@ UADI adapts the depth of this workflow to the task. A small UI change should sta
 
 - `SKILL.md` — the entry point for an AI agent.
 - `intelligence/` — practical UX reasoning playbook and contextual pattern library.
-- `docs/` — product vision, architecture, workflows and quality guidance.
+- `docs/` — product vision, architecture, integration and quality guidance.
 - `workflows/` — practical design workflows.
 - `schemas/` and `templates/` — portable design artifacts and UDS contracts.
 - `component-catalog/` and `renderers/` — reusable component concepts and the first React renderer.
@@ -68,7 +68,7 @@ node scripts/install-skill.mjs --agent codex
 # or: --agent claude | cursor | all
 ```
 
-The installer uses Node.js built-ins only and copies the skill plus its core references into the host's project skill directory. It preserves existing files unless `--force` is supplied. See [all adapter instructions](adapters/README.md).
+The installer uses Node.js built-ins only and copies the skill plus its core references into the host's project skill directory. It preserves existing files unless `--force` is supplied. See [supported agent installation](adapters/README.md).
 
 ## Optional local validation
 
