@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uadi.dev/schemas/design-feedback.schema.json",
+  "title": "UADI Design Feedback",
+  "type": "object",
+  "required": ["schema_version", "feedback_id", "proposal_id", "proposal_version", "decision", "actor", "items", "created_at"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "feedback_id": { "type": "string" },
+    "proposal_id": { "type": "string" },
+    "proposal_version": { "type": "integer", "minimum": 1 },
+    "decision": { "enum": ["REQUEST_CHANGES", "REJECT_CONCEPT", "COMMENT"] },
+    "actor": {
+      "type": "object",
+      "required": ["id", "role"],
+      "properties": {
+        "id": { "type": "string" },
+        "role": { "enum": ["OWNER", "DELEGATE", "DESIGNER", "DEVELOPER"] }
+      },
+      "additionalProperties": false
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "target", "action", "comment", "priority"],
+        "properties": {
+          "category": { "enum": ["LAYOUT", "VISUAL", "TYPOGRAPHY", "COLOR", "COMPONENT", "INTERACTION", "CONTENT", "ACCESSIBILITY", "RESPONSIVE", "OTHER"] },
+          "target": { "type": "string" },
+          "action": { "enum": ["ADD", "MODIFY", "REMOVE", "CLARIFY"] },
+          "comment": { "type": "string" },
+          "priority": { "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}
