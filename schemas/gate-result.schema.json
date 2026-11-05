@@ -4,7 +4,7 @@
   "title": "UADI Gate Result",
   "type": "object",
   "additionalProperties": false,
-  "required": ["gateId", "status", "artifactId", "artifactVersion", "artifactSha256", "evaluator", "checks", "evidence", "evaluatedAt"],
+  "required": ["gateId", "status", "artifactId", "artifactVersion", "artifactSha256", "evaluator", "checks", "evidence", "evaluatedAt", "attestation"],
   "properties": {
     "gateId": { "$ref": "#/$defs/gateId" },
     "status": { "enum": ["PASS", "FAIL", "WARNING", "BLOCKED"] },
@@ -14,8 +14,22 @@
     "evaluator": { "enum": ["RULE_ENGINE", "TEST_RUNNER", "HUMAN", "HOST_IDENTITY", "SECURITY_SCANNER"] },
     "checks": { "type": "array", "minItems": 1, "items": { "type": "object", "additionalProperties": false, "required": ["checkId", "status", "message"], "properties": { "checkId": { "type": "string", "minLength": 1 }, "status": { "enum": ["PASS", "FAIL", "WARNING", "BLOCKED"] }, "message": { "type": "string", "minLength": 1 }, "evidence": { "type": "array", "items": { "type": "string" } } } } },
     "evidence": { "type": "array", "items": { "type": "string" } },
-    "evaluatedAt": { "type": "string", "format": "date-time" }
+    "evaluatedAt": { "type": "string", "format": "date-time" },
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "keyId", "signature"],
+      "properties": {
+        "algorithm": { "const": "Ed25519" },
+        "keyId": { "type": "string", "minLength": 1 },
+        "signature": { "type": "string", "pattern": "^[A-Za-z0-9+/]+={0,2}$" }
+      }
+    }
   },
+  "allOf": [
+    { "if": { "properties": { "gateId": { "const": "HUMAN_APPROVAL" } } }, "then": { "properties": { "evaluator": { "const": "HOST_IDENTITY" } } } },
+    { "if": { "properties": { "gateId": { "const": "PROTOTYPE_RUNTIME" } } }, "then": { "properties": { "evaluator": { "const": "TEST_RUNNER" } } } }
+  ],
   "$defs": {
     "gateId": { "enum": ["INPUT_CONTEXT", "REQUIREMENT_COVERAGE", "DESIGN_QUALITY", "SCHEMA_ARTIFACT", "GOVERNANCE", "PROTOTYPE_RUNTIME", "UX_ACCESSIBILITY_VISUAL", "SECURITY_SAFETY", "HUMAN_APPROVAL", "PUBLISH_REGRESSION"] }
   }
