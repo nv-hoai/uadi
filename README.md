@@ -84,6 +84,7 @@ Human owners remain in control of product decisions. Git history is sufficient f
 - [Integration guide](docs/INTEGRATION-GUIDE.md)
 - [UDS and architecture](docs/ARCHITECTURE.md)
 - [Design quality checklist](docs/QUALITY-GATES.md)
+- [Benchmarking Design Intelligence](docs/BENCHMARKING.md)
 - [Roadmap](ROADMAP.md)
 
 ## License
