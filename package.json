@@ -5,7 +5,8 @@
   "type": "module",
   "description": "Universal AI Design Intelligence — embedded, agent-agnostic UX/UI design capability",
   "scripts": {
-    "validate": "node scripts/validate.mjs"
+    "validate": "node scripts/validate.mjs",
+    "test": "node --test"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
