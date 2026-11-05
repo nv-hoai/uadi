@@ -6,9 +6,10 @@ A checkbox indicates an implemented and repository-backed capability; it does no
 - [x] Analysis, proposal generation, comparison rubric, UDS contract and compiler workflow.
 ## Phase 3 — Prototype and iteration
 - [x] Component catalog and React renderer with page navigation and controlled field state.
-- [x] Responsive starter styling, prototype contract checker, renderer build and CI tests.
+- [x] Responsive starter styling, prototype contract checker and renderer build.
 - [x] Feedback workflow and immutable revision runtime with parent linkage and SHA-256 integrity.
-- [ ] Broader production component library, visual regression, browser accessibility automation and sandboxed preview hosting.
+- [x] Ephemeral Playwright/Chromium preview, keyboard interaction tests, axe-core WCAG 2.1 A/AA scan, mobile overflow test, SVG image baseline pixel comparison and CI screenshot artifacts.
+- [ ] Broader production component library, full WCAG audit, cross-browser visual baselines and hardened isolated preview hosting for untrusted generated code.
 ## Phase 4 — Approval and design system
 - [x] Approval and design configuration schemas/workflows.
 - [x] Configuration resolver with Feature > Project > Defaults precedence.
@@ -20,4 +21,4 @@ A checkbox indicates an implemented and repository-backed capability; it does no
 - [x] Optional MCP positioning and agent-agnostic compatibility contract.
 - [ ] Automated compatibility tests against live host products (requires host environments and credentials).
 ## Remaining external/productization work
-The portable embedded MVP is implemented and CI-validated. Production use still requires the host-selected sandbox, browser/accessibility and visual regression runners, identity provider integration, and live compatibility environments. These are deployment integrations, not capabilities that can be verified by repository-only code.
+The portable embedded MVP is CI-validated. Production use still requires a hardened runtime for executing untrusted generated source, full cross-browser accessibility/visual testing, identity provider integration, and live compatibility environments. These are deployment integrations, not capabilities that can be verified by repository-only code.
