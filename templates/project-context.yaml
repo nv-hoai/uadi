@@ -1,0 +1,16 @@
+schema_version: "1.0.0"
+project_id: replace-with-stable-project-id
+name: Replace with product name
+description: ""
+product:
+  problem: ""
+  value_proposition: ""
+  business_goals: []
+users: []
+platforms:
+  - web
+constraints: []
+preferences: {}
+assumptions: []
+sources: []
+updated_at: "2026-01-01T00:00:00Z"
