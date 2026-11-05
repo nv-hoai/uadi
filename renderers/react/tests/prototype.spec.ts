@@ -84,7 +84,8 @@ test("subscription settings updates billing period and labels sample pricing", a
  await page.goto("/subscription-settings");
  await expect(page.getByText("$490", { exact: true }).first()).toBeVisible();
  await page.getByRole("button", { name: "Monthly", exact: true }).click();
- await expect(page.getByText("$49", { exact: true }).first()).toBeVisible();
+ await expect(page.locator(".plan-card").nth(1).getByText("$49", { exact: true })).toBeVisible();
+ await expect(page.getByText("$490", { exact: true }).first()).toBeVisible();
  await expect(page.getByText("Illustrative prices for this prototype only. Actual pricing and taxes depend on your agreement.")).toBeVisible();
 });
 
@@ -96,6 +97,10 @@ test("cancellation requires deliberate confirmation and explains consequences", 
  await expect(dialog.getByText(/more than 3 members/)).toBeVisible();
  await expect(dialog.getByText(/Demo interaction only/)).toBeVisible();
  await expect(dialog.getByRole("button", { name: "Close dialog" })).toBeFocused();
+ await page.keyboard.press("Shift+Tab");
+ await expect(dialog.getByRole("button", { name: "Confirm cancellation" })).toBeFocused();
+ await page.keyboard.press("Tab");
+ await expect(dialog.getByRole("button", { name: "Close dialog" })).toBeFocused();
  await page.keyboard.press("Escape");
  await expect(dialog).toHaveCount(0);
  await expect(page.getByRole("button", { name: "Cancel plan" })).toBeFocused();
@@ -103,6 +108,8 @@ test("cancellation requires deliberate confirmation and explains consequences", 
  await page.getByRole("button", { name: "Confirm cancellation" }).click();
  await expect(page.getByRole("status").filter({ hasText: "Cancellation scheduled" })).toBeVisible();
  await expect(page.getByRole("button", { name: "Cancellation scheduled" })).toBeDisabled();
+ await page.getByRole("button", { name: "Undo cancellation" }).click();
+ await expect(page.getByRole("button", { name: "Cancel plan" })).toBeEnabled();
 });
 
 test("subscription settings passes serious and critical axe checks", async ({ page }) => {

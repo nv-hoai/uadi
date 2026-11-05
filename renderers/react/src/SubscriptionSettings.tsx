@@ -36,7 +36,6 @@ export function SubscriptionSettings(): ReactNode {
     return () => { document.removeEventListener("keydown", onKeyDown); previous?.focus(); };
   }, [cancelOpen]);
   const currentPlan = plans[1];
-  const price = period === "annual" ? currentPlan.annual : currentPlan.monthly;
   const isOwner = role === "owner";
 
   const choosePlan = (plan: Plan) => {
@@ -79,12 +78,12 @@ export function SubscriptionSettings(): ReactNode {
         </div>
 
         {notice && <div className="billing-notice" role="status">{notice}</div>}
-        {cancelled && <div className="billing-banner" role="status"><strong>Cancellation scheduled.</strong> Your Pro plan remains active until December 5, 2026. You can change your mind before then.</div>}
+        {cancelled && <div className="billing-banner" role="status"><strong>Cancellation scheduled.</strong> Your Pro plan remains active until December 5, 2026. No further renewal payment will be collected after that. <button type="button" className="text-action" onClick={() => setCancelled(false)}>Undo cancellation</button></div>}
 
         <section className="billing-card current-plan" aria-labelledby="current-plan-title">
           <div className="card-topline"><div><p className="card-kicker">CURRENT SUBSCRIPTION</p><h2 id="current-plan-title">Pro plan <span className="plan-status">Active</span></h2></div><span className="plan-icon" aria-hidden="true">✳</span></div>
           <div className="plan-summary-grid">
-            <div><span className="metric-label">Your price</span><strong className="plan-price">{money(price)}<small> / {period === "annual" ? "year" : "month"}</small></strong><span className="metric-note">{period === "annual" ? "$40.83 per month, billed annually" : "Billed monthly"}</span></div>
+            <div><span className="metric-label">Your price</span><strong className="plan-price">{money(currentPlan.annual)}<small> / year</small></strong><span className="metric-note">$40.83 per month, billed annually</span></div>
             <div><span className="metric-label">Next payment</span><strong className="metric-value">{cancelled ? "No upcoming payment" : "Dec 5, 2026"}</strong><span className="metric-note">{cancelled ? "Subscription ends Dec 5, 2026" : "Visa ending in 4242"}</span></div>
             <div><span className="metric-label">Member seats</span><strong className="metric-value">12 <small>/ 20</small></strong><span className="metric-note">8 seats available</span></div>
           </div>
@@ -93,7 +92,7 @@ export function SubscriptionSettings(): ReactNode {
         </section>
 
         <section className="billing-section" aria-labelledby="plans-title">
-          <div className="section-heading"><div><h2 id="plans-title">Choose a plan</h2><p>Find the right amount of room for your team.</p></div>
+          <div className="section-heading"><div><h2 id="plans-title">Choose a plan</h2><p>Compare monthly and annual pricing to find the right amount of room for your team.</p></div>
             <div className="billing-period" role="group" aria-label="Billing period"><button type="button" aria-pressed={period === "monthly"} onClick={() => setPeriod("monthly")}>Monthly</button><button type="button" aria-pressed={period === "annual"} onClick={() => setPeriod("annual")}>Yearly <span>Save 17%</span></button></div>
           </div>
           <div className="plan-grid">
@@ -134,7 +133,7 @@ export function SubscriptionSettings(): ReactNode {
         <button ref={dialogCloseRef} type="button" className="dialog-close" aria-label="Close dialog" onClick={() => setCancelOpen(false)}>×</button>
         <span className="dialog-icon" aria-hidden="true">!</span><h2 id="cancel-dialog-title">Cancel your Pro plan?</h2>
         <p id="cancel-dialog-description">Your subscription will remain active until <strong>December 5, 2026</strong>. After that:</p>
-        <ul><li>Your workspace moves to the Free plan.</li><li>Workspaces with more than 3 members will need to reduce their team size to keep access for everyone.</li><li>Your saved data remains available.</li></ul>
+        <ul><li>Your workspace moves to the Free plan.</li><li>Workspaces with more than 3 members will need to reduce their team size to keep access for everyone.</li><li>No further renewal payment will be collected after the end date.</li></ul>
         <div className="dialog-actions"><button type="button" className="secondary-button" onClick={() => setCancelOpen(false)}>Keep my plan</button><button type="button" className="confirm-cancel" onClick={() => { setCancelled(true); setCancelOpen(false); setNotice(""); }}>Confirm cancellation</button></div>
         <p className="dialog-demo-note">Demo interaction only. No real subscription will be cancelled.</p>
       </section>
