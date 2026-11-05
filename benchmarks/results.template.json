@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "study": {
+    "agent": "REPLACE_WITH_AGENT",
+    "model": "REPLACE_WITH_MODEL_AND_VERSION",
+    "date": "YYYY-MM-DD",
+    "project_snapshot": "REPLACE_WITH_COMMIT_OR_FIXTURE_ID"
+  },
+  "pairs": []
+}
