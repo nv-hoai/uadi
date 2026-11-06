@@ -87,3 +87,69 @@ test("recognizes the minimum multi-model protocol only with three distinct repet
   assert.equal(result.protocol_assessment.confirmatory_minimum_met, true);
   assert.deepEqual(result.protocol_assessment.model_families.sort(), ["family-a", "family-b"]);
 });
+
+
+test("does not qualify a pilot when a model family mixes exact model versions", () => {
+  const input = fixture();
+  input.pairs = [];
+  for (const task_id of ["subscription-settings", "product-onboarding", "operations-dashboard"]) {
+    for (const repetition of [1, 2, 3]) {
+      const pair = fixture().pairs[0];
+      input.pairs.push({
+        ...pair,
+        pair_id: task_id + "-" + repetition,
+        task_id,
+        model_version: repetition === 3 ? "Example model v2" : "Example model v1",
+        repetition
+      });
+    }
+  }
+  const result = scoreBenchmark(input);
+  assert.equal(result.protocol_assessment.exploratory_pilot_minimum_met, false);
+  assert.ok(result.protocol_assessment.warnings.some((warning) => warning.includes("not pinned")));
+});
+
+test("qualifies two complete model families even when an extra family is only partially sampled", () => {
+  const input = fixture();
+  input.pairs = [];
+  for (const model_family of ["family-a", "family-b"]) {
+    for (const task_id of ["subscription-settings", "product-onboarding", "operations-dashboard"]) {
+      for (const repetition of [1, 2, 3]) {
+        const pair = fixture().pairs[0];
+        input.pairs.push({
+          ...pair,
+          pair_id: model_family + "-" + task_id + "-" + repetition,
+          task_id,
+          model_family,
+          model_version: model_family + "-v1",
+          repetition
+        });
+      }
+    }
+  }
+  const partial = fixture().pairs[0];
+  input.pairs.push({
+    ...partial,
+    pair_id: "family-c-partial",
+    model_family: "family-c",
+    model_version: "family-c-v1"
+  });
+  const result = scoreBenchmark(input);
+  assert.equal(result.protocol_assessment.confirmatory_minimum_met, true);
+  assert.deepEqual(result.protocol_assessment.qualified_model_families.sort(), ["family-a", "family-b"]);
+});
+
+test("does not count duplicate repetition labels toward a sample minimum", () => {
+  const input = fixture();
+  input.pairs = [];
+  for (const task_id of ["subscription-settings", "product-onboarding", "operations-dashboard"]) {
+    for (const repetition of [1, 2, 3]) {
+      const pair = fixture().pairs[0];
+      input.pairs.push({ ...pair, pair_id: task_id + "-" + repetition, task_id, repetition });
+    }
+  }
+  input.pairs.push({ ...input.pairs[0], pair_id: "duplicate-repetition" });
+  const result = scoreBenchmark(input);
+  assert.equal(result.protocol_assessment.exploratory_pilot_minimum_met, false);
+  assert.ok(result.protocol_assessment.warnings.some((warning) => warning.includes("Duplicate repetition")));
+});

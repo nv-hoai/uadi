@@ -97,36 +97,51 @@ export function scoreBenchmark(input) {
   const requiredTasks = ["subscription-settings", "product-onboarding", "operations-dashboard"];
   const modelFamilies = [...new Set(pairResults.map((pair) => pair.model_family))];
   const cellPairs = new Map();
+  const versionsByFamily = new Map();
   for (const pair of pairResults) {
     const key = pair.model_family + "::" + pair.task_id;
     if (!cellPairs.has(key)) cellPairs.set(key, []);
     cellPairs.get(key).push(pair);
+    if (!versionsByFamily.has(pair.model_family)) versionsByFamily.set(pair.model_family, new Set());
+    versionsByFamily.get(pair.model_family).add(pair.model_version);
   }
   const modelMetadataComplete = input.pairs.every((pair) =>
     typeof pair.model_family === "string" && pair.model_family.trim() &&
     typeof pair.model_version === "string" && pair.model_version.trim() &&
     Number.isInteger(pair.repetition) && pair.repetition > 0
   );
-  const pilotMinimumMet = modelMetadataComplete && modelFamilies.some((family) =>
-    requiredTasks.every((task) => {
-      const entries = cellPairs.get(family + "::" + task) ?? [];
-      return new Set(entries.map((entry) => entry.repetition).filter((value) => value !== null)).size >= 3;
-    })
-  );
-  const confirmatoryMinimumMet = modelMetadataComplete && modelFamilies.length >= 2 && modelFamilies.every((family) =>
-    requiredTasks.every((task) => {
-      const entries = cellPairs.get(family + "::" + task) ?? [];
-      return new Set(entries.map((entry) => entry.repetition).filter((value) => value !== null)).size >= 3;
-    })
-  );
+  const versionPinnedFamilies = modelFamilies.filter((family) => versionsByFamily.get(family).size === 1);
+  const hasCompleteCoverage = (family) => requiredTasks.every((task) => {
+    const entries = cellPairs.get(family + "::" + task) ?? [];
+    const repetitions = entries.map((entry) => entry.repetition);
+    return entries.length >= 3 && new Set(repetitions).size === entries.length && new Set(repetitions).size >= 3;
+  });
+  const qualifiedFamilies = modelMetadataComplete
+    ? versionPinnedFamilies.filter(hasCompleteCoverage)
+    : [];
+  const pilotMinimumMet = qualifiedFamilies.length >= 1;
+  const confirmatoryMinimumMet = qualifiedFamilies.length >= 2;
   const protocolWarnings = [];
   if (!modelMetadataComplete) protocolWarnings.push("Model metadata incomplete: every pair must record model_family, exact model_version and a positive repetition number.");
-  if (!pilotMinimumMet) protocolWarnings.push("Exploratory pilot minimum not met: require three distinct repetitions for each of the three tasks on at least one model family.");
-  if (!confirmatoryMinimumMet) protocolWarnings.push("Confirmatory multi-model minimum not met: require three distinct repetitions for each of the three tasks on at least two model families (18 pairs minimum).");
+  for (const family of modelFamilies) {
+    if (versionsByFamily.get(family).size > 1) {
+      protocolWarnings.push("Model version is not pinned for family " + family + ": use one exact version across its repetitions.");
+    }
+    for (const task of requiredTasks) {
+      const entries = cellPairs.get(family + "::" + task) ?? [];
+      const repetitions = entries.map((entry) => entry.repetition);
+      if (new Set(repetitions).size !== repetitions.length) {
+        protocolWarnings.push("Duplicate repetition number for " + family + " / " + task + ".");
+      }
+    }
+  }
+  if (!pilotMinimumMet) protocolWarnings.push("Exploratory pilot minimum not met: require at least three unique repetitions for each of the three tasks on one model family with one pinned model version.");
+  if (!confirmatoryMinimumMet) protocolWarnings.push("Confirmatory multi-model minimum not met: require two qualifying model families, each with at least three unique repetitions for all three tasks.");
   const protocolAssessment = {
     exploratory_pilot_minimum_met: pilotMinimumMet,
     confirmatory_minimum_met: confirmatoryMinimumMet,
     model_families: modelFamilies,
+    qualified_model_families: qualifiedFamilies,
     task_coverage: [...taskIds],
     pair_counts_by_model_and_task: Object.fromEntries([...cellPairs.entries()].map(([key, entries]) => [key, entries.length])),
     warnings: protocolWarnings
