@@ -67,7 +67,7 @@ Weighted score = sum of (dimension score / 4 × dimension weight). Maximum 100.
 
 ## Record and calculate results
 
-Start with [results.template.json](results.template.json). It contains one clearly synthetic example pair to verify the scorer; replace the entire sample with real observations before reporting any result. Add one entry per paired run. Each condition must contain elapsed time in seconds and at least two independent reviewer IDs with all seven 0–4 dimension scores.
+Start with [results.template.json](results.template.json). It contains one clearly synthetic example pair to verify the scorer; replace the entire sample with real observations before reporting any result. Add one entry per paired run. Each pair must record task_id, model_family, exact model_version and repetition number. Each condition must contain elapsed time in seconds and at least two independent reviewer IDs with all seven 0–4 dimension scores. Keep study.model as a human-readable study-level summary; pair-level model fields are the source of truth for multi-model analysis.
 
 The same reviewer IDs must appear in both conditions for a pair. Keep IDs anonymous (for example, R1 and R2); do not store personal information.
 
