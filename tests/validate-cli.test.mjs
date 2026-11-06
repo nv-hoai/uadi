@@ -20,7 +20,7 @@ test("validates a subject-named artifact from outside the repository", async () 
     await writeFile(path.join(cwd, "onboarding-design.json"), JSON.stringify(fixture));
     const result = spawnSync(process.execPath, [SCRIPT, "onboarding-design.json"], { cwd, encoding: "utf8" });
     assert.equal(result.status, 0, result.stderr);
-    assert.match(result.stdout, /PASS onboarding-design\\.json/);
+    assert.ok(result.stdout.includes("PASS onboarding-design.json"));
   });
 });
 
@@ -38,9 +38,9 @@ test("reports malformed and missing files without stack traces and continues", a
     await writeFile(path.join(cwd, "valid.json"), JSON.stringify(fixture));
     const result = spawnSync(process.execPath, [SCRIPT, "missing.json", "bad.json", "valid.json"], { cwd, encoding: "utf8" });
     assert.equal(result.status, 1);
-    assert.match(result.stderr, /FAIL missing\\.json:/);
-    assert.match(result.stderr, /FAIL bad\\.json:/);
-    assert.match(result.stdout, /PASS valid\\.json/);
+    assert.ok(result.stderr.includes("FAIL missing.json:"));
+    assert.ok(result.stderr.includes("FAIL bad.json:"));
+    assert.ok(result.stdout.includes("PASS valid.json"));
     assert.doesNotMatch(result.stderr, / at file:/);
   });
 });
