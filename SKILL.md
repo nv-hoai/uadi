@@ -37,5 +37,7 @@ Read the [canonical Design Intelligence core](docs/DESIGN-INTELLIGENCE.md). It i
 
 Use the host agent's normal tools and project conventions. Validate UDS with the bundled schema when relevant; the `npm run validate` command is available in the UADI repository, not automatically in host projects. Do not assume the host project has UADI scripts or dependencies.
 
+For UDS, use the bundled schemas and component catalog when installed under the skill directory (`schemas/` and `component-catalog/`). A minimal valid example is available at `examples/minimal/design-specification.json`. Do not create a specification for a trivial change; preserve useful decisions in the host project when another agent or session needs them.
+
 ## Human direction and portability
 The user owns product and design decisions. Present consequential trade-offs and ask for direction when needed; never infer approval from silence. Keep useful project decisions in the repository when appropriate. Use the host agent's existing filesystem, terminal, editor and preview tools. Do not require a specific model, framework, backend, database, MCP server or hosted UADI service.
