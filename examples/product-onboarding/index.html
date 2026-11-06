@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start with a project — UADI onboarding example</title>
+<style>
+:root{color-scheme:light;--ink:#17231f;--muted:#61716a;--line:#dce5df;--paper:#f5f7f3;--surface:#fff;--accent:#176b52;--accent-soft:#e7f2ec;--danger:#a13b35;--focus:#286fd1;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);line-height:1.5}.shell{max-width:1080px;margin:auto;min-height:100vh;padding:28px clamp(18px,5vw,64px);display:grid;grid-template-columns:240px minmax(0,1fr);gap:clamp(28px,6vw,76px)}aside{padding-top:10px}.brand{font-size:13px;font-weight:750;letter-spacing:.09em;text-transform:uppercase}.brand-mark{display:inline-grid;place-items:center;width:28px;height:28px;margin-right:8px;border-radius:8px;background:var(--accent);color:white}.side-copy{margin:34px 0 22px;color:var(--muted);font-size:14px}.steps{list-style:none;padding:0;margin:0;display:grid;gap:15px}.steps li{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px}.steps .num{display:grid;place-items:center;width:25px;height:25px;border:1px solid var(--line);border-radius:50%;font-size:12px}.steps li[aria-current=step]{color:var(--ink);font-weight:650}.steps li[aria-current=step] .num{background:var(--accent);border-color:var(--accent);color:white}.aside-note{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}main{max-width:650px;padding:clamp(16px,5vh,58px) 0 48px}.eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}h1{font-size:clamp(30px,4vw,42px);line-height:1.12;letter-spacing:-.035em;margin:12px 0} .intro{max-width:55ch;color:var(--muted);margin:0 0 30px}.form-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:clamp(20px,4vw,32px)}h2{font-size:19px;margin:0 0 5px;letter-spacing:-.02em}.hint{margin:0 0 24px;color:var(--muted);font-size:14px}.field{margin:20px 0}.field label,.field legend{display:block;font-size:14px;font-weight:650;margin-bottom:7px}.field input,.field textarea,.field select{width:100%;font:inherit;color:var(--ink);background:white;border:1px solid #bdcbc2;border-radius:8px;padding:11px 12px}.field textarea{min-height:82px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus,button:focus-visible,a:focus-visible{outline:3px solid color-mix(in srgb,var(--focus),transparent 72%);outline-offset:2px;border-color:var(--focus)}.field small{display:block;color:var(--muted);font-size:12px;margin-top:6px}.limit{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;background:var(--accent-soft);border-radius:8px;font-size:13px}.limit strong{white-space:nowrap}.actions{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:26px}.button{border:0;border-radius:8px;padding:11px 17px;font:inherit;font-size:14px;font-weight:650;cursor:pointer}.primary{background:var(--accent);color:white}.primary:hover{background:#105640}.quiet{background:transparent;color:var(--muted);padding-inline:4px}.quiet:hover{color:var(--ink);text-decoration:underline}.error{color:var(--danger);font-size:13px;margin:8px 0 0}.role-note{padding:13px 14px;border-left:3px solid var(--accent);background:#f1f6f2;border-radius:0 8px 8px 0;font-size:13px;color:#3e5148}.optional{display:inline-block;margin-left:7px;color:var(--muted);font-weight:400;font-size:12px}.success-mark{width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:23px;margin-bottom:16px}.success-list{padding-left:19px;color:var(--muted);font-size:14px}.hidden{display:none!important}.footer{margin-top:16px;color:var(--muted);font-size:11px}@media(max-width:720px){.shell{grid-template-columns:1fr;gap:12px;padding-top:18px}.side-copy,.aside-note{display:none}aside{padding:0}.steps{display:flex;gap:14px;margin-top:18px}.steps li{font-size:12px}.steps .num{width:22px;height:22px}.steps li:not([aria-current=step]) span:last-child{display:none}main{padding:28px 0 36px}}@media(max-width:420px){.form-card{padding:18px}.actions{align-items:stretch}.actions .primary{flex:1}.limit{align-items:flex-start;flex-direction:column;gap:3px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside>
+  <div class="brand"><span class="brand-mark">u</span>Workspace</div>
+  <p class="side-copy">A useful start is a place to do real work. Set up only what you need right now.</p>
+  <ol class="steps" aria-label="Onboarding progress">
+    <li id="step-label-1" aria-current="step"><span class="num">1</span><span>Create a project</span></li>
+    <li id="step-label-2"><span class="num">2</span><span>Invite people</span></li>
+    <li id="step-label-3"><span class="num">3</span><span>You're ready</span></li>
+  </ol>
+  <p class="aside-note">You can skip invitations and return to workspace setup later.</p>
+</aside>
+<main>
+  <section id="project-step">
+    <p class="eyebrow">Your workspace · Step 1 of 2</p>
+    <h1>Start with something real.</h1>
+    <p class="intro">Create your first project. You can invite your team now or keep going on your own.</p>
+    <div class="form-card">
+      <h2>Give your project a name</h2>
+      <p class="hint">A clear name helps everyone recognize the work.</p>
+      <form id="project-form" novalidate>
+        <div class="field">
+          <label for="project-name">Project name</label>
+          <input id="project-name" name="project-name" maxlength="60" autocomplete="off" placeholder="e.g. Website redesign" required aria-describedby="name-hint name-error">
+          <small id="name-hint">You can change this later.</small>
+          <p id="name-error" class="error hidden" role="alert">Enter a project name to continue.</p>
+        </div>
+        <div class="field">
+          <label for="project-goal">What are you working on? <span class="optional">Optional</span></label>
+          <textarea id="project-goal" name="project-goal" maxlength="240" placeholder="A short note to give the project context"></textarea>
+        </div>
+        <div class="limit"><span>Starter workspace member limit</span><strong>Up to 5 people</strong></div>
+        <div class="actions"><button type="button" class="quiet" id="skip-all">Skip setup</button><button class="button primary" type="submit">Continue <span aria-hidden="true">→</span></button></div>
+      </form>
+    </div>
+    <p class="footer">Prototype only · No project is created or data sent to a service.</p>
+  </section>
+  <section id="invite-step" class="hidden">
+    <p class="eyebrow">Your workspace · Step 2 of 2</p>
+    <h1>Bring people in when you're ready.</h1>
+    <p class="intro">Your project is ready to start. Invitations are optional—you can work alone and invite teammates later.</p>
+    <div class="form-card">
+      <h2>Invite teammates <span class="optional">Optional</span></h2>
+      <p class="hint">Add one email address to preview the invitation flow.</p>
+      <form id="invite-form" novalidate>
+        <div class="field">
+          <label for="invite-email">Teammate's email</label>
+          <input id="invite-email" type="email" autocomplete="email" placeholder="name@company.com" aria-describedby="email-hint email-error">
+          <small id="email-hint">You can invite more people from workspace settings later.</small>
+          <p id="email-error" class="error hidden" role="alert">Enter a valid email address, or skip this step.</p>
+        </div>
+        <div class="field">
+          <label for="invite-role">Role</label>
+          <select id="invite-role"><option value="Member">Member</option><option value="Admin">Admin</option></select>
+        </div>
+        <div id="role-note" class="role-note" aria-live="polite">Members can work in projects. They cannot manage workspace settings or billing.</div>
+        <div class="actions"><button type="button" class="quiet" id="back-project">Back</button><div><button type="button" class="button quiet" id="skip-invite">Do this later</button> <button class="button primary" type="submit">Finish <span aria-hidden="true">→</span></button></div></div>
+      </form>
+    </div>
+    <p class="footer">Prototype only · Invitations are not sent.</p>
+  </section>
+  <section id="done-step" class="hidden" aria-live="polite">
+    <div class="success-mark" aria-hidden="true">✓</div>
+    <p class="eyebrow">Workspace setup</p>
+    <h1 id="done-title">You're ready to begin.</h1>
+    <p class="intro" id="done-copy">Your first project is ready in this prototype.</p>
+    <div class="form-card">
+      <h2>Next, make progress on your project.</h2>
+      <p class="hint">Start with one task that moves the work forward. You can invite teammates or adjust workspace settings whenever you need them.</p>
+      <ul class="success-list"><li>Project: <strong id="done-project"></strong></li><li id="done-invite" class="hidden"></li><li>Workspace roles and member limits remain available in settings.</li></ul>
+      <div class="actions"><button type="button" class="button primary" id="restart">Try the flow again</button></div>
+    </div>
+    <p class="footer">This is a local interaction demo. Nothing was saved to a server.</p>
+  </section>
+</main>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let projectName="";
+function show(step){["project","invite","done"].forEach(s=>$(`${s}-step`).classList.toggle("hidden",s!==step));[1,2,3].forEach(n=>{const el=$(`step-label-${n}`);if(n===(step==="project"?1:step==="invite"?2:3))el.setAttribute("aria-current","step");else el.removeAttribute("aria-current")});}
+function finish(invited=""){ $("done-project").textContent=projectName||"Not created — setup skipped";$("done-title").textContent=projectName? "You're ready to begin.":"You're ready when you are."; $("done-copy").textContent=projectName? "Your first project is ready in this prototype.":"You skipped setup. Start by creating a project when you're ready."; $("done-invite").classList.toggle("hidden",!invited);$("done-invite").textContent=invited?`Invitation preview: ${invited} (${$("invite-role").value})`:"";show("done");}
+$("project-form").addEventListener("submit",e=>{e.preventDefault();projectName=$("project-name").value.trim();const invalid=!projectName;$("name-error").classList.toggle("hidden",!invalid);$("project-name").setAttribute("aria-invalid",String(invalid));if(invalid){$("project-name").focus();return}show("invite");$("invite-email").focus()});
+$("invite-form").addEventListener("submit",e=>{e.preventDefault();const email=$("invite-email").value.trim();if(email&&!$("invite-email").validity.valid){$("email-error").classList.remove("hidden");$("invite-email").setAttribute("aria-invalid","true");$("invite-email").focus();return} $("email-error").classList.add("hidden");$("invite-email").removeAttribute("aria-invalid");finish(email)});
+$("invite-role").addEventListener("change",()=>{$("role-note").textContent=$("invite-role").value==="Admin"?"Admins can create projects and invite or remove members. They cannot manage billing or delete the workspace.":"Members can work in projects. They cannot manage workspace settings or billing."});
+$("skip-invite").addEventListener("click",()=>finish());$("skip-all").addEventListener("click",()=>{projectName="";finish()});$("back-project").addEventListener("click",()=>show("project"));$("restart").addEventListener("click",()=>{$("project-form").reset();$("invite-form").reset();$("name-error").classList.add("hidden");$("email-error").classList.add("hidden");$("project-name").removeAttribute("aria-invalid");$("invite-email").removeAttribute("aria-invalid");show("project");$("project-name").focus()});
+</script>
+</body>
+</html>
