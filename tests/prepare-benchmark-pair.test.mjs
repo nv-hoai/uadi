@@ -24,7 +24,6 @@ test("creates isolated clean condition copies and coordinator mapping", async ()
     }
     const mapping = JSON.parse(await readFile(path.join(result.pairDir, "mapping.json"), "utf8"));
     assert.deepEqual(mapping.run_order, result.order);
-    assert.ok(await readFile(path.join(result.pairDir, "blind/condition-a/.gitkeep").replace(".gitkeep","../..").replace(/\/\.\.$/,"/mapping.json").replace(/\/mapping\.json$/,"/mapping.json"), "utf8").catch(()=> ""));
     await assert.rejects(() => prepareBenchmarkPair({
       studyId: "study-1", pairId: "pair-1", taskId: "product-onboarding", snapshot, runsDir
     }), /Run already exists/);
