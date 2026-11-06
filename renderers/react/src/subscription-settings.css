@@ -108,7 +108,7 @@
 .dialog-backdrop { position:fixed; z-index:10; inset:0; display:grid; place-items:center; padding:20px; background:rgba(20,31,43,.48); }
 .cancel-dialog { position:relative; width:min(100%,470px); padding:28px; border-radius:12px; background:#fff; box-shadow:0 20px 60px rgba(12,25,37,.2); }
 .dialog-close { position:absolute; top:14px; right:15px; width:30px; height:30px; border:0; border-radius:6px; color:#5f6c7b; background:#f3f5f6; font-size:20px; cursor:pointer; }
-.dialog-icon { display:grid; place-items:center; width:34px; height:34px; border-radius:50%; color:#a85a4e; background:#fbefed; font-weight:800; }
+.dialog-icon { display:grid; place-items:center; width:34px; height:34px; border-radius:50%; color:#98483f; background:#fbefed; font-weight:800; }
 .cancel-dialog h2 { margin:17px 0 8px; color:#253345; font-size:19px; letter-spacing:-.5px; }
 .cancel-dialog > p { color:#5f6c7b; font-size:12px; line-height:1.6; }
 .cancel-dialog > p strong { color:#354357; }
