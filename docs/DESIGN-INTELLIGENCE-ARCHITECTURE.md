@@ -40,25 +40,23 @@ Avoid maintaining multiple competing versions of the same guidance.
 
 When guidance overlaps, keep the durable principle in Core and link to the method that operationalizes it. Keep task-specific procedures in workflows. Do not copy long sections between documents merely to make every file self-contained.
 
-## 3. Evidence discipline
+## 3. Applying the evidence principle
 
-Every substantial design recommendation should make clear what kind of support it has. Use plain language; a formal evidence ledger is useful for complex work, not required for every small change.
+The [canonical Core](DESIGN-INTELLIGENCE.md) requires decisions to stay grounded and uncertainty to remain visible. Methods operationalize that rule; this architecture does not define a second evidence taxonomy.
 
-| Evidence class | Meaning | How to use it |
-|---|---|---|
-| **Supplied fact** | Explicitly stated in the task, product brief or owner direction. | Treat as a constraint unless contradicted or clarified. |
-| **Observed fact** | Directly inspected in the product, source, data or behavior. | Record where it was observed; current implementation is not automatically intended behavior. |
-| **External research** | User research, analytics, support evidence or credible external source. | Identify source, scope, recency and limitations. Never imply it exists when it does not. |
-| **Inference** | A reasoned interpretation of available evidence. | Explain the reasoning and avoid presenting it as directly observed. |
-| **Assumption** | A temporary premise used to proceed. | State confidence and impact; validate when consequential. |
-| **Unknown** | A material question not answered by available evidence. | Investigate, ask the owner or constrain the design so it does not depend on an invented answer. |
-| **Validation result** | A check actually performed on a design or implementation. | State method, environment, result and limitations. A plan to test is not a test result. |
+For substantial work, label material inputs only as precisely as needed:
+- **Supplied:** stated in the task or authoritative brief.
+- **Observed:** directly inspected in the product, source, data or behavior.
+- **External:** research, analytics, support evidence or a credible external source; record its scope and limits.
+- **Inferred:** a reasoned interpretation, not a directly observed fact.
+- **Assumed / unknown:** a temporary premise or unanswered question; identify whether it could change the design.
+- **Validated:** a check actually performed; state method, environment, result and limits.
 
-For important decisions, preserve a compact trace:
+Use a compact trace for consequential decisions:
 
-**Evidence → user/task implication → identified problem → priority and confidence → design decision → trade-off → implementation → validation.**
+**Evidence → user/task implication → problem → decision and trade-off → implementation → validation.**
 
-Not every visual choice needs a research citation. The trace is most important for consequential product rules, permission and billing behavior, task blockers, trust risks and claims of user benefit.
+The [Product Understanding Playbook](../intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md) explains how to inspect and qualify product evidence. The [UX Reasoning Playbook](../intelligence/UX-REASONING-PLAYBOOK.md) explains how to turn it into prioritized design decisions. A formal ledger is useful for complex work, not required for every small change.
 
 ## 4. How the layers connect
 
