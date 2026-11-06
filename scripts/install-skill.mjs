@@ -31,6 +31,13 @@ const SKILL_FILES = [
   "component-catalog/catalog.json",
   "examples/minimal/design-specification.json",
   "examples/subscription-settings/README.md",
+  "examples/product-onboarding/README.md",
+  "examples/product-onboarding/index.html",
+  "examples/operations-dashboard/README.md",
+  "examples/operations-dashboard/app.js",
+  "examples/operations-dashboard/data.js",
+  "examples/operations-dashboard/index.html",
+  "examples/operations-dashboard/styles.css",
   "examples/sso-discovery/README.md",
   "examples/sso-discovery/app/app.js",
   "examples/sso-discovery/app/index.html",
@@ -90,8 +97,9 @@ Options:
             files are preserved and reported as skipped.
   --help    Show this help.
 
-The installer copies the skill, reasoning playbooks and UX pattern
-library. It does not install dependencies, change agent settings, or contact a server.`);
+The installer copies the skill, reasoning playbooks, UX pattern library and
+referenced worked examples. It does not install dependencies, change agent settings,
+or contact a server.`);
 }
 
 export async function installSkill({ agent, cwd = process.cwd(), force = false, root = ROOT }) {

@@ -86,3 +86,7 @@ Dense tables improve comparison and scanning for expert workflows but increase c
 - Making row selection and row navigation conflict.
 - Labeling a filtered zero-result view as if the account has no data.
 - Showing a bulk action without communicating which records it affects.
+
+## Implementation example
+
+The [operations dashboard example](../../examples/operations-dashboard/README.md) implements a filterable region table, contextual drill-down and an in-view sample list in `app.js` and `index.html`. It preserves the selected range, region and status when opening orders. The dataset is synthetic and the table is not paginated or virtualized.

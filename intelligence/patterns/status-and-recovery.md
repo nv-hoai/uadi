@@ -46,3 +46,7 @@ Announce asynchronous status changes appropriately without repeatedly interrupti
 - Claiming "Saved" before persistence is confirmed.
 - Clearing a form after a failed submission.
 - Providing "Try again" when the user must first fix permissions or input.
+
+## Implementation example
+
+The [operations dashboard example](../../examples/operations-dashboard/README.md) distinguishes loading, no records, no matches, error, partial and stale data in `app.js` and `index.html`. The [SSO discovery example](../../examples/sso-discovery/README.md) covers loading, load error and permission-denied states. The data is synthetic; no real network failure, retry or delayed backend response is exercised.

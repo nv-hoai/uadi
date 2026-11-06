@@ -125,3 +125,7 @@ Do not silently combine incomplete periods with complete ones. Do not show a liv
 ## Trade-offs
 
 More context improves interpretation but competes for screen space. Dense tables support exact work but slow pattern recognition. Aggregation improves scanning but can hide outliers. Real-time updates can help operational response but may add noise and performance cost. Choose the simplest representation that supports the actual decision and disclose the limits of the data.
+
+## Implementation example
+
+The [operations dashboard example](../../examples/operations-dashboard/README.md) implements metric hierarchy, explicit period comparison, zero-based bars, calculation disclosures and context-preserving drill-down in `app.js`, `data.js` and `index.html`. Its figures are synthetic and it makes no claim about real delivery performance.

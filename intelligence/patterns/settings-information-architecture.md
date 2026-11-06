@@ -43,3 +43,7 @@ A single long page can be efficient for a small number of simple preferences. Se
 - Showing decorative summary cards that push the actual settings below the fold.
 - Mixing account deletion or cancellation into routine toggles.
 - Using ambiguous labels such as "General" for unrelated controls.
+
+## Implementation example
+
+The [subscription settings example](../../examples/subscription-settings/README.md) separates plan summary, billing cadence, payment details and cancellation around the decisions an owner makes. The [SSO discovery example](../../examples/sso-discovery/README.md) separates identity-provider configuration from enforcement, with a plan gate and role-aware sections. Both are prototypes with synthetic accounts; neither implements a real settings backend.

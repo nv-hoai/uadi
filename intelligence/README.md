@@ -13,7 +13,7 @@ For a small local change, inspect the relevant code and existing conventions; do
 
 ## Pattern library
 
-Patterns are decision aids, not templates to apply blindly. Each pattern explains when it fits, the user problem it addresses, interaction details and common failure modes.
+Patterns are decision aids, not templates to apply blindly. Each pattern explains when it fits, the user problem it addresses, interaction details, common failure modes and a runnable implementation example.
 
 - [Settings information architecture](patterns/settings-information-architecture.md)
 - [Permission-aware actions](patterns/permission-aware-actions.md)

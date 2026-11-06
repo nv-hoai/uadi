@@ -96,3 +96,7 @@ Define event meaning and denominator before comparing variants. Segment by relev
 ## Trade-offs
 
 A shorter path can reduce friction but may defer information users need to make a safe choice. Progressive disclosure reduces initial load but can hide important constraints. Checklists can orient users but become coercive when optional work is presented as required. Choose based on prerequisite reality, user risk and observed behavior.
+
+## Implementation example
+
+The [product onboarding example](../../examples/product-onboarding/README.md) implements project-first setup, optional invitations, role explanation, skip paths and a completion state in `index.html`. It does not persist progress, send invitations or claim activation lift.

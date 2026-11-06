@@ -41,3 +41,7 @@ Showing a restricted action can teach users about available capabilities but may
 - Hiding actions with no explanation in workflows where users expect them.
 - Treating UI hiding as authorization.
 - Using the same disabled treatment for permission, loading and invalid-state reasons.
+
+## Implementation example
+
+The [SSO discovery example](../../examples/sso-discovery/README.md) shows Owner, Admin and Agent boundaries plus a Scale-only entitlement in `app/app.js` and `app/index.html`. The [subscription settings example](../../examples/subscription-settings/README.md) shows owner-only plan and billing actions with a member view in the React renderer. Both use synthetic roles; UI visibility is not a substitute for server-side authorization.
