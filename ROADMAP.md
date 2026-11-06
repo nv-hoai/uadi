@@ -10,7 +10,7 @@ UADI is successful when it measurably improves the design quality of the AI agen
 - [x] Core design workflow and portable UDS contracts.
 - [x] React renderer foundation and optional local validation.
 - [x] One-command installation paths for popular agent environments.
-- [ ] Strong end-to-end examples that show the workflow on real product tasks.
+- [x] Strong end-to-end examples that show the workflow on real product tasks.
 
 **Success signal:** A developer can make UADI available to an agent and use it without provisioning infrastructure or learning a complex framework.
 

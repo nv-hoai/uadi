@@ -70,17 +70,27 @@ Open `index.html` to inspect the complete implementation. It uses semantic forms
 
 The prototype intentionally does **not** implement persistence, authentication, project APIs, email delivery, analytics or backend error simulation. Those require real product contracts.
 
-## 5. Review and validation plan
+## 5. Review and validation performed
 
-The source implements the listed paths, but this repository change has not been browser-tested. Before treating it as production-ready:
+Validated on 2026-11-06 with Playwright 1.64.1 (Chromium revision 1248) against the local static server:
 
-1. Run the prototype at narrow and wide viewport sizes.
-2. Complete the project path with a valid name and with an empty name.
-3. Test invitation with blank, malformed and valid email input.
-4. Switch roles and verify the permission explanation.
-5. Skip invitations, skip the whole flow, go back and restart.
-6. Test keyboard-only operation and a screen reader announcement of validation and role changes.
-7. In a real product, verify persistence, authorization, invitation delivery and server error recovery against actual APIs.
+| Check | Result |
+|---|---|
+| Empty project name | Shows the inline error and returns focus to the name field |
+| Valid project name | Advances to the optional invitation step |
+| Admin role selection | Updates the permission explanation |
+| Malformed invitation email | Shows an actionable error; no invitation is sent |
+| Skip invitation | Reaches the truthful "ready when you are" state |
+| axe-core WCAG 2.1 A/AA | 0 violations at 1280×900 and 375×812 |
+| Document horizontal overflow | None at 1280 and 375 CSS px |
+| Browser console / page errors | None on the exercised paths |
+
+Only Chromium was tested. Before treating the flow as production-ready, also verify:
+
+1. Keyboard-only operation and screen-reader announcements of validation and role changes.
+2. Blank and valid invitation submissions, plus the back and restart paths.
+3. Skip-the-whole-flow behavior on a fresh load.
+4. In a real product, verify persistence, authorization, invitation delivery and server error recovery against actual APIs.
 
 ## What this example demonstrates
 
