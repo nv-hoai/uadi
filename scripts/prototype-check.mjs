@@ -1,10 +1,16 @@
 import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const [file] = process.argv.slice(2);
 if (!file) { console.error("Usage: node scripts/prototype-check.mjs <uds.json>"); process.exit(2); }
-const spec = JSON.parse(fs.readFileSync(file, "utf8"));
+let spec;
+try { spec = JSON.parse(fs.readFileSync(path.resolve(file), "utf8")); }
+catch (error) { console.error(`FAIL ${file}: ${error.message}`); process.exit(1); }
+const catalog = JSON.parse(fs.readFileSync(path.join(ROOT, "component-catalog/catalog.json"), "utf8"));
 const errors = [];
 if (!Array.isArray(spec.pages) || spec.pages.length === 0) errors.push("UDS must contain at least one page");
-const ids = new Set(["uadi.layout.page-shell", "uadi.navigation.primary", "uadi.feedback.alert", "uadi.form.field", "uadi.data.empty-state"]);
+const ids = new Set(catalog.components.map((component) => component.component_id));
 for (const page of spec.pages ?? []) {
  if (!page.page_id || !page.name) errors.push("Every page requires page_id and name");
  for (const section of page.sections ?? []) {
