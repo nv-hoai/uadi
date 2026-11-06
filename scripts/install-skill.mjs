@@ -8,6 +8,7 @@ const SKILL_FILES = [
   "SKILL.md",
   "docs/DESIGN-INTELLIGENCE.md",
   "docs/QUALITY-GATES.md",
+  "docs/ACCESSIBILITY-AND-INTERACTION-REVIEW.md",
   "docs/BENCHMARKING.md",
   "intelligence/README.md",
   "intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md",

@@ -27,11 +27,14 @@ Use this checklist to improve design outcomes. It is a reasoning aid, not a mand
 
 ## Accessibility and responsive behavior
 
-- Is the interface usable with keyboard navigation?
-- Are semantics, labels, contrast and focus states appropriate?
-- Does the layout work at relevant viewport sizes?
+- Is the interface usable with keyboard navigation, visible focus and no traps?
+- Are semantics, names, labels, contrast and focus states appropriate?
+- Does the layout work at relevant viewport sizes, zoom and reflow?
 - Are touch targets and text sizes usable?
 - Have motion and other potentially exclusionary patterns been considered?
+- Was assistive technology tested where available, and are untested areas disclosed?
+
+For a deeper review, use the [Accessibility and Interaction Review](ACCESSIBILITY-AND-INTERACTION-REVIEW.md). An automated scan is not proof of accessibility.
 
 ## Implementation quality
 

@@ -26,7 +26,7 @@ UADI is successful when it measurably improves the design quality of the AI agen
 - [ ] Expand reusable visual and interaction patterns with implementation examples.
 - [x] Define a multi-task paired benchmark suite, blind-review protocol and local score calculator.
 - [ ] Run paired benchmarks with and without UADI across representative tasks.
-- [ ] Improve accessibility and interaction review guidance.
+- [x] Improve accessibility and interaction review guidance.
 
 **Success signal:** Blind or structured reviews show more useful, coherent and usable results than the same agent working without UADI.
 

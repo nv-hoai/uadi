@@ -14,7 +14,7 @@ Follow the [Design Intelligence core](DESIGN-INTELLIGENCE.md) as the single sour
 - Use [Visual Design](../intelligence/VISUAL-DESIGN-PLAYBOOK.md) when establishing or materially improving composition and visual hierarchy.
 - Consult the [pattern library](../intelligence/patterns/README.md) only when a pattern fits the diagnosed problem; adapt it to context.
 - Match depth to consequence and uncertainty. Use UDS only when it preserves intent, enables comparison or supports reuse.
-- Inspect the rendered result and validate important behavior when tools are available.
+- Inspect the rendered result and validate important behavior when tools are available. Use the [Accessibility and Interaction Review](ACCESSIBILITY-AND-INTERACTION-REVIEW.md) for keyboard, semantics, state and responsive checks.
 
 ## Handoff
 Explain important decisions and trade-offs in terms of the actual user task and product constraints. Identify assumptions and unknowns that could change the design. Report what was inspected or tested, what was not, and any known limitations. A self-review or checklist is not independent evidence that tests were run.
