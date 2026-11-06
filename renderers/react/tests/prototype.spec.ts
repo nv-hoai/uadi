@@ -86,6 +86,8 @@ test("subscription settings updates billing period and labels sample pricing", a
  await page.getByRole("button", { name: "Monthly", exact: true }).click();
  await expect(page.locator(".plan-card").nth(1).locator(".amount")).toHaveText("$490");
  await expect(page.locator(".plan-card").nth(1).locator("small")).toContainText("/ year");
+ await expect(page.locator(".plan-card").nth(2).locator(".amount")).toHaveText("$129");
+ await expect(page.locator(".plan-card").nth(2).locator("small")).toContainText("/ month");
  await expect(page.locator(".plan-price .amount")).toHaveText("$490");
  await expect(page.getByText("Compare plan options. Your current Pro subscription is billed annually at $490 per year.")).toBeVisible();
 });
