@@ -30,7 +30,7 @@ jobs:
       - name: Run core tests
         run: npm test
       - name: Validate bundled examples
-        run: npm run validate -- examples/minimal
+        run: npm run validate -- examples/minimal/project-context.json
 
   react-renderer:
     name: React renderer checks
