@@ -93,6 +93,7 @@ Human owners remain in control of product decisions. Use the host project's norm
 ## Learn more
 
 - [Agent instructions](docs/AGENT-INSTRUCTIONS.md)
+- [Five-layer design intelligence architecture](docs/DESIGN-INTELLIGENCE-ARCHITECTURE.md) — responsibilities, source of truth, evidence traceability and the learning loop
 - [Design Intelligence](docs/DESIGN-INTELLIGENCE.md)
 - [Product Understanding](intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md)
 - [UX Reasoning](intelligence/UX-REASONING-PLAYBOOK.md)
