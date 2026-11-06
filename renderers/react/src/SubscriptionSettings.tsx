@@ -46,7 +46,7 @@ export function SubscriptionSettings(): ReactNode {
 
   return <div className="billing-app">
     <header className="billing-topbar">
-      <a className="billing-brand" href="#overview" aria-label="Northstar home"><span className="brand-mark">N</span> northstar</a>
+      <a className="billing-brand" href="#overview" aria-label="N northstar home"><span className="brand-mark">N</span> northstar</a>
       <div className="billing-workspace"><span className="workspace-avatar">A</span><span>Acme Studio</span><span className="workspace-chevron" aria-hidden="true">⌄</span></div>
       <div className="billing-user"><span className="user-avatar">JD</span><span>Jordan Davis</span></div>
     </header>
@@ -83,7 +83,7 @@ export function SubscriptionSettings(): ReactNode {
         <section className="billing-card current-plan" aria-labelledby="current-plan-title">
           <div className="card-topline"><div><p className="card-kicker">CURRENT SUBSCRIPTION</p><h2 id="current-plan-title">Pro plan <span className="plan-status">Active</span></h2></div><span className="plan-icon" aria-hidden="true">✳</span></div>
           <div className="plan-summary-grid">
-            <div><span className="metric-label">Your price</span><strong className="plan-price">{money(currentPlan.annual)}<small> / year</small></strong><span className="metric-note">$40.83 per month, billed annually</span></div>
+            <div><span className="metric-label">Your price</span><strong className="plan-price"><span className="amount">{money(currentPlan.annual)}</span><small> / year</small></strong><span className="metric-note">$40.83 per month, billed annually</span></div>
             <div><span className="metric-label">Next payment</span><strong className="metric-value">{cancelled ? "No upcoming payment" : "Dec 5, 2026"}</strong><span className="metric-note">{cancelled ? "Subscription ends Dec 5, 2026" : "Visa ending in 4242"}</span></div>
             <div><span className="metric-label">Member seats</span><strong className="metric-value">12 <small>/ 20</small></strong><span className="metric-note">8 seats available</span></div>
           </div>
@@ -92,14 +92,14 @@ export function SubscriptionSettings(): ReactNode {
         </section>
 
         <section className="billing-section" aria-labelledby="plans-title">
-          <div className="section-heading"><div><h2 id="plans-title">Choose a plan</h2><p>Compare monthly and annual pricing to find the right amount of room for your team.</p></div>
+          <div className="section-heading"><div><h2 id="plans-title">Choose a plan</h2><p>Compare plan options. Your current Pro subscription is billed annually at $490 per year.</p></div>
             <div className="billing-period" role="group" aria-label="Billing period"><button type="button" aria-pressed={period === "monthly"} onClick={() => setPeriod("monthly")}>Monthly</button><button type="button" aria-pressed={period === "annual"} onClick={() => setPeriod("annual")}>Yearly <span>Save 17%</span></button></div>
           </div>
           <div className="plan-grid">
             {plans.map((plan) => <article className={plan.name === "Pro" ? "plan-card plan-card-current" : "plan-card"} key={plan.name}>
               {plan.name === "Pro" && <span className="popular-tag">CURRENT PLAN</span>}
               <h3>{plan.name}</h3><p>{plan.description}</p>
-              <div className="plan-card-price">{money(period === "annual" ? plan.annual : plan.monthly)}<small>{plan.monthly === 0 ? "" : period === "annual" ? " / year" : " / month"}</small></div>
+              <div className="plan-card-price"><span className="amount">{money(plan.name === "Pro" ? plan.annual : period === "annual" ? plan.annual : plan.monthly)}</span><small>{plan.monthly === 0 ? "" : plan.name === "Pro" ? " / year · your plan" : period === "annual" ? " / year" : " / month"}</small></div>
               <div className="plan-seat"><span aria-hidden="true">✓</span> Up to {plan.members} members</div>
               {isOwner ? <button type="button" className={plan.name === "Pro" ? "plan-button plan-button-current" : "plan-button"} disabled={plan.name === "Pro" || cancelled} onClick={() => choosePlan(plan)}>{plan.name === "Pro" ? "Your current plan" : plan.name === "Free" ? "Review downgrade" : "Explore Business"}</button> : <span className="member-readonly">Owner can change plan</span>}
             </article>)}

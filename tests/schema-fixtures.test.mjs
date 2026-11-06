@@ -45,3 +45,11 @@ test("minimal UDS fixture validates", () => {
   const validate = validatorFor("schemas/design-specification.schema.json");
   assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
 });
+
+test("UDS rejects component IDs outside the catalog", () => {
+  const fixture = JSON.parse(fs.readFileSync(path.join(root, "examples/minimal/design-specification.json"), "utf8"));
+  fixture.pages[0].sections[0].component_id = "uadi.not-in-catalog";
+  const validate = validatorFor("schemas/design-specification.schema.json");
+  assert.equal(validate(fixture), false);
+  assert.ok(validate.errors.some((error) => error.keyword === "enum"));
+});

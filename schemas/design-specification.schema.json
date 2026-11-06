@@ -100,6 +100,13 @@
                 },
                 "component_id": {
                   "type": "string",
+                  "enum": [
+                    "uadi.layout.page-shell",
+                    "uadi.navigation.primary",
+                    "uadi.feedback.alert",
+                    "uadi.form.field",
+                    "uadi.data.empty-state"
+                  ],
                   "description": "Stable identifier from the UADI component catalog, not a framework component name."
                 },
                 "content_intent": {

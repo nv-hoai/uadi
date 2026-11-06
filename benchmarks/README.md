@@ -28,6 +28,12 @@ For each task, run at least three paired repetitions (nine pairs total):
 
 Use the same reviewers for both conditions in a pair. Reviewers should score independently before discussing disagreements.
 
+**Reviewer independence:** for a confirmatory result, use at least two human reviewers who did not produce either condition and who score independently. Two model calls, two models from the same provider, or two agents in one session are useful exploratory reviewers but do not count as independent human reviewers; label such a study exploratory and do not present it as meeting the protocol. Keep the condition-to-output mapping with a coordinator who does not score. The coordinator randomizes anonymous output IDs, removes condition hints and reveals the mapping only after all scores are locked.
+
+**What reviewers may score:** provide the same evidence types for both conditions. `visual_hierarchy` requires rendered screenshots or a runnable preview at the same target viewport(s); a prose-only UDS is insufficient evidence. Do not infer typography, spacing or composition from tokens alone. If a task cannot produce rendered evidence, mark visual hierarchy as not assessable in the study report and do not compare the overall weighted scores as if all seven dimensions were observed. The current scorer requires all dimensions, so use the visual dimension only when equivalent rendered evidence is available.
+
+**Run artifacts:** create a fresh randomized pair scaffold with `npm run benchmark:prepare -- --study-id <study-id> --pair-id <pair-id> --task-id <task-id> --snapshot <clean-project-directory>`. It creates independent `baseline/project` and `uadi/project` copies, prompt/transcript placeholders, screenshot/test-output/changed-files evidence folders, blind-review folders and a coordinator-only `mapping.json` recording randomized condition order and blind condition-A/condition-B mapping. Keep private raw study data out of version control; `benchmarks/runs/` is ignored. Copy the same exact task prompt into both condition folders, run each condition in the recorded order, and capture changed files, screenshots and test output. The coordinator should copy equivalent deliverables into `blind/condition-a` and `blind/condition-b`, remove condition hints, and retain the mapping privately until scores are locked. Never reuse a working directory or agent context between conditions. Put the scored aggregate in a separate `results.json`; retain exact model/tool settings in study metadata.
+
 ## Scoring rubric
 
 Score each dimension from 0 to 4:
@@ -52,7 +58,7 @@ Weighted score = sum of (dimension score / 4 × dimension weight). Maximum 100.
 
 ## Record and calculate results
 
-Start with [results.template.json](results.template.json). Add one entry per paired run. Each condition must contain elapsed time in seconds and at least two independent reviewer IDs with all seven 0–4 dimension scores.
+Start with [results.template.json](results.template.json). It contains one clearly synthetic example pair to verify the scorer; replace the entire sample with real observations before reporting any result. Add one entry per paired run. Each condition must contain elapsed time in seconds and at least two independent reviewer IDs with all seven 0–4 dimension scores.
 
 The same reviewer IDs must appear in both conditions for a pair. Keep IDs anonymous (for example, R1 and R2); do not store personal information.
 
