@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A worked SSO discovery and design example for the UADI design intelligence repository.">
+<title>Security settings — UADI SSO discovery example</title>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to security settings</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">K</span>
+      <span>Kestrel</span>
+    </div>
+    <span class="topbar-divider" aria-hidden="true"></span>
+    <span class="topbar-context">Settings</span>
+    <div class="user-chip">
+      <span class="user-avatar" id="user-avatar" aria-hidden="true">DW</span>
+      <span class="user-meta">
+        <strong id="user-name">Dana Whitfield</strong>
+        <span id="user-role">Owner</span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <div class="settings-shell">
+    <nav class="settings-nav" aria-label="Workspace settings">
+      <p class="nav-label">Workspace</p>
+      <ul>
+        <li><span class="nav-item">General</span></li>
+        <li><span class="nav-item">Members</span></li>
+        <li><span class="nav-item is-current" aria-current="page">Security</span></li>
+        <li><span class="nav-item">Billing</span></li>
+      </ul>
+    </nav>
+
+    <section class="settings-content" aria-labelledby="page-title">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">Workspace settings</p>
+          <h1 id="page-title">Security</h1>
+          <p class="lede">Control how members sign in to Kestrel.</p>
+        </div>
+        <span class="plan-badge" id="plan-badge">Scale</span>
+      </div>
+
+      <details class="demo-panel">
+        <summary>
+          <span class="disclosure" aria-hidden="true">▸</span>
+          <span>Prototype controls</span>
+          <span class="demo-note">Synthetic scenario · not product functionality</span>
+        </summary>
+        <div class="demo-body">
+          <div class="demo-field">
+            <label for="role">Role</label>
+            <select id="role">
+              <option value="OWNER">Owner</option>
+              <option value="ADMIN">Admin</option>
+              <option value="AGENT">Agent</option>
+            </select>
+          </div>
+          <div class="demo-field">
+            <label for="plan">Plan</label>
+            <select id="plan">
+              <option value="SCALE">Scale</option>
+              <option value="GROWTH">Growth</option>
+              <option value="STARTER">Starter</option>
+            </select>
+          </div>
+          <div class="demo-field">
+            <label for="scenario">Scenario</label>
+            <select id="scenario">
+              <option value="ready">Connected, not required</option>
+              <option value="no-connection">No identity provider</option>
+              <option value="required">SSO required</option>
+              <option value="loading">Loading</option>
+              <option value="error">Load error</option>
+            </select>
+          </div>
+          <p class="demo-help">Switch roles, plans and data states to inspect the decisions. No network request is made.</p>
+        </div>
+      </details>
+
+      <div id="security-body"></div>
+    </section>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>Prototype only · Synthetic evidence and data · No identity provider, authentication or persistence.</p>
+  <p><a href="../README.md">Worked example</a> · <a href="../evidence/README.md">Evidence packet</a> · <a href="../artifacts/02-resolved/design-brief.md">Design brief</a></p>
+</footer>
+
+<dialog id="enforce-dialog" class="modal" aria-labelledby="enforce-title" aria-describedby="enforce-desc">
+  <form id="enforce-form" method="dialog">
+    <div class="modal-head">
+      <h2 id="enforce-title">Require SSO for Kestrel?</h2>
+      <button type="button" class="icon-button" data-close aria-label="Close dialog">×</button>
+    </div>
+    <p id="enforce-desc">Every member will need to sign in with <strong id="enforce-provider">Okta</strong>. Enforcement starts at the next sign-in, and existing sessions expire within 24 hours.</p>
+
+    <div class="recovery-box">
+      <h3>Prepare recovery first</h3>
+      <p>Download a recovery link before you continue. Only Owners can use it if your identity provider is unavailable.</p>
+      <button type="button" class="secondary-button" id="download-recovery" autofocus>Download recovery link</button>
+      <p id="recovery-note" class="field-note" role="status"></p>
+    </div>
+
+    <label class="check">
+      <input type="checkbox" id="recovery-confirm">
+      <span>I have saved the recovery link somewhere safe.</span>
+    </label>
+
+    <div class="modal-actions">
+      <button type="button" class="secondary-button" data-close>Cancel</button>
+      <button type="submit" class="primary-button" id="enforce-confirm" disabled>Require SSO</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="disable-dialog" class="modal" aria-labelledby="disable-title" aria-describedby="disable-desc">
+  <form id="disable-form" method="dialog">
+    <div class="modal-head">
+      <h2 id="disable-title">Turn off SSO enforcement?</h2>
+      <button type="button" class="icon-button" data-close aria-label="Close dialog">×</button>
+    </div>
+    <p id="disable-desc">Members will be able to sign in with a password again. Existing SSO sessions are not revoked by this action.</p>
+    <div class="modal-actions">
+      <button type="button" class="secondary-button" data-close autofocus>Cancel</button>
+      <button type="submit" class="danger-button">Turn off enforcement</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="connection-dialog" class="modal" aria-labelledby="connection-title" aria-describedby="connection-desc">
+  <form id="connection-form" method="dialog" novalidate>
+    <div class="modal-head">
+      <h2 id="connection-title">Connect identity provider</h2>
+      <button type="button" class="icon-button" data-close aria-label="Close dialog">×</button>
+    </div>
+    <p id="connection-desc">Paste the SAML metadata URL from your identity provider. This prototype does not contact a provider.</p>
+
+    <label class="field-label" for="metadata-url">Metadata URL</label>
+    <input class="text-input" type="url" id="metadata-url" name="metadata-url" placeholder="https://kestrel.okta.com/app/.../sso/saml/metadata" required aria-describedby="metadata-help metadata-error">
+    <p class="field-note" id="metadata-help">Use the metadata URL from your identity provider. Test a sign-in before requiring SSO.</p>
+    <p class="field-error" id="metadata-error" role="alert" hidden></p>
+
+    <div class="modal-actions">
+      <button type="button" class="secondary-button" data-close>Cancel</button>
+      <button type="submit" class="primary-button" id="connection-submit">Save connection</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="live-status" class="sr-only" aria-live="polite"></div>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

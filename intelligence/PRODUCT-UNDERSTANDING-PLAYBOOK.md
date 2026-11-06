@@ -113,3 +113,5 @@ Use the existing project context or discovery artifact when it helps preserve th
 ## Example
 
 The [subscription settings reference example](../examples/subscription-settings/README.md) shows product rules becoming interface decisions: plan limits become seat usage, role permissions shape available actions, billing cadence becomes a comparison control, and cancellation consequences are explained before commitment. Its sample prices and account details are illustrative—not product facts.
+
+The [SSO discovery example](../examples/sso-discovery/README.md) shows the method on ambiguous brownfield evidence. It separates supplied, external and observed material, records a conflict between the help center and the route guard, stops at two high-impact questions, and only then synthesizes a feature context and design brief.

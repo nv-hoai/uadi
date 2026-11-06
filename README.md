@@ -101,6 +101,7 @@ Human owners remain in control of product decisions. Use the host project's norm
 - [UX Pattern Library](intelligence/patterns/README.md)
 - [Worked onboarding example](examples/product-onboarding/README.md) — evidence synthesis, ranked critique and runnable prototype
 - [Worked operations dashboard example](examples/operations-dashboard/README.md) — comparison, drill-down, data states and accessibility validation
+- [Worked SSO discovery example](examples/sso-discovery/README.md) — brownfield evidence, blocking questions, context synthesis and guarded enforcement
 - [Integration guide](docs/INTEGRATION-GUIDE.md)
 - [UDS and architecture](docs/ARCHITECTURE.md)
 - [Design quality checklist](docs/QUALITY-GATES.md)

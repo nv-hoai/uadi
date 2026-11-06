@@ -29,6 +29,25 @@ test("minimal discovery fixture validates", () => {
   const validate = validatorFor("schemas/discovery-result.schema.json");
   assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
 });
+test("SSO discovery blocked fixture validates", () => {
+  const fixture = JSON.parse(fs.readFileSync(path.join(root, "examples/sso-discovery/artifacts/01-blocked/discovery-result.json"), "utf8"));
+  const validate = validatorFor("schemas/discovery-result.schema.json");
+  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
+  assert.equal(fixture.readiness, "BLOCKED");
+  assert.ok(fixture.questions.some((question) => question.required && question.impact === "HIGH"));
+});
+test("SSO discovery resolved fixture validates", () => {
+  const fixture = JSON.parse(fs.readFileSync(path.join(root, "examples/sso-discovery/artifacts/02-resolved/discovery-result.json"), "utf8"));
+  const validate = validatorFor("schemas/discovery-result.schema.json");
+  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
+  assert.equal(fixture.readiness, "READY_WITH_ASSUMPTIONS");
+  assert.ok(fixture.facts.some((fact) => fact.source.includes("Simulated owner decision")));
+});
+test("SSO project context fixture validates", () => {
+  const fixture = JSON.parse(fs.readFileSync(path.join(root, "examples/sso-discovery/artifacts/02-resolved/project-context.json"), "utf8"));
+  const validate = validatorFor("schemas/project-context.schema.json");
+  assert.equal(validate(fixture), true, JSON.stringify(validate.errors, null, 2));
+});
 test("starter component catalog validates", () => {
   const fixture = JSON.parse(fs.readFileSync(path.join(root, "component-catalog/catalog.json"), "utf8"));
   const validate = validatorFor("schemas/component-catalog.schema.json");

@@ -1,0 +1,186 @@
+{
+  "schema_version": "1.0.0",
+  "session_id": "kestrel-sso-discovery-2026-11-06",
+  "scope": "Add SSO enforcement to Kestrel workspace security settings",
+  "facts": [
+    {
+      "id": "F1",
+      "statement": "Kestrel is a B2B customer support platform with Starter, Growth and Scale plans.",
+      "status": "CONFIRMED",
+      "source": "evidence/product-brief.md"
+    },
+    {
+      "id": "F2",
+      "statement": "SSO is included only on the Scale plan; Starter and Growth do not include it.",
+      "status": "CONFIRMED",
+      "source": "evidence/product-brief.md; evidence/app/src/billing/plans.ts"
+    },
+    {
+      "id": "F3",
+      "statement": "The current security route and settings navigation are restricted to the Owner role.",
+      "status": "CONFIRMED",
+      "source": "evidence/app/src/auth/permissions.ts; evidence/app/src/routes/settings.tsx"
+    },
+    {
+      "id": "F4",
+      "statement": "The help center, last reviewed in August 2025, says workspace Admins can connect an identity provider and require SSO.",
+      "status": "CONFIRMED",
+      "source": "evidence/help-center-sso.md"
+    },
+    {
+      "id": "F5",
+      "statement": "The current implementation and the help center disagree about whether Admins can manage SSO.",
+      "status": "CONFIRMED",
+      "source": "Comparison of evidence/help-center-sso.md with evidence/app/src/auth/permissions.ts"
+    },
+    {
+      "id": "F6",
+      "statement": "The current security panel is a disabled 'Coming soon' placeholder with no connection form.",
+      "status": "CONFIRMED",
+      "source": "evidence/app/src/settings/security-panel.tsx"
+    },
+    {
+      "id": "F7",
+      "statement": "The inspected SSO connection model has no enforcement flag, enforcement timestamp or session-revocation hook.",
+      "status": "CONFIRMED",
+      "source": "evidence/app/src/auth/sso.ts"
+    },
+    {
+      "id": "F8",
+      "statement": "The customer request is to require SSO for every member, not merely to offer SSO as an option.",
+      "status": "CONFIRMED",
+      "source": "evidence/product-brief.md"
+    },
+    {
+      "id": "F9",
+      "statement": "The brief assigns billing, workspace deletion and security enforcement to Owners, and member and workspace configuration to Admins.",
+      "status": "CONFIRMED",
+      "source": "evidence/product-brief.md"
+    },
+    {
+      "id": "F10",
+      "statement": "Support themes show Admins expect to manage SSO and customers fear locking everyone out.",
+      "status": "CONFIRMED",
+      "source": "evidence/support-themes.md (14 tickets, not representative)"
+    },
+    {
+      "id": "F11",
+      "statement": "Plan changes are handled by the account team; there is no in-app purchase flow.",
+      "status": "CONFIRMED",
+      "source": "evidence/product-brief.md"
+    },
+    {
+      "id": "F12",
+      "statement": "The help center tells customers to contact Kestrel support if the identity provider is unavailable.",
+      "status": "CONFIRMED",
+      "source": "evidence/help-center-sso.md"
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "A1",
+      "statement": "A workspace has one identity-provider connection.",
+      "status": "ASSUMPTION",
+      "source": "Inferred from the single-connection model in evidence/app/src/auth/sso.ts",
+      "confidence": 0.8
+    },
+    {
+      "id": "A2",
+      "statement": "Owners should retain the final enforcement decision because lockout risk is a workspace-level security action.",
+      "status": "ASSUMPTION",
+      "source": "Inferred from the role boundaries in evidence/product-brief.md and the lockout theme in evidence/support-themes.md",
+      "confidence": 0.6
+    },
+    {
+      "id": "A3",
+      "statement": "'Require SSO' is clearer than 'Enable SSO' for the irreversible-feeling action.",
+      "status": "ASSUMPTION",
+      "source": "Inferred from the support theme about session uncertainty",
+      "confidence": 0.7
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U1",
+      "statement": "Whether enforcement applies to existing sessions immediately or at the next sign-in.",
+      "status": "UNKNOWN",
+      "source": "No session behavior exists in the inspected code; the help center only mentions the next sign-in."
+    },
+    {
+      "id": "U2",
+      "statement": "What recovery path exists if the identity provider is unavailable or misconfigured.",
+      "status": "UNKNOWN",
+      "source": "No break-glass flow exists in the inspected code or documentation."
+    },
+    {
+      "id": "U3",
+      "statement": "Whether enforcement may remain on after a workspace leaves the Scale plan.",
+      "status": "UNKNOWN",
+      "source": "Plan entitlements and enforcement are not connected in the inspected code."
+    },
+    {
+      "id": "U4",
+      "statement": "Whether members can belong to more than one identity-provider domain.",
+      "status": "UNKNOWN",
+      "source": "Only a single-provider connection is evidenced."
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q1",
+      "question": "Who may turn SSO enforcement on and off: only Owners, or Owners and Admins?",
+      "why_it_matters": "This changes the route guard, the controls Admins see, the audit trail and the lockout recovery path.",
+      "impact": "HIGH",
+      "required": true,
+      "options": [
+        "Owners only",
+        "Owners and Admins",
+        "Admins configure the connection; Owners enforce"
+      ]
+    },
+    {
+      "id": "Q2",
+      "question": "What recovery path should exist if the identity provider is unavailable or misconfigured?",
+      "why_it_matters": "Without a recovery path, an enforcement mistake can lock every member out of the workspace.",
+      "impact": "HIGH",
+      "required": true,
+      "options": [
+        "Owner-only break-glass link",
+        "Support-assisted bypass",
+        "No bypass; wait for the identity provider to recover"
+      ]
+    },
+    {
+      "id": "Q3",
+      "question": "Should enforcement apply to existing sessions immediately or at the next sign-in?",
+      "why_it_matters": "Immediate revocation is stricter but can interrupt active support shifts.",
+      "impact": "MEDIUM",
+      "required": false,
+      "options": [
+        "Immediately",
+        "At the next sign-in",
+        "Within 24 hours"
+      ]
+    },
+    {
+      "id": "Q4",
+      "question": "Should the security page show the SAML metadata URL and entity ID?",
+      "why_it_matters": "This helps Admins verify configuration but may expose implementation detail.",
+      "impact": "LOW",
+      "required": false
+    },
+    {
+      "id": "Q5",
+      "question": "How should a downgrade from Scale behave while enforcement is on?",
+      "why_it_matters": "A silent downgrade could disable enforcement or leave members unable to sign in.",
+      "impact": "MEDIUM",
+      "required": false
+    }
+  ],
+  "readiness": "BLOCKED",
+  "blocking_gaps": [
+    "Q1: enforcement authority is unresolved",
+    "Q2: no safe recovery path is defined"
+  ],
+  "created_at": "2026-11-06T09:20:00Z"
+}

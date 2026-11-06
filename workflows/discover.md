@@ -19,3 +19,7 @@ Create a trustworthy snapshot of what is known, assumed, and still unknown befor
 
 ## Guardrails
 Do not ask for information already present. Do not invent research, analytics, personas, or customer evidence. Do not choose the visual direction during discovery.
+
+## Example
+
+The [SSO discovery example](../examples/sso-discovery/README.md) shows the workflow on ambiguous brownfield evidence: a documentation/code conflict, two high-impact questions that produce a `BLOCKED` artifact, simulated owner decisions, and a resolved `READY_WITH_ASSUMPTIONS` artifact that keeps the remaining downgrade assumption visible.
