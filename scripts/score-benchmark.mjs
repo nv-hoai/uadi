@@ -135,8 +135,8 @@ export function scoreBenchmark(input) {
       }
     }
   }
-  if (!pilotMinimumMet) protocolWarnings.push("Exploratory pilot minimum not met: require exactly three distinct repetitions for each of the three tasks on one model family with one pinned model version.");
-  if (!confirmatoryMinimumMet) protocolWarnings.push("Confirmatory multi-model minimum not met: require two qualifying model families, each with exactly three distinct repetitions for all three tasks.");
+  if (!pilotMinimumMet) protocolWarnings.push("Exploratory pilot minimum not met: require at least three unique repetitions for each of the three tasks on one model family with one pinned model version.");
+  if (!confirmatoryMinimumMet) protocolWarnings.push("Confirmatory multi-model minimum not met: require two qualifying model families, each with at least three unique repetitions for all three tasks.");
   const protocolAssessment = {
     exploratory_pilot_minimum_met: pilotMinimumMet,
     confirmatory_minimum_met: confirmatoryMinimumMet,
