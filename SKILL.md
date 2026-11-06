@@ -41,7 +41,7 @@ Read this file, then [Design Intelligence](docs/DESIGN-INTELLIGENCE.md). For sub
 - Keep small tasks lightweight; do not produce every artifact or run every checklist for a minor change.
 
 ## Working with artifacts
-Use UDS, schemas, templates and the component catalog when they help preserve intent or consistency. Do not create every possible artifact for a trivial task. Keep useful project decisions in the repository so another agent or session can continue.
+Use UDS and the bundled schemas and component catalog when they help preserve intent or consistency. The installer places these contracts under the skill directory (`schemas/` and `component-catalog/`); a minimal valid UDS example is available at `examples/minimal/design-specification.json`. Validate from the UADI repository with `npm run validate -- <artifact.json>`; in a host project, use its available JSON Schema validator and the bundled schema. Do not assume the host project has UADI scripts or dependencies. Do not create every possible artifact for a trivial task. Keep useful project decisions in the repository so another agent or session can continue.
 
 ## Human direction
 The user owns product and design decisions. Present consequential trade-offs and ask for direction when needed. Never claim the user approved something they did not approve.
