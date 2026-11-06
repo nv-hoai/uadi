@@ -22,6 +22,13 @@ Read this file, then [Design Intelligence](docs/DESIGN-INTELLIGENCE.md). For sub
 9. **Build and inspect.** Use the host agent's normal tools and project conventions. Preview the actual result when possible; inspect narrow and wide layouts and important interactions.
 10. **Evaluate and improve.** Review usability, visual hierarchy, consistency, accessibility, responsiveness and edge cases. Fix meaningful issues before handoff.
 
+## Billing cadence and consequential changes
+
+- Distinguish a **display-only pricing comparison** from a change to the user's active billing cadence. Label comparison controls plainly (for example, "Compare monthly and annual prices") and state that browsing prices does not change the subscription.
+- Never imply that changing a display toggle commits a subscription change. The active plan, billing cadence, renewal date and committed price must remain unchanged until the user completes an explicit change flow.
+- A real billing-cadence change is consequential: route it through a review-and-confirm step before committing. The review must show the exact new recurring price and interval, any prorated charge or credit (including zero when applicable), the effective date, the next renewal date and any relevant term change. If exact proration or dates are unavailable, say so and do not present the change as ready to confirm.
+- Example: a "Compare monthly / annual" toggle may reprice plan-comparison cards but must be labeled as a preview and must not mutate the active subscription. A separate "Change billing cadence" action opens a review showing the exact amount, proration and effective date; only explicit confirmation submits the change. After success, update the active subscription summary from the confirmed result, not from the preview toggle.
+
 ## Design principles
 - Solve the user's problem before decorating the interface.
 - Prefer clear information hierarchy and purposeful simplicity.
