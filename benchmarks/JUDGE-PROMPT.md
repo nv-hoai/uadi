@@ -14,7 +14,7 @@ You are an independent reviewer evaluating two product-design deliverables again
 1. Read the task brief and both complete evidence packets before scoring.
 2. Confirm that the evidence types are comparable. Identify missing screenshots, test output or implementation artifacts rather than assuming they exist.
 3. Score each candidate independently on all seven rubric dimensions from 0 to 4. Cite concrete file paths, screenshots or test evidence for each score.
-4. The visual-hierarchy dimension requires rendered screenshots or a runnable preview at equivalent viewport sizes. If either candidate lacks equivalent rendered evidence, mark that dimension not assessable and explain why; do not infer visual quality from prose or design tokens.
+4. The visual-hierarchy dimension requires rendered screenshots or a runnable preview at equivalent viewport sizes. If either candidate lacks equivalent rendered evidence, do not assign a numerical score for that dimension. Flag the pair as not scoreable under the current seven-dimension scorer and ask the coordinator to obtain equivalent evidence before scoring; do not infer visual quality from prose or design tokens.
 5. Do not reward longer explanations, UADI terminology, checklist compliance or artifact volume. Judge the delivered product and its evidence.
 6. Do not infer unsupported product rules, backend behavior, user research or test results.
 7. Do not read or request the coordinator-only `mapping.json`. Do not see other judge passes or discuss scores with other reviewers.
