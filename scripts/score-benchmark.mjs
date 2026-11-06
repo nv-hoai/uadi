@@ -82,6 +82,9 @@ export function scoreBenchmark(input) {
     return {
       pair_id: pair.pair_id,
       task_id: pair.task_id,
+      model_family: pair.model_family ?? input.study.model,
+      model_version: pair.model_version ?? input.study.model,
+      repetition: pair.repetition ?? null,
       baseline_score: baselineScore,
       uadi_score: uadiScore,
       delta: uadiScore - baselineScore,
@@ -90,6 +93,44 @@ export function scoreBenchmark(input) {
       dimensions
     };
   });
+
+  const requiredTasks = ["subscription-settings", "product-onboarding", "operations-dashboard"];
+  const modelFamilies = [...new Set(pairResults.map((pair) => pair.model_family))];
+  const cellPairs = new Map();
+  for (const pair of pairResults) {
+    const key = pair.model_family + "::" + pair.task_id;
+    if (!cellPairs.has(key)) cellPairs.set(key, []);
+    cellPairs.get(key).push(pair);
+  }
+  const modelMetadataComplete = input.pairs.every((pair) =>
+    typeof pair.model_family === "string" && pair.model_family.trim() &&
+    typeof pair.model_version === "string" && pair.model_version.trim() &&
+    Number.isInteger(pair.repetition) && pair.repetition > 0
+  );
+  const pilotMinimumMet = modelMetadataComplete && modelFamilies.some((family) =>
+    requiredTasks.every((task) => {
+      const entries = cellPairs.get(family + "::" + task) ?? [];
+      return new Set(entries.map((entry) => entry.repetition).filter((value) => value !== null)).size >= 3;
+    })
+  );
+  const confirmatoryMinimumMet = modelMetadataComplete && modelFamilies.length >= 2 && modelFamilies.every((family) =>
+    requiredTasks.every((task) => {
+      const entries = cellPairs.get(family + "::" + task) ?? [];
+      return new Set(entries.map((entry) => entry.repetition).filter((value) => value !== null)).size >= 3;
+    })
+  );
+  const protocolWarnings = [];
+  if (!modelMetadataComplete) protocolWarnings.push("Model metadata incomplete: every pair must record model_family, exact model_version and a positive repetition number.");
+  if (!pilotMinimumMet) protocolWarnings.push("Exploratory pilot minimum not met: require three distinct repetitions for each of the three tasks on at least one model family.");
+  if (!confirmatoryMinimumMet) protocolWarnings.push("Confirmatory multi-model minimum not met: require three distinct repetitions for each of the three tasks on at least two model families (18 pairs minimum).");
+  const protocolAssessment = {
+    exploratory_pilot_minimum_met: pilotMinimumMet,
+    confirmatory_minimum_met: confirmatoryMinimumMet,
+    model_families: modelFamilies,
+    task_coverage: [...taskIds],
+    pair_counts_by_model_and_task: Object.fromEntries([...cellPairs.entries()].map(([key, entries]) => [key, entries.length])),
+    warnings: protocolWarnings
+  };
 
   const baselineScore = average(pairResults.map((pair) => pair.baseline_score));
   const uadiScore = average(pairResults.map((pair) => pair.uadi_score));
@@ -106,6 +147,7 @@ export function scoreBenchmark(input) {
 
   return {
     study: input.study,
+    protocol_assessment: protocolAssessment,
     pair_count: pairResults.length,
     task_count: taskIds.size,
     baseline_weighted_score: baselineScore,
