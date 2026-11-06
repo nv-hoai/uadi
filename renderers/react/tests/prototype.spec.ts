@@ -1,8 +1,10 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
-import fs from "node:fs/promises";
-import pixelmatch from "pixelmatch";
-import { PNG } from "pngjs";
+import { readFileSync } from "node:fs";
+import { assertSupportedSection, unsupportedSpecFeatures } from "../src/validation";
+import type { UdsSpecification } from "../src/types";
+
+const minimalSpec = JSON.parse(readFileSync(new URL("../src/minimal-uds.json", import.meta.url), "utf8")) as UdsSpecification;
 test.beforeEach(async ({ page }) => {
  await page.route("**/*", async (route) => {
   const url = new URL(route.request().url());
@@ -39,34 +41,58 @@ test("responsive layout fits mobile, tablet and desktop viewports", async ({ pag
   expect(dimensions.scroll, `horizontal overflow at ${viewport.width}px`).toBeLessThanOrEqual(dimensions.client);
  }
 });
-test("capture deterministic desktop screenshot", async ({ page }, testInfo) => {
+const VISUAL_OPTIONS = { fullPage: true, animations: "disabled" as const, maxDiffPixelRatio: 0.02 };
+
+test("minimal UDS route matches the committed desktop baseline", async ({ page }) => {
  await page.setViewportSize({ width: 1280, height: 900 });
  await page.goto("/");
  await page.evaluate(() => document.fonts.ready);
- const output = testInfo.outputPath("uadi-desktop.png");
- await page.screenshot({ path: output, fullPage: true, animations: "disabled" });
- expect((await fs.stat(output)).size).toBeGreaterThan(1000);
+ await expect(page).toHaveScreenshot("minimal-desktop.png", VISUAL_OPTIONS);
 });
-test("desktop rendering stays within the committed visual baseline", async ({ page }, testInfo) => {
+
+test("subscription settings matches desktop and mobile baselines", async ({ page }) => {
  await page.setViewportSize({ width: 1280, height: 900 });
- await page.goto("/");
+ await page.goto("/subscription-settings");
  await page.evaluate(() => document.fonts.ready);
- const actualBuffer = await page.screenshot({ fullPage: false, animations: "disabled" });
- const baselineSvg = await fs.readFile(new URL("./visual-baseline.svg", import.meta.url), "utf8");
- const referencePage = await page.context().newPage();
- await referencePage.setViewportSize({ width: 1280, height: 900 });
- await referencePage.setContent(baselineSvg);
- const expectedBuffer = await referencePage.screenshot({ fullPage: false });
- await referencePage.close();
- const actual = PNG.sync.read(actualBuffer);
- const expected = PNG.sync.read(expectedBuffer);
- expect(actual.width).toBe(expected.width);
- expect(actual.height).toBe(expected.height);
- const diff = new PNG({ width: actual.width, height: actual.height });
- const mismatched = pixelmatch(actual.data, expected.data, diff.data, actual.width, actual.height, { threshold: 0.18, includeAA: false });
- const ratio = mismatched / (actual.width * actual.height);
- await fs.writeFile(testInfo.outputPath("uadi-visual-diff.png"), PNG.sync.write(diff));
- expect(ratio, "visual difference ratio against tests/visual-baseline.svg").toBeLessThanOrEqual(0.38);
+ await expect(page).toHaveScreenshot("subscription-desktop.png", VISUAL_OPTIONS);
+
+ await page.setViewportSize({ width: 375, height: 812 });
+ await page.goto("/subscription-settings");
+ await page.evaluate(() => document.fonts.ready);
+ await expect(page).toHaveScreenshot("subscription-mobile.png", VISUAL_OPTIONS);
+});
+
+test("cancellation dialog matches the committed baseline", async ({ page }) => {
+ await page.setViewportSize({ width: 1280, height: 900 });
+ await page.goto("/subscription-settings");
+ await page.getByRole("button", { name: "Cancel plan" }).click();
+ await expect(page.getByRole("dialog", { name: "Cancel your Pro plan?" })).toBeVisible();
+ await expect(page).toHaveScreenshot("subscription-cancel-dialog.png", VISUAL_OPTIONS);
+});
+
+test("renderer accepts the supported layout fields in the minimal spec", () => {
+ for (const section of (minimalSpec as UdsSpecification).pages[0].sections) {
+  expect(() => assertSupportedSection(section)).not.toThrow();
+ }
+});
+
+test("renderer rejects unsupported layout configuration", () => {
+ expect(() => assertSupportedSection({
+  section_id: "email",
+  component_id: "uadi.form.field",
+  layout: { type: "password" }
+ })).toThrow(/Unsupported UADI uadi\.form\.field configuration: type/);
+ expect(() => assertSupportedSection({
+  section_id: "navigation",
+  component_id: "uadi.navigation.primary",
+  layout: { items: [{ label: "Home", icon: "house" }] }
+ })).toThrow(/unknown property "icon"/);
+});
+
+test("renderer reports unsupported interaction semantics", () => {
+ const spec = structuredClone(minimalSpec) as UdsSpecification;
+ spec.pages[0].sections[0].interactions = [{ trigger: "click", result: "open panel" }];
+ expect(unsupportedSpecFeatures(spec)).toEqual([expect.stringContaining("interaction definition")]);
 });
 
 test("subscription settings exposes clear owner and member permissions", async ({ page }) => {

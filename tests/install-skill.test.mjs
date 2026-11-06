@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, rm, writeFile, mkdir } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile, mkdir, stat } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -12,6 +12,7 @@ const INSTALLED_FILES = [
   "SKILL.md",
   "docs/DESIGN-INTELLIGENCE.md",
   "docs/QUALITY-GATES.md",
+  "docs/BENCHMARKING.md",
   "intelligence/README.md",
   "intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md",
   "intelligence/UX-REASONING-PLAYBOOK.md",
@@ -23,6 +24,8 @@ const INSTALLED_FILES = [
   "intelligence/patterns/status-and-recovery.md",
   "intelligence/patterns/data-tables-and-filtering.md",
   "intelligence/patterns/forms-and-validation.md",
+  "intelligence/patterns/onboarding-and-activation.md",
+  "intelligence/patterns/metrics-and-data-visualization.md",
   "schemas/design-specification.schema.json",
   "schemas/discovery-result.schema.json",
   "schemas/project-context.schema.json",
@@ -90,5 +93,39 @@ test("rejects unsupported agents", async () => {
     const result = spawnSync(process.execPath, [INSTALLER, "--agent", "unknown", "--cwd", cwd], { encoding: "utf8" });
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /Unsupported agent/);
+  });
+});
+
+// Links that intentionally point outside the portable skill. The benchmark suite is
+// repository-only evidence tooling and is not copied into host projects.
+const EXTERNAL_SKILL_LINKS = new Map([
+  ["docs/BENCHMARKING.md", new Set(["../benchmarks/README.md"])],
+  ["examples/subscription-settings/README.md", new Set(["../../benchmarks/subscription-settings.md"])]
+]);
+
+function relativeMarkdownLinks(markdown) {
+  const links = [];
+  for (const match of markdown.matchAll(/\]\(([^)\s]+)\)/g)) {
+    const target = match[1];
+    if (/^(https?:|mailto:|#)/.test(target)) continue;
+    links.push(target.split("#")[0]);
+  }
+  return links;
+}
+
+test("all relative Markdown links in the installed skill resolve", async () => {
+  await withTempDir(async (cwd) => {
+    const result = spawnSync(process.execPath, [INSTALLER, "--agent", "codex", "--cwd", cwd], { encoding: "utf8" });
+    assert.equal(result.status, 0, result.stderr);
+    const destination = path.join(cwd, ".agents/skills/uadi");
+    for (const file of INSTALLED_FILES.filter((name) => name.endsWith(".md"))) {
+      const markdown = await readFile(path.join(destination, file), "utf8");
+      const external = EXTERNAL_SKILL_LINKS.get(file) ?? new Set();
+      for (const link of relativeMarkdownLinks(markdown)) {
+        if (external.has(link)) continue;
+        const target = path.resolve(path.dirname(path.join(destination, file)), link);
+        await assert.doesNotReject(stat(target), `${file} links to missing file: ${link}`);
+      }
+    }
   });
 });

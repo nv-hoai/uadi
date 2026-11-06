@@ -1,0 +1,120 @@
+{
+  "cases": [
+    {
+      "name": "page shell accepts an empty layout",
+      "component_id": "uadi.layout.page-shell",
+      "layout": {},
+      "valid": true
+    },
+    {
+      "name": "page shell rejects unknown layout properties",
+      "component_id": "uadi.layout.page-shell",
+      "layout": {
+        "columns": 2
+      },
+      "valid": false
+    },
+    {
+      "name": "primary navigation accepts labelled items",
+      "component_id": "uadi.navigation.primary",
+      "layout": {
+        "items": [
+          {
+            "label": "Home",
+            "href": "home"
+          },
+          {
+            "label": "Billing"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "primary navigation rejects items without a label",
+      "component_id": "uadi.navigation.primary",
+      "layout": {
+        "items": [
+          {
+            "href": "home"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "primary navigation rejects unknown item properties",
+      "component_id": "uadi.navigation.primary",
+      "layout": {
+        "items": [
+          {
+            "label": "Home",
+            "href": "home",
+            "icon": "house"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "alert accepts every documented variant",
+      "component_id": "uadi.feedback.alert",
+      "layout": {
+        "variant": "warning"
+      },
+      "valid": true
+    },
+    {
+      "name": "alert rejects unknown variants",
+      "component_id": "uadi.feedback.alert",
+      "layout": {
+        "variant": "danger"
+      },
+      "valid": false
+    },
+    {
+      "name": "form field accepts every documented input type",
+      "component_id": "uadi.form.field",
+      "layout": {
+        "label": "Email address",
+        "type": "email",
+        "required": true,
+        "placeholder": "you@example.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "form field rejects unsupported input types",
+      "component_id": "uadi.form.field",
+      "layout": {
+        "type": "password"
+      },
+      "valid": false
+    },
+    {
+      "name": "form field rejects unknown layout properties",
+      "component_id": "uadi.form.field",
+      "layout": {
+        "label": "Email address",
+        "maxlength": 120
+      },
+      "valid": false
+    },
+    {
+      "name": "empty state accepts a title",
+      "component_id": "uadi.data.empty-state",
+      "layout": {
+        "title": "No invoices yet"
+      },
+      "valid": true
+    },
+    {
+      "name": "empty state rejects unknown layout properties",
+      "component_id": "uadi.data.empty-state",
+      "layout": {
+        "illustration": "inbox"
+      },
+      "valid": false
+    }
+  ]
+}

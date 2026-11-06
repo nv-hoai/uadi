@@ -17,6 +17,7 @@
 .uadi-form-field { display: grid; gap: .4rem; max-width: 32rem; }
 .uadi-form-field input { min-height: 2.75rem; padding: .55rem .75rem; border: 1px solid var(--uadi-color-border); border-radius: .45rem; font: inherit; }
 .uadi-empty-state { padding: 1.5rem; border: 1px dashed var(--uadi-color-border); border-radius: .75rem; }
+.uadi-conformance-warning { margin-block-end: 1rem; padding: .75rem 1rem; border: 1px solid #b7791f; border-radius: .5rem; background: #fffaf0; color: #7b341e; }
 @media (max-width: 40rem) {
   .uadi-prototype nav ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); }
   .uadi-prototype button { width: 100%; }

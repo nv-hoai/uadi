@@ -17,4 +17,4 @@ UADI is at the early architecture and MVP-foundation stage. Please open an issue
 Include the problem, decision and alternatives, affected modules/schemas, tests or validation evidence, and migration notes where relevant.
 
 ## License
-A license has not yet been selected. Do not assume public visibility grants permission to reuse or redistribute this project.
+UADI is released under the [MIT License](LICENSE). By contributing, you agree that your contributions will be licensed under the same terms.

@@ -6,7 +6,7 @@ This is suitable for validating the fixed UADI renderer and fixture. It is not a
 - Keyboard tab order and controlled form interaction.
 - axe-core scan tagged WCAG 2.1 A/AA; fail on serious/critical violations.
 - Mobile viewport horizontal-overflow check.
-- Desktop screenshot compared with visual-baseline.svg using pixelmatch; a diff image is retained for review.
-- Failure screenshots, traces, HTML report and visual diff are uploaded as a 14-day GitHub Actions artifact.
+- Committed screenshot baselines for the minimal route (desktop), subscription settings (desktop and mobile) and its cancellation dialog. Playwright compares screenshots directly with a 2% pixel-difference budget; update intentional changes with `npx playwright test --update-snapshots` and review the result before committing.
+- Failure screenshots, traces, HTML report and visual diffs are uploaded as a 14-day GitHub Actions artifact.
 ## Limits
 These automated checks are regression gates, not proof of full WCAG conformance. Human review, screen-reader testing, cross-browser coverage, responsive viewport matrices and a production-grade untrusted-code sandbox remain separate work.

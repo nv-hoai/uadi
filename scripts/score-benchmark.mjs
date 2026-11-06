@@ -27,6 +27,11 @@ function validateCondition(condition, label) {
     assert(reviewer && typeof reviewer.id === "string" && reviewer.id.trim(), prefix + ".id is required");
     assert(!ids.has(reviewer.id), label + " has duplicate reviewer id: " + reviewer.id);
     ids.add(reviewer.id);
+    assert(reviewer.type === "human" || reviewer.type === "llm", prefix + '.type must be "human" or "llm"');
+    assert(typeof reviewer.independent === "boolean", prefix + ".independent must be a boolean");
+    if (reviewer.provenance !== undefined) {
+      assert(typeof reviewer.provenance === "string" && reviewer.provenance.trim(), prefix + ".provenance must be a non-empty string when supplied");
+    }
     assert(reviewer.scores && typeof reviewer.scores === "object", prefix + ".scores is required");
     for (const dimension of Object.keys(DIMENSIONS)) {
       const score = reviewer.scores[dimension];
@@ -49,7 +54,7 @@ function average(values) {
 }
 
 export function scoreBenchmark(input) {
-  assert(input && input.schema_version === 1, "schema_version must be 1");
+  assert(input && input.schema_version === 2, "schema_version must be 2");
   assert(input.study && typeof input.study.agent === "string" && input.study.agent.trim(), "study.agent is required");
   assert(typeof input.study.model === "string" && input.study.model.trim(), "study.model is required");
   assert(typeof input.study.date === "string" && input.study.date.trim(), "study.date is required");
@@ -70,6 +75,13 @@ export function scoreBenchmark(input) {
     const uadiIds = validateCondition(pair.uadi, label + ".uadi");
     assert(baselineIds.size === uadiIds.size && [...baselineIds].every((id) => uadiIds.has(id)),
       label + " must use the same reviewer IDs for baseline and UADI");
+    const baselineById = new Map(pair.baseline.reviewers.map((reviewer) => [reviewer.id, reviewer]));
+    const uadiById = new Map(pair.uadi.reviewers.map((reviewer) => [reviewer.id, reviewer]));
+    for (const [id, reviewer] of baselineById) {
+      const other = uadiById.get(id);
+      assert(reviewer.type === other.type && reviewer.independent === other.independent,
+        label + " reviewer " + id + " must keep the same type and independence in both conditions");
+    }
 
     const dimensions = {};
     for (const dimension of Object.keys(DIMENSIONS)) {
@@ -93,6 +105,19 @@ export function scoreBenchmark(input) {
       dimensions
     };
   });
+
+  const humanReviewers = new Set();
+  const llmJudgePasses = new Set();
+  let humanReviewMinimumMet = true;
+  for (const pair of input.pairs) {
+    const baselineHumans = pair.baseline.reviewers.filter((reviewer) => reviewer.type === "human" && reviewer.independent === true);
+    const uadiHumans = pair.uadi.reviewers.filter((reviewer) => reviewer.type === "human" && reviewer.independent === true);
+    if (baselineHumans.length < 2 || uadiHumans.length < 2) humanReviewMinimumMet = false;
+    for (const reviewer of baselineHumans) humanReviewers.add(reviewer.id);
+    for (const reviewer of [...pair.baseline.reviewers, ...pair.uadi.reviewers]) {
+      if (reviewer.type === "llm") llmJudgePasses.add(pair.pair_id + ":" + reviewer.id);
+    }
+  }
 
   const requiredTasks = ["subscription-settings", "product-onboarding", "operations-dashboard"];
   const modelFamilies = [...new Set(pairResults.map((pair) => pair.model_family))];
@@ -120,7 +145,7 @@ export function scoreBenchmark(input) {
     ? versionPinnedFamilies.filter(hasCompleteCoverage)
     : [];
   const pilotMinimumMet = qualifiedFamilies.length >= 1;
-  const confirmatoryMinimumMet = qualifiedFamilies.length >= 2;
+  const confirmatoryMinimumMet = qualifiedFamilies.length >= 2 && humanReviewMinimumMet;
   const protocolWarnings = [];
   if (!modelMetadataComplete) protocolWarnings.push("Model metadata incomplete: every pair must record model_family, exact model_version and a positive repetition number.");
   for (const family of modelFamilies) {
@@ -136,10 +161,15 @@ export function scoreBenchmark(input) {
     }
   }
   if (!pilotMinimumMet) protocolWarnings.push("Exploratory pilot minimum not met: require at least three unique repetitions for each of the three tasks on one model family with one pinned model version.");
-  if (!confirmatoryMinimumMet) protocolWarnings.push("Confirmatory multi-model minimum not met: require two qualifying model families, each with at least three unique repetitions for all three tasks.");
+  if (qualifiedFamilies.length < 2) protocolWarnings.push("Confirmatory multi-model minimum not met: require two qualifying model families, each with at least three unique repetitions for all three tasks.");
+  if (!humanReviewMinimumMet) protocolWarnings.push("Confirmatory human-review minimum not met: every condition requires at least two independent human reviewers who did not produce either condition.");
+  if (llmJudgePasses.size > 0) protocolWarnings.push("LLM judge passes are supplementary only (" + llmJudgePasses.size + " recorded) and do not count toward the human-review minimum.");
   const protocolAssessment = {
     exploratory_pilot_minimum_met: pilotMinimumMet,
     confirmatory_minimum_met: confirmatoryMinimumMet,
+    human_review_minimum_met: humanReviewMinimumMet,
+    human_reviewer_ids: [...humanReviewers].sort(),
+    llm_judge_passes: llmJudgePasses.size,
     model_families: modelFamilies,
     qualified_model_families: qualifiedFamilies,
     task_coverage: [...taskIds],

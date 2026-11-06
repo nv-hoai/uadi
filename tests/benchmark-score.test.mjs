@@ -2,13 +2,19 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { scoreBenchmark, DIMENSIONS } from "../scripts/score-benchmark.mjs";
 
-function reviewer(id, score) {
-  return { id, scores: Object.fromEntries(Object.keys(DIMENSIONS).map((key) => [key, score])) };
+function reviewer(id, score, overrides = {}) {
+  return {
+    id,
+    type: "human",
+    independent: true,
+    ...overrides,
+    scores: Object.fromEntries(Object.keys(DIMENSIONS).map((key) => [key, score]))
+  };
 }
 
 function fixture() {
   return {
-    schema_version: 1,
+    schema_version: 2,
     study: { agent: "Example agent", model: "Example model", date: "2026-11-05", project_snapshot: "fixture-commit" },
     pairs: [{
       pair_id: "subscription-01",
@@ -42,6 +48,28 @@ test("requires at least two independent reviewers per condition", () => {
   const input = fixture();
   input.pairs[0].uadi.reviewers.pop();
   assert.throws(() => scoreBenchmark(input), /at least two independent reviewers/);
+});
+
+test("requires the versioned reviewer-provenance results format", () => {
+  const input = fixture();
+  input.schema_version = 1;
+  assert.throws(() => scoreBenchmark(input), /schema_version must be 2/);
+});
+
+test("requires reviewer type and independence metadata", () => {
+  const missingType = fixture();
+  delete missingType.pairs[0].baseline.reviewers[0].type;
+  assert.throws(() => scoreBenchmark(missingType), /\.type must be "human" or "llm"/);
+
+  const missingIndependence = fixture();
+  delete missingIndependence.pairs[0].uadi.reviewers[1].independent;
+  assert.throws(() => scoreBenchmark(missingIndependence), /independent must be a boolean/);
+});
+
+test("requires the same reviewer type and independence in both conditions", () => {
+  const input = fixture();
+  input.pairs[0].uadi.reviewers[0].type = "llm";
+  assert.throws(() => scoreBenchmark(input), /same type and independence/);
 });
 
 test("requires the same reviewer panel for both conditions", () => {
@@ -84,8 +112,38 @@ test("recognizes the minimum multi-model protocol only with three distinct repet
   const result = scoreBenchmark(input);
   assert.equal(result.pair_count, 18);
   assert.equal(result.protocol_assessment.exploratory_pilot_minimum_met, true);
+  assert.equal(result.protocol_assessment.human_review_minimum_met, true);
   assert.equal(result.protocol_assessment.confirmatory_minimum_met, true);
   assert.deepEqual(result.protocol_assessment.model_families.sort(), ["family-a", "family-b"]);
+});
+
+test("an LLM-only panel cannot qualify a confirmatory study", () => {
+  const input = fixture();
+  input.pairs = [];
+  for (const model_family of ["family-a", "family-b"]) {
+    for (const task_id of ["subscription-settings", "product-onboarding", "operations-dashboard"]) {
+      for (const repetition of [1, 2, 3]) {
+        const pair = fixture().pairs[0];
+        const judge = (id, score) => reviewer(id, score, { type: "llm", independent: true, provenance: "judge-model pass 1" });
+        input.pairs.push({
+          ...pair,
+          pair_id: model_family + "-" + task_id + "-" + repetition,
+          task_id,
+          model_family,
+          model_version: model_family + "-v1",
+          repetition,
+          baseline: { duration_seconds: 100, reviewers: [judge("J1", 2), judge("J2", 2)] },
+          uadi: { duration_seconds: 90, reviewers: [judge("J1", 3), judge("J2", 3)] }
+        });
+      }
+    }
+  }
+  const result = scoreBenchmark(input);
+  assert.equal(result.protocol_assessment.qualified_model_families.length, 2);
+  assert.equal(result.protocol_assessment.human_review_minimum_met, false);
+  assert.equal(result.protocol_assessment.confirmatory_minimum_met, false);
+  assert.ok(result.protocol_assessment.llm_judge_passes > 0);
+  assert.ok(result.protocol_assessment.warnings.some((warning) => warning.includes("human-review minimum")));
 });
 
 

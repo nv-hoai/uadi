@@ -10,7 +10,7 @@ This example is intentionally small and illustrative. It is not user research or
 From the repository root:
 
 ```bash
-npm install
+npm ci
 npm run validate -- examples/minimal/project-context.json examples/minimal/discovery-result.json
 ```
 

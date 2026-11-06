@@ -88,40 +88,7 @@
           "sections": {
             "type": "array",
             "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "section_id",
-                "component_id"
-              ],
-              "properties": {
-                "section_id": {
-                  "type": "string"
-                },
-                "component_id": {
-                  "type": "string",
-                  "enum": [
-                    "uadi.layout.page-shell",
-                    "uadi.navigation.primary",
-                    "uadi.feedback.alert",
-                    "uadi.form.field",
-                    "uadi.data.empty-state"
-                  ],
-                  "description": "Stable identifier from the UADI component catalog, not a framework component name."
-                },
-                "content_intent": {
-                  "type": "string"
-                },
-                "layout": {
-                  "type": "object"
-                },
-                "interactions": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/interaction"
-                  }
-                }
-              }
+              "$ref": "#/$defs/section"
             }
           }
         }
@@ -202,6 +169,225 @@
           "type": "string"
         }
       }
+    },
+    "navigationItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "href": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "pageShellLayout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "primaryNavigationLayout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/navigationItem"
+          }
+        }
+      }
+    },
+    "alertLayout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "variant": {
+          "type": "string",
+          "enum": [
+            "info",
+            "success",
+            "warning",
+            "error"
+          ]
+        }
+      }
+    },
+    "formFieldLayout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "placeholder": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "text",
+            "email",
+            "number",
+            "search",
+            "tel",
+            "url"
+          ]
+        }
+      }
+    },
+    "emptyStateLayout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "section_id",
+        "component_id"
+      ],
+      "properties": {
+        "section_id": {
+          "type": "string"
+        },
+        "component_id": {
+          "type": "string",
+          "enum": [
+            "uadi.layout.page-shell",
+            "uadi.navigation.primary",
+            "uadi.feedback.alert",
+            "uadi.form.field",
+            "uadi.data.empty-state"
+          ],
+          "description": "Stable identifier from the UADI component catalog, not a framework component name."
+        },
+        "content_intent": {
+          "type": "string"
+        },
+        "layout": {
+          "type": "object"
+        },
+        "interactions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/interaction"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "component_id"
+            ],
+            "properties": {
+              "component_id": {
+                "const": "uadi.layout.page-shell"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "layout": {
+                "$ref": "#/$defs/pageShellLayout"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "component_id"
+            ],
+            "properties": {
+              "component_id": {
+                "const": "uadi.navigation.primary"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "layout": {
+                "$ref": "#/$defs/primaryNavigationLayout"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "component_id"
+            ],
+            "properties": {
+              "component_id": {
+                "const": "uadi.feedback.alert"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "layout": {
+                "$ref": "#/$defs/alertLayout"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "component_id"
+            ],
+            "properties": {
+              "component_id": {
+                "const": "uadi.form.field"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "layout": {
+                "$ref": "#/$defs/formFieldLayout"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "component_id"
+            ],
+            "properties": {
+              "component_id": {
+                "const": "uadi.data.empty-state"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "layout": {
+                "$ref": "#/$defs/emptyStateLayout"
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

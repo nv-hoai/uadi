@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { ReactNode } from "react";
 import type { UdsSection, UdsSpecification, UadiRenderActions } from "./types.js";
+import { assertSupportedSection, unsupportedSpecFeatures } from "./validation.js";
 function textValue(value: unknown, fallback: string): string { return typeof value === "string" && value.trim() ? value : fallback; }
 function FormField({ section, actions }: { section: UdsSection; actions: UadiRenderActions }): ReactNode {
  const label = textValue(section.layout?.label, section.content_intent ?? "Field label");
@@ -12,6 +13,7 @@ function FormField({ section, actions }: { section: UdsSection; actions: UadiRen
  return <div className="uadi-form-field"><label htmlFor={id}>{label}{required ? " *" : ""}</label><input id={id} name={section.section_id} type={type} placeholder={placeholder} required={required} value={value} onChange={(event) => { setValue(event.target.value); actions.onFieldChange?.(section.section_id, event.target.value); }} /></div>;
 }
 function Section({ section, actions }: { section: UdsSection; actions: UadiRenderActions }): ReactNode {
+ assertSupportedSection(section);
  switch (section.component_id) {
   case "uadi.layout.page-shell": return <div className="uadi-page-shell">{section.content_intent ?? "Page content"}</div>;
   case "uadi.navigation.primary": {
@@ -37,7 +39,9 @@ export function UadiPrototype({ spec, actions = {} }: { spec: UdsSpecification; 
  const page = spec.pages.find((item) => item.page_id === activePage) ?? spec.pages[0];
  if (!page) return <div role="status">This specification has no pages.</div>;
  const wiredActions: UadiRenderActions = { ...actions, onNavigate: (destination) => { setActivePage(destination); actions.onNavigate?.(destination); } };
+ const conformanceWarnings = unsupportedSpecFeatures(spec);
  return <div className="uadi-prototype" data-spec-id={spec.spec_id} data-spec-version={spec.version}>
+   {conformanceWarnings.map((message) => <div key={message} role="status" className="uadi-conformance-warning" data-uadi-conformance-warning>{message}</div>)}
   <nav aria-label="Prototype pages"><ul>{spec.pages.map((item) => <li key={item.page_id}><button type="button" aria-current={item.page_id === page.page_id ? "page" : undefined} onClick={() => setActivePage(item.page_id)}>{item.name}</button></li>)}</ul></nav>
   <main aria-label={page.name}><header><h1>{page.name}</h1>{page.purpose ? <p>{page.purpose}</p> : null}</header>{page.sections.map((section) => renderSection(section, wiredActions))}</main>
  </div>;
