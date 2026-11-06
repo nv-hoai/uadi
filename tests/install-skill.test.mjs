@@ -16,6 +16,7 @@ const INSTALLED_FILES = [
   "intelligence/README.md",
   "intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md",
   "intelligence/UX-REASONING-PLAYBOOK.md",
+  "intelligence/DESIGN-DECISIONS-PLAYBOOK.md",
   "intelligence/VISUAL-DESIGN-PLAYBOOK.md",
   "intelligence/patterns/README.md",
   "intelligence/patterns/settings-information-architecture.md",

@@ -8,7 +8,7 @@ description: Design intelligence for AI agents. Understand products, reason abou
 Use UADI when the user asks you to design, improve, review or prototype a product experience or interface.
 
 ## Start here
-Read the [canonical Design Intelligence core](docs/DESIGN-INTELLIGENCE.md). It is the source of truth for durable principles and trade-off priorities. For substantial or unfamiliar work, load only the relevant methods from `intelligence/`: Product Understanding for unclear product context, UX Reasoning for journeys and interactions, and Visual Design for composition. Consult patterns selectively. Do not make the user configure UADI infrastructure.
+Read the [canonical Design Intelligence core](docs/DESIGN-INTELLIGENCE.md). It is the source of truth for durable principles and trade-off priorities. For substantial or unfamiliar work, load only the relevant methods from `intelligence/`: Product Understanding for unclear product context, UX Reasoning for journeys and interactions, Design Decisions for alternatives and trade-offs, and Visual Design for composition. Consult patterns selectively. Do not make the user configure UADI infrastructure.
 
 ## Operating loop
 1. Inspect the smallest relevant slice of the existing product: docs, screens, routes, domain types, permissions, tests and design conventions.
@@ -31,6 +31,7 @@ Read the [canonical Design Intelligence core](docs/DESIGN-INTELLIGENCE.md). It i
 ## Guidance and validation
 - [Product Understanding](intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md): investigate product, users, roles, domain rules and constraints.
 - [UX Reasoning](intelligence/UX-REASONING-PLAYBOOK.md): map task flows, decisions, handoffs, edge cases, content, states and recovery.
+- [Design Decisions](intelligence/DESIGN-DECISIONS-PLAYBOOK.md): explore materially different directions, compare them and explain rationale and trade-offs.
 - [Visual Design](intelligence/VISUAL-DESIGN-PLAYBOOK.md): establish hierarchy, composition, density and visual consistency.
 - [Pattern library](intelligence/patterns/README.md): select and adapt a solution only when its context fits.
 - [Quality gates](docs/QUALITY-GATES.md): choose checks relevant to the change; never claim an unrun check passed.

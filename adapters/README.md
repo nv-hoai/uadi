@@ -1,6 +1,6 @@
 # Install UADI into an AI agent
 
-UADI is agent-agnostic. The installer copies the same portable skill, product/UX/visual playbooks and contextual UX pattern library into the native project skill directory for the selected host.
+UADI is agent-agnostic. The installer copies the same portable skill, reasoning playbooks and contextual UX pattern library into the native project skill directory for the selected host.
 
 Run one command from the UADI repository root:
 
@@ -24,7 +24,7 @@ node scripts/install-skill.mjs --agent all
 | Claude Code | `.claude/skills/uadi/` |
 | Cursor | `.cursor/skills/uadi/` |
 
-The installer copies `SKILL.md`, the core design guidance, all three reasoning playbooks and the UX pattern library. It does not change host settings, install dependencies or contact a server.
+The installer copies `SKILL.md`, the core design guidance, every reasoning playbook and the UX pattern library. It does not change host settings, install dependencies or contact a server.
 
 Existing files are preserved by default. Use `--force` only when you intend to replace the installed UADI skill files. To update UADI, pull the latest repository changes and rerun the installer.
 

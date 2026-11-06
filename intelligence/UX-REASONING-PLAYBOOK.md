@@ -339,7 +339,7 @@ When more than one approach is viable, compare only meaningfully different optio
 - Why the recommendation fits the current evidence.
 - Which edge cases remain unresolved, and what decision would resolve them.
 
-Recommend one direction when context supports it. Do not manufacture alternatives for a trivial task.
+Recommend one direction when context supports it. Use the [Design Decisions Playbook](DESIGN-DECISIONS-PLAYBOOK.md) when exploring or comparing substantial alternatives. Do not manufacture alternatives for a trivial task.
 
 ## Lightweight output format
 
