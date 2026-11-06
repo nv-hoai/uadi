@@ -1,0 +1,71 @@
+{
+  "reviewer_id": "J1",
+  "pair_id": "operations-dashboard-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:25-34 defines units, denominators (all orders due in the period, including late and failed) and distinguishes failed attempts from affected orders; app.js:270-297 implements rate = ontime/count. analysis.md:156-167 separates facts from assumptions without inventing forecasts, causes or revenue.",
+      "ux_reasoning": "analysis.md:42-56 orders the page around five manager questions and a scan -> baseline -> magnitude -> concentration -> orders journey. index.html:125-166 plus the drawer logic preserve period/region/status chips, search, sort and pagination, and the desktop screenshot shows the signal -> KPI -> chart -> region sequence.",
+      "design_judgment": "analysis.md:81-103 justifies a full 0-100% rate line backed by a separate symmetric percentage-point change chart instead of a truncated axis, rejects a dual axis, and chooses a precise regional table over a heat map; both charts are visible in screenshots/desktop.png.",
+      "visual_hierarchy": "screenshots/desktop.png has an exceptionally clear signal band, three KPI cards, paired trend/change charts, outcome bar and regional table with consistent type and spacing. screenshots/mobile.png stacks coherently, but the capture is 602px wide for a 390px client because of page overflow (see accessibility evidence), which leaves a blank side-scroll band.",
+      "interaction_completeness": "analysis.md:125-139 enumerates normal, loading, stale, partial, no-data, empty-result, error, comparison-unavailable and drawer-empty states; index.html:32-55 exposes a state switcher and index.html:142-164 adds search, sort, result count and paging. However, only the normal state is screenshotted or captured in checks.json.",
+      "accessibility_responsiveness": "test-output/checks.json:81-83 reports horizontal_overflow true with document_width 602 against client_width 390; axe reports serious color-contrast on 10 nodes and target-size on 2 nodes at both viewports (checks.json:36-50, 86-100). index.html:11 and :125 show a skip link and native dialog, but the rendered failures remain.",
+      "implementation_quality": "Dependency-free static implementation with no console or page errors (checks.json:34-35) and sensible date/aggregation helpers in app.js. styles.css:1344 collapses the two minmax(0, 1fr) grids to plain 1fr at the responsive breakpoint, removing the min-content guard; checks.json:81-83 confirms page overflow. analysis.md:173 and :178 cite transcript.md, which is absent from the packet."
+    },
+    "critical_defects": [
+      "Mobile page overflows horizontally: document_width 602 vs client_width 390 (test-output/checks.json:81-83), and screenshots/mobile.png is 602x3466, creating a 212px blank side-scroll band.",
+      "Two serious axe rule failures at both viewports: color-contrast on 10 nodes and target-size on 2 nodes (test-output/checks.json:36-50, 86-100).",
+      "analysis.md:173 and :178 claim checks are recorded in transcript.md, but that file is not in the packet, so the interaction and state runs it describes cannot be verified.",
+      "Only the normal dashboard state is evidenced by a screenshot; loading, stale, partial, no-data, error and empty states are implemented but not visually demonstrated."
+    ],
+    "strengths": [
+      "Metric definitions are unusually explicit about the denominator, attempts-vs-orders distinction and equal-length comparison baseline.",
+      "The signal band turns the default view into a decision ('on-time is 2.1 pts below the previous 7 days', weakest region West) before showing data inventory.",
+      "The two-chart solution keeps the headline rate axis honest while making small week-to-week change legible.",
+      "The order drawer preserves investigation context with scope chips, search, sort, pagination and an explicit edit-filters return path.",
+      "State handling covers the difficult cases (partial, stale, comparison unavailable) in both analysis and code."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:19-35 defines the delivered-order denominator, distinguishes failed attempts from orders, states that order volume and delivery metrics use different populations, and refuses to invent an SLA/target; index.html:120-139 repeats these definitions in the product UI.",
+      "ux_reasoning": "analysis.md:37-55 orders scope/freshness -> rate-first KPIs -> trend -> 'Worth checking' -> regions -> orders. analysis.md:88-100 explains that region clicks update the shared scope, day clicks set an explicit custom range, and the order dialog repeats why an order matched.",
+      "design_judgment": "analysis.md:65-74 rejects both a full 0-100% axis and a cropped rate axis in favour of deviation from a named baseline in percentage points, with a labelled zero line that is explicitly not a target. analysis.md:80-82 chooses a precise region table over bars, and analysis.md:33-35 labels the callout thresholds as review aids rather than SLA judgements.",
+      "visual_hierarchy": "screenshots/desktop.png has a clear rate-first KPI, scope bar and well-organised region table, but the 1280x2408 page is dense, uses small 12-14px type and leaves a large sparse area under 'Worth checking'. screenshots/mobile.png stacks cleanly at 390px and contains labelled horizontal table scrolling rather than page overflow.",
+      "interaction_completeness": "analysis.md:126-137 and index.html:31-48 cover loading, stale, partial, no-data, empty-order, error, comparison-off and comparison-unavailable states. index.html:101-108 provides the comparison toggle; analysis.md:88-96 describes drill links, the order dialog and focus return. Only the normal state is screenshotted or captured in checks.json.",
+      "accessibility_responsiveness": "test-output/checks.json:24-40 and :60-77 show no horizontal overflow at 1280 or 390, zero unnamed controls and one serious color-contrast violation. index.html:11 supplies a skip link, and analysis.md:114-124 documents table captions and focusable scroll regions; the single contrast failure is real despite the claim of 4.6:1 or better at analysis.md:119.",
+      "implementation_quality": "Static dependency-free implementation with no console or page errors and document_width equal to client_width on both viewports (checks.json:24-25, 62-64). styles.css:378, :440 and :901 use minmax(0, 1fr) grids, and styles.css:940-949 adds reduced-motion and forced-colors handling."
+    },
+    "critical_defects": [
+      "One serious color-contrast violation remains at both desktop and mobile (test-output/checks.json:30-37, 66-73), contradicting the measured-contrast claim in analysis.md:119.",
+      "Only the normal state is evidenced by a screenshot or checks.json; the seven non-normal states described in analysis.md:126-137 and section 8 are not visually demonstrated.",
+      "The delivery-status filter is deliberately scoped to the order list only (analysis.md:98-100); it is disclosed in the UI, but it may not match a manager's expectation that status filters all headline metrics."
+    ],
+    "strengths": [
+      "The deviation-from-baseline chart makes week-to-week movement visible without a truncated rate axis, and labels the baseline and zero line precisely.",
+      "The 'Worth checking' panel is thresholded, states exact numbers, links to the affected region/orders, and explicitly does not claim causes.",
+      "Every unit, population and comparison baseline is visible next to the number, including the delivered-only denominator caveat.",
+      "The layout is responsive without page overflow; wide tables scroll inside labelled regions.",
+      "Clear, consistent operations-console visual language with rate-first hierarchy and neutral volume deltas."
+    ]
+  },
+  "comparison": "Both candidates deliver complete, coherent dashboards and both score strongly on product understanding, investigation flow, chart rationale and state coverage. Candidate A has the stronger desktop composition and the richer scope-preserving order drawer, while Candidate B is technically more robust: no page-level overflow, one serious contrast failure instead of ten contrast plus two target-size failures, and cleaner responsive grids. Candidate B's deviation chart and 'Worth checking' panel also make the key change and next action slightly more direct, whereas Candidate A's signal band and two-chart explanation are the more elegant reading experience. On the weighted rubric Candidate B edges Candidate A by a small margin, driven by accessibility/responsiveness and implementation quality.",
+  "limitations": "This is one blinded judge pass based on static files, two normal-state screenshots per candidate and one automated Chromium/axe capture; neither candidate supplied screenshots of non-normal states, and Candidate A's cited transcript.md is missing, so interaction claims could not be re-run or verified. No real screen-reader, mobile-browser, zoom or cross-browser testing was available, and no backend behavior, production data or user research could be assessed. Scores are not proof of causation or statistical significance."
+}

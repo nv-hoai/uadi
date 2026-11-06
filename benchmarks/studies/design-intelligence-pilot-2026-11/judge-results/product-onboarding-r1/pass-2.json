@@ -1,0 +1,75 @@
+{
+  "reviewer_id": "J2",
+  "pair_id": "product-onboarding-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "condition-a/analysis.md lines 5-33 separate supplied facts, seven labelled assumptions (e.g. line 18: Owner occupies a Starter seat; line 19: pending invites reserve a seat) and nine unknowns; inference about Admin settings access is flagged as needing confirmation (line 20). Activation is defined as 'a project exists and the Owner can open it' (line 43).",
+      "ux_reasoning": "condition-a/analysis.md lines 47-54 give the smallest-path stage table (one required field, optional description, open project, optional invite, resume) and lines 72-76 justify skip/resume with draft retention. In the build, creation success makes 'Open project' the primary action (implementation/index.html lines 166-170), skip is present on both steps (implementation/app.js lines 1091-1096, 1114-1119) and a contextual resume card is rendered only while setup is incomplete (app.js lines 873-912).",
+      "design_judgment": "condition-a/analysis.md section 4 (lines 79-101) states trade-offs with costs, including deferring workspace questions, collapsing the description, keeping Team's 25-member limit as a footnote with no upgrade CTA, and limiting the project screen to a shell rather than inventing project content; section 5 (lines 105-121) enumerates 13 states and their recovery.",
+      "visual_hierarchy": "screenshots/desktop.png (1280x921): eyebrow, single h1 'Create your first project', short lead, one form card with one required field and one primary 'Create project' button plus a quiet skip; the secondary rail holds 'Your workspace at a glance' and a 1-of-5 seat meter. screenshots/mobile.png (390x1380) preserves that order, but the fixed 'Prototype controls' bar (implementation/styles.css lines 1549-1561, 1836-1842) covers the 'Your workspace at a glance' heading, and the 'One field to start' chip floats unanchored below the lead.",
+      "interaction_completeness": "condition-a/analysis.md lines 105-121 cover empty, validation, create loading/failure/success, empty invite list, invite validation/loading/partial failure/retry, seat limit, return-later, reload and deep-link guards. The build implements create failure with retained values (implementation/app.js lines 352-363), per-row invite errors and partial failure/retry (lines 662-776), seat-limit disabling with a reason (lines 419-430) and the empty invite list (lines 441-445).",
+      "accessibility_responsiveness": "test-output/checks.json reports axe 0 violations and no horizontal overflow at 1280 and 390 (document/client width match), plus skip link (index.html line 11), labelled progressbars (lines 130-132), aria-describedby/aria-invalid wiring (lines 78-80, app.js 298-311) and a polite live region (index.html line 390). However the same checks report h1_count 5 and controls_without_accessible_name 2 at both viewports, and the packet gives no manual keyboard/screen-reader evidence.",
+      "implementation_quality": "Dependency-free vanilla JS organised in labelled sections (implementation/app.js 1251 lines); user text is escaped through esc() before innerHTML (lines 58-62, 834-843); persistence and load validation at lines 106-172; no console or page errors in checks.json. Rough edges: an unreachable [data-create-project] branch (line 1200), seat counting that treats drafts as planned seats on the invite screen (lines 95-100) but only sent invites elsewhere (lines 292, 811), and an invented 2-character name minimum (line 316)."
+    },
+    "critical_defects": [
+      "screenshots/mobile.png at 390px: the fixed Prototype controls bar overlays the 'Your workspace at a glance' heading and the top of its card, so rendered content is obscured (implementation/styles.css lines 1549-1561, 1836-1842).",
+      "test-output/checks.json reports controls_without_accessible_name = 2 in both the desktop and mobile runs; the packet does not identify which controls, so two unnamed controls remain unresolved.",
+      "Seat usage changes meaning between screens: the invite screen counts drafts as 'planned' seats (app.js lines 95-100, 412) while create and home count only sent invitations (lines 292, 811), so '1 of 5 seats' is not the same measure throughout.",
+      "A 2-character minimum project-name rule (app.js line 316) is invented beyond the brief's 'project name required' framing.",
+      "Only the create step is rendered in the screenshots; invite, success, failure and workspace-home visuals are evidenced only by code and prose."
+    ],
+    "strengths": [
+      "The solo path is genuinely short: one required name field, one create action, then 'Open project' is the primary CTA; invitations are a separate optional step.",
+      "Skip is available on both steps, drafts and chosen roles are retained, and the workspace home shows a single contextual resume card that disappears when setup is complete.",
+      "Unusually complete state modelling, including project-creation failure with retained input, partial invitation failure with a successful row preserved and a one-shot retry, seat-limit explanation, empty invite list and deep-link guards.",
+      "Facts, assumptions and unknowns are clearly separated, with the load-bearing owner-seat and pending-invite interpretations surfaced rather than hidden.",
+      "Accessible mechanics are deliberate: progressbar semantics, aria-describedby for hints and errors, focus to headings and alerts, reduced-motion support, and native controls only."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "condition-b/analysis.md lines 5-37 separate given facts from seven assumptions and nine unknowns; pending invitations counting toward the limit is flagged (line 21), Owner retention is explicit (line 22), and the brief's silence on project content is named as the largest unresolved gap (lines 30, 182).",
+      "ux_reasoning": "condition-b/analysis.md lines 43-58 and 85-91 give a coherent project-first journey and justify omitting a welcome screen; app.js sequences project creation into the invite screen (line 364) and then the done screen (lines 1037-1047), so a solo Owner must pass through the full invite screen (app.js lines 456-460) and a separate done screen before 'Open project'.",
+      "design_judgment": "condition-b/analysis.md lines 109-117 explain roles before selectors, lines 166-188 pair activation risks with mitigations, and line 176 rules out pricing or upgrade CTA at the seat limit. Fewer explicit alternatives/costs are stated than in the corresponding A analysis, and the three-step rail (including 'Start working' as a step) slightly re-frames the path as a wizard.",
+      "visual_hierarchy": "screenshots/desktop.png (1280x988): distinctive display-serif h1, left progress rail with three status steps, workspace facts card, and a single prominent primary button; the 'NEXT' callout and save line add competing secondary text. screenshots/mobile.png (390x1096) stacks three header bands (brand/role, three-step rail, workspace facts strip) before the h1, pushing the task form to roughly the lower two-thirds of the first screen, and the floating controls chip covers the 'NEXT' callout body text.",
+      "interaction_completeness": "condition-b/analysis.md lines 138-160 list empty, validation, loading, success, failure, pause/resume and role-preview states, and the build implements per-row sending/sent/not-sent with Retry (implementation/app.js lines 833-895), failure and success banners (lines 898-920), invite validation (lines 375-400) and the seat cap (lines 969-971). Project creation has loading and success but no failure/recovery branch (lines 347-369).",
+      "accessibility_responsiveness": "test-output/checks.json reports h1_count 1, controls_without_accessible_name 0, axe 0 violations and no horizontal overflow at 1280 and 390. The build adds a skip link (implementation/index.html line 13), a status toast and polite announcer (lines 38-39), aria-pressed role previews (lines 47-49), a labelled seat meter (app.js line 749) and focus moved to screen headings and result banners (app.js lines 216-228, 502-508).",
+      "implementation_quality": "Single-file renderer with consistent escaping via escapeHtml (implementation/app.js lines 40-44), defensive persistence that clamps and re-validates saved state (lines 106-169), async epoch guards (lines 342, 478, 567) and a storage-unavailable toast (lines 1466-1470); dependency-free and no console or page errors. Minor issues: the 'name.length > MAX_NAME' branch is unreachable with maxlength set (lines 331-333), and removal re-renders with focus on the screen heading rather than a neighbouring control (lines 542-553)."
+    },
+    "critical_defects": [
+      "The default solo path is create -> full invite screen -> done -> open project (app.js line 364, 456-460, 1037-1047): the optional invitation surface sits in the required path and adds two decisions before the first project is opened.",
+      "Retry cannot demonstrate recovery in the default 'Realistic' mode: any address matching /fail/ fails again on retry (app.js lines 489-490, 570-571), so the advertised fail@ address loops unless the user edits it.",
+      "screenshots/mobile.png: the floating Prototype controls chip covers the 'NEXT' callout text, and the three-band header (steps + workspace facts) occupies roughly the first quarter of a 390px screen before the task.",
+      "No project-creation failure or recovery state: after submit the prototype always creates the project after a timer (app.js lines 347-369), unlike its invitation failure path.",
+      "Only the create step is rendered in the screenshots; invite, done, workspace and error visuals are evidenced only by code and prose.",
+      "The Member experience is reachable only through the prototype role preview, not through any real membership path."
+    ],
+    "strengths": [
+      "Clean automated accessibility evidence: one h1, zero unnamed controls, zero axe violations and no horizontal overflow at both viewports.",
+      "The role guide appears before any role selector, with plain capability language, the current role marked 'You', and a gated Member view that demonstrates the restriction rather than merely describing it.",
+      "The seat model is legible (five pips, '1 owner + N invitations', capped at four invitations with an explanation) and avoids pricing or upgrade behaviour.",
+      "'Save & exit' on both steps persists the step, draft and typed invitations, and the workspace shows a paused notice with a resume action and draft summary.",
+      "Load-time state sanitisation, async epoch cancellation and explicit storage-failure messaging are above the level of a throwaway prototype."
+    ]
+  },
+  "comparison": "Candidate A has the more economical first-value path (name -> create -> Open project, with invitations secondary) and deeper state coverage, including project-creation failure, partial invitation failure with a one-shot retry, a contextual resume card and 13 documented states; its analysis also states explicit trade-offs and costs. Candidate B is visually more distinctive, has cleaner accessibility evidence (single h1, zero unnamed controls) and stronger implementation hygiene (state sanitisation, epoch guards, storage fallback), but it places the full optional invite screen in the solo path before the done screen, its advertised retry loops in the default failure mode, and it has no project-creation failure state. On the weighted rubric A scores 3.80 and B 3.35; both share the same evidence limitation that only step 1 is rendered.",
+  "limitations": "Only the project-creation step is captured in both packets (1280px desktop and 390px mobile are equivalent and sufficient for the visual-hierarchy dimension), so invite, success, failure, resume and workspace screens could not be judged visually and were assessed from code and prose. The packets contain only summary check JSON, not the test harness or transcript, so the claim of 41 checks in A and the additional flows in both could not be re-run or audited. No manual keyboard, screen-reader or cross-browser testing was reported, no backend or email delivery exists, and axe results are rule-limited. This is one blinded judge pass, not a statistical test or proof of causation."
+}

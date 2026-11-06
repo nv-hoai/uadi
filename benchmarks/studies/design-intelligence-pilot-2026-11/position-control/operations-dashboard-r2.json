@@ -1,0 +1,73 @@
+{
+  "reviewer_id": "C1",
+  "pair_id": "operations-dashboard-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 2
+    },
+    "weighted_score": 3.55,
+    "evidence": {
+      "product_understanding": "analysis.md sections 1-2 define all three metrics with denominators (on-time = inside promised window / delivered orders), promised-delivery-date basis, pp-vs-percent semantics, attempt-vs-order distinction and the 15-minute lag; the same definitions are visible under each KPI and in 'How these metrics are calculated' in screenshots/desktop.png.",
+      "ux_reasoning": "analysis.md sections 3-4 and 6 give a change-before-detail hierarchy and a five-step manager journey; screenshots/desktop.png shows the period sentence '31 Oct - 6 Nov ... compared with 24-30 Oct', the headline naming West's 4.9 pp decline, and the region table sorted lowest-first (West 75.6%). Custom-range validation and 'comparison off' behaviour are also reasoned through.",
+      "design_judgment": "screenshots/desktop.png shows three small multiples with separate axes (no dual axis), a fixed 0-100% rate axis, zero-based count bars, region bars plus exact numbers, and a status mix with labelled counts/shares; analysis.md section 5 explains pp deltas, polarity, pattern encoding and why no pie/dual axis is used.",
+      "visual_hierarchy": "screenshots/desktop.png and mobile.png establish header -> filters -> headline -> three KPI cards -> 'Performance over time' -> region/status -> definitions, with one h1 and a consistent card grid at both widths. The expanded floating 'Prototype controls' panel in desktop.png covers the right end of the trend chart, and the rate line is visually near-flat, which keeps this at strong rather than excellent.",
+      "interaction_completeness": "index.html lines 26-117 plus app.js renderOrders/renderDashboard implement preset and custom ranges, region, status, compare toggle, reset, eight drill sources including chart days, an orders view with context chips, and an order drawer with focus trap and focus return (app.js lines 1557-1583); analysis.md section 7 enumerates seven distinct states including an undefined on-time metric.",
+      "accessibility_responsiveness": "test-output/checks.json: one h1, 49 controls, 0 controls without accessible name, console/page errors empty, skip link and reduced-motion rules in styles.css lines 770-776. Against that, axe reports serious color-contrast (3 nodes) and label-content-name-mismatch (3 nodes) at both viewports, and mobile document_width 392 exceeds client_width 390.",
+      "implementation_quality": "app.js (1,981 lines) is structured into render functions and runs with no console or page errors (test-output/checks.json), and the aggregate figures reconcile (14,232 orders = 3,342+2,895+3,617+4,378; 424 attempts = 165+84+85+90). However, the 424 failed attempts are fewer than the 643 orders shown in 'Failed attempt' status in screenshots/desktop.png, which contradicts the packet's own rule that a failed order has one or more failed attempts, so the delivered data is internally inconsistent."
+    },
+    "critical_defects": [
+      "Data contradiction: screenshots/desktop.png shows 424 'Failed delivery attempts' while the status mix shows 643 orders in 'Failed attempt' status; with attempts counted per failed attempt this is impossible and directly contradicts analysis.md section 2. It also makes the 'Orders with failed attempts' drill-down denominator untrustworthy.",
+      "Accessibility: axe reports serious color-contrast (3 nodes) and label-content-name-mismatch (3 nodes) violations at desktop and mobile in test-output/checks.json.",
+      "Responsive: mobile page overflows horizontally by 2 px (document_width 392 vs client_width 390) in test-output/checks.json.",
+      "Evidence/visual defect: the expanded 'Prototype controls' panel floats over the right side of the 'Performance over time' chart in screenshots/desktop.png, occluding the 5-6 Nov bars and preventing full review of that chart.",
+      "Comparison inconsistency: only the on-time rate chart carries a previous-period series; the orders and failed-attempts charts show selected-period bars only even when 'Compare with previous period' is on (screenshots/desktop.png, analysis.md section 5)."
+    ],
+    "strengths": [
+      "Metric definitions are unusually rigorous for a prototype: denominators, promised-date basis, pp vs percent, attempt-vs-order and the status-filter effect on the rate are all stated in the UI.",
+      "Deep investigation model with eight drill sources, context chips, a focus-trapped order drawer and explicit preservation of period/region/status/day context.",
+      "State coverage includes loading, stale, partial coverage, no data, error, empty drill-down and a genuinely undefined on-time metric, each with a distinct explanation.",
+      "Honest charting choices: no dual axis, zero baselines, fixed 0-100% rate axis, table alternatives and keyboard-focusable chart hit areas."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "weighted_score": 3.4,
+    "evidence": {
+      "product_understanding": "analysis.md sections 1 and 7 give a metric-contract table, an explicit one-attempt-per-failed-order synthetic assumption, a disclosed no-target stance, UTC basis and partial-coverage handling; index.html lines 119-137 repeat the definitions and limits in-product, and the figures reconcile (3,894 on time + 102 late = 3,996 delivered; 97.4%).",
+      "ux_reasoning": "analysis.md sections 1-4 frame a five-step orient/judge/locate/investigate/return loop, an explicit 'largest change' insight naming East (down 2.9 pts) and state that the status filter changes the analytical question; screenshots/desktop.png shows that insight band and the 0.6 pts hero comparison.",
+      "design_judgment": "screenshots/desktop.png uses a dark hero rate card, subordinate count cards, a separate zero-based failed-attempts chart, labelled part-to-whole status rows and a lowest-rate-first region table; analysis.md section 3 rejects dual axes, pie charts and truncated axes with reasons.",
+      "visual_hierarchy": "screenshots/desktop.png has the clearest focal point of the pair (dark on-time card), then the amber largest-change band, then chart/status and region table. On screenshots/mobile.png the page is clipped at the right edge and the rate chart collapses to a thin band of dots at the top of its 0-100% plot, which weakens scanning at the review viewport.",
+      "interaction_completeness": "index.html lines 67-104, 158-177 plus app.js implement range/region/status/compare/reset filters, a native orders dialog with scope restated, back action and four drill sources (KPI, insight, status row, region row). Missing: custom date range (only 7 days/14 days/4 weeks) and any chart-segment drill, so the brief's 'selecting a metric or chart segment' path is only partly delivered.",
+      "accessibility_responsiveness": "test-output/checks.json shows one h1, 23 controls, 0 unnamed controls, skip link, focus-visible rules and reduced-motion CSS (styles.css lines 869-871). It also shows mobile document_width 580 vs client_width 390 - a 190 px page-level horizontal overflow with html overflow-x hidden - plus serious label-content-name-mismatch (3 nodes) at both viewports.",
+      "implementation_quality": "app.js (1,263 lines) is compact and runs without console/page errors (test-output/checks.json); data reconciles across status, region and KPI totals and the dialog is a native element. analysis.md section 8 claims 39 DOM checks and eight-state visual inspection, but no such log or state screenshots are in the packet, and the mobile overflow is a real delivered defect."
+    },
+    "critical_defects": [
+      "Responsive failure: mobile document width is 580 px against a 390 px viewport in test-output/checks.json; the Regions table and right-hand content are clipped in screenshots/mobile.png and the page itself cannot be scrolled sideways because html sets overflow-x: hidden.",
+      "Accessibility: axe reports serious label-content-name-mismatch (3 nodes) at desktop and mobile in test-output/checks.json.",
+      "Undelivered capability: no custom date range (only three presets) and no chart-segment drill-down, so part of the stated filter/investigation workflow is unavailable.",
+      "Missing evidence: analysis.md section 8 claims 39 passing DOM checks and visual inspection of loading, stale, partial, error, no-data, empty-result and dialog states, but the packet contains only ready-state desktop and mobile screenshots and no behaviour-test output."
+    ],
+    "strengths": [
+      "Decision-first composition: the dark on-time card, the 'largest change this period' insight naming East and the subordinate failed/orders cards make the weekly judgement fast.",
+      "Status-aware analysis: filtering to a single status replaces the rate with that status's count/share instead of leaving a misleading rate card, and the undefined case is explained.",
+      "Honest framing: 'Not a live view', the 15-minute lag, snapshot preparation time, no-target stance and 'what changed and where, not why' are all visible.",
+      "Clear state separation between true zero, no data, error, stale and partial coverage, including the North missing-feed treatment and a reference explaining production caveats."
+    ]
+  },
+  "comparison": "Both candidates are strong on product understanding and reasoning: Candidate A is more rigorous about denominators and drill-down context, while Candidate B is more disciplined about not labelling rates good/bad and about the failed-attempt assumption. Candidate A leads on interaction completeness (custom range, eight drill sources, chart-day drill, focus-trapped order drawer) and on responsive fit, although its mobile page overflows by 2 px and its data contradicts itself (424 attempts vs 643 failed-attempt orders). Candidate B has the clearer focal hierarchy and the more honest freshness/no-target framing, but its 190 px mobile overflow, preset-only ranges and non-drillable charts reduce its delivered utility. Using the supplied weights, Candidate A scores 3.55 and Candidate B 3.40, a close result driven by A's interaction depth and B's responsive defect rather than by prose quality.",
+  "limitations": "This is one blinded judge pass, not a statistical test and not proof of causation. Only ready-state screenshots exist for each candidate (desktop and mobile); the claimed loading, stale, partial, no-data, error, empty and dialog states could not be visually verified, and neither packet includes behavioural test logs (Candidate B's 39 checks are asserted but not supplied). Visual-hierarchy scoring used the two supplied viewport pairs only; hover, tooltip, focus and drawer visuals were not captured. Automated axe output covers only the rules that ran and is not a WCAG audit, and no screen-reader or cross-browser testing evidence is present. Candidate A's failed-attempt/status contradiction was inferred from the rendered numbers, not from a data-generation dump. Finally, the two packet manifests carry `candidate` fields inverted relative to their directory names; I ignored those fields and kept Candidate A = condition-a packet and Candidate B = condition-b packet exactly as the judge prompt requires, and I read no mapping file or material outside the control inputs."
+}

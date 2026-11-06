@@ -1,0 +1,71 @@
+{
+  "reviewer_id": "J1",
+  "pair_id": "subscription-settings-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "inputs/condition-a/analysis.md:8-30 separates demo identity, prices, dates, proration and cancellation policy from findings, and :23-26 flags the over-limit cancellation assumption; app.js:41-49 encodes the brief's 3/20/100 member limits and both billing periods.",
+      "ux_reasoning": "inputs/condition-a/analysis.md:49-84 defines a Billing & plan IA and owner journey; app.js:429-496 keeps plan and member usage adjacent, app.js:833-893 models effective dates and proration, and app.js:686-750 / 1576-1651 isolate cancellation with consequences, acknowledgement and a safe exit.",
+      "design_judgment": "inputs/condition-a/analysis.md:86-136 records nine explicit decisions and trade-offs, including two-step change review (:104-112), hiding owner actions while explaining permission (:114-118), and rejecting dark patterns (:94-98); these choices are visible in the rendered page rather than only prose.",
+      "visual_hierarchy": "inputs/condition-a/screenshots/desktop.png shows a clear h1, a plan/usage two-card row with $29/month and Next payment Dec 6, 2026 as focal facts, then payment/invoices and a separated cancellation section; inputs/condition-a/screenshots/mobile.png preserves that order, but the fixed 'Prototype controls' bar overlays the Member usage card's count and meter, and on desktop the panel covers the lower settings rail.",
+      "interaction_completeness": "inputs/condition-a/app.js:797-812 loading skeleton, :814-829 load error with retry, :248-273 past-due/member banners, :1462-1566 card validation with focus and provider-failure alert, :1732-1743 busy/disabled commit buttons, :1302-1306 scheduled-change undo; inputs/condition-a/test-output/checks.json:28-29 reports no console or page errors.",
+      "accessibility_responsiveness": "inputs/condition-a/test-output/checks.json:30-41 records a serious axe target-size violation on 2 desktop nodes (mobile run is clean); index.html:12 supplies a skip link, app.js:474-488 a labelled progressbar, index.html:109 a labelled dialog, and app.js:1698-1722 focus restoration. The contrast claim in analysis.md:180-183 is not reproduced in checks.json.",
+      "implementation_quality": "inputs/condition-a/app.js is dependency-free, state-driven and covers dynamic dates, scenarios, invoices and dialogs; inputs/condition-a/test-output/checks.json:5-72 confirms both viewports render at 1280/390 with one h1 and no overflow; the claimed 36/36 interaction assertions (analysis.md:170-177) are not included as artifact."
+    },
+    "critical_defects": [
+      "Desktop axe reports a serious target-size violation on 2 nodes (inputs/condition-a/test-output/checks.json:30-41).",
+      "The fixed prototype-controls panel obscures product content: in inputs/condition-a/screenshots/mobile.png it covers the '18 of 20' usage count and meter, and in desktop.png it covers the lower settings navigation.",
+      "Cancellation copy tells the owner they will 'choose which 3 people keep access' (app.js:1601-1604), an unvalidated policy (analysis.md:23-26) presented inside the destructive confirmation."
+    ],
+    "strengths": [
+      "Complete state coverage: loading skeleton, load error with retry, empty invoices, near/at limit, past due, scheduled change, cancelled and reactivated states.",
+      "Cancellation is discoverable but protected by a separate section, four consequences, acknowledgement, disabled destructive button and 'Keep my plan' as the primary action (app.js:1576-1651).",
+      "Payment-method dialog validates name, Luhn number, expiry, CVC and postal code, focuses the first error and has an honest provider-failure state saying nothing was charged (app.js:1439-1566).",
+      "Plan and usage are adjacent, with seat count, progress bar, consequence sentence and next-plan callout (app.js:429-496).",
+      "Copy consistently avoids claiming a successful payment and labels amounts as estimates (analysis.md:168-208)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "inputs/condition-b/analysis.md:14-25 states synthetic prices, dates, proration and cancellation policy as assumptions, and :27-35 identifies the core risks; app.js:44-95 encodes the plan limits and owner/member scenarios.",
+      "ux_reasoning": "inputs/condition-b/analysis.md:36-57 explains the single-page IA and owner journey; app.js:429-488 concentrates plan, price, renewal and usage, :530-608 exposes plan comparison, and :1060-1105 reviews cancellation. However, an over-limit downgrade is blocked with no resolution path (analysis.md:179; app.js:927-968).",
+      "design_judgment": "inputs/condition-b/analysis.md:61-100 gives clear trade-offs, especially separating 'Price display' from a real billing change (:67-73) and reviewing upgrades and downgrades differently (:75-80); app.js:530-559 and :1007-1054 implement that separation.",
+      "visual_hierarchy": "inputs/condition-b/screenshots/desktop.png has one dominant summary with Pro, $29/month, next payment and 16/20 usage, followed by a three-card plan comparison, payment/invoices and a separated cancellation block; inputs/condition-b/screenshots/mobile.png keeps the same order and converts invoices to labelled cards, though the page is 3818px tall and the prototype select at the top is clipped.",
+      "interaction_completeness": "inputs/condition-b/app.js:768-809 loading/error states, :368-391 failed-payment banner that remains unresolved after a card update, :1178-1263 inline validation with focus, :974-1001 and :1107-1118 plan/cancel commits, :1269-1303 receipt; plan and cancellation confirmations apply with no busy or disabled in-flight state and there is no provider-failure simulation.",
+      "accessibility_responsiveness": "inputs/condition-b/test-output/checks.json:31-41 and :70-80 record serious color-contrast violations on 6 nodes in both desktop and mobile; index.html:11 has a skip link, app.js:521 a labelled progressbar, styles.css:136 a focus-visible style, and styles.css:1908 reduced-motion support.",
+      "implementation_quality": "inputs/condition-b/app.js uses a clean escaping helper (:152-162) and modular render functions; checks.json:5-81 confirms both viewports, one h1, no overflow and no console errors; dates are hardcoded (:36-39), the display toggle re-renders and loses focus (:1387-1398), and the claimed 71-check suite (analysis.md:151-164) is not included as artifact."
+    },
+    "critical_defects": [
+      "Axe reports serious color-contrast failures on 6 nodes in both desktop and mobile (inputs/condition-b/test-output/checks.json:31-41 and :70-80).",
+      "The mobile prototype-controls bar clips the Data scenario select and truncates its label (inputs/condition-b/screenshots/mobile.png, top), making the scenario control hard to read.",
+      "An over-limit downgrade is a dead end: confirmation is disabled with an instruction to remove members, but no member-management route exists (analysis.md:179; app.js:927-968).",
+      "Plan and cancellation changes commit immediately with no busy/disabled state (app.js:974-1001, :1107-1118), leaving the brief's loading/commit feedback incomplete for consequential actions."
+    ],
+    "strengths": [
+      "The single summary answers plan, price, renewal and member usage above the fold, with a plain consequence sentence at 80% usage (app.js:429-528).",
+      "Price display is explicitly separated from commitment: the monthly/annual toggle changes comparison prices only, with copy stating the subscription is unchanged (app.js:530-559).",
+      "Plan review states plan, member-limit delta, effective date, due today, next payment and payment method, and blocks an over-limit downgrade before commitment (app.js:888-972).",
+      "Coherent warm-grey and deep-green visual system that reads as a reliable account document, with one focal price and restrained status colour (screenshots/desktop.png; analysis.md:141-143).",
+      "Owner-only actions are replaced in place with explanations for members while retaining all read-only plan, usage, card and invoice data (app.js:354-366, :458, :582-591)."
+    ]
+  },
+  "comparison": "Both packets provide equivalent evidence: analysis, source, 1280px desktop and 390px mobile screenshots, and axe/DOM checks. Candidate A has the deeper interaction model and recovery coverage — loading/error/past-due/scheduled states, gated cancellation, validated card update with provider-failure handling, and busy states — plus fewer axe failures, but its prototype overlay obscures content and its cancellation seat policy is an unvalidated assumption. Candidate B has the stronger visual composition, always-visible plan comparison and the sharper judgment of separating price display from a billing change, but it carries serious contrast failures in both viewports, a dead-end over-limit downgrade and no in-flight confirmation feedback. Candidate A is ahead on the seven-dimension rubric.",
+  "limitations": "One judge pass only; no statistical or causal claim. Screenshots cover the default owner state, so dialog, loading, error, member and scheduled-change visuals were inspected in source but not scored visually. Neither packet includes the claimed 36-/71-check interaction logs; test-output/checks.json contains only axe and DOM metrics. There was no screen-reader, manual keyboard, real payment-provider or real-browser matrix testing, and visual review is limited to the supplied 1280px and 390px full-page captures. All prices, proration, over-limit and cancellation policies are candidate assumptions and cannot be validated from the packets."
+}

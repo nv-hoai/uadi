@@ -1,0 +1,73 @@
+{
+  "reviewer_id": "J1",
+  "pair_id": "product-onboarding-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:5-33 separates supplied facts, seven explicit assumptions (owner consumes a seat; pending invitations reserve seats; Admin settings access) and eight unknowns; analysis.md:144-145 flags the owner-seat reading as load-bearing; implementation/index.html:133 says '5 members in total, including you' and index.html:276 says 'Owner isn't offered when inviting'.",
+      "ux_reasoning": "analysis.md:45-54 is the smallest-path table; analysis.md:79-101 chooses project-first with invitations second; implementation/app.js:178-184 guards success, invite and project URLs without a project; app.js:873-912 builds a contextual resume card; app.js:723-776 preserves sent rows and retries only the failed invitation. screenshots/desktop.png shows one visible required field plus a collapsed optional description.",
+      "design_judgment": "analysis.md:79-101 gives eight decisions with explicit costs (invitations one click less discoverable; projects without descriptions harder to distinguish; no next step at the seat limit); analysis.md:142-153 lists activation risks; implementation/app.js:407-430 disables add at four invitees and explains why. It deliberately stops at a project shell (analysis.md:97-98).",
+      "visual_hierarchy": "screenshots/desktop.png and screenshots/mobile.png: the h1 and green Create project CTA are clear, but the 'One field to start' chip floats at the far right of the page head (index.html:63), the form card and 'Your workspace at a glance' card read as near-peer white cards (styles.css:473-486), and the desktop page leaves a large empty band below the cards. On mobile the two-step stepper is compressed (styles.css:1746 hides the Optional tag) and the context card follows the form because .rail is ordered second (styles.css:1663-1671).",
+      "interaction_completeness": "analysis.md:105-120 covers the state matrix; app.js:313-376 implements validation, aria-busy loading, retained values and a recoverable create failure; app.js:694-776 validates empty, malformed, duplicate and own-email addresses, handles partial send failure and retry; app.js:407-430 enforces the Starter limit; app.js:1091-1119 makes both steps skippable; app.js:1237-1243 restores on reload. test-output/checks.json:37-39 and 78-80 report no console or page errors.",
+      "accessibility_responsiveness": "test-output/checks.json:33-44 (desktop) and 74-85 (mobile) report zero axe violations and no horizontal overflow at 390px, but also 2 controls without accessible names and 5 h1 elements. index.html:130 and 217 expose seat meters as progressbars, index.html:390 provides a polite live region, and app.js:551-558 uses a fieldset with a hidden legend per invite row; styles.css:653-655 sets a #929a95 placeholder on #fffefb (about 2.9:1), below 4.5:1. styles.css:1880 honors reduced motion.",
+      "implementation_quality": "implementation/app.js is a coherent vanilla state machine with escaping at app.js:58-62, guarded storage at app.js:106-172, and no dependencies; index.html and styles.css are organized by view and token. test-output/checks.json:37-39 and 78-80 show no runtime errors. The packet does not include the 41-check log claimed at analysis.md:170, so only the static checks are independently visible."
+    },
+    "critical_defects": [
+      "On viewports at or below 980px the invitation role guide is moved after the form (styles.css:1663-1671 sets .rail { order: 2 }); a mobile user can choose Member/Admin before reading the full capability guide. The one-line summary (index.html:224) and per-select hint (app.js:614-619) only partially satisfy the brief's requirement to explain role capabilities before assignment.",
+      "The supplied check reports 2 controls without accessible names at both viewports (test-output/checks.json:34 and 75) and 5 h1 elements (checks.json:10 and 51). The extra headings are in [hidden] views, but the unnamed controls are not identified and should be audited.",
+      "The project-name placeholder is #929a95 on #fffefb (styles.css:653-655), about 2.9:1; labels are present, but the placeholder text falls below the 4.5:1 normal-text threshold.",
+      "Reload always lands on the workspace home (app.js:1237-1243) rather than the interrupted screen; draft data survives, but resume is less exact than B's screen restore."
+    ],
+    "strengths": [
+      "Shortest solo path: one required name field, then Open project as the primary CTA (index.html:95-101 and 166-169); invitations are a separate, skippable screen, so a solo owner is never routed through an invite interstitial.",
+      "Broadest state coverage: create failure retains the form and offers retry (app.js:352-362), invitation failure preserves sent rows and retries only the failed row (app.js:723-776), empty invites and the four-invite seat cap are handled (app.js:441-445 and 407-430), success/invite/project URLs are guarded (app.js:178-184), and the workspace home shows a contextual resume card (app.js:873-912).",
+      "The owner-seat and pending-seat assumptions are documented and surfaced rather than hidden: analysis.md:16-33 and UI copy at index.html:133, 214 and 276 ('5 members in total, including you'; 'Owner isn't offered when inviting').",
+      "Role explanation is at the point of choice on desktop: the role guide sits beside the invite form and each select has a capability hint (index.html:255-277; app.js:614-619).",
+      "Semantics are deliberate: per-row fieldset/legend (app.js:551-558), progressbar seat meters (index.html:130 and 217), a polite live region (index.html:390), and reduced-motion support (styles.css:1880)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:5-37 separates given facts, seven assumptions and unknowns; analysis.md:30-37 refuses to invent project content, pricing, upgrade behavior or invitation lifecycle. UI copy states the limit and owner accounting: app.js:746-754 ('Starter plan - up to 5 members', '1 owner + N invitations', 'Starter limit reached'). app.js:688-730's role cards match the brief: Owner billing/deletion, Admin projects/invites, Member projects only.",
+      "ux_reasoning": "analysis.md:41-91 explains the project-first journey and why the welcome screen was omitted; implementation/app.js:402-428 turns the invite primary action into 'Continue without inviting' when no address is entered; app.js:513-529 finishes onboarding; app.js:277-287 and 1051-1070 resume from a paused state. However, app.js:364-366 auto-advances every created project to the invite screen, so the solo path is create -> invite -> done -> Open project, one screen longer than A's create -> Open project.",
+      "design_judgment": "analysis.md:83-91 explains project-first and the omitted welcome screen; analysis.md:164-189 names activation risks and mitigations (invitations may feel required; long invite step; role education becoming a policy page; limit implying payment; empty project). app.js:732-755 shows the 5-member limit and cap with no upgrade CTA; app.js:947-953 puts role education before the form. analysis.md:181-182 explicitly leaves the 'meaningful project' gap unresolved rather than inventing content.",
+      "visual_hierarchy": "screenshots/desktop.png: the large serif h1, single white panel and clearly secondary left rail create an obvious focal path to the green CTA; screenshots/mobile.png keeps the same hierarchy in one column. The panel/rail structure at styles.css:218 and 381-405 and the display/sans pairing at styles.css:33-35 make the form dominant. Minor density: many uppercase micro-labels (FIRST RUN, SETUP - STEP 1 OF 2, REQUIRED, OPTIONAL, NEXT) and the mobile rail occupies the area above the h1.",
+      "interaction_completeness": "analysis.md:138-160 maps the states; app.js:316-370 implements name validation, aria-busy loading and success, but has no failure branch for project creation (the timer always writes the project). app.js:451-511 implements per-row sending and results, app.js:555-585 retry, app.js:1261-1273 a Member permission gate, app.js:1051-1070 pause/resume, and app.js:106-168 and 171-187 restore the exact screen and results. Invitation validation app.js:375-400 covers format and duplicates but not the Owner's own address.",
+      "accessibility_responsiveness": "test-output/checks.json:10-25 (desktop) and 33-47 (mobile) report h1_count 1, 0 controls without accessible names, zero axe violations and no horizontal overflow at 390px. app.js:781-829 associates labels, hints, aria-describedby, aria-invalid and aria-busy; app.js:905 uses role=alert for the failure banner; app.js:38-39 provides live regions; app.js:216-228 moves focus to the new heading. styles.css:500-501 uses a #6d746a placeholder (about 5:1) and styles.css:2002 honors reduced motion. Only 390px is evidenced, not 320px.",
+      "implementation_quality": "implementation/app.js is a dependency-free IIFE with snapshotForm before navigation (app.js:230-248), validated loadState (app.js:106-168), asyncEpoch guards against stale async results (app.js:342, 478 and 567), escaping (app.js:40-44), and a pagehide flush (app.js:1455-1458). test-output/checks.json:17-19 and 41-43 report no console or page errors. The verification claim at analysis.md:239 points to a missing transcript.md, so the claimed end-to-end and reload runs are not independently visible."
+    },
+    "critical_defects": [
+      "There is no project-creation failure or recovery state: handleProjectSubmit (app.js:316-370) always writes the project after the 900ms timer and analysis.md:140-154 lists no create-failure state. The only recoverable error is an invitation failure, so a failed project save cannot be demonstrated or recovered.",
+      "Verification evidence is incomplete and broken: analysis.md:239 says verification is recorded in transcript.md, which is absent from the packet; analysis.md:195 and 204 claim end-to-end and reload tests that the supplied checks.json (initial load and axe only, lines 1-49) does not contain.",
+      "Invitation validation (app.js:375-400) rejects malformed and duplicate addresses but not the Owner's own email (Candidate A rejects it at implementation/app.js:680-681); the flow can invite the Owner as Admin/Member.",
+      "At 980px and below the rail precedes the main panel (index.html:33-36; styles.css:1845-1859), so three step cards plus a workspace strip occupy the top of the mobile first screen and push the form/CTA down; styles.css:1883 also hides the step metadata, removing the Optional cue from the mobile stepper."
+    ],
+    "strengths": [
+      "Clear visual hierarchy: a dominant serif h1, a single white panel, a visually secondary rail, and one solid primary CTA (screenshots/desktop.png, screenshots/mobile.png; styles.css:33-35, 218 and 381-405).",
+      "Role capabilities are shown before any role selector at every width: the 'Who can do what' section precedes the form (app.js:947-953), with three capability cards (app.js:688-730) and 'You stay the Owner' copy.",
+      "Optionality is reinforced in the flow, not just the prose: the invite step is labeled Optional, the primary action becomes 'Continue without inviting' with no addresses (app.js:402-428), and the done screen accepts a solo start (app.js:1009-1016).",
+      "Persistence and resume are exact: screen, projectName/description, invites, results, pausedFrom and completed are validated and restored (app.js:106-168 and 171-187), with a pagehide flush (app.js:1455-1458).",
+      "Recoverable invitation failure is well surfaced: per-row 'Not sent' plus Retry, an alert banner, and a success receipt (app.js:898-920 and 555-585).",
+      "The Member preview gate demonstrates permission boundaries with a clear return path (app.js:1261-1273)."
+    ]
+  },
+  "comparison": "Both candidates separate facts from assumptions and avoid invented pricing, integrations or project content. Candidate A has the shorter solo activation path (create -> Open project) and broader state coverage, including a recoverable project-creation failure, a deep-link guard and empty/partial invitation states. Candidate B has the stronger visual hierarchy (a dominant serif h1 and a clearly secondary rail) and cleaner supplied automated accessibility results (single h1, zero unnamed controls), plus exact screen and draft restoration. Candidate B inserts an optional invite screen before its done screen and has no project-creation failure state; its verification note points to a missing transcript.md. Using the supplied weights, A totals 3.75 and B 3.65: close, with A marginally ahead on the delivered artifact.",
+  "limitations": "This pass saw only the create screen for each candidate (desktop 1280px and mobile 390px); the invite, success, failure, home and project screens could not be visually inspected, so visual hierarchy is judged only on the entry screen. The only supplied test artifact is a static checks.json (initial load plus axe); no interaction log, transcript, screen-reader run, cross-browser result or 320px screenshot was supplied, and both candidates' broader test claims are unverified. No codebase or design system was supplied, so implementation fit was judged as framework-neutral vanilla. Placeholder contrast was calculated from CSS, not measured in a browser. This is one blinded pass, not a statistical test, and it does not establish causation."
+}

@@ -1,0 +1,71 @@
+{
+  "reviewer_id": "C1",
+  "pair_id": "subscription-settings-r3",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "inputs/condition-a/analysis.md §§2–8 maps the six owner questions, seven high-risk problems, IA, owner/member journeys and assumptions. The main gap is role policy: inputs/condition-a/implementation/app.js renderPayment (lines 434–444) and renderInvoices (lines 490–500) lock payment details and invoices for members, which goes beyond 'cannot change billing' and conflicts with inputs/task.md line 33 ('non-owners see billing information but cannot perform owner-only actions').",
+      "ux_reasoning": "analysis.md §§5–6 explains the key separation between display-only annual pricing and a real cadence commitment, and between routine billing and cancellation. app.js renderPriceControls (323–331) keeps the price toggle non-committal; openPlanDialog (693–754) and openCadenceDialog (778–804) show from/to, exact effective date, '$0.00 today', new price and member limit. The primary owner journey in analysis.md §5 matches the rendered summary-first order in screenshots/desktop.png.",
+      "design_judgment": "Scheduling plan and cadence changes at the next renewal avoids inventing a proration calculation (analysis.md §6; app.js 736–745), while cancellation sits below a divider with consequences, a required acknowledgement and 'Keep my plan' focused first (app.js 827–868). The member privacy overreach is a product-requirement issue rather than a visual one, and is reflected in product_understanding.",
+      "visual_hierarchy": "screenshots/desktop.png (1280×2265) reads clearly top-to-bottom: H1, 'At a glance' with plan/price/next payment, billing period, plans, payment, invoices, then cancellation. screenshots/mobile.png (390×3776) preserves that order and makes summary actions full-width. Supporting copy is often 11–12px and three plan cards are stacked in a 720px column on desktop, which makes scanning slower than Candidate B; the fixed 'Prototype controls' panel also covers part of the member meter on mobile, though that is demo chrome rather than product UI.",
+      "interaction_completeness": "app.js implements loading skeleton, load error/retry, empty payment, at-member-limit, inline payment validation with focus to the first invalid field, busy confirmation buttons that block duplicate submission, scheduled plan/cadence states with Undo, cancellation with Resume, and role-disabled controls (app.js 589–618, 681–689, 827–888, 997–1030). test-output/checks.json confirms one H1, named controls, no horizontal overflow, and no console or page errors at 1280 and 390.",
+      "accessibility_responsiveness": "index.html includes a skip link, main landmark and one H1; the usage meter has role=progressbar and an accessible name (app.js line 267); focus returns to the trigger on dialog close and reduced motion is respected (app.js 64, 1167–1172). test-output/checks.json still reports one serious color-contrast node on desktop and mobile and one serious aria-prohibited-attr node on mobile (the plain div with aria-label in index.html line 21); analysis.md §9 does not acknowledge these axe findings. Responsive evidence shows document_width === client_width at 1280 and 390.",
+      "implementation_quality": "The 1232-line app.js is a coherent IIFE with centralized state, render functions, delegated events, a dialog framework, busy-state guards and focus restoration (app.js 632–689, 1142–1172). analysis.md §9 documents node --check, HTML/CSS structural checks, 38 CDP assertions and contrast checks; the supplied checks.json shows no runtime errors. Note that the claimed contrast conclusion conflicts with the axe result, so the check report is not fully reconciled."
+    },
+    "critical_defects": [
+      "Member view hides payment details and invoices entirely (app.js renderPayment 434–444, renderInvoices 490–500), which exceeds the brief's 'cannot change billing' restriction and contradicts the requirement that non-owners see billing information; analysis.md §2 acknowledges this as an unconfirmed policy choice.",
+      "Automated axe checks in test-output/checks.json report a serious color-contrast violation (1 node, desktop and mobile) and a serious aria-prohibited-attr violation on mobile (1 node); the quality review in analysis.md §9 does not disclose or explain them."
+    ],
+    "strengths": [
+      "Excellent anti-dark-pattern separation: browsing annual prices does not change the subscription, and real changes go through an explicit review with exact date, price and '$0.00 today'.",
+      "Cancellation is discoverable in its own section, visually separated, gated by a required acknowledgement, and defaults focus to the safe 'Keep my plan' action.",
+      "Very broad state coverage: loading, load error, empty payment, at-limit, validation errors, pending submissions, scheduled changes, undo and resume.",
+      "Plain-language role explanations and disabled-state reasons; no dead-end 'permission denied' screen.",
+      "Accessible meter naming, focus return, skip link, reduced-motion support and verified mobile layout without horizontal overflow."
+    ],
+    "weighted_score": 3.6
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "inputs/condition-b/analysis.md §2 maps each reviewer question to a surface, §§3–6 identify risks, IA, trade-offs and owner/member behavior. It explicitly keeps billing visible to members: renderPaymentCard (app.js 420–450) shows card last-four, expiry and billing email, and renderInvoices (531–575) lets members view/download invoices while owner actions are disabled. The 9% tax and immediate-proration policy are explicitly labelled illustrative (analysis.md §§1, 5), but they are invented rules beyond the brief.",
+      "ux_reasoning": "analysis.md §§3–5 and app.js changePlanMarkup (852–946) implement a two-step choose/review flow with from/to, effective date, price, blocked downgrades and a clear immediate-versus-renewal distinction. Cancellation is separated at the bottom with consequences, a required checkbox and a safe primary button (app.js 1031–1107). analysis.md §7 and the scenario selector cover approaching/at limit, payment failure, empty invoices, loading and load error.",
+      "design_judgment": "The restrained palette, one primary action and factual annual saving avoid urgency and dark patterns (analysis.md §5; screenshots/desktop.png). Judgment is weakened by an unexplained optional 'Reason for leaving' select (app.js 1069–1079), a fabricated 9% tax and proration note (app.js 14, 390–392), and the cancellation dialog initially focusing its title rather than the safe action (renderDialog 694–703, openCancel 1026–1029).",
+      "visual_hierarchy": "screenshots/desktop.png (1280×2217) is the strongest of the pair: the summary card gives plan, price, renewal, next payment and member usage in one scan, then a consistent card grid for billing, payment, members and invoices. screenshots/mobile.png (390×3731) preserves the order and turns stats into labelled rows. Type scale, spacing and accent use are consistent; the floating 'Prototype controls' bar obscures part of the summary footnote, but that is evidence chrome.",
+      "interaction_completeness": "app.js covers loading, load error/retry, empty invoices, payment failure, near/at limit, blocked downgrade, scheduled change with cancel-change, cancellation with reactivate and undo toast, inline validation including expiry and email, and a saving state (app.js 598–636, 986–1120, 1197–1256). Gaps are minor: no empty payment-method state, and Escape can close the native dialog during a simulated save because the cancel event is not prevented.",
+      "accessibility_responsiveness": "checks.json reports two serious aria-progressbar-name violations—both usage meters at app.js lines 258 and 496 have no accessible name—and a serious definition-list violation because the summary-stats divs contain direct span children (app.js 244–262). Positives are a skip link, landmarks, labelled icon buttons, focus restoration and no overflow at 320–1280 per analysis.md §8. The two serious structural axe rules cap this dimension at adequate.",
+      "implementation_quality": "app.js is a 1548-line, organized script with clear data/render/dialog/event sections, HTML escaping for user-supplied values, scenario tokens and payment-save tokens (app.js 60, 1246–1255, 1307–1347). Supplied checks show no console/page errors and node --check passes per analysis.md §9. The invalid dl markup, unnamed progressbars and title-first dialog focus are implementation-level defects that keep this below Candidate A."
+    },
+    "critical_defects": [
+      "Both member-usage meters lack accessible names (test-output/checks.json aria-progressbar-name, 2 nodes on desktop and mobile; app.js 258, 496), and the summary stats use invalid definition-list markup (definition-list, 1 node; app.js 244–262). These are serious automated accessibility violations on core billing information.",
+      "The cancellation dialog opens with focus on the dialog title, not the safe 'Keep my plan' action (app.js renderDialog 694–703 and openCancel 1026–1029), weakening the deliberate-confirmation pattern even though the safe button is visually primary.",
+      "The optional 'Reason for leaving' select collects data that has no use in the prototype and is not justified in the analysis (app.js 1069–1079), an unnecessary addition to a cancellation flow the brief asked to keep free of dark patterns."
+    ],
+    "strengths": [
+      "Best visual hierarchy in the pair: a single summary card answers plan, price, renewal, next payment and seat usage immediately, with disciplined spacing and type scale on desktop and mobile.",
+      "Respects the role requirement more faithfully: members retain plan, payment summary, invoice visibility and download while owner actions are disabled with a named owner contact.",
+      "Strong plan comparison and review: blocked downgrades state the required member removals, upgrades and scheduled changes distinguish effective dates, and scheduled changes can be cancelled.",
+      "Payment-failure state, approaching/at-limit states and empty-invoice state are designed and reachable from the prototype controls.",
+      "Validation is thorough for a static prototype (expiry validity, email, card length), with inline errors, focus to the first error and a duplicate-safe saving state."
+    ],
+    "weighted_score": 3.55
+  },
+  "comparison": "Candidate A and Candidate B are both complete, comparable static prototypes with 1280px desktop and 390px mobile screenshots plus the same checks.json schema. Candidate A is stronger on analytical rigor, honest simulation (no fabricated proration), cancellation safety, focus management and semantic accessibility; Candidate B is stronger on visual hierarchy, member-role transparency, and the breadth of limit/payment-failure states. A's main weakness is hiding billing information from members and unreconciled axe violations; B's main weaknesses are two unnamed progressbars, invalid definition-list markup, title-first focus in the cancellation dialog, and invented tax/proration plus an unused exit-reason field. Weighted scores are 3.60 for Candidate A and 3.55 for Candidate B, effectively a tie within the precision of one review pass; no positional preference should be inferred from the small gap.",
+  "limitations": "This is one blinded judge pass, not a statistical test and not proof of causation. Evidence was limited to the supplied desktop (1280px) and mobile (390px) screenshots, source files and checks.json; tablet layouts, dialog states and runtime behaviour were not independently executed or re-captured, and the runtime assertions are taken from the supplied checks. Automated axe results are not a full WCAG or screen-reader audit, and the violating nodes were not individually identified beyond the cited markup. Both mobile screenshots include a fixed prototype-controls overlay that covers a small part of the page, so those areas were assessed from source rather than pixels. No cross-browser or OS text-scaling evidence was supplied. Candidate labels were kept exactly as packet A and packet B; no mapping or other pass was consulted."
+}

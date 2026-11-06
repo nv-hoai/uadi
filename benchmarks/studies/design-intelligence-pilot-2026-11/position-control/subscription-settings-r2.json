@@ -1,0 +1,67 @@
+{
+  "reviewer_id": "C1",
+  "pair_id": "subscription-settings-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md lines 27-47 correctly frames the six owner questions and highest-risk billing problems; the rendered summary in screenshots/desktop.png shows Pro, $29/month, next payment 1 December 2026 and 16 of 20 members in one panel, and the inline plan cards state each limit (3/20/100) and price. Assumptions such as synthetic prices, proration and cancellation policy are explicitly separated from product facts (analysis.md lines 14-25).",
+      "ux_reasoning": "analysis.md lines 61-98 and 109-139 justify the IA: status first, usage adjacent, price display separated from commitment, upgrades reviewed immediately versus scheduled downgrades, and cancellation separated at the bottom. app.js openPlanReview/openCadenceReview/openCancelReview implement those distinctions, including over-limit downgrade blocking and a required cancellation acknowledgement.",
+      "design_judgment": "The page is deliberately document-like rather than promotional: one factual summary panel, restrained deep-green primary color, tabular figures, and no countdowns or retention offers visible in screenshots/desktop.png. Cancellation is discoverable in its own bottom section but visually separated from routine billing actions.",
+      "visual_hierarchy": "Rendered evidence is equivalent for both candidates: screenshots/desktop.png at 1280x2011 and screenshots/mobile.png at 390x3818. The h1, one dominant summary panel, large $29 price, then plans, payment/invoices and cancellation form a clear scan path; the mobile capture preserves the same order with stacked plan cards and converted invoice rows. checks.json reports no horizontal overflow at 390px.",
+      "interaction_completeness": "app.js covers owner/member roles, loading skeleton, load error with retry, Free empty state, payment-failure banner, inline card validation with first-error focus, plan/cadence reviews, cancellation acknowledgement plus reactivation, and scheduled-change banners. checks.json confirms one h1, 20 named controls, no console errors, and dialog/progressbar markup.",
+      "accessibility_responsiveness": "checks.json reports an axe serious color-contrast violation with 6 nodes in both desktop and mobile runs, and analysis.md line 172 concedes formal contrast was not measured. Structural evidence is stronger: labelled controls, progressbar with aria-valuenow/text, skip link, aria-live region, native <dialog>, and no horizontal overflow at 1280/390.",
+      "implementation_quality": "Plain modular ESM-style functions in app.js with delegated event handling, escaping helper, validation and state transitions; `node --check app.js` passes. The 71-check interaction claim in analysis.md is not represented by raw assertions in test-output/checks.json, so it could not be independently verified."
+    },
+    "critical_defects": [
+      "Axe reports a serious color-contrast violation affecting 6 nodes in both 1280px and 390px renders (test-output/checks.json), so the delivered interface does not meet WCAG AA contrast in the tested configuration."
+    ],
+    "strengths": [
+      "Plan, price, renewal date and 16/20 member usage are answerable in one glance from the single summary panel.",
+      "All three plans and their member limits are directly comparable on the page, including monthly/annual display without changing the active subscription.",
+      "The price-display toggle is explicitly separated from commitment and explained in place, avoiding a common billing dark pattern.",
+      "Cancellation is separated, states access-end and member consequences, requires an acknowledgement, defaults to a safe exit, and supports reactivation.",
+      "State coverage is broad and honest: skeleton loading, load-error retry, Free empty states, failed payment that remains unresolved after a card update, and prototype-labelled success copy."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "analysis.md lines 32-47 and 137-166 correctly identify cancellation risk, invisible limits, renewal ambiguity and role confusion; screenshots show Pro, $29/month, next payment Dec 6, 2026 and 18 of 20 members. However, analysis.md lines 23-26 invent a cancellation consequence that only three members keep access, and app.js lines 1595-1606 present that unsupported rule as fact in the cancellation dialog.",
+      "ux_reasoning": "analysis.md lines 49-85 defines a coherent settings IA with Plan & usage, Payment & invoices and Cancellation, plus an on-page nav. app.js lines 995-1214 implement a two-step change flow that preselects the current plan, compares plans and cycles in one place, shows effective date, estimated charge, next payment and seat overflow before confirmation.",
+      "design_judgment": "The settings rail plus on-page navigation and plan/usage card pair are appropriate for a B2B billing context, and the cancellation section is deliberately quiet (screenshots/desktop.png). Judgment is weakened by hiding all plan/limit comparison behind a modal and by the fixed prototype panel's visual weight; the mobile capture also shows that panel covering product content.",
+      "visual_hierarchy": "Rendered evidence is equivalent: screenshots/desktop.png at 1280x1606 and screenshots/mobile.png at 390x2530, with no horizontal overflow in test-output/checks.json. Desktop hierarchy is clear through the h1, two summary cards and section headings, but the dark prototype panel competes for attention and the mobile panel overlays the Member usage card, hiding the 18/20 figure and meter (screenshots/mobile.png, roughly y=640-710).",
+      "interaction_completeness": "app.js includes loading skeleton, load error with retry, empty invoices, past due, near/at limit, plan and cycle changes with review, downgrade acknowledgement, scheduled-change undo, card validation plus simulated provider failure, busy/disabled states, cancellation gating and reactivation. test-output/checks.json confirms 24 named controls, one h1, no console errors and no overflow.",
+      "accessibility_responsiveness": "test-output/checks.json shows zero axe violations on mobile and a serious target-size violation with 2 nodes on desktop; all controls have accessible names and there is no horizontal overflow at 390px. Heading text is concatenated as 'ProMonthly' in checks.json because the badge sits inside the plan heading, and the mobile prototype overlay obscures the usage meter in the captured state.",
+      "implementation_quality": "app.js implements Luhn card validation, expiry/CVC/postal checks, first-error focus, dialog busy locking, Escape/backdrop blocking while busy, focus restoration, toasts and undo. `node --check app.js` passes. The claimed 36/36 assertion suite is not included in test-output/checks.json, so only the rendered summary checks are independently evidenced."
+    },
+    "critical_defects": [
+      "The supplied mobile screenshot has the fixed prototype-controls bar covering the Member usage card's 18 of 20 count and progress meter, so the primary limit information is not visible in the rendered mobile evidence.",
+      "The cancellation dialog asserts that only three members can keep access after cancelling, an unsupported product rule absent from the task brief and presented to the owner as fact."
+    ],
+    "strengths": [
+      "Settings rail and on-page navigation place billing in a believable, scalable product context.",
+      "Plan and usage are adjacent cards, with 18 of 20 members, 2 seats left and the consequence of reaching the limit stated plainly.",
+      "The change-plan dialog preselects the current plan, combines plan and cycle comparison, and reviews effective date, estimated charge, next payment and seat overflow before commitment.",
+      "Cancellation is separated in a quiet section, lists consequences, requires acknowledgement, and provides a scheduled state with reactivation.",
+      "Engineering detail is stronger than the evidence average: Luhn validation, busy locking, focus restoration, persistent scheduled-change state with undo, and explicit no-charge copy."
+    ]
+  },
+  "comparison": "Candidate A is the stronger deliverable overall, with a weighted score of 3.70 versus 3.45 for Candidate B. Both are scoreable on visual hierarchy because each supplies 1280px desktop and 390px mobile renders. Candidate A wins on at-a-glance plan/limit comparison, separation of price display from commitment, cancellation copy that avoids an unsupported member-selection policy, and cleaner mobile hierarchy; its main weakness is a serious axe color-contrast finding on six nodes. Candidate B has the more realistic settings IA, stronger engineering (Luhn, busy locking, focus restore, undo), and a cleaner axe result on mobile, but its inline experience hides plan comparison behind a dialog, its mobile screenshot obscures the usage meter with prototype chrome, and its cancellation dialog asserts an unverified member-access rule. Neither candidate's claimed interaction-suite pass counts could be verified from the supplied checks.json files.",
+  "limitations": "This is one blinded judge pass over static full-page screenshots, source files and automated-check summaries, not a statistical test or proof of causation. The screenshots show one owner/near-limit state per candidate, not their dialogs, error, loading, Free, member or cancellation states, so those were assessed from source and prose rather than rendered evidence. Neither packet includes raw assertion output for its claimed 71-check or 36/36 interaction suite; checks.json contains only a rendered summary. No screen-reader, keyboard-only, real-device or cross-browser testing was performed here, and both use synthetic prices and dates. The packet manifests' `candidate` fields are inconsistent with their folder labels; I scored strictly by the immutable packet labels (Candidate A = condition-a, Candidate B = condition-b) and inferred no condition mapping."
+}

@@ -1,0 +1,70 @@
+{
+  "reviewer_id": "J2",
+  "pair_id": "product-onboarding-r3",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:12-24 tabulates every supplied fact; analysis.md:26-53 separates stated design assumptions (e.g. pending invites occupying a seat, email-only delivery) from an explicit 'unknowns that should not be invented' list. app.js:286-305 renders a capability-accurate Owner/Admin/Member panel and states the 5/25 limits without pricing.",
+      "ux_reasoning": "analysis.md:57-96 defines the required path as one screen/one field and justifies creating the project before invitations so an invite failure never rolls back activation; app.js:932-946 enforces that order and app.js:108-211 restores drafts into a deliberate resume screen rather than auto-jumping. analysis.md:198-216 inventories empty, validation, loading, success, partial/total failure, paused, resume and plan-limit states.",
+      "design_judgment": "analysis.md:223-250 documents eight trade-offs with alternatives and costs (one required field vs richer setup, project-before-invites, per-invite roles, three-place role education, save without confirmation, resume vs auto-resume); analysis.md:254-266 adds a risk table with residual risks and states no analytics or research are claimed.",
+      "visual_hierarchy": "screenshots/desktop.png shows a clear two-column composition with a dominant h1, a numbered three-step path, one filled primary action and a calmer aside of workspace/roles/'not asked for yet' cards; screenshots/mobile.png preserves the order with the aside stacked below the panel. styles.css:222-283 and 373-399 establish the grid and type scale. The secondary copy is visually washed out, consistent with the contrast failures in test-output/checks.json:24-41.",
+      "interaction_completeness": "app.js:858-907 implements required-name, malformed-email, duplicate-in-list and already-invited validation with aria-invalid/focus; app.js:928-946 and 966-999 show creating/sending busy states; app.js:1016-1050 retries single or all failed invites without touching the project; app.js:441-462 replaces the invite form at the Starter limit; app.js:1275-1282 saves and exits; app.js:308-326 and 361/414 explain and block the Member role.",
+      "accessibility_responsiveness": "index.html:11,31 provide a skip link and a polite live region and styles.css:107-111,1552-1560 add visible focus and reduced motion, but test-output/checks.json:24-41 records a serious color-contrast violation on 16 desktop nodes plus label-content-name-mismatch (id at lines 30-37), repeated on mobile at lines 62-79 (13 nodes). That is a concrete failure of readable helper/label text, though semantics, names and 390/1280 overflow checks pass.",
+      "implementation_quality": "app.js is a coherent vanilla module with escaped interpolation, guarded localStorage (app.js:89-133) and no console/page errors or horizontal overflow in test-output/checks.json:17-22. Maintainability is only adequate because of many inline styles (app.js:367-370, 662-675), a rolesPanel nested inside another section (app.js:540) and unused helpers such as remainingSeats (app.js:81-83)."
+    },
+    "critical_defects": [
+      "Serious axe color-contrast violations on both viewports (16 desktop / 13 mobile nodes) plus label-content-name-mismatch in test-output/checks.json:24-41 and 62-79, contradicting the accessibility claims in analysis.md:313-316.",
+      "The fixed 'Prototype controls' bar covers page content at 390px in screenshots/mobile.png (it sits over the 'Your workspace' card), so prototype tooling intrudes on the reviewable layout.",
+      "Rendered/automated evidence covers only the welcome screen; analysis.md:321-324 cites a transcript.md of exercised states that is not present in the packet, so interactive claims are verified only by reading app.js."
+    ],
+    "strengths": [
+      "Creates the project before any invitation, making activation independent of invitation success (app.js:932-946; analysis.md:84-89).",
+      "Comprehensive recovery design: per-invite retry, explicit non-destructive failure copy, save/exit and a resume screen (app.js:1016-1050, 108-211).",
+      "Role capabilities and the 5/25 member limits are explained before assignment in three places, including per-row hints (analysis.md:99-127; app.js:286-305, 508-509).",
+      "Honest scope boundary: no integrations, imports, pricing or fake project tools; the project view states it is outside the prototype (app.js:737-765)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:5-15 restates the supplied facts; analysis.md:17-29 marks nine working assumptions (Owner occupies a seat, pending invites hold seats, email delivery, 2-60 character duplicate-checked names) as decisions, and analysis.md:31-41 lists unknowns such as Admin billing rights, ownership transfer and the first work object. app.js:15-28 encodes role capabilities accurately and invents no integration, import or upgrade path.",
+      "ux_reasoning": "analysis.md:43-67 defines a two-step spine and a table of included/deferred/skippable items; app.js:933-963 creates the project before step 2, app.js:967-1020 validates and focuses the first bad email, app.js:1022-1084 preserves failed rows and offers retry without affecting the project, and app.js:830-853 implements skip/resume via a workspace resume card. The flow is sound but shallower than A's: no distinct paused screen and only one simulated failure mode.",
+      "design_judgment": "analysis.md:69-75 compares five alternatives (one field vs rich setup, forced vs optional invites, separate role screen vs in-place guide, checklist vs confirmation, failure recovery) with stated costs; analysis.md:139-146 names activation and role-skimming risks. Choices are contextual, though the case for holding a seat for pending invites is asserted more than argued.",
+      "visual_hierarchy": "screenshots/desktop.png shows a refined 288px progress rail plus a single document-like panel with a large serif 'What are you working on?' heading, one filled primary action and quiet skip link; screenshots/mobile.png collapses to one focused card with step metadata, plan chip and role line above the heading. styles.css:203-229 (serif display type), 244-252 (grid) and 1516-1536 (rail removal) keep density low and scanning easy.",
+      "interaction_completeness": "app.js:410-415 and 451-459 explain the full-plan state and disable add/send while keeping finish available; app.js:527-545 blocks Members with an explanation; app.js:1022-1084 handles sending, partial failure, retry and success; app.js:570-596 resumes drafts from the workspace. Gaps: no distinct paused screen, failure is limited to failing the last invite, and analysis.md:109's claim that a stored failure surfaces in the workspace with retry does not match the boot logic at app.js:1245-1256, which reopens onboarding step 2.",
+      "accessibility_responsiveness": "test-output/checks.json:22-26 and 45-49 report zero axe violations on desktop and mobile, one h1, no unnamed controls and no horizontal overflow at 390/1280; index.html:12,14 add skip link and live region, styles.css:500-509 visible focus and 1822-1830 reduced motion, and the rail is replaced by a mobile context line at 960px (styles.css:1516-1536). Minor gap: the mobile remove control is about 34x38px (styles.css:1693-1708), below the 44px targets claimed in analysis.md:129.",
+      "implementation_quality": "app.js is a clean, dependency-free IIFE with centralized state, escaped interpolation, guarded localStorage (app.js:106-136) and no console/page errors in test-output/checks.json:17-20. Component strings and CSS tokens are consistently organized. Residual issues are minor dead code (app.js:1103-1105) and the analysis/behaviour mismatch over failure-after-reload."
+    },
+    "critical_defects": [
+      "Only the first project step is represented in screenshots/desktop.png, screenshots/mobile.png and test-output/checks.json:5-49; the invite, feedback, failure, success and resume states have no rendered or automated evidence.",
+      "The UI states 'An invitation holds a seat until the person joins' (app.js:414) as a product rule although the brief leaves pending-invite seat occupancy unknown; analysis.md:23 flags it as an assumption, but users see it as fact.",
+      "analysis.md:109 says a failed invitation after reload appears as a workspace warning with retry, while app.js:1245-1256 reopens the onboarding invite step instead; the delivered behaviour and the written claim differ.",
+      "Mobile remove-person control is roughly 34x38px (styles.css:1693-1708), below the 44px target the analysis claims (analysis.md:129)."
+    ],
+    "strengths": [
+      "Clean, genuinely skippable two-step flow with a single primary action per screen and an explicit 'Finish setup without inviting' alternative (app.js:373-463).",
+      "Strongest rendered accessibility result in the pair: zero axe violations on both viewports plus labelled controls, live regions and 390/1280 overflow checks (test-output/checks.json:22-49).",
+      "Role guide sits directly above the role selectors with per-row hints that update on change (app.js:326-344, 361-368).",
+      "Refined visual hierarchy and responsive behavior: serif display headings, a compact progress rail that collapses to a mobile context line, and low visual noise (screenshots/desktop.png, screenshots/mobile.png; styles.css:203-252, 1516-1536).",
+      "Project creation before invites and retention of failed rows for retry keep activation separate from delivery failure (app.js:933-963, 1022-1084)."
+    ]
+  },
+  "comparison": "Both candidates are honest, skippable, project-first onboarding flows that avoid pricing, integrations and fabricated project tools. Candidate A is deeper on product model, flow reasoning and state coverage (project-before-invite rationale, pause/resume screen, per-invite retry, plan-limit and Member states), while Candidate B is stronger on rendered visual hierarchy and demonstrated accessibility (zero axe violations versus Candidate A's serious contrast failures). Weighted totals with the supplied weights are Candidate A 3.55 and Candidate B 3.40, a close result driven by different strengths rather than overall superiority; Candidate A's advantage is offset by its accessibility regressions.",
+  "limitations": "Each packet supplies only two rendered screenshots (Candidate A: welcome; Candidate B: project step 1) and checks limited to that landing screen, so visual and automated comparisons cover only those states; invite, loading, failure, success and resume screens were assessed by reading the implementations, not by executing them. No screen-reader, cross-browser or full keyboard audit was possible, both analyses cite a transcript.md that is absent, and this is a single blinded pass, not a statistical test or proof of causation."
+}

@@ -20,3 +20,13 @@ The [benchmark suite](../benchmarks/README.md) defines three representative task
 Evidence should show stronger product understanding, UX reasoning, design judgment, visual hierarchy, interaction completeness, accessibility/responsiveness and implementation quality—without unnecessary process overhead.
 
 Do not market benchmark results until real runs have been completed, documented and independently reviewed. The included scorer calculates descriptive summaries; it does not establish statistical significance or causation.
+
+## Capturing rendered evidence
+
+Use `node scripts/capture-benchmark-evidence.mjs --project <project-dir> --out <evidence-dir>` to capture desktop and mobile screenshots plus axe and DOM checks. The script serves the project from a local static server and uses the React renderer's Playwright and axe-core installation, so install the renderer dependencies first (`cd renderers/react && npm ci`).
+
+## Recorded study
+
+The Design Intelligence Pilot (see `benchmarks/studies/design-intelligence-pilot-2026-11/README.md`) is an exploratory pilot: nine pairs across the three tasks, one pinned model family, three blinded LLM judge passes per pair and no independent human reviewers. It met the pilot sample-size check but not the confirmatory multi-model or human-review minimum.
+
+A swapped-label control found a strong candidate-position effect: in six of nine pairs the same label won after the candidate packets were swapped. Treat the pilot's condition scores as confounded, not as evidence that UADI improves or harms outcomes. A confirmatory study must add independent human reviewers, a second model family and balanced candidate order.

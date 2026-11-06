@@ -25,10 +25,11 @@ UADI is successful when it measurably improves the design quality of the AI agen
 - [x] Improve design alternatives, rationale and trade-off analysis.
 - [x] Expand reusable visual and interaction patterns with implementation examples.
 - [x] Define a multi-task paired benchmark suite, blind-review protocol and local score calculator.
-- [ ] Run paired benchmarks with and without UADI across representative tasks.
+- [x] Run an exploratory paired benchmark pilot with and without UADI across representative tasks. See the [pilot record](benchmarks/studies/design-intelligence-pilot-2026-11/README.md); it is not confirmatory and its condition scores are confounded by a candidate-position effect.
+- [ ] Complete an independent human-reviewed, multi-model confirmatory benchmark and resolve the candidate-position bias ([#48](https://github.com/nv-hoai/uadi/issues/48)).
 - [x] Improve accessibility and interaction review guidance.
 
-**Success signal:** Blind or structured reviews show more useful, coherent and usable results than the same agent working without UADI.
+**Success signal:** Blind or structured reviews show more useful, coherent and usable results than the same agent working without UADI. Not yet met: the exploratory pilot was inconclusive and no independent human review has been completed.
 
 ## Phase 3 — Reusable design intelligence
 

@@ -1,0 +1,70 @@
+{
+  "reviewer_id": "J2",
+  "pair_id": "operations-dashboard-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "Candidate A analysis.md §1 'Metric contracts' (lines 21-25) defines the on-time denominator (on-time + late), failed attempts as counts, order volume in orders, and percentage-point comparisons; §1 'Evidence classes' (lines 38-43) separates supplied facts, synthetic data, prototype assumptions and unknowns. The rendered figures reconcile: 3,894 + 102 + 170 = 4,166 and 3,894/(3,894+102) = 97.4% (screenshots/desktop.png).",
+      "ux_reasoning": "analysis.md §4 (lines 91-100) makes the status filter change the analytical question (a specific status hides the rate), preserves filters in the dialog and discloses the 20-row sample; §5 (lines 102-115) separates no-data from true zero and excludes North from both periods in partial. screenshots/desktop.png has the 'Largest change' callout linking East orders and the region table sorted lowest rate first.",
+      "design_judgment": "analysis.md §3 (lines 61-89) reasons through the 0-100% rate axis, zero-based failed bars, two charts instead of a dual axis, percentage points instead of percent, and comparison-off behavior; §7 (lines 125-136) names misleading interpretations. The rendered UI follows: deltas and the insight use pts, and the chart subtitle states the separate scales (screenshots/desktop.png).",
+      "visual_hierarchy": "screenshots/desktop.png has a clear decision order: dark on-time-rate hero, amber largest-change band, chart/status two-column, then the region table, with consistent type and spacing. The weakness is the primary chart: the rate series is pinned along the 100% gridline with crowded markers; mobile.png (580px wide for a 390px viewport per checks.json) shows the series at the top edge and region columns cut at 'FAIL'.",
+      "interaction_completeness": "analysis.md §5 (lines 102-115) covers ready, loading, stale, partial, no-data, error, true-zero and comparison-off; app.js 1069-1074 opens the native dialog and focuses close, 1076-1085 removes figures in error, 1088-1101 handles no-data. Missing: chart-segment drill and any per-order detail; the order destination is a 20-row sample dialog (analysis.md line 100).",
+      "accessibility_responsiveness": "test-output/checks.json desktop (lines 31-42) and mobile (lines 70-81) report only one axe violation, label-content-name-mismatch (3 serious nodes), with 0 controls without accessible names, one h1 and main. But mobile reports document_width 580 vs client_width 390 (lines 65-67), a 190px reflow overflow; analysis.md lines 119-123 lists the skip link, live region, focus-visible styles, dialog and table alternatives.",
+      "implementation_quality": "app.js is 1,263 lines and passes node --check; checks.json reports no console or page errors in either viewport (lines 29-30 and 68-69). Weaknesses: the mobile overflow above and the rate series visually pinned at 100% in screenshots/desktop.png; the claimed '39 DOM behaviour checks' (analysis.md line 142) are not included in test-output/checks.json, which carries only structural and axe results."
+    },
+    "critical_defects": [
+      "Primary on-time chart is pinned to the 100% gridline at 97.4% (screenshots/desktop.png); on mobile the line sits on the top edge with crowded tick labels (screenshots/mobile.png), so the main chart cannot show the daily movement it is meant to explain.",
+      "Mobile document is 580 CSS px wide in a 390 px viewport (test-output/checks.json mobile block), a 190 px reflow overflow; the Regions table cuts off at 'FAIL' and requires sideways scrolling (screenshots/mobile.png).",
+      "Axe reports label-content-name-mismatch on 3 serious nodes in both viewports (test-output/checks.json lines 31-42 and 70-81). No chart-segment drill and no per-order detail; drill-down is a 20-row sample dialog (analysis.md line 100)."
+    ],
+    "strengths": [
+      "Explicit evidence classes separate supplied facts, synthetic data, prototype assumptions and unknowns (analysis.md lines 38-43), and the delivered numbers reconcile across KPI cards, status mix and region table (screenshots/desktop.png).",
+      "Decision-first hierarchy: dark on-time-rate hero, 'Largest change this period' callout naming East and linking its orders, chart/status pair, and a region table sorted by lowest rate (screenshots/desktop.png).",
+      "State model distinguishes stale, partial (North excluded from both periods), no-data, error with no stale figures, true zero versus empty result, and comparison-off (analysis.md lines 102-115); the status filter changes the question instead of leaving a stale rate (lines 93-98).",
+      "Accessibility basics are solid: skip link, live region, native dialog focus handling, labelled controls, table alternatives, reduced motion, and no axe contrast violation (analysis.md lines 119-123; test-output/checks.json).",
+      "The 15-minute delay and snapshot are explicit without 'live' language (screenshots/desktop.png; analysis.md lines 31-34); no revenue, forecasts, causes or targets are invented."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md §2 (lines 20-34) defines the delivered-only rate denominator, promised-date basis, percentage-point changes, the 15-minute delay and the undefined rate for non-delivered status filters; §8 (lines 100-124) lists guarded misinterpretations and unresolved risks. However, screenshots/desktop.png shows 424 failed attempts against 643 orders in 'Failed attempt' status, impossible under the §2 line 24 rule that one order can have several attempts and line 30's common promised-date basis; app.js 160, 166 and 175 generate the two independently.",
+      "ux_reasoning": "analysis.md §4 (lines 52-60) gives the investigate-and-return journey with context chips and filter consistency; §6 (lines 75-83) preserves period, region, status and day, returns focus to the originating row and returns to the overview when a toolbar filter changes. screenshots/desktop.png shows the headline naming 85.0%, -1.3 pp, West and 1,862 late orders, with the sorted regional table and drill entry points.",
+      "design_judgment": "analysis.md §5 (lines 62-73) justifies three small multiples, zero baselines, the 0-100% rate axis, the position-aligned previous-line caveat, lowest-first region sorting, delta polarity and table alternatives; §8 (lines 116-124) names the sensitivity and 30-day alignment risks. The rendered UI uses pp for rate changes and percent for counts (screenshots/desktop.png).",
+      "visual_hierarchy": "screenshots/desktop.png has a clear top-to-bottom order: header, sticky filter bar, one-sentence headline, three KPI cards, three aligned small multiples, sorted region table and status mix; it is dense but scannable with consistent type. Weaknesses: the three KPI cards are visually equal, and the expanded 'Prototype controls' panel covers the 5 Nov and 6 Nov bars; mobile.png (392x2759) keeps a clean single column but the same panel overlaps the rate-card sparkline.",
+      "interaction_completeness": "analysis.md §7 (lines 87-96) covers loading, ready, stale, partial, no-data, error, empty drill and undefined metric; §6 lists drill from KPI, chart day, region row and status row plus an order detail drawer. app.js 1557-1583 moves focus into the drawer, traps Tab, closes on Escape and restores focus; 1615-1663 handles custom-range validation.",
+      "accessibility_responsiveness": "app.js 495, 539, 566 and 584 give chart groups and keyboard-focusable hit areas accessible labels; 1557-1583 traps and restores drawer focus. test-output/checks.json desktop (lines 25-42) and mobile (lines 64-81) report two axe violations: color-contrast (3 serious nodes) and label-content-name-mismatch (3 serious nodes), with 0 unnamed controls, one h1 and main. Mobile width is 392 vs 390 (lines 59-61), a 2px overflow.",
+      "implementation_quality": "app.js is 1,981 lines and passes node --check; checks.json reports no console or page errors (lines 23-24 and 62-63), and the rendered pages support the feature set in the screenshots. The data generator (app.js 160, 166, 175) produces 643 failed-status orders from 4.5% of volume but only 424 attempts from failBase, so the primary metrics contradict; the default expanded prototype panel also covers chart bars (screenshots/desktop.png)."
+    },
+    "critical_defects": [
+      "Core metric contradiction: the KPI shows 424 failed delivery attempts while the status mix shows 643 'Failed attempt' orders (screenshots/desktop.png); with B's own 'one order can have several attempts' rule and common promised-date basis (analysis.md lines 24 and 30), attempts cannot be fewer than failed-status orders. app.js 160, 166 and 175 generate the two from independent rates.",
+      "The fixed, expanded 'Prototype controls' panel covers the right end of the orders and failed-attempt charts (5-6 Nov bars) on desktop (screenshots/desktop.png) and overlaps the rate-card sparkline on mobile (screenshots/mobile.png).",
+      "Axe reports color-contrast on 3 serious nodes in both viewports, in addition to label-content-name-mismatch on 3 serious nodes (test-output/checks.json desktop lines 25-42 and mobile lines 64-81)."
+    ],
+    "strengths": [
+      "Investigation surface is the most complete of the pair: KPI, region, status and chart-day drill; orders view with context chips; order detail drawer with focus trap, Escape and focus return; toolbar filter changes return to the overview (analysis.md lines 75-83; app.js 1557-1583).",
+      "Weekly-review headline names 85.0%, -1.3 pp, West and 1,862 late orders in one sentence (screenshots/desktop.png), then supports it with a lowest-first regional table, pp deltas and failed-attempt counts.",
+      "Chart discipline: separate small multiples, zero-based bars, a 0-100% rate axis, table alternatives and keyboard-focusable chart hit areas (analysis.md lines 62-73; app.js 495-584).",
+      "State model includes an undefined rate ('-' with disabled drill), empty drill versus whole-period no-data, partial coverage with disabled regions, and error with no figures (analysis.md lines 87-96).",
+      "Sticky desktop filter bar and explicit selected/compared ranges keep period context visible (screenshots/desktop.png; analysis.md lines 40-41); the mobile table hides columns cleanly rather than scrolling (screenshots/mobile.png)."
+    ]
+  },
+  "comparison": "Candidate A has the more rigorous product model and the more decisive hierarchy: its evidence classes, metric contracts and arithmetic are consistent, and the dark rate card plus largest-change callout answer 'what changed and where' fastest. Candidate B has the stronger investigation surface: chart-day drill, an orders list and order detail drawer with focus management, context chips, custom range and a cleaner mobile table. Both carry major defects: Candidate A's primary chart is effectively a flat line at the 100% boundary and its mobile document overflows 190 px; Candidate B's 424 attempts versus 643 failed-status orders contradicts its own definition, and its expanded prototype panel covers chart bars. Using the supplied weights, the totals are 3.50 for Candidate A and 3.50 for Candidate B.",
+  "limitations": "Only ready-state desktop and mobile screenshots are included for either candidate; loading, stale, partial, no-data, error, empty-result and open-dialog states are assessed from analysis and source, not rendered evidence. test-output/checks.json contains structural and axe results only; Candidate A's claimed 39 DOM behavior checks and Candidate B's behavior claims are not supplied as logs. No screen-reader, cross-browser, real-data, time-zone or high-volume testing was available. Candidate A's mobile capture is 580 px wide because of the 190 px overflow, so only the left 390 px represents the viewport. All data is synthetic; this is one blinded pass, not a statistical test and not proof of causation."
+}

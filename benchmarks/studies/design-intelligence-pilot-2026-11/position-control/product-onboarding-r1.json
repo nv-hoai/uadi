@@ -1,0 +1,75 @@
+{
+  "reviewer_id": "C1",
+  "pair_id": "product-onboarding-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "analysis.md §1 separates given facts, seven numbered assumptions (for example that outstanding invitations count toward the Starter limit) and open questions; §5 and §7 keep activation risks and unresolved policy questions explicit. It invents no pricing, upgrade, integration or analytics behavior.",
+      "ux_reasoning": "analysis.md §2 gives an explicit journey (create project -> optional invite -> done; Save & exit -> paused workspace -> resume) and §3 justifies project-first sequencing and deferred workspace/plan questions. app.js handleProjectSubmit creates the project before entering 'invite', and primaryButton() offers 'Continue without inviting' when the list is empty, so the project is secured before any invitation decision.",
+      "design_judgment": "The role guide is placed above the selectors (analysis.md §3; app.js roleCardsHTML/inviteScreen), invitations are capped at four with 'Starter limit reached' and no upgrade path (seatMeterHTML), and the done screen makes Open project primary. Weaker choices: the optional description is permanently expanded, and a three-step rail plus workspace card give a one-field task more chrome than necessary.",
+      "visual_hierarchy": "screenshots/desktop.png (1280x988) has one dominant serif H1, a short lede, two clearly labeled fields and a single deep-green CTA inside one panel; mobile.png (390x1096) stacks the same order. test-output/checks.json confirms document_width = client_width (1280 and 390, no horizontal overflow). The floating Prototype controls pill overlaps the 'Next' note on mobile.",
+      "interaction_completeness": "analysis.md §4 and app.js implement empty workspace, name validation with focus return, a creating spinner with aria-busy, success, per-row invalid/duplicate/seat-cap validation, partial invitation failure with Retry, Save & exit, localStorage reload persistence, resume, and Owner/Admin/Member gating. Project-creation failure is not simulated, although the brief only explicitly demands invitation failure.",
+      "accessibility_responsiveness": "test-output/checks.json reports axe violations 0, 30 passes, controls_without_accessible_name 0, h1_count 1, has_main true, and horizontal_overflow false at both 1280 and 390. Source adds a skip link, heading/error focus management, aria-live announcements, aria-busy, labeled inputs and reduced-motion handling (styles.css line 2002).",
+      "implementation_quality": "app.js is a structured IIFE with escapeHtml, normalized loadState, asyncEpoch guards against stale async work, delegated events, explicit guards while busy and localStorage persistence; styles.css uses design tokens and defined 1040/980/680/430px breakpoints. Evidence is limited to checks.json rather than a test log."
+    },
+    "critical_defects": [
+      "None blocking the solo or invitation paths. Minor: no project-creation failure state is demonstrated, and the mobile Prototype controls overlay covers body copy in screenshots/mobile.png."
+    ],
+    "strengths": [
+      "Project is created before roles or invitations, and the solo path is explicit ('Continue without inviting', 'Not now', and a solo success message).",
+      "Role capabilities appear as three compact cards before the role selector; the Starter limit is visible and enforced without inventing pricing or upgrades.",
+      "Complete invitation recovery model: per-row validation, sending state, sent/failed rows, retry, continue-without-inviting and saved unsent drafts.",
+      "Clean rendered hierarchy and clean automated accessibility summary (0 unnamed controls, one h1, no overflow)."
+    ],
+    "missing_evidence": [
+      "analysis.md §8 says verification is recorded in transcript.md, but no transcript.md is present in the packet; checks.json covers only the initial rendered/accessibility state.",
+      "Only the create screen is captured at both viewports; the invite, role, error, success and resume screens have no rendered screenshots."
+    ],
+    "weighted_score": 3.85
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md §1 separates nine supplied facts, seven explicit assumptions and eight unknowns, including the load-bearing assumptions that the Owner consumes a Starter seat and that pending invitations reserve seats. §8 states activation risks and open questions; no email delivery, analytics, integration or upgrade behavior is claimed as real.",
+      "ux_reasoning": "analysis.md §3 makes the project name the only required input and §4.1 sequences name -> create -> success -> Open project, placing invitations in a separate optional branch after the project exists. §4.2 defers workspace name, team size and use case, and §4.5 explains the seat-limit decision. app.js makes Open project the success screen's primary action.",
+      "design_judgment": "index.html collapses the optional description behind a details element (lines 83-92), keeps one primary action on the success card, and shows '5 members in total, including you' with Team as a footnote rather than an upgrade CTA. The mobile decision to place the full role guide after the invitation form weakens 'explain capabilities before assigning roles'.",
+      "visual_hierarchy": "screenshots/desktop.png (1280x921) has a clear H1 and form-first hierarchy, but the form card and 'Your workspace at a glance' card carry similar weight and a large lower area is unused. screenshots/mobile.png (390x1380) is much taller and the fixed Prototype controls bar covers the 'Your workspace at a glance' heading. checks.json reports no horizontal overflow at either viewport.",
+      "interaction_completeness": "analysis.md §5 and app.js cover empty, name validation, create loading, create failure with retained values, confirmation, per-row invitation validation, partial failure with Try again, seat limit, skip on both steps, resume card, reload persistence, project shell and eight demo states. The supplied checks.json verifies rendering/accessibility only, not these interaction paths.",
+      "accessibility_responsiveness": "test-output/checks.json reports axe violations 0 and no overflow, but h1_count = 5 and controls_without_accessible_name = 2 of 40 at both viewports. Source uses native controls, fieldset legends, progressbars and box-shadow focus rings (styles.css lines 639-644); the unnamed controls and duplicate page-level h1s need correction.",
+      "implementation_quality": "app.js uses consistent escaping for injected HTML, guarded state transitions, dynamic invite fieldsets/legends and localStorage persistence. The static multi-view document leaves five h1s in the DOM and two controls unnamed, and the claimed 41-check suite is not supplied, so generated-markup QA is weaker than candidate A's."
+    },
+    "critical_defects": [
+      "Non-blocking requirement gap: below 720px the complete 'What each role can do' guide renders after the invitation form (index.html 207-289; styles.css @media 720), so the full capability explanation is not before the first role selection, although a summary line and per-select help are present.",
+      "Accessibility defect to verify and fix: test-output/checks.json reports 2 of 40 controls without an accessible name and 5 h1 elements in the document."
+    ],
+    "strengths": [
+      "Shortest credible activation path: one required field, project creation, then Open project as the primary success action.",
+      "Invitations are clearly a post-activation, optional branch, with skip on both steps and a contextual resume card rather than a checklist.",
+      "Seat and role copy is explicit that the Owner is included and that pending rows reserve seats; no pricing or upgrade flow is fabricated.",
+      "State model includes project-creation failure as well as partial invitation failure and retry, exceeding the brief's explicit failure-state requirement."
+    ],
+    "missing_evidence": [
+      "analysis.md §10 claims 41 automated checks passed, but the packet contains only test-output/checks.json, which holds desktop/mobile render and axe summaries, not the claimed 41-check log.",
+      "Only the create screen is captured at both viewports; success, invite, error, project-shell and resume screens have no rendered screenshots."
+    ],
+    "weighted_score": 3.5
+  },
+  "comparison": "Candidate A is the stronger delivered artifact overall (3.85 vs 3.50 weighted). Candidate A has the more authoritative rendered hierarchy, a cleaner accessibility result (0 unnamed controls and one h1, versus 2 unnamed of 40 and five h1s for Candidate B) and more defensive implementation structure. Candidate B has the better activation design: name -> create -> Open project, with invitations moved into a clearly optional post-success branch, whereas Candidate A interposes a full optional invitation screen before its completion screen and requires an extra acknowledgement to reach Open project. Candidate B also models project-creation failure, which Candidate A does not, but Candidate B's mobile role-guide order and generated-markup accessibility issues cost it in the rubric.",
+  "limitations": "This is one blinded judge pass, not a statistical test and not proof of causation. Only the create screen is rendered in each packet (desktop 1280x988/921, mobile 390x1096/1380); I inspected those screenshots directly but did not execute the prototypes, so interaction completeness is judged against source code and supplied checks rather than live runs, and no manual screen-reader or cross-browser test was performed. Both packets omit the end-to-end verification logs their analyses claim. The packet manifests contain candidate metadata fields that conflict with the immutable packet labels assigned in instructions.md and judge-prompt.md; I ignored those fields, did not read mapping.json or other passes, and scored only the evidence inside inputs/."
+}
