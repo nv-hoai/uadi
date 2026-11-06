@@ -23,7 +23,7 @@ UADI is successful when it measurably improves the design quality of the AI agen
 - [x] Improve end-to-end product discovery and context synthesis through representative worked examples.
 - [x] Deepen UX reasoning, task flows, edge cases and content design.
 - [x] Improve design alternatives, rationale and trade-off analysis.
-- [ ] Expand reusable visual and interaction patterns with implementation examples.
+- [x] Expand reusable visual and interaction patterns with implementation examples.
 - [x] Define a multi-task paired benchmark suite, blind-review protocol and local score calculator.
 - [ ] Run paired benchmarks with and without UADI across representative tasks.
 - [x] Improve accessibility and interaction review guidance.

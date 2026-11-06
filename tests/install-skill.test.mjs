@@ -35,6 +35,13 @@ const INSTALLED_FILES = [
   "component-catalog/catalog.json",
   "examples/minimal/design-specification.json",
   "examples/subscription-settings/README.md",
+  "examples/product-onboarding/README.md",
+  "examples/product-onboarding/index.html",
+  "examples/operations-dashboard/README.md",
+  "examples/operations-dashboard/app.js",
+  "examples/operations-dashboard/data.js",
+  "examples/operations-dashboard/index.html",
+  "examples/operations-dashboard/styles.css",
   "examples/sso-discovery/README.md",
   "examples/sso-discovery/app/app.js",
   "examples/sso-discovery/app/index.html",
@@ -124,7 +131,9 @@ test("rejects unsupported agents", async () => {
 // repository-only evidence tooling and is not copied into host projects.
 const EXTERNAL_SKILL_LINKS = new Map([
   ["docs/BENCHMARKING.md", new Set(["../benchmarks/README.md"])],
-  ["examples/subscription-settings/README.md", new Set(["../../benchmarks/subscription-settings.md"])]
+  ["examples/subscription-settings/README.md", new Set(["../../benchmarks/subscription-settings.md"])],
+  ["examples/product-onboarding/README.md", new Set(["../../benchmarks/tasks/product-onboarding.md"])],
+  ["examples/operations-dashboard/README.md", new Set(["../../benchmarks/tasks/operations-dashboard.md"])]
 ]);
 
 function relativeMarkdownLinks(markdown) {

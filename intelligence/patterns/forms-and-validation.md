@@ -95,3 +95,7 @@ Inline validation can reduce correction effort but may interrupt typing when app
 - Disabling submit without explaining what is missing.
 - Splitting a trivial form into several steps.
 - Showing a success toast before the save is confirmed.
+
+## Implementation example
+
+The [product onboarding example](../../examples/product-onboarding/README.md) validates a project name and invitation email, associates errors with their fields and returns focus on failure. The [SSO discovery example](../../examples/sso-discovery/README.md) validates a metadata URL in `app/app.js`. Both are local prototypes without server-side validation.

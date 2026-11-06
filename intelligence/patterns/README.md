@@ -13,6 +13,17 @@ These patterns describe recurring user problems and useful solution structures. 
 | [Onboarding and activation](onboarding-and-activation.md) | New users need to reach a first meaningful outcome | Setup friction, forced invitations and activity mistaken for value |
 | [Metrics and data visualization](metrics-and-data-visualization.md) | Users monitor performance, compare periods or investigate signals | Misleading metrics, unclear freshness and charts disconnected from decisions |
 
+## Reference implementations
+
+Each pattern ends with an implementation example. These runnable prototypes show one contextual adaptation, not a mandatory component:
+
+- [Subscription settings](../../examples/subscription-settings/README.md) — settings information architecture, permission-aware actions, destructive actions and forms.
+- [First-run onboarding](../../examples/product-onboarding/README.md) — onboarding, forms and validation.
+- [Operations dashboard](../../examples/operations-dashboard/README.md) — data tables, metrics, status and recovery.
+- [SSO discovery](../../examples/sso-discovery/README.md) — settings information architecture, permission-aware actions, destructive actions, status and recovery.
+
+The examples use synthetic data and state their limitations. Inspect the decisions and interactions; do not copy the visual answer without checking the current product's context.
+
 ## Selecting a pattern
 
 Start with the user's task and the information they need to make progress. Use a pattern only when it addresses a real problem in the current context. Patterns can be combined when a flow crosses concerns—for example, a permission-aware form or a filterable table with destructive bulk actions.

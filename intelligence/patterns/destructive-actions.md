@@ -45,3 +45,7 @@ Use a correctly labelled dialog when a modal is justified. Keep keyboard focus w
 ## Trust rule
 
 The destructive path must be as understandable and direct as the non-destructive path. Do not hide cancellation behind repeated retention offers, confusing labels or unnecessary contact steps.
+
+## Implementation example
+
+The [subscription settings example](../../examples/subscription-settings/README.md) shows a cancellation confirmation that states the effective date, plan change and access consequence. The [SSO discovery example](../../examples/sso-discovery/README.md) shows a separate enforcement-off confirmation that explains the password and session behavior. Both simulate the result locally and do not mutate a real subscription or workspace.
