@@ -9,7 +9,8 @@
     "validate": "node scripts/validate.mjs",
     "prototype:check": "node scripts/prototype-check.mjs",
     "test": "node --test",
-    "benchmark:score": "node scripts/score-benchmark.mjs"
+    "benchmark:score": "node scripts/score-benchmark.mjs",
+    "benchmark:prepare": "node scripts/prepare-benchmark-pair.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
