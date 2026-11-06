@@ -13,6 +13,9 @@ function fixture() {
     pairs: [{
       pair_id: "subscription-01",
       task_id: "subscription-settings",
+      model_family: "Example family",
+      model_version: "Example model v1",
+      repetition: 1,
       baseline: { duration_seconds: 100, reviewers: [reviewer("r1", 2), reviewer("r2", 2)] },
       uadi: { duration_seconds: 90, reviewers: [reviewer("r1", 3), reviewer("r2", 3)] }
     }]
@@ -27,6 +30,9 @@ test("calculates paired weighted scores, deltas and time change", () => {
   assert.equal(result.pairs_won_by_uadi, 1);
   assert.equal(result.time_change_percent, -10);
   assert.equal(result.task_count, 1);
+  assert.equal(result.pairs[0].model_family, "Example family");
+  assert.equal(result.pairs[0].model_version, "Example model v1");
+  assert.equal(result.pairs[0].repetition, 1);
 });
 
 test("requires at least two independent reviewers per condition", () => {
