@@ -9,7 +9,7 @@ These patterns describe recurring user problems and useful solution structures. 
 | [Destructive actions](destructive-actions.md) | An action can remove data, access, money or service | Accidental commitment and unclear consequences |
 | [Status, empty states and recovery](status-and-recovery.md) | Users depend on asynchronous or incomplete system data | Uncertainty, dead ends and failed task recovery |
 | [Data tables and filtering](data-tables-and-filtering.md) | Users scan, compare, filter or act on multiple records | Poor findability, weak comparison and unsafe bulk actions |
-| [Forms and validation](forms-and-validation.md) | Users enter or change structured information | Unnecessary effort, late errors and lost input |
+| [Forms and validation](forms-and-validation.md) | Users enter or change structured information | Unnecessary effort, late errors and lost input |\n| [Onboarding and activation](onboarding-and-activation.md) | New users need to reach a first meaningful outcome | Setup friction, forced invitations and activity mistaken for value |\n| [Metrics and data visualization](metrics-and-data-visualization.md) | Users monitor performance, compare periods or investigate signals | Misleading metrics, unclear freshness and charts disconnected from decisions |
 
 ## Selecting a pattern
 
