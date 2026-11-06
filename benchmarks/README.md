@@ -34,9 +34,9 @@ For every pair:
 
 ### Review independence, repeated judging and labels
 
-For a confirmatory result, use at least two human reviewers who did not produce either condition and who score independently. Two model calls, multiple models from one provider, or multiple calls in one session are not independent human reviewers. They may be used as supplementary exploratory judging only.
+For a confirmatory result, use at least two human reviewers who did not produce either condition and who score independently. Record each reviewer with `"type": "human"` and `"independent": true`; the scorer will not count a panel without both fields toward the confirmatory human-review minimum. Two model calls, multiple models from one provider, or multiple calls in one session are not independent human reviewers and must be recorded with `"type": "llm"`. They may be used as supplementary exploratory judging only.
 
-For an LLM-judge panel, run at least **three separate judge passes per pair**. Each pass must use a fresh context, the same complete evidence packet, the same rubric and the same candidate order; do not let judges see previous scores or notes. Use stable reviewer IDs (for example, J1, J2, J3) and retain each pass independently. Three passes from one model are repeated measurements, not three independent human reviewers and not a substitute for the human panel.
+For an LLM-judge panel, run at least **three separate judge passes per pair**. Each pass must use a fresh context, the same complete evidence packet, the same rubric and the same candidate order; do not let judges see previous scores or notes. Use stable reviewer IDs (for example, J1, J2, J3), record `"type": "llm"` and an optional `provenance` string (model/version and pass identifier), and retain each pass independently. Three passes from one model are repeated measurements, not three independent human reviewers and not a substitute for the human panel. The scorer reports LLM judge passes separately and never counts them toward the human-review minimum.
 
 Prevent arm-label swaps by using the exact stable labels **Candidate A** and **Candidate B** in every prompt and in every evidence filename. Candidate A always means the contents of `blind/condition-a`; Candidate B always means `blind/condition-b`. Do not rename these candidates X/Y, infer their identity from content, or change the mapping between judge passes. The coordinator-only `mapping.json` maps those folders to baseline/UADI; judges must not receive it while condition blinding is required. Use [JUDGE-PROMPT.md](JUDGE-PROMPT.md) verbatim and attach the same manifest to all passes. After all scores are locked, the coordinator applies the private mapping once. Never ask a judge to guess which candidate is UADI.
 
@@ -67,9 +67,9 @@ Weighted score = sum of (dimension score / 4 × dimension weight). Maximum 100.
 
 ## Record and calculate results
 
-Start with [results.template.json](results.template.json). It contains one clearly synthetic example pair to verify the scorer; replace the entire sample with real observations before reporting any result. Add one entry per paired run. Each pair must record task_id, model_family, exact model_version and repetition number. Each condition must contain elapsed time in seconds and at least two independent reviewer IDs with all seven 0–4 dimension scores. Keep study.model as a human-readable study-level summary; pair-level model fields are the source of truth for multi-model analysis.
+Start with [results.template.json](results.template.json). It contains one clearly synthetic example pair to verify the scorer; replace the entire sample with real observations before reporting any result. Add one entry per paired run. Each pair must record task_id, model_family, exact model_version and repetition number. Each condition must contain elapsed time in seconds and at least two reviewers with all seven 0–4 dimension scores; each reviewer must declare `id`, `type` (`human` or `llm`) and `independent` (boolean), plus optional `provenance`. Keep study.model as a human-readable study-level summary; pair-level model fields are the source of truth for multi-model analysis.
 
-The same reviewer IDs must appear in both conditions for a pair. Keep IDs anonymous (for example, R1 and R2); do not store personal information.
+The same reviewer IDs must appear in both conditions for a pair, with the same `type` and `independent` values. Keep IDs anonymous (for example, R1 and R2); do not store personal information.
 
 Run the scorer:
 
@@ -78,7 +78,7 @@ node scripts/score-benchmark.mjs benchmarks/my-study.json
 npm test
 ~~~
 
-The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/losses, per-dimension deltas and elapsed-time change. It also assesses the sample against the exploratory (9-pair) and confirmatory multi-model (18-pair) minimums and lists missing model/task/repetition coverage. This is a protocol check, not a statistical-significance test. It rejects incomplete scores, mismatched reviewer panels and malformed pairs. A negative time-change percentage means the UADI condition was faster; a positive value means it took longer.
+The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/losses, per-dimension deltas and elapsed-time change. It also assesses the sample against the exploratory (9-pair) and confirmatory multi-model (18-pair) minimums and lists missing model/task/repetition coverage. Confirmatory qualification additionally requires at least two eligible independent human reviewers per condition; `human_review_minimum_met` reports that gate, and `llm_judge_passes` counts supplementary LLM passes separately. This is a protocol check, not a statistical-significance test. It rejects incomplete scores, mismatched reviewer panels, missing reviewer provenance and malformed pairs. A negative time-change percentage means the UADI condition was faster; a positive value means it took longer.
 
 ## Interpretation and reporting
 

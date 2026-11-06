@@ -7,7 +7,7 @@ A working React reference implementation for the [subscription settings benchmar
 From `renderers/react/`:
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 

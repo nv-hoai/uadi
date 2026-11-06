@@ -2,6 +2,8 @@ node_modules/
 **/node_modules/
 **/dist/
 coverage/
+renderers/react/test-results/
+renderers/react/playwright-report/
 .DS_Store
 .env
 .env.*

@@ -77,7 +77,7 @@ The installer uses Node.js built-ins only and copies the complete portable skill
 The design capability itself does not require installation. If you want to validate repository artifacts:
 
 ```bash
-npm install
+npm ci
 npm test
 npm run validate -- examples/minimal/project-context.json examples/minimal/discovery-result.json examples/minimal/design-specification.json
 ```

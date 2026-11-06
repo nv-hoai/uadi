@@ -9,7 +9,7 @@ The [benchmark suite](../benchmarks/README.md) defines three representative task
 - Compare the same agent/model version, settings, tools and task context with and without UADI.
 - Start each run from an identical clean project snapshot.
 - Randomize condition order and blind reviewers to the condition where practical.
-- Use at least two independent reviewers and repeat each task.
+- Use at least two independent human reviewers and repeat each task.
 - Score actual product outcomes, not whether an agent followed instructions.
 - Include completion time, implementation defects and checks actually run.
 - Preserve prompts, transcripts, artifacts, screenshots and reviewer notes.

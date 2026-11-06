@@ -1,21 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-import Ajv2020 from "ajv/dist/2020.js";
-import addFormats from "ajv-formats";
+import { loadSchemaRegistry, formatSchemaErrors } from "./schema-validation.mjs";
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const schemaDir = path.join(ROOT, "schemas");
-const ajv = new Ajv2020({ allErrors: true, strict: true });
-addFormats(ajv);
-
-const schemaFiles = fs.readdirSync(schemaDir).filter((file) => file.endsWith(".schema.json"));
-const schemas = new Map();
-for (const file of schemaFiles) {
-  const schema = JSON.parse(fs.readFileSync(path.join(schemaDir, file), "utf8"));
-  ajv.addSchema(schema);
-  schemas.set(file, schema);
-}
+const { ajv, schemas } = loadSchemaRegistry();
 
 const args = process.argv.slice(2);
 let explicitSchema = null;
@@ -68,7 +55,7 @@ for (const target of targets) {
     else {
       failed = true;
       console.error(`FAIL ${target} (${schemaName})`);
-      for (const error of validate.errors ?? []) console.error(`  ${error.instancePath || "/"} ${error.message}`);
+      for (const error of formatSchemaErrors(validate.errors)) console.error(`  ${error}`);
     }
   } catch (error) {
     failed = true;
