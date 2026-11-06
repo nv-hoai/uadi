@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "kestrel-support",
+  "name": "Kestrel",
+  "scope": "FEATURE",
+  "description": "Workspace security settings for a B2B customer support platform. This context covers the SSO enforcement feature, not the whole product.",
+  "product_type": "B2B customer support platform",
+  "platforms": [
+    "WEB"
+  ],
+  "business_goals": [
+    "Help enterprise customers pass security review with enforceable SSO",
+    "Reduce password-related support load when employees change teams",
+    "Make a high-risk security action safe to operate and recover from"
+  ],
+  "users": [
+    {
+      "name": "Workspace Owner",
+      "description": "Accountable for billing, workspace deletion and security enforcement.",
+      "needs": [
+        "Understand what enforcement changes before turning it on",
+        "Keep a recovery path if the identity provider is unavailable",
+        "See who configured the connection and when it was last changed"
+      ]
+    },
+    {
+      "name": "Workspace Admin",
+      "description": "Runs workspace setup and member management but does not control billing or enforcement.",
+      "needs": [
+        "Connect and verify the identity provider without waiting for an Owner",
+        "Understand why the enforcement control is unavailable",
+        "Know when a change requires an Owner"
+      ]
+    },
+    {
+      "name": "Support Agent",
+      "description": "Works customer conversations in shared inboxes.",
+      "needs": [
+        "Sign in reliably through the company identity provider",
+        "Understand why a password no longer works after enforcement",
+        "Reach the right person when access fails"
+      ]
+    }
+  ],
+  "constraints": {
+    "framework": "React 18 + TypeScript",
+    "component_library": "Kestrel settings components",
+    "brand_guidelines": "Calm, explicit settings UI; no marketing treatment inside security settings",
+    "accessibility_level": "WCAG 2.2 AA",
+    "technical_constraints": [
+      "SSO entitlement is Scale-only",
+      "One identity-provider connection per workspace (observed)",
+      "No SCIM, multi-IdP or automatic provisioning in scope",
+      "No in-app purchase flow; plan changes go through the account team",
+      "The current security route is Owner-only and must change so Admins can configure the connection"
+    ]
+  },
+  "design_preferences": {
+    "style": "Existing Kestrel settings patterns; low density and explicit consequence copy",
+    "theme": "SYSTEM",
+    "density": "COMFORTABLE"
+  }
+}
