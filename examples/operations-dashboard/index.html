@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A worked operations dashboard example for the UADI design intelligence repository.">
+<title>Delivery performance — UADI operations dashboard example</title>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to dashboard</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">N</span>
+      <span>Northwind Ops</span>
+    </div>
+    <p class="topbar-context">Weekly delivery review</p>
+    <div class="user-chip">
+      <span class="user-avatar" aria-hidden="true">MC</span>
+      <span><span class="sr-only">Signed in as </span>Maya Chen</span>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="page-head" aria-labelledby="page-title">
+    <div>
+      <p class="eyebrow">Operations · Delivery</p>
+      <h1 id="page-title">Delivery performance</h1>
+      <p class="lede">Is delivery health on track, and where should you investigate?</p>
+    </div>
+    <div class="freshness">
+      <span class="freshness-dot" aria-hidden="true"></span>
+      <div>
+        <strong>Snapshot through Sun 1 Nov, 23:59</strong>
+        <span>Refreshed Mon 2 Nov, 06:12 · feeds can lag by up to 15 minutes</span>
+      </div>
+    </div>
+  </section>
+
+  <details class="demo-panel">
+    <summary>
+      <span class="disclosure" aria-hidden="true">▸</span>
+      <span>Prototype controls</span>
+      <span class="demo-note">Synthetic data · not product functionality</span>
+    </summary>
+    <div class="demo-body">
+      <label for="data-state">Data state</label>
+      <select id="data-state">
+        <option value="ready">Ready</option>
+        <option value="loading">Loading</option>
+        <option value="stale">Stale snapshot</option>
+        <option value="partial">Partial data</option>
+        <option value="error">Load error</option>
+        <option value="empty">No data</option>
+      </select>
+      <p>Use this control to inspect the states a real dashboard must distinguish. No network request is made.</p>
+    </div>
+  </details>
+
+  <section class="filters" aria-labelledby="filters-title">
+    <h2 id="filters-title" class="sr-only">Dashboard filters</h2>
+    <div class="filter-group">
+      <span class="filter-label" id="range-label">Date range</span>
+      <div class="segmented" role="group" aria-labelledby="range-label">
+        <button type="button" data-range="last" aria-pressed="true">Last week</button>
+        <button type="button" data-range="previous" aria-pressed="false">Previous week</button>
+        <button type="button" data-range="month" aria-pressed="false">Last 4 weeks</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label" for="region">Region</label>
+      <select id="region">
+        <option value="all">All regions</option>
+        <option value="North">North</option>
+        <option value="South">South</option>
+        <option value="East">East</option>
+        <option value="West">West</option>
+      </select>
+    </div>
+    <div class="filter-group filter-compare">
+      <label class="check">
+        <input type="checkbox" id="compare" checked>
+        <span>Compare with previous period</span>
+      </label>
+    </div>
+    <div class="filter-summary">
+      <p id="filter-summary" aria-live="polite"></p>
+      <button type="button" class="text-button" id="reset-filters">Reset filters</button>
+    </div>
+  </section>
+
+  <div id="state-banner"></div>
+
+  <div id="summary" aria-labelledby="summary-title">
+    <h2 id="summary-title" class="sr-only" tabindex="-1">Delivery summary</h2>
+    <div id="summary-body"></div>
+  </div>
+
+  <section id="orders-panel" class="orders-panel" aria-labelledby="orders-title" hidden>
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">Investigation</p>
+        <h2 id="orders-title" tabindex="-1">Orders in this view</h2>
+        <p id="orders-context" class="panel-subtitle"></p>
+      </div>
+      <button type="button" class="secondary-button" id="back-to-summary">Back to summary</button>
+    </div>
+    <div class="orders-toolbar">
+      <label for="order-status">Status</label>
+      <select id="order-status">
+        <option value="all">All statuses</option>
+        <option value="On time">On time</option>
+        <option value="Late">Late</option>
+        <option value="Failed">Failed</option>
+        <option value="In transit">In transit</option>
+      </select>
+      <p id="orders-count" class="orders-count"></p>
+    </div>
+    <div id="orders-body"></div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>Prototype only · Synthetic sample data · No API, authentication, persistence or delivery integration.</p>
+  <p><a href="../product-onboarding/README.md">Worked onboarding example</a> · <a href="../../benchmarks/tasks/operations-dashboard.md">Benchmark task</a></p>
+</footer>
+
+<div id="live-status" class="sr-only" aria-live="polite"></div>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

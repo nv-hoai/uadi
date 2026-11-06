@@ -10,7 +10,7 @@ Use all three tasks for a representative evaluation:
 2. [First-run onboarding](tasks/product-onboarding.md) — activation, progressive disclosure, optional setup and role understanding.
 3. [Operations dashboard](tasks/operations-dashboard.md) — metric comprehension, information density, comparisons and investigation flow.
 
-The [subscription settings reference implementation](../examples/subscription-settings/README.md) is one example, not the expected visual answer. Do not show it to the agent during a benchmark run.
+The [subscription settings reference implementation](../examples/subscription-settings/README.md), [worked onboarding example](../examples/product-onboarding/README.md) and [worked operations dashboard example](../examples/operations-dashboard/README.md) are reference implementations, not the expected visual answers. Do not show them to the agent during a benchmark run.
 
 ## Paired study protocol
 
