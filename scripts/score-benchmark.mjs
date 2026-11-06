@@ -102,7 +102,7 @@ export function scoreBenchmark(input) {
     if (!cellPairs.has(key)) cellPairs.set(key, []);
     cellPairs.get(key).push(pair);
   }
-  const modelMetadataComplete = pairResults.every((pair) =>
+  const modelMetadataComplete = input.pairs.every((pair) =>
     typeof pair.model_family === "string" && pair.model_family.trim() &&
     typeof pair.model_version === "string" && pair.model_version.trim() &&
     Number.isInteger(pair.repetition) && pair.repetition > 0
