@@ -14,6 +14,7 @@ UADI helps the agent:
 
 - Understand the product, its users, domain rules and business context.
 - Identify UX risks and missing requirements before coding.
+- Map task flows, edge cases and content before choosing a layout.
 - Explore meaningful design directions and explain trade-offs.
 - Compose hierarchy, typography, spacing and visual language intentionally.
 - Build, inspect and improve a working interface.

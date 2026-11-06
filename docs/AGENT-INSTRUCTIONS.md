@@ -9,7 +9,7 @@ Follow the [Design Intelligence core](DESIGN-INTELLIGENCE.md) as the single sour
 ## Apply the methods selectively
 - Inspect relevant product context and implementation before proposing a solution.
 - Use [Product Understanding](../intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md) when users, domain rules, roles or constraints are unclear.
-- Use [UX Reasoning](../intelligence/UX-REASONING-PLAYBOOK.md) for meaningful journeys, decisions, interaction states or recovery paths.
+- Use [UX Reasoning](../intelligence/UX-REASONING-PLAYBOOK.md) for meaningful journeys, task flows, edge cases, content, interaction states or recovery paths.
 - Use [Visual Design](../intelligence/VISUAL-DESIGN-PLAYBOOK.md) when establishing or materially improving composition and visual hierarchy.
 - Consult the [pattern library](../intelligence/patterns/README.md) only when a pattern fits the diagnosed problem; adapt it to context.
 - Match depth to consequence and uncertainty. Use UDS only when it preserves intent, enables comparison or supports reuse.
