@@ -82,6 +82,9 @@ export function scoreBenchmark(input) {
     return {
       pair_id: pair.pair_id,
       task_id: pair.task_id,
+      model_family: pair.model_family ?? input.study.model,
+      model_version: pair.model_version ?? input.study.model,
+      repetition: pair.repetition ?? null,
       baseline_score: baselineScore,
       uadi_score: uadiScore,
       delta: uadiScore - baselineScore,
