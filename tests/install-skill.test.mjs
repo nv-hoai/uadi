@@ -22,7 +22,14 @@ const INSTALLED_FILES = [
   "intelligence/patterns/destructive-actions.md",
   "intelligence/patterns/status-and-recovery.md",
   "intelligence/patterns/data-tables-and-filtering.md",
-  "intelligence/patterns/forms-and-validation.md"
+  "intelligence/patterns/forms-and-validation.md",
+  "schemas/design-specification.schema.json",
+  "schemas/discovery-result.schema.json",
+  "schemas/project-context.schema.json",
+  "schemas/component-catalog.schema.json",
+  "component-catalog/catalog.json",
+  "examples/minimal/design-specification.json",
+  "examples/subscription-settings/README.md"
 ];
 
 async function withTempDir(run) {
