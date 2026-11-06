@@ -35,6 +35,7 @@ Read the [canonical Design Intelligence core](docs/DESIGN-INTELLIGENCE.md). It i
 - [Visual Design](intelligence/VISUAL-DESIGN-PLAYBOOK.md): establish hierarchy, composition, density and visual consistency.
 - [Pattern library](intelligence/patterns/README.md): select and adapt a solution only when its context fits.
 - [Quality gates](docs/QUALITY-GATES.md): choose checks relevant to the change; never claim an unrun check passed.
+- [Accessibility and interaction review](docs/ACCESSIBILITY-AND-INTERACTION-REVIEW.md): review keyboard, semantics, states, responsive behavior and assistive technology honestly.
 
 Use the host agent's normal tools and project conventions. Validate UDS with the bundled schema when relevant; the `npm run validate` command is available in the UADI repository, not automatically in host projects. Do not assume the host project has UADI scripts or dependencies.
 

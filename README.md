@@ -107,6 +107,7 @@ Human owners remain in control of product decisions. Use the host project's norm
 - [Integration guide](docs/INTEGRATION-GUIDE.md)
 - [UDS and architecture](docs/ARCHITECTURE.md)
 - [Design quality checklist](docs/QUALITY-GATES.md)
+- [Accessibility and interaction review](docs/ACCESSIBILITY-AND-INTERACTION-REVIEW.md)
 - [Benchmarking Design Intelligence](docs/BENCHMARKING.md)
 - [Roadmap](ROADMAP.md)
 

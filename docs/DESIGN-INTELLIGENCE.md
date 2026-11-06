@@ -42,4 +42,5 @@ For small, low-risk changes, local context plus a focused review is enough. More
 - [Design Decisions](../intelligence/DESIGN-DECISIONS-PLAYBOOK.md)
 - [Visual Design](../intelligence/VISUAL-DESIGN-PLAYBOOK.md)
 - [Pattern library](../intelligence/patterns/README.md)
+- [Accessibility and interaction review](ACCESSIBILITY-AND-INTERACTION-REVIEW.md)
 - [Benchmark protocol](BENCHMARKING.md)

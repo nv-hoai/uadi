@@ -36,6 +36,7 @@ Avoid maintaining multiple competing versions of the same guidance.
 | Product, UX, decision and visual reasoning methods | The four [intelligence playbooks](../intelligence/README.md) | [Workflows](../workflows/) provide task sequences and artifact contracts where useful. |
 | Reusable UX solutions | Individual files indexed by the [pattern library](../intelligence/patterns/README.md) | Examples may show one contextual implementation of a pattern. |
 | Worked design decisions and implementations | Each example's own README and implementation | The matching benchmark task supplies a comparable scenario where available. |
+| Accessibility and interaction review | [ACCESSIBILITY-AND-INTERACTION-REVIEW.md](ACCESSIBILITY-AND-INTERACTION-REVIEW.md) | [Quality gates](QUALITY-GATES.md), the state and form patterns, and the renderer browser tests. |
 | Evaluation protocol and claims about effectiveness | [BENCHMARKING.md](BENCHMARKING.md) and [benchmarks/README.md](../benchmarks/README.md) | Raw results, reviewer evidence and analysis support conclusions. |
 
 When guidance overlaps, keep the durable principle in Core and link to the method that operationalizes it. Keep task-specific procedures in workflows. Do not copy long sections between documents merely to make every file self-contained.
@@ -115,7 +116,7 @@ Do not create an artifact simply because a workflow names one. Use structured ar
 This is a repository-level planning assessment, not a measured score:
 
 - **Core:** principles exist; keep one authoritative source and prevent duplication.
-- **Methods:** substantial playbooks and workflows exist; UX reasoning covers flow branches, handoffs, edge-case derivation and content design, and design decisions now covers alternatives, rationale and trade-offs. Improve traceability and validation without adding process.
+- **Methods:** substantial playbooks and workflows exist; UX reasoning covers flow branches, handoffs, edge-case derivation and content design, design decisions covers alternatives, rationale and trade-offs, and accessibility/interaction review guidance is available. Improve traceability and validation without adding process.
 - **Patterns:** a useful starting library exists; improve consistency and evidence links before expanding it.
 - **Examples:** onboarding, operations-dashboard and SSO discovery worked examples cover a guided flow, an investigation/comparison flow and a brownfield discovery/context-synthesis path; validate them in real reviews before expanding further.
 - **Benchmarks:** protocol and tooling exist; completed, verified pilot evidence is still needed before claiming UADI improves outcomes.
