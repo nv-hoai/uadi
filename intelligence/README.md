@@ -5,7 +5,8 @@ This directory contains practical reasoning methods and reusable UX patterns for
 ## Start with the problem
 
 - [Product Understanding Playbook](PRODUCT-UNDERSTANDING-PLAYBOOK.md) — build a grounded model of users, product value, domain rules and constraints before choosing UI.
-- [UX Reasoning Playbook](UX-REASONING-PLAYBOOK.md) — map task flows, handoffs, friction, edge cases, content, information architecture, interaction states and trade-offs.
+- [UX Reasoning Playbook](UX-REASONING-PLAYBOOK.md) — map task flows, handoffs, friction, edge cases, content, information architecture and interaction states.
+- [Design Decisions Playbook](DESIGN-DECISIONS-PLAYBOOK.md) — explore materially different directions, compare them fairly and explain rationale and trade-offs.
 - [Visual Design Playbook](VISUAL-DESIGN-PLAYBOOK.md) — turn task priority and product character into hierarchy, composition and a coherent visual system.
 
 For a small local change, inspect the relevant code and existing conventions; do not run every playbook end to end.

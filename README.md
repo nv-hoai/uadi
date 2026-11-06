@@ -98,6 +98,7 @@ Human owners remain in control of product decisions. Use the host project's norm
 - [Design Intelligence](docs/DESIGN-INTELLIGENCE.md)
 - [Product Understanding](intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md)
 - [UX Reasoning](intelligence/UX-REASONING-PLAYBOOK.md)
+- [Design Decisions](intelligence/DESIGN-DECISIONS-PLAYBOOK.md)
 - [Visual Design](intelligence/VISUAL-DESIGN-PLAYBOOK.md)
 - [UX Pattern Library](intelligence/patterns/README.md)
 - [Worked onboarding example](examples/product-onboarding/README.md) — evidence synthesis, ranked critique and runnable prototype

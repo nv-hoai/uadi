@@ -39,6 +39,7 @@ For small, low-risk changes, local context plus a focused review is enough. More
 - [Agent entry point](../SKILL.md)
 - [Product Understanding](../intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md)
 - [UX Reasoning](../intelligence/UX-REASONING-PLAYBOOK.md)
+- [Design Decisions](../intelligence/DESIGN-DECISIONS-PLAYBOOK.md)
 - [Visual Design](../intelligence/VISUAL-DESIGN-PLAYBOOK.md)
 - [Pattern library](../intelligence/patterns/README.md)
 - [Benchmark protocol](BENCHMARKING.md)

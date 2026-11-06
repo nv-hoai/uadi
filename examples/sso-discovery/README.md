@@ -79,7 +79,7 @@ It excludes what the evidence does not support: no revenue model, no driver prod
 
 ## 5. Design brief
 
-The full reasoning is in [`artifacts/02-resolved/design-brief.md`](artifacts/02-resolved/design-brief.md). The [UX Reasoning Playbook](../../intelligence/UX-REASONING-PLAYBOOK.md) uses the enforcement flow as a compact trace of task-flow, edge-case and content reasoning. The decisions that matter most:
+The full reasoning is in [`artifacts/02-resolved/design-brief.md`](artifacts/02-resolved/design-brief.md). The [UX Reasoning Playbook](../../intelligence/UX-REASONING-PLAYBOOK.md) uses the enforcement flow as a compact trace of task-flow, edge-case and content reasoning, and the [Design Decisions Playbook](../../intelligence/DESIGN-DECISIONS-PLAYBOOK.md) reuses the permission-model comparison. The decisions that matter most:
 
 - **Two-person control.** Admins configure the connection; Owners enforce it. This resolves the docs/code conflict without pretending the old test was policy.
 - **Configuration and enforcement are separate cards.** Connecting a provider is routine; changing how every member signs in is not.

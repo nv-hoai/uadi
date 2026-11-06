@@ -13,6 +13,8 @@ Use this checklist to improve design outcomes. It is a reasoning aid, not a mand
 - Is content written in the user's language, with consequences, units and next steps where they matter?
 - Do state messages say what happened, what it means and what the user can do next?
 - Are empty, loading, error, success and disabled states considered?
+- Are materially different alternatives compared on the same criteria, with must-pass gates and uncertainty visible?
+- Does the rationale state the decision, evidence, rejected alternatives and who bears each trade-off?
 
 ## Visual and interaction quality
 

@@ -12,6 +12,7 @@ const SKILL_FILES = [
   "intelligence/README.md",
   "intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md",
   "intelligence/UX-REASONING-PLAYBOOK.md",
+  "intelligence/DESIGN-DECISIONS-PLAYBOOK.md",
   "intelligence/VISUAL-DESIGN-PLAYBOOK.md",
   "intelligence/patterns/README.md",
   "intelligence/patterns/settings-information-architecture.md",
@@ -88,7 +89,7 @@ Options:
             files are preserved and reported as skipped.
   --help    Show this help.
 
-The installer copies the skill, product/UX/visual playbooks and UX pattern
+The installer copies the skill, reasoning playbooks and UX pattern
 library. It does not install dependencies, change agent settings, or contact a server.`);
 }
 
