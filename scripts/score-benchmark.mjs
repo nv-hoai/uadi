@@ -114,7 +114,7 @@ export function scoreBenchmark(input) {
   const hasCompleteCoverage = (family) => requiredTasks.every((task) => {
     const entries = cellPairs.get(family + "::" + task) ?? [];
     const repetitions = entries.map((entry) => entry.repetition);
-    return entries.length === 3 && new Set(repetitions).size === 3;
+    return entries.length >= 3 && new Set(repetitions).size === entries.length && new Set(repetitions).size >= 3;
   });
   const qualifiedFamilies = modelMetadataComplete
     ? versionPinnedFamilies.filter(hasCompleteCoverage)
