@@ -44,18 +44,23 @@ export async function prepareBenchmarkPair(options) {
     const conditionDir = path.join(pairDir, condition);
     await mkdir(path.join(conditionDir, "evidence", "screenshots"), { recursive: true });
     await mkdir(path.join(conditionDir, "evidence", "test-output"), { recursive: true });
+    await mkdir(path.join(conditionDir, "evidence", "changed-files"), { recursive: true });
     await cp(snapshot, path.join(conditionDir, "project"), { recursive: true });
     await writeFile(path.join(conditionDir, "prompt.md"), "# Task prompt\n\nCopy the exact benchmark task prompt here.\n");
     await writeFile(path.join(conditionDir, "transcript.md"), "# Run transcript\n\nRecord the complete transcript here.\n");
   }
   await mkdir(path.join(pairDir, "blind", "condition-a"), { recursive: true });
   await mkdir(path.join(pairDir, "blind", "condition-b"), { recursive: true });
+  const blindMapping = randomInt(2) === 0
+    ? { "condition-a": "baseline", "condition-b": "uadi" }
+    : { "condition-a": "uadi", "condition-b": "baseline" };
   const metadata = {
     study_id: options.studyId,
     pair_id: options.pairId,
     task_id: options.taskId,
     snapshot: snapshot,
     run_order: order,
+    blind_mapping: blindMapping,
     created_at: new Date().toISOString(),
     note: "Coordinator-only metadata. Keep this directory private until blind review is complete."
   };
