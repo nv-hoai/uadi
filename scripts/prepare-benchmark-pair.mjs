@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { cp, mkdir, readFile, writeFile, stat } from "node:fs/promises";
+import { cp, mkdir, writeFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { randomInt } from "node:crypto";
 import { fileURLToPath } from "node:url";
