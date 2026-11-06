@@ -94,6 +94,38 @@ export function scoreBenchmark(input) {
     };
   });
 
+  const requiredTasks = ["subscription-settings", "product-onboarding", "operations-dashboard"];
+  const modelFamilies = [...new Set(pairResults.map((pair) => pair.model_family))];
+  const cellPairs = new Map();
+  for (const pair of pairResults) {
+    const key = pair.model_family + "::" + pair.task_id;
+    if (!cellPairs.has(key)) cellPairs.set(key, []);
+    cellPairs.get(key).push(pair);
+  }
+  const pilotMinimumMet = modelFamilies.some((family) =>
+    requiredTasks.every((task) => {
+      const entries = cellPairs.get(family + "::" + task) ?? [];
+      return new Set(entries.map((entry) => entry.repetition).filter((value) => value !== null)).size >= 3;
+    })
+  );
+  const confirmatoryMinimumMet = modelFamilies.length >= 2 && modelFamilies.every((family) =>
+    requiredTasks.every((task) => {
+      const entries = cellPairs.get(family + "::" + task) ?? [];
+      return new Set(entries.map((entry) => entry.repetition).filter((value) => value !== null)).size >= 3;
+    })
+  );
+  const protocolWarnings = [];
+  if (!pilotMinimumMet) protocolWarnings.push("Exploratory pilot minimum not met: require three distinct repetitions for each of the three tasks on at least one model family.");
+  if (!confirmatoryMinimumMet) protocolWarnings.push("Confirmatory multi-model minimum not met: require three distinct repetitions for each of the three tasks on at least two model families (18 pairs minimum).");
+  const protocolAssessment = {
+    exploratory_pilot_minimum_met: pilotMinimumMet,
+    confirmatory_minimum_met: confirmatoryMinimumMet,
+    model_families: modelFamilies,
+    task_coverage: [...taskIds],
+    pair_counts_by_model_and_task: Object.fromEntries([...cellPairs.entries()].map(([key, entries]) => [key, entries.length])),
+    warnings: protocolWarnings
+  };
+
   const baselineScore = average(pairResults.map((pair) => pair.baseline_score));
   const uadiScore = average(pairResults.map((pair) => pair.uadi_score));
   const baselineTime = average(pairResults.map((pair) => pair.baseline_duration_seconds));
@@ -109,6 +141,7 @@ export function scoreBenchmark(input) {
 
   return {
     study: input.study,
+    protocol_assessment: protocolAssessment,
     pair_count: pairResults.length,
     task_count: taskIds.size,
     baseline_weighted_score: baselineScore,
