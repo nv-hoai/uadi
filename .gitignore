@@ -6,3 +6,6 @@ coverage/
 .env
 .env.*
 !.env.example
+
+# Local benchmark transcripts, screenshots and working artifacts
+benchmarks/runs/
