@@ -102,19 +102,25 @@ export function scoreBenchmark(input) {
     if (!cellPairs.has(key)) cellPairs.set(key, []);
     cellPairs.get(key).push(pair);
   }
-  const pilotMinimumMet = modelFamilies.some((family) =>
+  const modelMetadataComplete = pairResults.every((pair) =>
+    typeof pair.model_family === "string" && pair.model_family.trim() &&
+    typeof pair.model_version === "string" && pair.model_version.trim() &&
+    Number.isInteger(pair.repetition) && pair.repetition > 0
+  );
+  const pilotMinimumMet = modelMetadataComplete && modelFamilies.some((family) =>
     requiredTasks.every((task) => {
       const entries = cellPairs.get(family + "::" + task) ?? [];
       return new Set(entries.map((entry) => entry.repetition).filter((value) => value !== null)).size >= 3;
     })
   );
-  const confirmatoryMinimumMet = modelFamilies.length >= 2 && modelFamilies.every((family) =>
+  const confirmatoryMinimumMet = modelMetadataComplete && modelFamilies.length >= 2 && modelFamilies.every((family) =>
     requiredTasks.every((task) => {
       const entries = cellPairs.get(family + "::" + task) ?? [];
       return new Set(entries.map((entry) => entry.repetition).filter((value) => value !== null)).size >= 3;
     })
   );
   const protocolWarnings = [];
+  if (!modelMetadataComplete) protocolWarnings.push("Model metadata incomplete: every pair must record model_family, exact model_version and a positive repetition number.");
   if (!pilotMinimumMet) protocolWarnings.push("Exploratory pilot minimum not met: require three distinct repetitions for each of the three tasks on at least one model family.");
   if (!confirmatoryMinimumMet) protocolWarnings.push("Confirmatory multi-model minimum not met: require three distinct repetitions for each of the three tasks on at least two model families (18 pairs minimum).");
   const protocolAssessment = {
