@@ -26,7 +26,7 @@ For each task, run at least three paired repetitions (nine pairs total):
 8. Record elapsed time and checks actually executed. Do not count unrun tests as passing.
 9. Repeat for all tasks. Report missing runs, deviations and failed implementations.
 
-Use the same reviewers for both conditions in a pair. Reviewers should score independently before discussing disagreements.
+Use the same reviewers for both conditions in a pair. Reviewers should score independently before discussing disagreements.\n\n**Reviewer independence:** for a confirmatory result, use at least two human reviewers who did not produce either condition and who score independently. Two model calls, two models from the same provider, or two agents in one session are useful exploratory reviewers but do not count as independent human reviewers; label such a study exploratory and do not present it as meeting the protocol. Keep the condition-to-output mapping with a coordinator who does not score. The coordinator randomizes anonymous output IDs, removes condition hints and reveals the mapping only after all scores are locked.\n\n**What reviewers may score:** provide the same evidence types for both conditions. `visual_hierarchy` requires rendered screenshots or a runnable preview at the same target viewport(s); a prose-only UDS is insufficient evidence. Do not infer typography, spacing or composition from tokens alone. If a task cannot produce rendered evidence, mark visual hierarchy as not assessable in the study report and do not compare the overall weighted scores as if all seven dimensions were observed. The current scorer requires all dimensions, so use the visual dimension only when equivalent rendered evidence is available.\n\n**Run artifacts:** keep private raw study data out of version control. A recommended local layout is `benchmarks/runs/<study-id>/<pair-id>/{baseline,uadi,blind}/` with `prompt.md`, `transcript.md`, `changed-files/`, `screenshots/`, `test-output/`, and a coordinator-only `mapping.json`. Put the scored aggregate in a separate `results.json`; retain the exact clean project snapshot and tool/model settings in the study metadata. Randomize the first condition for each pair with a recorded coin flip or seeded randomization, then reset to the clean snapshot before the second condition. Never reuse a working directory or agent context between conditions.
 
 ## Scoring rubric
 
@@ -52,7 +52,7 @@ Weighted score = sum of (dimension score / 4 × dimension weight). Maximum 100.
 
 ## Record and calculate results
 
-Start with [results.template.json](results.template.json). Add one entry per paired run. Each condition must contain elapsed time in seconds and at least two independent reviewer IDs with all seven 0–4 dimension scores.
+Start with [results.template.json](results.template.json). It contains one clearly synthetic example pair to verify the scorer; replace the entire sample with real observations before reporting any result. Add one entry per paired run. Each condition must contain elapsed time in seconds and at least two independent reviewer IDs with all seven 0–4 dimension scores.
 
 The same reviewer IDs must appear in both conditions for a pair. Keep IDs anonymous (for example, R1 and R2); do not store personal information.
 
