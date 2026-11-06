@@ -1,10 +1,73 @@
 {
   "schema_version": 1,
   "study": {
-    "agent": "REPLACE_WITH_AGENT",
-    "model": "REPLACE_WITH_MODEL_AND_VERSION",
-    "date": "YYYY-MM-DD",
-    "project_snapshot": "REPLACE_WITH_COMMIT_OR_FIXTURE_ID"
+    "agent": "EXAMPLE_ONLY",
+    "model": "EXAMPLE_ONLY",
+    "date": "2000-01-01",
+    "project_snapshot": "SYNTHETIC_FIXTURE_NOT_EMPIRICAL"
   },
-  "pairs": []
+  "pairs": [
+    {
+      "pair_id": "example-pair-01",
+      "task_id": "product-onboarding",
+      "baseline": {
+        "duration_seconds": 600,
+        "reviewers": [
+          {
+            "id": "R1",
+            "scores": {
+              "product_understanding": 2,
+              "ux_reasoning": 2,
+              "design_judgment": 2,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "R2",
+            "scores": {
+              "product_understanding": 2,
+              "ux_reasoning": 2,
+              "design_judgment": 2,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 2
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 650,
+        "reviewers": [
+          {
+            "id": "R1",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
