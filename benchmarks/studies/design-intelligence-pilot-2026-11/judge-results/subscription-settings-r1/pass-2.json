@@ -1,0 +1,74 @@
+{
+  "reviewer_id": "J2",
+  "pair_id": "subscription-settings-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "inputs/condition-a/analysis.md:15-29 separates the supplied plan/role constraints from assumed prices, account data and change timing, and lists out-of-scope areas; analysis.md:31-39 names the highest-risk problems; app.js:7-20 and index.html:119-157 implement the three plans, limits, price, renewal and member usage.",
+      "ux_reasoning": "analysis.md:41-87 orders the single page by the owner's questions and documents owner, cancellation and non-owner journeys; app.js:345-352 handles empty invoices, app.js:389-410 handles cancellation/resume, and app.js:458-501 blocks an over-limit downgrade with the exact number of members to remove. Counter-evidence: app.js:466-470 schedules every change to December 1 while app.js:127 tells an at-limit owner to 'Upgrade for more members'.",
+      "design_judgment": "analysis.md:91-111 gives explicit rationale and trade-offs for summary-first layout, preview-only cadence, renewal-date changes and typed cancellation confirmation; app.js:486-496 shows '$0.00 charged today', the effective date and the limit delta instead of inventing proration. Counter-evidence: 'Choose Free' is a filled primary CTA (app.js:312-315; screenshots/desktop.png) that is blocked over the Free limit (app.js:458-479), while cancellation is allowed over that limit (app.js:660-662), so the two routes to Free have different protection.",
+      "visual_hierarchy": "screenshots/desktop.png and screenshots/mobile.png show a clear summary -> plans -> payment -> invoices -> cancellation order, labelled facts, a distinct tinted cancellation panel, and mobile invoice rows that keep label/value scanning. The desktop has three filled blue primaries competing ('Change plan', 'Choose Free', 'Choose Business'), and the 'Preview prices' control sits detached in the Plans header.",
+      "interaction_completeness": "app.js:435-446 sets aria-busy and disables buttons during saves; app.js:516-539, 625-648 and 704-721 show save-failure messages and leave prior state intact; app.js:675-689 requires both a checkbox and the typed workspace name before enabling cancellation; app.js:779-789 provides loading/error/empty scenarios; app.js:250-255 provides undo and app.js:726-732 resume. Recurring payment failure/dunning is explicitly not designed (analysis.md:152).",
+      "accessibility_responsiveness": "index.html:10 has a skip link, index.html:300-343 uses native dialogs, index.html:370 has a table caption, and index.html:151 exposes aria-valuetext. However, test-output/checks.json:34-45 and 76-87 report a serious aria-progressbar-name violation because the meter has no accessible name (index.html:151), and checks.json:28 and 70 report 4 controls without accessible names. styles.css:387-391 also sets table/tr/td to display:block on mobile, which can drop table semantics despite the claim in analysis.md:135.",
+      "implementation_quality": "app.js is a single 891-line vanilla module with readable state/render functions and native <dialog>, and checks.json:32-33/74-75 show no console or page errors. Minor dead markup remains: index.html:289-290 declares both billingEmailInputError and billingEmailError, but app.js:545-606 only uses the former."
+    },
+    "critical_defects": [
+      "Serious automated accessibility violation: the member meter is a role=progressbar without an accessible name (index.html:151; test-output/checks.json:34-45, 76-87), and the rendered checks also report 4 controls without accessible names (checks.json:28, 70).",
+      "The at-limit state tells the owner to 'Upgrade for more members' (app.js:127), but every plan change is scheduled for December 1 (app.js:466-470, 491), so the offered remedy cannot add members now. The analysis itself lists immediate upgrades as unresolved risk #1 (analysis.md:150).",
+      "Two paths reach the Free plan with different gates: 'Choose Free' is blocked while the workspace exceeds 3 members (app.js:458, 477-479), but cancellation over the same limit is allowed (app.js:653-662), and the Free card is given equal primary-button weight (app.js:312-315; screenshots/desktop.png).",
+      "Mobile invoices use display:block on table, tr and td (styles.css:387-391), which can remove table semantics for assistive technology even though analysis.md:135 claims semantics are preserved."
+    ],
+    "strengths": [
+      "Unusually clear separation of supplied facts from assumptions, with prices, dates and account data explicitly labelled illustrative (analysis.md:15-27).",
+      "Refuses to invent proration: the review states $0 today, the effective date, next payment and member-limit delta (app.js:464-471).",
+      "Cancellation is isolated, consequence-reviewed, requires both acknowledgment and typing the workspace name, starts with the safe action focused, and offers resume (index.html:300-329; app.js:675-689, 726-732).",
+      "Broad state coverage: loading, load error, empty invoices, near/at limit, blocked downgrade, scheduled change with undo, busy, save failure, cancelled and owner-only (app.js:345-352, 435-446, 516-539, 779-789).",
+      "Permission model is explained in place and names the workspace owner rather than only disabling controls (index.html:72-78, 175-176, 188, 227; app.js:176-183).",
+      "Responsive order and no horizontal overflow are evidenced at 1280 and 390 CSS pixels (checks.json:29-31, 71-73; screenshots/desktop.png, screenshots/mobile.png)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:9-17 labels prices, seat counts and dates as illustrative and states what members can see; analysis.md:19-26 identifies cancellation, hidden limits, hidden consequences, role ambiguity and payment failure as the key risks; app.js:133-183 models pro, business, free, past_due and canceled scenarios consistently. The 'current date Nov 6, 2026' is asserted without a supplied basis (analysis.md:12).",
+      "ux_reasoning": "analysis.md:28-52 documents the IA and primary owner journey; app.js:724-732 and 778-875 put plan and period comparison in a review dialog with effective date and seat-fit blockers; app.js:749-750 makes upgrades effective today and downgrades/period changes effective at period end; app.js:790-797 and 847-849 route Free through cancellation; app.js:878-926 plus 889-895 explain that 15 members could lose access. The fixed toolbar (styles.css:646-664) obstructs content while scrolling (analysis.md:122).",
+      "design_judgment": "analysis.md:54-63 justifies summary-first layout, dialog review, immediate upgrades, Free-via-cancellation, no fake invoice download and concrete annual savings. Counter-evidence: app.js:754-765 computes an 'About $X' proration estimate from an assumed 25-of-30-day period, a fabricated charge figure even with the provider caveat noted in analysis.md:58 and 114.",
+      "visual_hierarchy": "screenshots/desktop.png gives the plan card a strong hierarchy: hero plan name and $29 price, next-payment meta line, amber 18/20 meter and '2 seats left'; payment and billing period sit side by side and cancellation is separated by a rule. screenshots/mobile.png preserves that order and turns invoices into labeled cards. The fixed dark toolbar floats over the lower Billing period card on desktop and covers the Payment method heading area on mobile (styles.css:646-664, 1256-1264).",
+      "interaction_completeness": "app.js:329-352 designs a past-due banner with retry date and update path that never claims a charge; app.js:156-165 provides the free/no-card/no-invoice empty state; app.js:354-365 provides cancelled/reactivate; app.js:79-88 and 914-925 provide busy and acknowledgment-gated cancellation; app.js:1145-1215 validates card fields and can return to plan review. The 'Keep Pro' data-autofocus is never consumed (app.js:921; renderDialog at 664-689), so the dialog opens with focus on the container, and disabled member actions explain only via title (app.js:386-399).",
+      "accessibility_responsiveness": "checks.json:19-30 and 46-57 show 0 unnamed controls, 0 axe violations and 2 incomplete checks; index.html:10 has a skip link, index.html:85 is an aria-live toast region, app.js:430-432 names the progressbar, and app.js:1352-1376 traps Tab with Escape close and focus restoration at 699-707. The custom dialog at app.js:675-676 is aria-modal but the page behind is not made inert, and disabled owner actions carry no keyboard-reachable explanation (app.js:386-399).",
+      "implementation_quality": "app.js is a single 1,450-line vanilla module with consistent esc() use and delegated events, no console/page errors (checks.json:24-25, 52-53), and a small index.html shell. Dead code remains: data-autofocus (app.js:921) is never read, and re-rendering the whole page through string concatenation is workable but harder to maintain."
+    },
+    "critical_defects": [
+      "The fixed prototype toolbar (styles.css:646-664, 1256-1264) visibly floats over product content in both delivered screenshots: on desktop it interrupts the lower Billing period card, and on mobile it covers the Payment method heading/control area (screenshots/desktop.png, screenshots/mobile.png; acknowledged at analysis.md:122).",
+      "The plan review invents a proration amount client-side from an assumed 25/30-day period (app.js:754-765; analysis.md:58, 114); the brief forbids inventing payment-provider behavior, and a dollar figure can be read as a real charge even when labelled an estimate.",
+      "The declared data-autofocus on 'Keep Pro' is never read (app.js:921; renderDialog at 664-689), so the cancellation dialog opens with focus on the dialog container instead of the safe action the markup intends.",
+      "Disabled member controls explain the restriction only through a title attribute (app.js:386-399), which keyboard and screen-reader users cannot reach; the global view-only banner (app.js:321-327) compensates at page level but not per control."
+    ],
+    "strengths": [
+      "The first card answers plan, price, renewal and usage immediately; the amber meter with '18 of 20 used', '2 seats left' and plain-language consequence copy is the clearest limit treatment in the pair (app.js:425-439; screenshots/desktop.png, screenshots/mobile.png).",
+      "Payment failure is designed rather than ignored: failed amount, retry date, owner update path and an explicit 'no charge has been made' after a card update (app.js:329-352; analysis.md:82).",
+      "Free is routed through cancellation instead of being a second, weaker downgrade path (app.js:790-797, 847-849).",
+      "Cancellation states the member impact before the dialog ('15 would lose access') and requires an unchecked acknowledgment that gates the destructive action (app.js:889-895, 914-925).",
+      "Automated accessibility evidence is clean: 0 unnamed controls and 0 axe violations at both viewports, with a focus trap, Escape handling and focus restoration (test-output/checks.json:19-30, 46-57; app.js:1352-1376, 699-707).",
+      "Mobile invoice cards preserve invoice, date, period, amount, status and view actions without horizontal overflow (screenshots/mobile.png; styles.css:1281-1318; checks.json:49-52)."
+    ]
+  },
+  "comparison": "Candidate A is the more rigorous analysis and the safer destructive-action design: it separates assumptions from facts, refuses to invent proration, requires both acknowledgment and a typed workspace name to cancel, and explains permissions in place. Candidate B is the more coherent delivered product: its first card scans better, the near-limit meter is clearer, payment failure and free/empty/canceled states are designed, and its automated accessibility evidence is much cleaner. B also has the more sensible upgrade model, while A's renewal-only changes contradict its own at-limit 'upgrade for more members' message. B's visible fixed toolbar obstruction and invented proration estimate are real defects, but they are narrower than A's serious axe violation, unnamed controls and mobile table-semantics risk. Under the rubric weights the result is close: Candidate A approximately 3.40/4 and Candidate B approximately 3.50/4, a narrow B advantage driven by accessibility evidence and the core upgrade flow.",
+  "limitations": "One judge pass, not a statistical test. Both packets contain only ready-state desktop and mobile screenshots (1280 and 390 CSS pixels), so dialogs, payment failure, loading, empty, error and disabled states were assessed from source, analysis and checks.json rather than rendered state screenshots. I did not run either prototype, so keyboard, focus, responsive and state behavior beyond the supplied automated checks is unverified. Axe covers only the rules it ran and is not proof of WCAG conformance; B's two incomplete axe checks and A's four unnamed-control count were not root-caused with a screen reader or zoom pass. Visual judgment is limited to two static screenshots per candidate, and a fixed-position prototype toolbar can look more disruptive in a full-page capture than at a normal scroll position. Payment-provider behavior, backend authorization, prices, dates and real user research are outside what either packet can establish."
+}

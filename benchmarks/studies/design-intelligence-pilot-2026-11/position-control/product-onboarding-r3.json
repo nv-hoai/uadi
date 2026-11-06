@@ -1,0 +1,69 @@
+{
+  "reviewer_id": "C1",
+  "pair_id": "product-onboarding-r3",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "weighted_score": 3.85,
+    "evidence": {
+      "product_understanding": "analysis.md §1 separates supplied facts, nine numbered working assumptions (including the unconfirmed 'pending invitations hold a seat' rule) and unknowns; §2 names the activation event (first project) and a two-step spine; §7 lists activation risks and ten unresolved questions. No analytics, research or integrations are invented.",
+      "ux_reasoning": "analysis.md §2 has an explicit included/deferred/skippable table and per-decision rationale; §3 explains role capabilities before assignment and the Starter 5-member limit without pricing. The implementation matches: app.js projectStep is one required field, inviteStep always offers 'Finish setup without inviting', and skipSetup/resumeSetup preserve drafts. I exercised the solo path locally: project creation → 'Finish setup without inviting' → h1 'Your first project is ready' with 'Open project' as the primary action.",
+      "design_judgment": "The scope is disciplined: no workspace-name step, no billing/upgrade path, no integrations, and an honest 'This project is empty' destination (app.js projectView). Roles, seats and plan stay in a compact rail rather than competing with the form. Deductions: the rail repeats the panel's 'Step 1 of 2' progress, and the three-card role guide is heavy for a single-purpose optional step (analysis.md §2 concedes the extra content).",
+      "visual_hierarchy": "screenshots/desktop.png: one serif h1 'What are you working on?', one short lede, one labelled field, one filled primary button, with plan/seat/role context grouped in a low-contrast left rail. screenshots/mobile.png: the same single-panel hierarchy survives at 390px with the skip link, plan chip and full-width primary action; nothing competes with the heading.",
+      "interaction_completeness": "app.js covers empty workspace, name validation (empty/2-char/60-char/duplicate), create loading with aria-busy, project success, invite validation (empty/malformed/duplicate/already-invited/over-capacity), send loading, success, partial failure with preserved address and retry, full-plan disabling, member restriction, skip/resume, and workspace/project destinations. States are also enumerated in analysis.md §4. The failure alert persists on both the invite step and workspace (failedInviteAlert).",
+      "accessibility_responsiveness": "test-output/checks.json: axe violations [] at both 1280 and 390, 29/24 passes, 0 controls without accessible names, one h1, no horizontal overflow, no console or page errors. app.js uses real labels, aria-describedby/aria-invalid, a polite live region, aria-busy and focus movement; styles.css has a visible focus ring, 44px+ targets and prefers-reduced-motion. Minor caveat: at desktop the rail's h2 precedes the panel h1 in DOM order.",
+      "implementation_quality": "app.js is dependency-free, HTML-escapes user data, versions persisted state in localStorage with merge fallbacks, uses event delegation and prevents duplicate submission. test-output/checks.json reports no console or page errors. The workspace/project views are implemented rather than described."
+    },
+    "critical_defects": [],
+    "strengths": [
+      "Solo activation is genuinely unblocked: project creation needs one field and 'Finish setup without inviting' completes onboarding without inviting anyone (verified in a local browser run).",
+      "Role capabilities and the Owner 'You' marker are shown before the role selectors, and the seat rule is stated where invitations happen (analysis.md §3; app.js roleGuide).",
+      "State coverage is unusually complete for a prototype: validation, loading, partial invitation failure with retry, full plan, member restriction, skip/resume with draft restoration, and a real workspace/project destination.",
+      "Accessibility evidence is clean in the supplied automated check: zero axe violations and zero unnamed controls at both viewports (test-output/checks.json).",
+      "The empty project view is honest about the prototype boundary instead of fabricating tasks, files or integrations (app.js projectView)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "weighted_score": 3.05,
+    "evidence": {
+      "product_understanding": "analysis.md §1 is a facts table plus eight explicitly labelled assumptions (including 'pending invitations occupy a seat' and 'Owner cannot be invited') and nine unknowns; §2 defines the smallest useful path and why project creation precedes invitations; §7 has a risk/mitigation/residual-risk table; §8 lists unresolved questions. No fabricated pricing, analytics or imports.",
+      "ux_reasoning": "analysis.md §2 and §6 give defensible reasons for deferral, per-invite roles, the three-layer role explanation and a resume screen. The delivered flow nevertheless contradicts the stated optionality: on the invite step the primary button is labelled 'Continue without inviting' but submitting the default blank row runs validateInvites and shows 'Add an email address, or remove this row.'; the user stays on the invite screen (reproduced locally). Solo completion only works via the separate 'Skip for now'.",
+      "design_judgment": "Good: a compact welcome that names the optional step and its time cost, a roles & limits panel that states the 5/25 limits and the Owner-invitation exclusion, least-privilege Member default, and a deliberately thin project shell. Weaker: an optional 'What is it for?' textarea adds a decision to the first screen, and the same roles panel plus 'Not asked for yet' card is repeated on every screen, including after completion.",
+      "visual_hierarchy": "screenshots/desktop.png has a strong focal headline and one filled CTA, but the right column of three bordered cards plus the main panel creates two competing information centres. screenshots/mobile.png is a very long single column (panel, then workspace, roles and 'not asked for yet' cards) where secondary role content outweighs the completed action, and the fixed 'PROTOTYPE CONTROLS' bar overlaps card content in the capture.",
+      "interaction_completeness": "analysis.md §5 inventories empty, validation, create/send loading, success, partial/total failure, retry, return-later, reload and plan-limit states, and app.js implements per-row retry, localStorage resume and a full-plan branch. However the primary solo control is non-functional as labelled, the seat meter counts blank draft rows ('Starter plan seats 2 of 5 members' immediately after project creation, verified), and skipping lands on a paused interstitial rather than a workspace, so the promised 'return to setup later from the workspace' surface does not exist.",
+      "accessibility_responsiveness": "test-output/checks.json records serious axe violations on both viewports: color-contrast (16 nodes desktop, 13 mobile) and label-content-name-mismatch (1 node). The likely contrast source is --ink-3 #6f7a71 on --paper #f3f1ec (about 4.0:1), used for hints, notes and secondary copy throughout; the mismatch is the brand link aria-label 'Tandem workspace home' versus its visible 'Tandem / Your workspace' text. Positives: one h1, labels on inputs, visible focus styles, aria-invalid, aria-busy, live region, reduced-motion rule and no horizontal overflow at 390/1280.",
+      "implementation_quality": "app.js and styles.css are organised and dependency-free, escape user data, persist versioned state and report no console/page errors. Quality is undercut by the untested 'Continue without inviting' path (the core task constraint), inconsistent seat accounting that treats blank rows as members, and many inline style attributes in generated markup."
+    },
+    "critical_defects": [
+      "Primary solo control fails: the invite step's 'Continue without inviting' button submits the form, validation rejects the default blank row, and the user remains on the invite screen with 'Add an email address, or remove this row.' (condition-b/implementation/app.js inviteScreen primaryLabel + sendInvites/validateInvites; reproduced locally). This directly conflicts with 'Inviting teammates is optional' and the copy 'Skipping changes nothing'.",
+      "Serious accessibility violations in the supplied automated check: axe color-contrast (16 desktop / 13 mobile nodes) and label-content-name-mismatch (1 node) in condition-b/test-output/checks.json.",
+      "Seat display is misleading: usedSeats() adds every draft invite row, so the invite step shows 'Starter plan seats 2 of 5 members' when only the Owner exists and one email row is blank (app.js usedSeats; reproduced).",
+      "No workspace surface is implemented. 'Skip setup for now' opens a paused screen, while analysis.md §4 and the welcome copy say setup stays available from the workspace; the analysis also labels workspace locations illustrative. The return-later path therefore has no destination beyond the prototype interstitial."
+    ],
+    "strengths": [
+      "The welcome screen explains the whole path, marks invitations 'Optional', and gives a time estimate plus one clear primary action (screenshots/desktop.png; welcomeScreen in app.js).",
+      "Roles and limits are explained before any role is chosen, including that the Owner cannot be invited and that Starter supports 5 members including the Owner (rolesPanel; analysis.md §3).",
+      "Creating the project before sending invitations is a sound safety property: partial or total invite failure never rolls back activation, and per-invite plus bulk retry are modelled (analysis.md §2, §4; doneScreen/retryFailed).",
+      "Per-invite role selection defaults to Member (least privilege) and updates an inline capability hint at the point of assignment (ROLE_HINTS; wireInviteInputs).",
+      "Pause, reload and resume states are implemented with localStorage, and the resume screen prevents an accidental second project (resumeScreen; init/loadSaved)."
+    ]
+  },
+  "comparison": "Candidate A is the stronger deliverable overall (3.85 vs 3.05). A's two-step path is shorter, its solo completion actually works, and it covers the required states plus workspace/project destinations with clean automated accessibility results. Candidate B has the clearer welcome overview and richer in-context role education, and its project-before-invites failure isolation is well argued, but its primary 'Continue without inviting' control errors instead of completing, its seat meter overstates membership, it has no workspace surface for returning later, and it ships serious axe contrast/label violations. B's advantages in explanation do not offset those delivery and accessibility gaps.",
+  "limitations": "Single blinded judge pass; not a statistical result and not proof of causation. Both packets contain desktop and mobile screenshots of only the entry screen (A: project step; B: welcome), so visual hierarchy is scored from those captures and the CSS, not from rendered invite/success/error screens; interaction findings for later screens come from source inspection plus a targeted local Chromium run of the solo path (no network, evidence unmodified). Both analyses cite a transcript.md that is absent from the packets, and both claim viewport checks (320 and/or 1440px) that test-output/checks.json does not cover (390 and 1280 only). Each packet's manifest.json names the opposite condition; per the instructions I kept the immutable packet labels A and B and did not use those fields to infer condition mapping. Accessibility judgment relies on the supplied axe run, which is not a screen-reader or full WCAG audit."
+}

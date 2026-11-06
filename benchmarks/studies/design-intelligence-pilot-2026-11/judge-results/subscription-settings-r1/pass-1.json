@@ -1,0 +1,76 @@
+{
+  "reviewer_id": "J1",
+  "pair_id": "subscription-settings-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:19-29 separates illustrative prices/account from the brief's facts and lists out-of-scope areas; analysis.md:24 deliberately refuses to invent proration, and analysis.md:148-157 records unresolved policy (immediate upgrades, over-limit members after cancellation) rather than guessing.",
+      "ux_reasoning": "analysis.md:45-87 gives a decision-ordered IA and owner, cancellation and non-owner journeys; app.js:464-500 shows current to new, effective date, $0 today, next payment and 20 to 100 member limit, with explicit over-limit copy at app.js:477-479. However 'Choose Free' is enabled at app.js:287-290 for the 7-member state and only reports the overage after opening the dialog (app.js:458-479).",
+      "design_judgment": "analysis.md:89-111 gives explicit trade-offs for renewal-only changes, the non-committal preview, cancellation friction and honest success; delivered choices mostly support trust (preview at index.html:165-172, cancel dialog at index.html:300-329). But app.js:486-499 schedules a move to Free through the plan dialog, an exit from paid billing that bypasses the protected cancellation flow.",
+      "visual_hierarchy": "desktop.png has a clear three-fact summary, three-up plan cards and calm blue hierarchy. In mobile.png the expanded prototype panel occupies roughly the first 330 px above the product and pushes price/renewal below the 844 px fold; invoice rows become tall stacked blocks (styles.css:388-393), and the right-aligned 'Preview prices' control floats awkwardly above the Plans heading in desktop.png.",
+      "interaction_completeness": "analysis.md:113-131 enumerates loading, load error, near/at-limit, empty invoices, blocked downgrade, scheduled, submitting, save failure, success, owner-only, validation and cancelled; app.js:518-523, 627-632 and 706-712 implement failure plus retry for plan, card and cancellation, and app.js:852-871 blocks duplicate submission and closing while busy. Cancellation requires a checkbox and typed workspace name (app.js:685-692).",
+      "accessibility_responsiveness": "index.html:10 has a skip link, index.html:151 supplies text for the meter, and native dialogs are used (index.html:237-343). But checks.json:34-44 reports a serious axe aria-progressbar-name violation (meter at index.html:151 has no accessible name), checks.json:28 reports four controls without accessible names, and styles.css:388 sets table rows to display:block on mobile despite the table-semantics preservation claimed at analysis.md:135.",
+      "implementation_quality": "The prototype loads with no console or page errors and no horizontal overflow at 1280 and 390 CSS px (checks.json:5-75). Code is organized with helpers and state, but index.html:288-289 leaves an unused duplicate billing-email error element, and the 32 assertions claimed at analysis.md:140 have no log in the packet."
+    },
+    "critical_defects": [
+      "A Free-plan downgrade can schedule an exit from paid billing through the plan dialog (app.js:486-499) instead of the protected cancellation flow (index.html:300-329); it is only stopped when member count exceeds the Free limit.",
+      "At-limit copy says 'Upgrade for more members' (app.js:127), but upgrades only start at renewal (app.js:467-470), so the recommended remedy cannot add seats immediately.",
+      "'Choose Free' is enabled at app.js:287-290 for the 7-member screenshot state and only reports the four-member overage after the dialog opens, so the primary-looking CTA dead-ends.",
+      "checks.json:34-44 records a serious axe violation (progressbar has no accessible name) and checks.json:28 records four controls without accessible names.",
+      "Mobile invoice rows are set to display:block (styles.css:388-393), which strips table semantics despite analysis.md:135 claiming they are preserved.",
+      "The packet has no screenshots or logs for dialogs, loading, error, near-limit, validation or save-failure states; those claims are source-only."
+    ],
+    "strengths": [
+      "The summary card answers plan, price, renewal and seat usage before anything else (index.html:137-156; desktop.png).",
+      "Cancellation is isolated, lists six consequences, requires both a checkbox and typed workspace name, and focuses the safe action (index.html:300-329; app.js:653-722).",
+      "Plan review states current to new, effective date, charge today, next payment and member-limit delta, and blocks over-limit downgrades (app.js:464-500).",
+      "Role handling is explained in place with a view-only banner, per-section notes, a named owner and 'Owner only' plan CTAs (index.html:72-78, 175-188, 223-227).",
+      "Broad state coverage includes failure and retry for all three mutations, busy lockout, undo, resume and an honest no-charge demo (app.js:518-523, 627-632, 706-712, 852-871)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:9-17 states illustrative prices, the demo account, member invoice visibility as an assumption and single-owner scope, while analysis.md:59 and 67-75 route Free through cancellation and define a role matrix. However analysis.md:12 claims the current date 'matches the brief's context' although the brief supplies no date, and analysis.md:16-17/:115 base an estimated proration on fixed 25-of-30-day demo dates.",
+      "ux_reasoning": "The IA (analysis.md:28-43) and plan review (app.js:852-861) put status, billing and invoices in decision order; seat fit is surfaced before commitment via disabled options with 'Remove N' (app.js:787-813, 842-846), and member loss is disclosed on the page before cancellation (app.js:619-631). But there is no failure path for plan or cancellation mutations (app.js:1091-1120 always succeeds), and opening cancel focuses the dialog container (app.js:664-689) rather than the 'Keep Pro' action at app.js:921.",
+      "design_judgment": "analysis.md:54-63 explains summary-first layout, dialog review, immediate upgrades, Free-via-cancellation and no fake download; the delivered choices are coherent. Weaker calls are the fixed control bar covering content (styles.css:646-663; desktop.png, mobile.png), a proration figure estimated from demo dates (app.js:754-766), and owner-only reasons confined to title attributes (app.js:387-399, 536-537).",
+      "visual_hierarchy": "desktop.png shows a stronger typographic hierarchy than A: $29 price, status pill, amber seat meter and a coherent green/ink system. mobile.png keeps plan, price, actions and usage above the fold and compacts invoices into cards (styles.css:1281-1319). Both screenshots show the dark fixed prototype bar covering the Payment method/Billing period content, interrupting the composition.",
+      "interaction_completeness": "analysis.md:77-88 covers loading, error, empty, payment failure, success, disabled, canceled, scheduled, validation and busy; app.js:634-660 implements the skeleton and retry, app.js:1102-1120 cancellation and app.js:1145-1216 validation. Missing: plan-change and cancellation saves never fail (app.js:1091-1120), and cancellation confirmation is a checkbox only (app.js:914-925) with no typed-name check.",
+      "accessibility_responsiveness": "checks.json:26-30 and 53-57 report zero axe violations, zero controls without accessible names and no horizontal overflow at 1280/390. index.html:11 provides a skip link, app.js:430-432 labels the progressbar, and app.js:1352-1376 traps Tab and handles Escape with focus return. Minor gaps: the owner role is hidden at 720 px and below (styles.css:1234) and disabled reasons are title-only (app.js:387-399).",
+      "implementation_quality": "No console or page errors and no overflow in checks.json, and the code has an escaping helper (app.js:53-57), delegated actions and a working focus trap. But app.js:1010 hardcodes 'monthly' in invoice detail, app.js:921 sets a data-autofocus attribute that renderDialog never uses (app.js:664-689), and the 39 checks claimed at analysis.md:131 have no log in the packet."
+    },
+    "critical_defects": [
+      "No error or failure state exists for plan changes or cancellation; both busy flows always resolve successfully (app.js:1091-1120), so error handling is limited to page load and the payment-failure scenario.",
+      "Cancellation protection is a modal plus checkbox (app.js:914-925); 'Keep Pro' is marked data-autofocus but renderDialog focuses the container (app.js:664-689), so the safe action is not the default focus.",
+      "The fixed prototype bar covers product content in both delivered screenshots (desktop.png and mobile.png; styles.css:646-663), an issue acknowledged at analysis.md:122 that still damages the visual evidence.",
+      "The upgrade 'Due today' amount is estimated from fixed 25-of-30-day demo data (app.js:16-17, 754-766; analysis.md:115), presenting a billing figure the brief does not support.",
+      "The plan review summary omits the member-limit change (app.js:852-861), owner-only disabled reasons are title-only (app.js:387-399, 536-537), and the role label is hidden on mobile (styles.css:1234).",
+      "Invoice detail hardcodes 'monthly' (app.js:1010), and the packet contains no dialog/state screenshots or assertion logs for the claimed 39 checks."
+    ],
+    "strengths": [
+      "Seat usage is exceptionally legible: 18 of 20, amber meter, '2 seats left', '90% used' and a plain-language consequence (desktop.png; app.js:425-441).",
+      "Seat fit is shown before commitment: Free is marked 'Cancel instead' and an over-limit plan is disabled with 'Remove N' and an explanatory note (app.js:787-813, 842-846).",
+      "Free is routed through cancellation, and the cancellation section discloses member loss and no-charge consequences before entry (app.js:59-60, 619-631).",
+      "Mobile preserves plan, price, actions and usage above the fold and compacts invoices into readable cards (mobile.png; styles.css:1281-1319).",
+      "Automated accessibility evidence is clean (checks.json: zero axe violations, zero unnamed controls) and the demo explicitly never claims a payment succeeded (app.js:866-867, 1207)."
+    ]
+  },
+  "comparison": "Candidate A is stronger on product framing, consequence review, failure/retry coverage and cancellation safety; Candidate B is stronger visually, keeps the mobile plan/price/usage above the fold, surfaces seat fit earlier, and has cleaner automated accessibility. A's Free-plan route bypasses its own protected cancellation flow and its renewal-only upgrades conflict with its at-limit 'Upgrade' prompt; B has no plan/cancel failure states, a checkbox-only cancellation confirmation and a fixed prototype bar over product content. Weighted with the supplied rubric, Candidate A scores 3.30 and Candidate B scores 3.20.",
+  "limitations": "Each packet supplies only one default-state desktop screenshot and one default-state mobile screenshot; loading, error, near/at-limit, dialog, validation and save-failure screens are not rendered in evidence, so judgments on those rest on source and prose. checks.json covers a single page load and axe only; A's 32 claimed assertions and B's 39 claimed checks have no logs. I did not run either prototype, use a screen reader, or test zoom and physical devices; visual comparison is limited to 1280 and 390 CSS px. This is one judge pass, not a statistical result or proof of causation."
+}

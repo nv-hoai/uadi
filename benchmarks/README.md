@@ -90,4 +90,8 @@ The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/
 - Do not generalize from one model, one task set or one study.
 - Do not claim UADI improves results until real paired runs have been completed and reviewed.
 
-No empirical result is included in this repository yet. The benchmark tasks and scorer make evaluation repeatable; they are not evidence of improvement by themselves.
+## Recorded studies
+
+- [Design Intelligence Pilot (exploratory)](studies/design-intelligence-pilot-2026-11/README.md) — nine pairs across the three tasks with one pinned model family, three blinded LLM judge passes per pair and no independent human reviewers. It met the exploratory sample-size check but not the confirmatory multi-model or human-review minimum. A swapped-label control found a strong candidate-position effect, so its condition deltas are not evidence of improvement.
+
+No confirmatory result has been recorded. The benchmark tasks and scorer make evaluation repeatable; they are not evidence of improvement by themselves.

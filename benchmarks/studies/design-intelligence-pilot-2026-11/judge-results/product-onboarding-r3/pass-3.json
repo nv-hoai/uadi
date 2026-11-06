@@ -1,0 +1,77 @@
+{
+  "reviewer_id": "J3",
+  "pair_id": "product-onboarding-r3",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:12-54 separates supplied facts, 8 assumptions and 9 unknowns (including pending-invite seats and ownership transfer); analysis.md:110-127 gives a role-capability matrix and plan handling without pricing; app.js:9,14,59 encode SEAT_LIMIT, role labels and a least-privilege Member default.",
+      "ux_reasoning": "analysis.md:61-96 defines the path and the deliberate project-before-invite ordering so activation cannot be rolled back by an invite failure; but app.js:1222-1227 sends 'Skip setup for now' to pausedScreen (app.js:654-687) whose only actions are Resume/Start over, with no workspace or later-setup destination, so the escape hatch does not release the user; app.js:1229-1233 routes 'Back' from invites to the already-'Setup complete' summary.",
+      "design_judgment": "analysis.md:223-250 weighs eight concrete trade-offs (one required field, least-privilege default, replacing the invite form at plan limit, no confirmation on skip, resume screen instead of auto-resume); app.js:477-480 offers only Admin/Member and explains the Owner exclusion before assignment; app.js:737-765 ships an honest empty project shell instead of inventing boards or tasks.",
+      "visual_hierarchy": "desktop.png (1280x900): 1140px two-column layout, large headline, 01-03 path rows with mono numerals, times and one isolated primary CTA; mobile.png (390x1666): the stacked panel reads cleanly, but the plan chip is hidden (styles.css:1445-1447) and the fixed prototype-controls bar covers the 'Your workspace' card in the full-page capture.",
+      "interaction_completeness": "Loading, validation, retry, pause/resume and full-plan states exist (app.js:928-999, 1016-1050, 654-733, 501-528), but with zero emails on step 2 the primary button reads 'Continue without inviting' (app.js:488-492) yet still submits the form (app.js:781-787) and validateInvites rejects the blank row (app.js:879-883); the header seat chip says '1 of 5' (app.js:259-260) while the seat meter says '2 of 5' by counting a blank draft row (app.js:77-79, 446-461).",
+      "accessibility_responsiveness": "checks.json:24-41,62-79 reports serious axe 'color-contrast' on 16 desktop and 13 mobile nodes plus 'label-content-name-mismatch'; styles.css:12 sets --ink-3 #6f7a71 for 12-13.5px secondary text at roughly 3.9:1 on #f3f1ec; positives are the skip link (index.html:11), 3px focus-visible outline (styles.css:107-111) and polite live region (index.html:31).",
+      "implementation_quality": "app.js is a readable vanilla ES2020 state machine with escaping and guarded localStorage (app.js:66-133), and the prototype runs from file://; however the defects above ship in the core path and analysis.md:321 directs readers to transcript.md, which is not in the packet, so the claimed headless-Chromium flow checks are unverified."
+    },
+    "critical_defects": [
+      "Primary-action contradiction: on step 2 with no emails the button says 'Continue without inviting' but submits the form and returns 'Add an email address, or remove this row.' (app.js:488-492 vs 781-787, 879-883).",
+      "Skip trap: welcome 'Skip setup for now' and 'Save & exit' land on a paused screen offering only Resume setup / Start over (app.js:1222-1227, 654-687); no workspace surface exists, so 'return later' has no real destination.",
+      "Inconsistent member count: '1 of 5 members' in the header versus '2 of 5 members' in the seat meter with one blank invitation row (app.js:259-260 vs 77-79, 446-461).",
+      "Widespread serious accessibility failures: 16 desktop / 13 mobile contrast nodes and a brand link accessible-name mismatch (checks.json:24-41, 62-79).",
+      "Back from the invite step jumps to the 'Setup complete' success summary before the user has finished (app.js:1229-1233, 596-600).",
+      "Only the welcome screen is rendered in screenshots; invite, success and failure screens have no visual evidence.",
+      "analysis.md:321 cites a transcript.md that is absent from the packet."
+    ],
+    "strengths": [
+      "Facts, assumptions and unknowns are cleanly separated; plan and role rules are explained before assignment without inventing pricing or upgrade behavior.",
+      "Project-before-invite ordering plus explicit retry means a failed invitation never rolls back the activation event.",
+      "Broad state coverage: validation, loading, partial/total/network failure, retry, full-plan, role restriction, pause and reload/resume.",
+      "Distinctive, coherent visual system with solid semantics: skip link, one h1 per screen, aria-invalid/aria-busy, live regions, focus moved to headings and invalid fields.",
+      "An honest project boundary rather than fabricated boards, docs or tasks."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:5-41 separates supplied facts, 9 working assumptions and 10 unknowns (including pending-invite seats and the missing work-item model); analysis.md:79-91 gives role copy and seat rules; app.js:7,15-28 encode the plan limit and role capabilities.",
+      "ux_reasoning": "analysis.md:45-75 defines a two-step spine (project, then optional invites) with an include/defer/skip table; app.js:830-843 sends skip to a real workspace and app.js:570-596 renders a resume card that preserves the draft name and invite rows, so return-later has a destination; app.js:410-415 and 451-459 explain and block the full-seat state; minor mismatch between the three rail steps (app.js:264-267) and 'Step 1 of 2' (app.js:299).",
+      "design_judgment": "analysis.md:69-75 weighs speed versus richer setup, forced versus optional invites, and in-place versus separate role education, and ships the role guide immediately above the selectors (app.js:326-344, 443); however app.js:921-931 adds a 2-character minimum and duplicate-name rejection that the brief never establishes.",
+      "visual_hierarchy": "desktop.png (1280x900): a quiet 288px rail with numbered steps and workspace facts beside a 685px panel, serif h1, one filled CTA and one underlined skip action, giving a single clear scan path; mobile.png (390x844): the rail is replaced by a compact 'Starter - 1 of 5 seats' plus 'You are the Owner' line (app.js:284-289) and the CTA stays full-width, with generous whitespace and a consistent type scale.",
+      "interaction_completeness": "Every brief-required state is present and coherent: inline validation with focus and aria-invalid (app.js:921-944, 967-1020), creating/sending loading with aria-busy and disabled controls (app.js:306, 445-446, 931-963), success with an explicit next step (app.js:467-525), invitation failure with a retry that preserves the address (app.js:1022-1083, 396-402), full-seat disablement (app.js:451-459), skip/resume with draft preserved (app.js:830-853, 570-596), member-blocked screen (app.js:527-545), and reload persistence via loadState/boot (app.js:106-129, 1245-1256).",
+      "accessibility_responsiveness": "checks.json:22-49 reports zero axe violations at 1280 and 390 with 29/24 passes; index.html:12 provides the skip link, styles.css:500-509 the focus-visible rings, app.js:313,357 role=alert and aria-describedby, index.html:14 the live region, and styles.css:1822 reduced-motion handling. Residual issues: the rail h2 precedes the page h1 (app.js:260-263 vs 304) and the remove control is 38x42px (styles.css:811-821).",
+      "implementation_quality": "Compact dependency-free IIFE with design tokens and template helpers; the re-render uses an explicit pendingFocus queue (app.js:781-810) and guarded localStorage (app.js:131-136). There is minor dead code (app.js:66, 1103-1105), and analysis.md:132 cites a contrast transcript that is not included, though checks.json corroborates the axe result."
+    },
+    "critical_defects": [
+      "The rail presents three numbered steps while the panel says 'Step 1 of 2' / 'Step 2 of 2' (app.js:264-267 vs 299, 430).",
+      "Invented project-name rules (2-character minimum, duplicate-name rejection) add validation and error states with no basis in the brief (app.js:921-931).",
+      "Heading order: an h2 in the rail precedes the page h1, so screen-reader navigation meets a subheading before the title (app.js:260-263 vs 304).",
+      "Remove-invite control is 38x42px, below the stated 44px target (styles.css:811-821; analysis.md:129).",
+      "Only the project step is rendered; invite, success and failure screens have no visual evidence.",
+      "analysis.md:132 references a transcript that is absent from the packet."
+    ],
+    "strengths": [
+      "Skipping setup returns to a real workspace with a resume card that preserves the draft, the clearest answer to the return-later question in either packet.",
+      "Role explanation sits directly above the role selectors, and the seat limit plus pending-invite rule are stated before action without pricing, trials or upgrade CTAs.",
+      "Axe-clean at both viewports with thoughtful focus handling, live-region announcements and explicit, field-level validation messages.",
+      "Calm, legible hierarchy with one primary action per step and a rail that keeps plan, seat and role context visible on desktop.",
+      "Honest empty project and workspace states instead of fabricated tasks, imports or integrations."
+    ]
+  },
+  "comparison": "Candidate B is the stronger delivered artifact: its skip path reaches a real workspace with a resume card, its required states are coherent, and it is axe-clean at both viewports. Candidate A has deeper written rationale and a better-argued project-before-invite safety model, but it ships a contradictory primary 'Continue without inviting' action, a skip trap, an inconsistent member count and 13-16 serious contrast failures. A's hierarchy is denser and loses plan context on mobile, while B's is calmer; B's remaining weaknesses are its three-step rail against a 'of 2' label and its invented project-name rules.",
+  "limitations": "Only one screen per candidate is rendered (A: welcome; B: project step), so invite, success and failure visuals and the multi-screen compositions could not be judged. A's mobile capture is a 390x1666 full page while B's is a 390x844 viewport, so mobile composition is only loosely comparable, and A's fixed prototype-controls bar overlaps a card in that capture as a rendering artifact. Axe results were accepted as given and not rerun; no screen-reader or cross-browser testing exists, and both analyses cite transcripts that are not in the packets, so flow and keyboard claims are unverified. This is one blinded pass, not a statistical result or proof of causation."
+}

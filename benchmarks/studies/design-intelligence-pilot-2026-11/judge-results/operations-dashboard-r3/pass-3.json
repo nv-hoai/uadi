@@ -1,0 +1,66 @@
+{
+  "reviewer_id": "J3",
+  "pair_id": "operations-dashboard-r3",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:24-47 states each metric's unit and denominator, pp-vs-percent, complete-day and comparison rules, and the absence of targets/forecasts; the same contracts are visible in index.html:99-123 and the synthetic model in app.js:84-140.",
+      "ux_reasoning": "analysis.md:48-94 and app.js:486-517 organise a freshness/scope -> insight -> KPI -> trend/region/outcome -> orders funnel. Verified region drill: the drawer heading carries 'Sat 31 Oct – Fri 6 Nov 2026 · West · All outcomes', says 'Showing 240 of 8,997 matching orders (deterministic sample)', and Escape closes it with focus returned.",
+      "design_judgment": "analysis.md:96-119 explains the 0–100% rate axis, zero-based grouped bars, rejection of dual axes/target lines, and hiding on-time rate for status subsets; implemented in app.js:678-826 and 466-479.",
+      "visual_hierarchy": "desktop.png shows three KPI tiles, a computed insight strip, a 2:1 trend/outcome row and a full-width regional table, all scanning in decision order. It is held below 4 because the fixed 'Prototype controls' pill covers the 'Delivered on time' values in desktop.png and the insight sentence in mobile.png.",
+      "interaction_completeness": "index.html:136-152 plus app.js:1479-1501 expose normal, loading, stale, partial, no-data and error states plus forced empty orders. I exercised loading/stale/error/partial locally with no console or page errors; stale shows 'Last update 13:45 · 47 min ago' and error shows a retry/safe-data card.",
+      "accessibility_responsiveness": "test-output/checks.json reports 22 serious color-contrast nodes at desktop and 15 at mobile, plus 2 target-size and 1 label-content-name-mismatch violation. It also reports horizontal_overflow true at 390px with document_width 604; mobile.png is a 604x3483 capture, and its regional table clips the FAILED and Orders columns.",
+      "implementation_quality": "The app is deterministic and runs with no console/page errors (app.js:55-140). However there are two prototype-control surfaces (index.html:30 and 136-152), and at 390px a closed daily-data-table table still expands the document to 604px, contradicting the responsive claim in analysis.md:126-129."
+    },
+    "critical_defects": [
+      "Mobile layout overflows horizontally: test-output/checks.json reports document_width 604 vs client_width 390 and horizontal_overflow true; mobile.png is 604px wide instead of a 390px viewport, with the regional table's right columns and action links clipped.",
+      "Automated accessibility evidence contradicts the self-report: checks.json records 22 serious contrast nodes on desktop and 15 on mobile plus target-size failures, while analysis.md:164-165 claims 4.5:1 contrast and says no axe run was performed.",
+      "The fixed prototype-controls panel obscures product data: it covers the 'Delivered on time' row's values in desktop.png and the insight text in mobile.png, and a second prototype-controls button exists in the header (index.html:30/136)."
+    ],
+    "strengths": [
+      "Metric definitions are unusually concrete: units, denominators, percentage points, complete-day ranges, comparison dates and the 15-minute delay are repeated where they are needed.",
+      "The computed insight strip names the weakest region and largest change without inventing a cause, and the drawer preserves range, region and status while disclosing that the list is a 240-row deterministic sample.",
+      "State coverage and recovery are broad and distinct: stale, partial, no-data, error, empty orders, invalid custom range, comparison-unavailable and status-subset states all have explicit banners and recovery actions."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 2
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:16-41 gives explicit numerator, denominator, scope and exclusions for each metric; the rate card shows 1,397 resolved / 1,431 due and '34 excluded: 3 in transit, 31 failed-only' in desktop.png. It distinguishes pp from percent, equal-length from weekday-matched baselines, and states that no target, forecast or cause is available.",
+      "ux_reasoning": "The scan -> compare -> locate -> investigate flow is implemented and the orders page carries context: verified West -> View orders shows '263 orders in Sat 31 Oct – Fri 6 Nov, in West' and Back to dashboard restores region=West. Held at 3 because the 'where is delivery weakest' table contradicts its own 'Lowest rate first' instruction (app.js:965; desktop.png rows are Central 95.4%, East 92.4%, North 91.0%, South 91.3%, West 89.4%).",
+      "design_judgment": "analysis.md:64-102 explains the 0–100% rate axis, zero-based grouped bars with a hatch comparison series, one metric at a time, and rejection of gauges/dual axes/pie charts. Held at 3 because the delivered composition does not follow the 8/4 + 7/5 layout the analysis and styles intend (app.js:844-850).",
+      "visual_hierarchy": "Desktop.png has a clear type hierarchy and readable headline, but the chart sits in an 8-column card with roughly 400px of empty space to its right, while Delivery status, On-time rate by region and Largest regional declines all render full width with very long bars. This is not the two-column composition claimed in analysis.md:139 and weakens density and scan balance.",
+      "interaction_completeness": "The orders page supports context chips, sorting, paging (1–20 of 263), search and per-row Details with an attempt history; verified empty search keeps the chips and offers Clear search/Clear region. The dashboard exposes loading, stale, partial, error, no-data, no-denominator and empty-result states; switching to partial excluded North from figures and showed it as 'Data delayed'.",
+      "accessibility_responsiveness": "test-output/checks.json shows no horizontal overflow at 390px (document 390 / client 390) and only 2 contrast nodes, but still 4 label-content-name-mismatch nodes on both viewports; skip link, aria-live, labelled fields and chart text alternatives are present.",
+      "implementation_quality": "chartSVG closes the chart-scroll wrapper before the legend (app.js:844) and then emits an extra closing div after the legend (app.js:850); in the rendered DOM only the chart card remains inside .grid, so the 8/4 chart/status and 7/5 region/declines grids never apply. The region table is also never sorted despite app.js:965 saying 'Lowest rate first'. Otherwise the page runs without console or page errors and the orders view works."
+    },
+    "critical_defects": [
+      "Broken grid markup: chartSVG closes chart-scroll before the legend (app.js:844) and emits an extra closing div after it (app.js:850), so only the chart card remains inside .grid; the documented 8/4 and 7/5 desktop layout collapses to one 8-column chart row followed by full-width cards, leaving a large blank column in desktop.png.",
+      "The On-time rate by region table says 'Lowest rate first' (app.js:965) but renders the REGIONS order (Central, East, North, South, West); in desktop.png West at 89.4% appears last while Central at 95.4% appears first, contradicting the stated ranking.",
+      "Evidence gap: analysis.md:164-169 claims 77/77 checks, a 13/13 re-check and screenshots of the orders list, detail and partial state, but test-output/checks.json contains only generic DOM/axe checks and the packet contains only desktop.png and mobile.png."
+    ],
+    "strengths": [
+      "The headline and KPI cards make the decision legible: on-time rate with numerator/denominator and excluded count, failed attempts across orders, and orders due explicitly labelled as context rather than a target.",
+      "The time chart uses a 0–100% rate axis with labelled points, a dashed comparison series and a text data table; counts use grouped bars with a hatch pattern, avoiding colour-only encoding and dual axes.",
+      "The orders surface is the strongest interaction: context chips, sortable and paged rows, per-order Details with promised window and attempt history, and search that preserves filters in its empty state."
+    ]
+  },
+  "comparison": "Both candidates understand the product and disclose metric limits well. Candidate A's delivered page matches its decision funnel most closely: the computed West insight, the 2:1 trend/outcome composition and the context-preserving drawer make the scan-to-investigate path coherent, though its mobile page overflows to 604px, its axe output records 22 serious contrast nodes, and its fixed controls obscure key values. Candidate B has cleaner typography, a stronger orders page and no mobile overflow, but a stray closing div collapses its intended grid (leaving an empty column beside the chart), and its regional table claims lowest-rate-first while rendering alphabetical order. On balance A's product, UX and composition advantages outweigh its larger accessibility defect, while B's layout and sorting defects are narrower but more visible.",
+  "limitations": "Only the default desktop (1280px) and mobile screenshots were supplied per candidate; Candidate A's mobile PNG is 604px wide because of the page overflow, so it is not a strict 390px-equivalent capture to Candidate B's. No screenshots of the orders/drill-down or non-default states are in either packet, and the automated checks are axe/DOM snapshots rather than the 77 checks Candidate B claims. I loaded both implementations locally in Chromium and exercised filtering, region drill-down, drawer/orders context, search and loading/stale/partial/error states, but did not test screen readers, real touch hardware or browsers beyond Chromium. This is one blinded judge pass, not a statistical test."
+}

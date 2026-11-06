@@ -1,0 +1,74 @@
+{
+  "reviewer_id": "J2",
+  "pair_id": "operations-dashboard-r3",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:24-46 and index.html:95-126 define units, denominators, complete-day rules and the 15-minute lag, and invent no target or forecast. However the delivered outcome model treats one failed attempt per order as a terminal outcome (app.js:95-99,126-136; desktop.png shows '1,159 attempts' and '2.5% of orders') even though index.html:105-106 says an order can have several attempts.",
+      "ux_reasoning": "analysis.md:48-95 and desktop.png show a coherent funnel: scope strip, computed insight, KPI row, trend/outcome split, sortable regional table and orders drawer. The drawer keeps the exact range/regions/statuses and opener, caps the list at 240 with honest copy (analysis.md:91-94), closes on filter change and restores focus (app.js:1186-1213).",
+      "design_judgment": "analysis.md:96-119 justifies zero-based count charts, a fixed 0-100% rate axis with its readability trade-off, no dual axes/target/pie, and aria-hidden sparklines. The status-subset rule hides the rate rather than silently redefining its denominator (analysis.md:115-119; app.js:469-475).",
+      "visual_hierarchy": "Desktop.png (1280x2012) has a clear scope -> insight -> KPI -> 2:1 trend/outcome -> full-width table composition. Mobile.png is 604 px wide for a 390 px client (checks.json:71-73), so the regional table is clipped at 'FAILED AT' and there is no valid 390 px visual evidence; the open prototype panel also covers outcome values in desktop.png.",
+      "interaction_completeness": "index.html:136-151 exposes loading, stale, partial, no-data, error and forced-empty orders; analysis.md:136-148 documents matching recovery and the role=alert custom-range error; app.js:421-536 supplies loading skeletons, stale banner, a full error card with retry/last-good data and per-panel no-data states.",
+      "accessibility_responsiveness": "Semantics are strong: skip link, landmarks, one h1, inert labelled dialog and a live region (index.html:10-35,130-134; app.js:1186-1213). But axe reports serious color-contrast on 22 desktop and 15 mobile nodes, 2 target-size nodes and 1 label-content-name mismatch (checks.json:28-50,76-98), and the 390 px page is 604 px wide (checks.json:71-73).",
+      "implementation_quality": "Self-contained deterministic app with no console/page errors (checks.json:26-27,74-75) and clear render sections. But the region table still expands the document to 604 px at 390, contradicting analysis.md:126-128's 'tables scroll horizontally', and the supplied checks cover only the happy-path render."
+    },
+    "critical_defects": [
+      "Mobile page-level horizontal overflow: a 604 px document for a 390 px viewport (checks.json:71-73); screenshots/mobile.png is 604 px wide and cuts the regional table mid-header, so the responsive deliverable fails at the required mobile width.",
+      "Failed delivery attempts are counted as one terminal outcome per order (app.js:95-99,126-136; desktop.png outcome mix 'Failed attempt 1,159, 2.5% of orders') while the page's own definition says an order can have several failed attempts (index.html:105-106).",
+      "Accessibility failures: axe reports serious color-contrast on 22 desktop/15 mobile nodes, 2 target-size nodes and 1 label-content-name mismatch (checks.json:28-50,76-98), while analysis.md:164 targets 4.5:1.",
+      "No screenshots of loading, stale, partial, no-data, error, empty-result or drawer states are supplied; only normal-state renders exist in the packet.",
+      "The desktop evidence has the prototype-controls panel open over the delivery-outcome card (desktop.png), hiding part of the artifact."
+    ],
+    "strengths": [
+      "Clear metric contracts with units, exact dates, pp vs percent, complete-day rules and explicit absence of targets or forecasts (analysis.md:24-46; index.html:95-126).",
+      "Decision-led hierarchy and a strong investigation path, led by a computed non-causal insight, with a drawer that preserves dashboard context (analysis.md:48-95).",
+      "Honest chart choices and non-color encoding: zero-based counts, 0-100% rate axis, labelled outcomes and deltas, and text/data-table alternatives (analysis.md:96-119).",
+      "Broad state coverage and recovery, including stale, partial, no-data, error, invalid range and empty orders (analysis.md:136-148; app.js:421-536).",
+      "Solid keyboard/focus mechanics for the modal drawer: inert background, Escape close and focus restoration (app.js:1186-1213)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 2
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:20-27 defines attempts vs orders and the resolved-rate denominator; the UI reports '199 ... across 180 orders' and '34 excluded: 3 in transit, 31 failed-only' (app.js:538-575; desktop.png), handles in-progress periods and invents no target, forecast or cause.",
+      "ux_reasoning": "analysis.md:43-117 has a coherent scan -> compare -> locate -> investigate flow, a quantified headline naming West, context chips and back-preserving filters. But the region table promises 'Lowest rate first' (app.js:965) while rows stay in the fixed REGIONS order Central -> West (app.js:337-351; desktop.png), and 'Largest regional declines' repeats the table's data.",
+      "design_judgment": "analysis.md:74-90 and app.js:688-850 justify a 0-100% rate line with dashed comparison, hatched count bars, no dual axis/target, a data table and keyboard day targets. The delivered page does not honor its own 8/4 and 7/5 grid (app.js:850), and the sorted-table intent is absent.",
+      "visual_hierarchy": "Desktop.png (1280x2373) leaves a large empty right column: the chart occupies the left 8 columns, then 'Delivery status', 'On-time rate by region' and 'Largest regional declines' stack full width. A stray closing div at app.js:850 closes the grid opened at app.js:586, so the intended status sidebar and 7/5 region layout never render. Mobile.png is more coherent but clips the table/caption (styles.css:630-634).",
+      "interaction_completeness": "analysis.md:119-135 and app.js:495-533,1075-1134 implement loading, stale, partial, error with retry, no-data, no-denominator, empty results and in-progress periods; orders support sort, paging, search, inline details, removable chips and preserved context. No state screenshots are supplied to confirm the visuals.",
+      "accessibility_responsiveness": "Semantics and keyboard paths are strong (aria-sort, chart day buttons, aria-busy, focus handling; app.js:1106-1123,1285-1314) and checks.json:69-71 reports no page-level overflow at 390. Axe still reports 4 label-content-name mismatches and 2 contrast nodes (checks.json:30-47,74-91), and the mobile table is clipped with no visible scroll affordance.",
+      "implementation_quality": "Organized render code with no console/page errors at either viewport (checks.json:25-29,68-73). However the unbalanced closing div at app.js:850 structurally breaks the grid, the 'Lowest rate first' copy is false (app.js:337-351,965), and the claimed 77/77 plus 13/13 checks (analysis.md:167) are not present in checks.json."
+    },
+    "critical_defects": [
+      "A stray closing div at app.js:850 closes the grid opened at app.js:586 after the chart; desktop.png confirms status, region and declines render as full-width siblings with a blank right column, so the intended 8/4 and 7/5 layout is not delivered.",
+      "Region table subtitle says 'Lowest rate first' (app.js:965) but rows are fixed Central -> West (app.js:337-351; desktop.png); there is no region-table sort control, so the promised worst-first scan is absent.",
+      "At 390 px the 600 px region table is clipped inside its scroll area; the caption renders as 'Bars show ... on a 0-100% be selected.' and ORDERS/FAILED ATTEMPTS are off-screen with no visible scrollbar (mobile.png; styles.css:630-634).",
+      "Axe reports 4 label-content-name-mismatch nodes and 2 color-contrast nodes in both viewports (checks.json:30-47,74-91).",
+      "No state screenshots are supplied, and the claimed 77/77 and 13/13 checks (analysis.md:167) are not in checks.json, so state and interaction claims are unverified."
+    ],
+    "strengths": [
+      "Best-in-pair metric semantics: attempt events vs affected orders, a stated resolved denominator with exclusion counts, pp vs count deltas and no invented target/cause (analysis.md:20-27; desktop.png).",
+      "Clear investigation flow with a quantified non-causal headline, context chips on the orders view, inline details and preserved filters (analysis.md:43-117).",
+      "Honest charting with exact alternatives: 0-100% rate axis with dashed comparison, hatched comparison bars, data table and keyboard day targets (analysis.md:74-90; app.js:688-850).",
+      "A complete state taxonomy, including in-progress, stale, partial, error/retry, no-data, empty result and no-denominator (analysis.md:119-135).",
+      "The page does not horizontally overflow at 390 px (checks.json:69-71), and the mobile cards stack readably."
+    ]
+  },
+  "comparison": "Candidate A has the stronger desktop information architecture and investigation model: a context strip, computed insight, KPI -> trend/mix -> regional table -> drawer sequence, with preserved filters and focus. Candidate B has the stronger product/metric semantics (attempt events vs orders, explicit denominator and exclusions) and the cleaner 390 px page. Both deliver a broken viewport: Candidate A overflows horizontally at 390 px with a 604 px document, while Candidate B's cards fall out of the 12-column grid because of a stray closing tag, producing a blank right column. Candidate A's accessibility violations are more numerous (22 contrast nodes), but its state and interaction coverage is at least as complete; Candidate B's table-sort copy is not delivered. Candidate A edges ahead on hierarchy, design reasoning and completeness; Candidate B is better on domain modeling and responsive integrity.",
+  "limitations": "Only normal-state screenshots are supplied for both candidates; loading, stale, partial, no-data, error, empty and drawer/orders states were assessed from source and prose, not rendered evidence. checks.json is an axe-based rendered summary, not a full functional or WCAG test, and Candidate B's claimed 77/77 and 13/13 checks are absent from the packet. Candidate A's mobile image is 604 px wide at a 390 px viewport, so 390 px visual judgement is partly inferred from the reported overflow and DOM. No screen-reader, cross-browser or real-data testing was available. This is one blinded judge pass, not a statistical test or proof of causation."
+}

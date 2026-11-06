@@ -1,0 +1,72 @@
+{
+  "reviewer_id": "J2",
+  "pair_id": "operations-dashboard-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "inputs/condition-a/analysis.md:25-34 defines every metric's population, unit and denominator (on-time denominator includes late and failed orders; failed attempts are events, not orders), and :156-167 separates known limits from assumptions (weekday composition, partial totals, stale data, synthetic sample). The same definitions appear in-product in app.js:1228-1235 and index.html:116-118.",
+      "ux_reasoning": "inputs/condition-a/analysis.md:40-57 orders the page around five decisions and states the journey from signal to order timeline; :107-121 keeps the dashboard context in drawer chips instead of mutating filters; :127-139 distinguishes loading, stale, partial, no-data, empty-result and comparison-unavailable. app.js:1378-1409 builds the order scope from the clicked region/day/outcome.",
+      "design_judgment": "inputs/condition-a/analysis.md:81-95 explicitly rejects a truncated rate axis and a heat map, uses a 0-100% main axis plus a symmetric percentage-point change chart, avoids dual axes, and makes volume deltas neutral. app.js:1001-1046 implements the change chart with an explicit zero line and per-bar labels.",
+      "visual_hierarchy": "inputs/condition-a/screenshots/desktop.png (1280x1649): a strong 'Needs attention — On-time delivery is 2.1 pts below the previous 7 days' band with 'Review West orders' sits above three large KPI cards, giving a clear scan order. However the 'On-time delivery by day' panel uses a 0-100% axis, so the 87.9-91.9% series is a nearly flat line in the top fifth of a mostly empty plot (acknowledged at analysis.md:81-85). The mobile capture is 602x3466 px, not a 390 px composition, because the page overflows (checks.json:81-83).",
+      "interaction_completeness": "inputs/condition-a/analysis.md:127-139 documents nine distinguishable states; app.js:1324-1351 routes loading, error, no-data, partial-region and empty-result states with recovery actions (:1279-1314), and :1640-1660 validates custom ranges with a role=alert message. The order drawer adds scope chips, search, sort, pagination and an expandable event timeline (app.js:1421-1430, 1477-1533).",
+      "accessibility_responsiveness": "inputs/condition-a/test-output/checks.json:36-50 and :86-99 report serious axe color-contrast violations on 10 nodes and target-size violations on 2 nodes at both viewports; the chart axis labels use #87938c on white (styles.css:18, :717), roughly 3.2:1. checks.json:81-83 also reports horizontal_overflow true on mobile (document width 602 vs client 390). Positives: one h1, semantic main, skip link (index.html:11), native dialog (index.html:125), named controls (checks.json:30).",
+      "implementation_quality": "inputs/condition-a/test-output/checks.json:34-35,84-85 show zero console and page errors, and the implementation is dependency-free and deterministic (analysis.md:171-176). app.js:1919-1962 handles focus tooltips and breakpoint re-render. But the mobile overflow is a real defect in the delivered result, and analysis.md:173,178 refer to transcript.md as the record of checks actually run, which is absent from the packet."
+    },
+    "critical_defects": [
+      "Mobile responsiveness is broken: checks.json:81-83 records horizontal_overflow true with document_width 602 versus client_width 390, and screenshots/mobile.png is a 602 px-wide document capture rather than a 390 px viewport render. This contradicts analysis.md:151's claim that only the region table scrolls horizontally.",
+      "Serious automated accessibility violations in both viewports: 10 color-contrast nodes and 2 target-size nodes (checks.json:36-50, 86-99). The 10 contrast nodes are consistent with the #87938c chart axis labels at ~3.2:1 (styles.css:18,717).",
+      "Missing evidence: analysis.md:173,178 cite transcript.md for the checks actually run, but no transcript.md is present in the packet; its interaction and keyboard claims cannot be verified.",
+      "The primary 'On-time delivery by day' chart is visually close to flat at a 0-100% scale, so it adds little scanning value beyond the change chart; the large panel spends most of its area on empty plot space."
+    ],
+    "strengths": [
+      "The key-finding band states the change, the current rate, the weakest region and a direct investigation action in one scan, before the KPI cards (screenshots/desktop.png; analysis.md:62-66).",
+      "Charting is honest by construction: a full-scale rate trend plus a separate percentage-point change chart with a symmetric zero axis and a data table, rather than a truncated axis (analysis.md:81-87; app.js:1001-1046).",
+      "The order drawer preserves the dashboard context through scope chips and reopens the matching orders for a region, day, outcome or failed-attempt scope without mutating the dashboard filters (analysis.md:107-121; app.js:1378-1430).",
+      "The empty-result state is produced by a real region/status/period combination and is explicitly distinguished from feed-level no-data and from errors (analysis.md:133-139; app.js:1324-1351).",
+      "The risk review is substantive and product-specific: failed attempts versus failed orders, equal-length versus equal-weekday comparisons, partial totals and stale data (analysis.md:156-167)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "inputs/condition-b/analysis.md:19-23 defines the on-time rate over delivered orders, excludes in-transit and failed-only orders, and separates attempts from orders; :25-35 prints the exact comparison window and refuses to invent a target. :156-165 names the status taxonomy, sampling and local-time assumptions. index.html:122-138 repeats the definitions in-product.",
+      "ux_reasoning": "inputs/condition-b/analysis.md:37-55 gives a clear shift-start and weekly-review journey and a 'Worth checking' bridge from scan to investigation (app.js:653-739, including a 'No material change' fallback). But region clicks filter the whole dashboard and a chart click replaces the weekly range with a single-day custom range (app.js:1160-1172), so the original weekly context is not retained in a scoped order view; the user must reset. The order section is also limited to a 10-row sample with 'Show 10 more' (app.js:832-902).",
+      "design_judgment": "inputs/condition-b/analysis.md:65-75 rejects both a 0-100% rate axis and a truncated rate axis in favor of change from a named baseline in percentage points; :80-86 chooses a table over bars for exact regional values; :84-86 frames thresholds as review aids, not an SLA; :98-100 openly weighs the status-filter scope trade-off. These are contextual choices with explicit alternatives and trade-offs.",
+      "visual_hierarchy": "inputs/condition-b/screenshots/desktop.png (1280x2408) has a coherent top-down order: featured on-time KPI, two supporting KPIs, chart plus 'Worth checking', regions, then orders, with consistent type scale and numeric alignment. inputs/condition-b/screenshots/mobile.png is a true 390 px render with no page overflow (checks.json:59-65). Mobile weakness: the region table leads with region share and 'Orders placed', pushing 'On-time rate' off the right edge, and the orders table shows only its first three columns until scrolled.",
+      "interaction_completeness": "inputs/condition-b/analysis.md:126-137 enumerates eight states; app.js:904-994 implements error/no-data blocks with retry and filter recovery, :1108-1127 simulates refresh with an announced loading state, and :1174-1207 returns focus to the invoking View button on dialog close. Gaps: the order view has no search, sort control or paging, only 'Show 10 more' (app.js:832-902), custom dates silently swap when start is after end (app.js:1229-1246), and the delivery-status filter changes only the order list (index.html:91,109).",
+      "accessibility_responsiveness": "inputs/condition-b/test-output/checks.json:29-40,66-77 show a single serious color-contrast violation (1 node) and no target-size violations; the stale zero line is acknowledged at analysis.md:119. The 390 px mobile view has no horizontal page overflow (checks.json:59-65), and wide tables are focusable, labelled scroll regions with a visible hint (analysis.md:122; styles.css:586-587). Chart points are focusable buttons with descriptive labels (app.js:555-570).",
+      "implementation_quality": "inputs/condition-b/test-output/checks.json:24-40,61-77 show zero console and page errors and a dependency-free deterministic build. Scrolling is correctly contained (styles.css:586) and focus/reduced-motion/forced-colors are handled (app.js:1174-1207; styles.css:940-952). Defect: the Regions panel claims and its code comment says rows are sorted by largest on-time drop (app.js:741-796, caption at :788), but ids come from the fixed REGIONS array and are never sorted, so rendered South (-0.2 pp) precedes East (-0.7 pp) in screenshots/desktop.png."
+    },
+    "critical_defects": [
+      "The Regions table is not sorted by largest on-time drop despite the caption, subtitle and analysis claim (analysis.md:82; app.js:741-796). The rendered desktop screenshot shows South at -0.2 pp before East at -0.7 pp, so the stated scan affordance is false.",
+      "The delivery-status filter is deliberately scoped to the order list only (index.html:91,109): KPI values, trend and region table continue to cover all statuses. This is documented, but it departs from the brief's 'filter by ... delivery status' and can surprise a manager who expects the whole dashboard to change.",
+      "The order investigation surface is weak for a large result set: only 10 sampled rows are shown with a 'Show 10 more' button, with no order search, sort control or paging (app.js:832-902), even though the dashboard can match hundreds of orders.",
+      "One serious axe color-contrast node remains in both viewports (checks.json:29-40,66-77)."
+    ],
+    "strengths": [
+      "The trend chart plots deviation from a named previous-period average in percentage points, labels the zero line as 'not a target', and exposes raw daily rates in the tooltip and table, avoiding both a flat 0-100% chart and a truncated axis (analysis.md:65-75).",
+      "The 'Worth checking' panel turns the largest movements into explicit, threshold-based callouts with direct actions and a 'No material change' fallback, while stating that the thresholds are not an SLA and that the panel does not explain causes (app.js:653-739).",
+      "KPI cards separate delivered orders, attempts and orders affected, use neutral deltas for volume, and repeat the exact comparison dates on the numbers (analysis.md:59-63; screenshots/desktop.png).",
+      "State handling is explicit and distinguishable, with retry paths, preserved filters, a stale badge, partial rows kept visible, and a separate empty-order state (analysis.md:126-137).",
+      "The implementation is clean at 390 px: no page overflow, focusable labelled table scroll regions, focus return from the order dialog, reduced-motion and forced-colors support (checks.json:59-65; app.js:1174-1207; styles.css:586-587,940-952)."
+    ]
+  },
+  "comparison": "Candidate A has the deeper investigation workflow and the more rigorous metric semantics: the key-finding band, scoped order drawer with search/sort/paging/timeline, genuine filtered empty state, and a candid risk review. Candidate B has the cleaner comparison visualization, a stronger threshold-based triage panel, a true 390 px mobile layout with contained table scrolling, and fewer automated accessibility violations, but its region table is not sorted as claimed, its order view is a 10-row sample without search or paging, and its status filter does not affect the headline metrics. On the rubric weights A averages 3.55 and B 3.45; the small gap is driven by A's UX/interaction depth against its mobile overflow, contrast violations and missing transcript evidence.",
+  "limitations": "Only the normal state is rendered in screenshots for both candidates; loading, stale, partial, no-data, empty and error states were assessed from implementation code and prose, not images. Candidate A's mobile capture is 602x3466 px (document width) and checks.json reports a 390 px viewport with overflow, so its 390 px composition is inferred rather than directly seen. Axe results cover only the rules it ran; no screen reader, zoom or manual keyboard session was supplied, and Candidate B's claims of checks at 320/768/1440 px are not evidenced in the packet. Data is synthetic for both. This is one blinded judge pass, not a statistical test and not proof of causation."
+}

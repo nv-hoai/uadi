@@ -1,0 +1,69 @@
+{
+  "reviewer_id": "C1",
+  "pair_id": "operations-dashboard-r3",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 2
+    },
+    "evidence": {
+      "product_understanding": "analysis.md §2 gives an explicit metric contract: on-time rate = on-time ÷ completed outcomes, with 34 excluded (3 in transit, 31 failed-only) surfaced on the rate card in screenshots/desktop.png; pp vs percent, promised-window scope, comparison period dates and the 15-minute lag are all stated. §9 distinguishes failed attempts from failed orders and zero from not-applicable. definitions disclosure in implementation/index.html:98 and app.js:641.",
+      "ux_reasoning": "analysis.md §3 and §6 define a scan→compare→locate→investigate journey with carried context (period, comparison, region, status, day, search) and removable chips; app.js:1041-1069 implements the context bar and app.js:1017-1120 the orders view. §7 separates loading/stale/partial/error/no-data/empty-result/no-denominator. Screenshots/desktop.png shows the resulting order: freshness → headline → KPIs → trend → status → region → declines.",
+      "design_judgment": "analysis.md §4-5 rejects dual axes, gauges, forecast cones, invented targets and truncated rate axes; screenshots/desktop.png uses a 0–100% line with dashed comparison, a sorted region table with printed values, and a status list rather than a pie. Deltas use sign + arrow + words, not colour alone.",
+      "visual_hierarchy": "screenshots/desktop.png shows a clear type hierarchy (headline, three KPI cards, section headings), but the trend card ends at roughly 8/12 width with an empty ~1/3 column beside it, while Delivery status, On-time rate by region and Largest regional declines all render full width. This is not just a capture artifact: in headless Chromium at 1280 px the .card-status element's parent is MAIN, not .grid, and its rect is x=28 width=1224. The extra closing div in chartSVG (app.js:845) closes .grid early, so the intended 8/4 and 7/5 relationships in styles.css:443-446 never apply.",
+      "interaction_completeness": "All drill surfaces are wired: KPI View orders, chart day, status row, region row and largest-decline row (app.js:905-1004); the orders view adds context chips, sort, paging, search, inline Details with attempt history and Back to dashboard preserving filters (app.js:1017-1166, 1398). Prototype controls expose ready/loading/stale/partial/error plus no-data (index.html:104-117).",
+      "accessibility_responsiveness": "Good semantics in index.html (skip link, one h1, labelled filters, live region) and app.js (aria-pressed, aria-sort, aria-expanded, SVG title/description, chart-day buttons). test-output/checks.json reports 0 controls without accessible names and no horizontal overflow at 1280 or 390, but also 2 serious color-contrast nodes and 4 label-content-name-mismatch nodes on both viewports; analysis.md:146 nonetheless claims all core pairs are ≥4.5:1, which the automated evidence contradicts. Mobile layout is otherwise intact (screenshots/mobile.png is 390 wide; charts/tables scroll inside regions).",
+      "implementation_quality": "Substantial dependency-free implementation (app.js 1695 lines, styles.css 975) with no console or page errors in test-output/checks.json. However the premature-closing-div defect above breaks the intended desktop grid, and the analysis overstates verification: it claims 77/77 checks plus a 13/13 re-check and 1440 px screenshots, none of which appear in test-output/checks.json (which contains only axe results) or match the 1280 px files. The contrast claim is also contradicted by the same file."
+    },
+    "critical_defects": [
+      "Rendered desktop layout is structurally broken: an extra closing </div> in chartSVG (implementation/app.js:845) closes the .grid container, so .card-status/.card-region/.card-attention become children of MAIN and lose their span-4/span-7 columns. screenshots/desktop.png shows a large blank column to the right of the trend chart and full-width cards below; confirmed in headless Chromium at 1280 px (.card-status parent=MAIN, x=28, width=1224).",
+      "Verification claims conflict with supplied evidence: analysis.md:166-169 claims 77/77 + 13/13 automated checks, 1440 px screenshots and all contrast ≥4.5:1, but test-output/checks.json contains only axe results (with 2 color-contrast and 4 label-content-name-mismatch violations) and the screenshots are 1280 px. No 77-check log or 1440 px image is in the packet.",
+      "Order-list, expanded-detail, failed-attempt-chart and partial-state screenshots that analysis.md:168 says were captured are absent from screenshots/, so those states and the drill journey cannot be visually verified."
+    ],
+    "strengths": [
+      "Excellent metric contract: denominator is completed outcomes with the exclusion count exposed, failed attempts are separated from affected orders, and rate changes use percentage points.",
+      "Strong state model that separates no-data, no-match, load failure, stale, partial and zero-vs-not-applicable, with North excluded explicitly under partial data.",
+      "Drill-down preserves period, comparison, region, status, day and search, and the inline order detail shows promised window, outcome and attempt timeline.",
+      "Appropriate chart choices: 0–100% rate axis, zero-baseline counts, one metric at a time, printed values and a data-table alternative."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md §2 states definitions, units, comparison rules, today-excluded and pp-vs-percent, and §9 is candid about limits. But it also admits the demo never has more than one failed attempt per order while the UI presents 1,159 attempts and a 2.5% share of orders, and the on-time denominator is all order volume including failed attempts (screenshots/desktop.png). That ambiguity is disclosed rather than resolved.",
+      "ux_reasoning": "analysis.md §3-4 defines the shift-start and weekly-review journeys; the insight strip names West with the change and failed-attempt multiple (screenshots/desktop.png), the drawer states its origin and carries range/region/status tags, and filters are multi-select. Changing a filter closes the drawer and hides the rate for a status subset, both explained in text. The investigation stops at a list; per-order detail is declared out of scope (app.js:1170).",
+      "design_judgment": "analysis.md §5 rejects dual axes, pie charts, 3D, auto-refresh and invented targets, and uses zero-based columns plus a 0–100% rate line (screenshots/desktop.png). The outcome mix is a labelled stacked bar. Counterweights: sparklines duplicate the trend and are unlabelled/aria-hidden, volume is the first and visually dominant KPI, and the 'failure share of orders' framing sits awkwardly with attempts-vs-orders.",
+      "visual_hierarchy": "screenshots/desktop.png is cohesive: freshness, filter contract, a single insight sentence with a View West orders action, a three-up KPI row, a 2:1 trend/outcomes split, a compact sortable region table, then definitions. Spacing, card sizes and the indigo accent produce a clear scan path. The hierarchy weakness is that Order volume (47,169) leads and is the largest number, while on-time health is the stated primary outcome.",
+      "interaction_completeness": "Drill links exist from each KPI, chart day, outcome row and region row (app.js:639-656, 969-978); the drawer preserves range/region/status, states its origin, orders failed/late first and discloses sampling (app.js:1120-1185). States cover normal/loading/stale/partial/no-data/error/empty/invalid-range/status-subset/no-regions (analysis.md §7, index.html:140-150). Gap: table rows are static and there is no per-order detail, so the manager cannot open a specific order to investigate.",
+      "accessibility_responsiveness": "Strong semantics and focus handling: skip link, labelled groups, aria-pressed chips, modal drawer with inert background, Escape close and focus return (app.js:1186-1213, 1410). But test-output/checks.json reports 22 color-contrast violations on desktop and 15 on mobile, 2 target-size violations and 1 label-content-name-mismatch; mobile document_width is 604 against client_width 390, and screenshots/mobile.png is 604 px wide with the region table cut off. That is a real page-level horizontal-overflow failure.",
+      "implementation_quality": "Clean, compact implementation (app.js 1547, styles.css 537) with no console or page errors; state switching, drawer inert/focus management and data tables are implemented directly. The accessibility failures above are implementation defects, and the mobile overflow is a CSS layout bug. No automated interaction log is supplied, only axe results."
+    },
+    "critical_defects": [
+      "Mobile viewport overflows horizontally: test-output/checks.json reports document_width 604 vs client_width 390, and screenshots/mobile.png is 604 px wide with Regional performance columns clipped. This fails the responsive-dashboard requirement.",
+      "Automated accessibility check reports serious failures: color-contrast (22 nodes desktop, 15 mobile), target-size (2 nodes) and label-content-name-mismatch (1 node) in test-output/checks.json. analysis.md:165 correctly admits axe was not run, but the supplied axe output shows real failures.",
+      "Investigation stops at the order list: drawer rows are non-interactive and analysis.md/app.js:1170 explicitly exclude opening an individual order record, so 'open relevant orders to investigate' is only partly supported.",
+      "Failed-attempt semantics are internally weak: the UI counts attempts and says one order can have several, but the demo data has one attempt per order and the on-time rate denominator is all orders, so attempts/orders cannot be separated in the delivered evidence."
+    ],
+    "strengths": [
+      "Most cohesive visual composition of the pair: balanced KPI row, 2:1 trend/outcomes split, compact region table and consistent spacing at 1280 px.",
+      "Clear comparison contract repeated in the filter bar, context strip and chart legend, with exact comparison dates and pp-vs-percent units.",
+      "Useful filter model with multi-select regions/statuses, a comparison switch, invalid-range handling, status-subset rate suppression and a no-regions state.",
+      "Drawer preserves filters, names the surface it opened from, sorts failed/late first and honestly discloses 'Showing 240 of N' sampling; focus returns to the opener."
+    ]
+  },
+  "comparison": "Candidate A is materially stronger on product reasoning and investigation depth: its metric contract exposes the on-time denominator and exclusion count, separates failed attempts from affected orders, handles partial/stale/in-progress states, and carries context through a real order-detail view. Candidate B is materially stronger visually at desktop: its three-up KPI row, insight strip, 2:1 trend/outcomes split and sortable region table form a cleaner, more balanced page, whereas Candidate A's rendered desktop layout is broken by a stray closing div, leaving a third of the width beside the trend chart empty and stretching the lower cards. Candidate B also has the more flexible multi-select filters, but it pays for that with serious automated contrast failures, target-size failures and a 604 px mobile document in a 390 px viewport, and its investigation ends at a non-interactive order list. Candidate A's accessibility evidence is better (no overflow, fewer axe nodes) but not clean, and its analysis overstates its verification. Weighted by the supplied rubric the pass lands at approximately 3.40 for Candidate A and 2.90 for Candidate B; the gap is driven by product/UX/interaction depth on A's side and by accessibility/responsiveness failures on B's side, partly offset by B's stronger visual composition and cleaner implementation.",
+  "limitations": "This is one blinded judge pass, not a statistical test and not proof of causation. Both packets supply only normal-state desktop and mobile screenshots, so loading, stale, partial, error, no-data and drill-down states could not be visually verified for either candidate; the state claims rest on prose and source inspection. The automated evidence is an axe snapshot only, with no screen-reader, keyboard, cross-browser or performance testing. I ran Candidate A's implementation locally in headless Chromium only to confirm the DOM parent/rect of .card-status; I did not run Candidate B's interactions. Candidate B's 'mobile' screenshot is 604 px wide because the page overflows a 390 px viewport, not because it was captured at a different nominal viewport. The packet manifests contain 'candidate' fields that conflict with their directory names; I treated those as metadata errors, kept the immutable directory-based A/B labels, and did not use them to infer conditions. No other passes, coordinator metadata or mapping files were read, and no evidence files were modified."
+}

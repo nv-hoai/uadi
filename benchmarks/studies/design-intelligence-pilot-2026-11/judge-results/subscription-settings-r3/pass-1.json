@@ -1,0 +1,78 @@
+{
+  "reviewer_id": "J1",
+  "pair_id": "subscription-settings-r3",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "condition-a/analysis.md:9-21 separates demo assumptions (prices, proration, cancellation, roles) from facts; condition-a/implementation/app.js:8-18 encodes the brief's 3/20/100 member limits and one owner; app.js:227-290 answers plan, price, renewal, next payment and seat usage in the summary.",
+      "ux_reasoning": "condition-a/analysis.md:27-36 maps each owner question to a page area and :52-84 gives the IA and owner/member journeys; app.js:786-838 previews effective date/price before commitment; app.js:1048-1094 lists cancellation consequences and gates the destructive button behind an acknowledgement.",
+      "design_judgment": "condition-a/analysis.md:88-104 records the decision/trade-off table and deliberate exclusions (no urgency, guilt copy or upsells); app.js:880-909 adds a separate review step; app.js:1096-1115 provides reactivation and undo.",
+      "visual_hierarchy": "condition-a/screenshots/desktop.png shows a strong summary-first order but an empty right column under Payment method in the two-column billing grid; condition-a/screenshots/mobile.png preserves section order yet leaves a large void before the Cancel button, caused by styles.css:697 (flex: 1 1 400px) surviving the column layout at styles.css:1240.",
+      "interaction_completeness": "condition-a/implementation/index.html:59-67 exposes seven reachable data states; app.js:436 adds a payment-failure banner and app.js:600 a loading skeleton; app.js:1134-1245 handles payment validation and simulated success; app.js:664-676 restores focus to the trigger; app.js:1096-1115 covers reactivate/undo.",
+      "accessibility_responsiveness": "condition-a/test-output/checks.json:32-48 and :76-93 record serious axe violations (aria-progressbar-name, 2 nodes; definition-list, 1 node); app.js:258 and :496 progressbars carry aria-valuetext but no accessible name; app.js:242-262 puts span children inside dl rows. checks.json:26-27 and :70-72 confirm no horizontal overflow at 1280/390, but the mobile cancel-zone gap is a real responsive defect.",
+      "implementation_quality": "node --check app.js passes and condition-a/test-output/checks.json:29-30/:74-75 show no console or page errors with no external assets; however styles.css:697+:1240 causes the mobile layout bug, and analysis.md:179-181 says no automated axe audit was run although checks.json contains axe results with serious violations."
+    },
+    "critical_defects": [
+      "Mobile cancellation block: .cancel-copy keeps flex: 1 1 400px (styles.css:697) after .cancel-zone becomes a column at styles.css:1240, producing roughly 300px of dead space between the explanation and the Cancel subscription button in screenshots/mobile.png.",
+      "Axe reports two serious violations in both viewports (test-output/checks.json:32-48, :76-93): both seat-usage progressbars have no accessible name (app.js:258, :496) and the summary dl rows contain span children (app.js:242-262).",
+      "The upgrade review says the prorated amount is 'confirmed at checkout' (app.js:831, :881) but no checkout step exists; 'Confirm upgrade' (app.js:877, :909) commits immediately (app.js:986-1000), so the owner never sees the charge before committing.",
+      "The desktop two-column billing grid leaves a large empty area under Payment method while the Next invoice card extends the left column (screenshots/desktop.png).",
+      "Settings rail items General, Members, Billing history and Integrations only fire a toast (app.js:1424-1426), so four prominent destinations are dead ends."
+    ],
+    "strengths": [
+      "Broad, reachable state coverage: payment failure, no invoices, approaching/at limit, blocked downgrade, loading, load error, scheduled change and cancellation are all selectable in index.html:59-67.",
+      "Cancellation is clearly separated and protected by a consequence list, required acknowledgement, disabled destructive action, safe primary button, reactivate and undo (app.js:1048-1115).",
+      "Members retain plan, card last-four, billing email and invoice history while every change control is disabled with a named-owner explanation (app.js:276-277; analysis.md:110-119), matching the brief.",
+      "The summary card answers plan, price, renewal, next payment and 12-of-20 usage at a glance on desktop and mobile (screenshots/desktop.png, screenshots/mobile.png).",
+      "Assumptions are explicit and every simulated outcome is labelled, including invoice text files and the payment form (analysis.md:9-21; app.js:1150).",
+      "Focus returns to the dialog trigger after close and no horizontal overflow occurs at the captured viewports (app.js:664-676; checks.json:26-27, :70-72)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "condition-b/analysis.md:9-20 states the fixture assumptions and the conservative member policy; app.js:11-30 encodes the 3/20/100 limits and app.js:155-164 explains member permissions. However app.js:216 promises invitations resume when the owner upgrades while app.js:739-742 schedules every upgrade for 1 Dec 2026, so the seat-limit remedy does not work.",
+      "ux_reasoning": "condition-b/analysis.md:38-73 gives a coherent one-page IA and owner/member journeys; app.js:730-752 and :788-802 provide exact change reviews; app.js:830-885 gates cancellation behind consequences and acknowledgement. Gaps: the deferred-upgrade conflict above, no failed-payment recovery, and the empty-invoice state is unreachable from index.html:167-173.",
+      "design_judgment": "condition-b/analysis.md:75-91 explains separating price display from commitment, refusing to invent proration, reversible scheduling, and conservative permissions; :134-142 lists unresolved risks. app.js:736-742 shows exact from/to price, $0 charged today, next payment and new member limit, and app.js:303-305 provides undo.",
+      "visual_hierarchy": "condition-b/screenshots/desktop.png and screenshots/mobile.png show a calm, consistent hierarchy: at-a-glance summary, three comparable plan cards, then payment, invoices and cancellation; the in-page navigator in index.html:38-49 keeps every section reachable, including Cancellation on mobile.",
+      "interaction_completeness": "index.html:56-87 supplies skeleton and retryable error panels; app.js:683-684 adds a pending spinner and duplicate-submit block; app.js:652-666 focuses the safe action and app.js:955-956/:985 use aria-invalid and focus the first invalid field; app.js:830-885 covers cancellation gating. Missing: any payment-failure state, and app.js:503-505's empty-invoice state cannot be reached from the selector.",
+      "accessibility_responsiveness": "condition-b/test-output/checks.json:34-44 and :76-88 report serious color-contrast failures in both viewports, and :77-81 reports aria-prohibited-attr on mobile, likely from the aria-label on the roleless div at index.html:21. Positives: app.js:267 names the progressbar, app.js:985 sets aria-invalid, and checks.json:28-29/:71-73 confirm no horizontal overflow at 1280/390.",
+      "implementation_quality": "node --check app.js passes; condition-b/test-output/checks.json:31/:74 show no console or page errors and the static shell in index.html:56-145 is clean. But the contrast violation contradicts analysis.md:125, and the unreachable empty-invoice state is a functional gap."
+    },
+    "critical_defects": [
+      "At 20/20 seats the page says new invitations resume when you upgrade (app.js:216), but every plan change is scheduled for the renewal date (app.js:739-742, :767), so upgrading leaves the workspace at its seat limit until 1 Dec 2026.",
+      "Axe reports a serious color-contrast violation in both desktop and mobile captures (test-output/checks.json:34-44, :76-88), contradicting analysis.md:125's claim that all tested pairs are at least 4.5:1.",
+      "Members are denied invoices and payment details entirely (app.js:439-446, :492-497); this is a deliberate policy (analysis.md:19) but goes beyond 'cannot change billing' and conflicts with the brief's 'non-owners see billing information'.",
+      "The empty-invoice state exists (app.js:503-505) but the demo selector offers no way to reach it (index.html:167-173), and there is no failed-payment state; analysis.md:142 acknowledges the gap.",
+      "The mobile capture shows the fixed prototype bar covering the summary's member row (screenshots/mobile.png), obscuring evidence; it is a capture artifact but reduces the screenshot's usefulness.",
+      "The Pro plan card repeats 'Current plan' as a badge, a disabled button and an 'Active' caption (screenshots/desktop.png), adding visual noise to the most important card."
+    ],
+    "strengths": [
+      "Price comparison is explicitly separated from commitment: the Monthly/Annual control is labelled 'Show prices' with a note that browsing changes nothing, and a real cadence change goes through its own review (index.html:105-114; app.js:801-802).",
+      "Plan reviews state exact from/to, price, effective date, $0 charged today, next payment and new member limit (app.js:736-742), avoiding invented proration.",
+      "Scheduled plan, cadence and cancellation states are reversible with Undo or Resume (app.js:303-305, :830-885).",
+      "Cancellation leads with consequences, requires an acknowledgement, initial-focuses 'Keep my plan', and offers Resume (app.js:830-885).",
+      "The visual system is calm and trustworthy, with consistent cards, restrained colour and a persistent section navigator on desktop and mobile (screenshots/desktop.png, screenshots/mobile.png).",
+      "Interaction details are strong: pending spinner, duplicate-submit block, safe initial focus, aria-invalid and focus-to-first-error (app.js:683-684, :652-666, :955-956).",
+      "Members receive explicit locked-state explanations and a named owner rather than silent failures (app.js:155-164, :439-446, :492-497)."
+    ]
+  },
+  "comparison": "Candidate A is the more complete and constraint-literal deliverable: it covers payment failure, no-invoice and near/at-limit states, keeps invoices visible to members, and makes upgrades immediate so the seat-limit remedy works. Candidate B is visually stronger and more internally consistent on money presentation, with exact $0-today reviews, reversible schedules and a clear display-versus-commitment separation, but its deferred upgrades contradict its at-limit guidance, members lose invoice access, and axe reports a contrast failure. Weighted totals using the supplied weights: Candidate A 3.65, Candidate B 3.40.",
+  "limitations": "Only default owner-state screenshots were supplied (1280px desktop and 390px mobile), so dialogs, member views and alternate states are judged from code and self-reported checks rather than rendered evidence. The checks.json files are DOM/axe snapshots, not the interaction runs described in the analyses. No screen-reader, cross-browser or real-device testing was available, and no backend or payment provider exists. Both full-page captures render their fixed prototype-control bars over page content, which is a capture artifact and was not scored. This is one blinded pass, not a statistical test or proof of causation."
+}

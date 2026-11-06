@@ -1,0 +1,73 @@
+{
+  "reviewer_id": "J3",
+  "pair_id": "product-onboarding-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md lines 5-33 separate supplied facts from seven numbered assumptions (owner seat, pending invitations, Admin settings) and eight unknowns; lines 37-43 define activation as a project existing and the Owner opening it; index.html lines 127-133 show only the supplied Starter/Team limits. No fabricated integrations, analytics or pricing are present.",
+      "ux_reasoning": "analysis.md lines 47-54 and 79-80 define the one-required-field path and place invitations after the first outcome; index.html lines 56-140 contain the create screen, 143-190 the success screen with Open project as primary, and 194-291 the optional invitation step. Skip/resume is implemented in app.js lines 873-912 and 1091-1119.",
+      "design_judgment": "analysis.md lines 79-101 explain project-first sequencing, one required field, collapsing the optional description, role guidance placement, the seat meter without sales behavior, resume as a state, and stopping at the project shell; lines 144-153 record the trade-off risks. The optional description is actually collapsed behind details in index.html lines 83-92.",
+      "visual_hierarchy": "screenshots/desktop.png (1280x921) has a clear h1 -> lead -> two-column form/rail composition with Create project as the only solid primary. screenshots/mobile.png (390x1380) keeps the form before the context rail and the primary sits at y=601-647 in a 390x844 viewport. Weaknesses: the isolated 'One field to start' chip floats far right on desktop, desktop bottom whitespace is large, and the fixed Prototype controls panel clips the 'Your workspace at a glance' heading on mobile.",
+      "interaction_completeness": "app.js lines 313-376 cover name validation, loading and create failure; 662-692 cover empty, malformed, own-email and duplicate invitation validation; 694-776 cover simulated partial failure and retry; 407-430 enforce the four-invitation Starter cap. index.html supplies empty, validation, loading, success, invitation-sent and invitation-error states. Missing from the delivered interaction: any permission/role state beyond explanatory copy (no Member or Admin view).",
+      "accessibility_responsiveness": "index.html line 11 provides a skip link, lines 73/78 visible labels, line 390 a polite live region, and lines 130/217 progressbars with min/max/now; app.js lines 551-558 use fieldsets with legends, 587 sets aria-invalid, and 206-211 move focus to the screen heading. checks.json reports axe violations 0 (31/30 passes) and no horizontal overflow at 390/1280. Caveat: checks.json reports 2 controls without accessible names; my CDP audit found only the unnamed main landmark shared by both candidates, so the packet's signal is unresolved.",
+      "implementation_quality": "app.js (1251 lines) and styles.css (1889 lines) are dependency-free and organized into render and handler functions; node --check passed, checks.json shows no console or page errors, and a local create -> success -> project smoke test worked. analysis.md line 170 claims 41 automated checks all passed, but test-output/checks.json contains only one DOM/axe snapshot per viewport and no behavioral test log, so that claim is unverified."
+    },
+    "critical_defects": [
+      "Verification evidence is overstated: analysis.md line 170 claims 41 automated behavioral checks all passed, but test-output/checks.json contains only a single DOM/axe snapshot for desktop and mobile, with no record of those checks.",
+      "The delivered mobile screenshot has obscured content: the fixed Prototype controls panel overlaps and clips the 'Your workspace at a glance' heading in screenshots/mobile.png around y=710-745.",
+      "Resume is not fully surfaced after skipping step 1: the home setup card says only 'Create your first project' and does not show the typed draft project name (app.js lines 873-885), so the user cannot see what will be restored without reopening the form.",
+      "On mobile the full role guide follows the invitation form (index.html lines 207-289), so the complete capabilities may be read only after roles are chosen; only the one-line summary and the per-select help precede assignment."
+    ],
+    "strengths": [
+      "The activation sequence is correct: project creation leads to a success screen whose primary action is Open project, and invitations are a secondary, optional next step.",
+      "The required path is genuinely short: one required field, a collapsed optional description, skip on both setup steps, and a resume card on the workspace home.",
+      "The product model is explicit and honest about uncertain rules: owner occupancy of a Starter seat, pending invitations reserving seats, Admin settings scope, and owner non-invitability are all flagged as assumptions.",
+      "State handling is broad and recoverable: validation, loading, create failure, partial invitation failure, retry, seat cap, reload, and deep-link guards are implemented.",
+      "No fabricated capabilities: no imports, integrations, analytics, project content, pricing or upgrade behavior, and the project shell explicitly stops at 'ready'."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "analysis.md lines 5-37 separate supplied facts from seven assumptions and eight unknowns; lines 109-117 give a role capability table; lines 194-213 answer the reviewer questions. The Starter limit is stated without pricing or an upgrade path, and the project destination deliberately avoids inventing project content.",
+      "ux_reasoning": "analysis.md lines 43-58 lay out account -> project -> optional invite -> open project, with save and exit; lines 97-134 justify project-first and document paused/reload behavior. app.js lines 316-370 create the project, 402-428 adapt the primary to 'Continue without inviting', 513-529 finish setup, and 1051-1070 show the paused draft. The optional invite step still sits before the done/open-project screen, and the mobile primary is measured at y=876-923 in a 390x844 viewport.",
+      "design_judgment": "analysis.md lines 83-91 justify project-first and explicitly omit a welcome screen; lines 164-188 record activation risks and mitigations; the role guide is placed above the role selectors (app.js lines 947-953) and no upgrade path is shown. Weaknesses: the rail numbers three steps including 'Start working' while the panel says 'Step 1 of 2' (app.js lines 636-640 vs 936), and the visible full description textarea (app.js lines 807-815) lengthens the required screen despite being optional.",
+      "visual_hierarchy": "screenshots/desktop.png (1280x988) has the strongest composition in the pair: a serif display h1, a 262px progress rail with workspace summary, and a single solid primary in a well-spaced 780px panel. screenshots/mobile.png (390x1096) preserves the identity but the three-step rail and workspace summary dominate the top; the Create project primary is below the first 844px viewport, and the fixed Prototype controls chip covers the NEXT note text around y=812.",
+      "interaction_completeness": "app.js lines 833-896 implement per-row sending, sent and failed states with Retry; 898-920 render success and failure banners; 675-686 and 1261-1273 implement role preview and a Member access gate; 732-756 render the seat meter; 966 provides the empty-invite state; 1051-1070 provide the paused draft notice. This covers the required states plus permissions more completely than Candidate A.",
+      "accessibility_responsiveness": "index.html line 13 provides a skip link; app.js lines 781/957 set aria-busy, 784/865/883 provide labels, 799/858 use role=alert for errors, 216-221 move focus to headings, and 610-613 expose aria-pressed role buttons. checks.json reports 0 controls without accessible names, one h1, axe violations 0 (30 passes), and no horizontal overflow at 390/1280. Caveat: no manual audit was performed, and the seat meter uses role=img with a static label (line 749) rather than progressbar semantics.",
+      "implementation_quality": "app.js (1471 lines) is dependency-free and uses escapeHtml for interpolated user data (lines 40-44, 791, 872, 1030); node --check passed, checks.json shows no console or page errors, and a local create -> invite -> continue -> done smoke test worked. analysis.md line 239 says verification is recorded in transcript.md, but no transcript.md exists in the packet; checks.json is the only test artifact."
+    },
+    "critical_defects": [
+      "Missing verification artifact: analysis.md line 239 points to transcript.md for the verification record, but the packet contains no transcript.md; only a single DOM/axe snapshot is available.",
+      "The mobile first viewport does not show the primary action: the Create project button is at y=876-923 in a 390x844 viewport, below the fold, after the three-step rail and workspace summary.",
+      "The fixed Prototype controls chip covers the NEXT note text in screenshots/mobile.png around y=812, obscuring 'Skipping the invitation step never blocks your project.'",
+      "Information architecture is internally inconsistent: the rail presents three numbered steps including 'Start working' while the panel says 'Step 1 of 2'/'Step 2 of 2' (app.js lines 636-640 vs 936).",
+      "The optional invitation step precedes the done/open-project screen (app.js 364, 513-529), so a solo owner must first pass an optional screen via 'Continue without inviting' or 'Not now' before seeing the success and next-step screen; this adds one avoidable step against the activation goal."
+    ],
+    "strengths": [
+      "The visual system is the strongest in the pair: distinctive serif display type, warm restrained palette, clear progress rail and a single dominant primary action on desktop.",
+      "Role capabilities and the Starter limit are explained before assignment: three role cards sit above the selectors and the seat meter shows the owner plus invitations with no pricing or upgrade path.",
+      "The invitation flow is unusually complete: adaptive primary label, per-row sending/sent/failed states, Retry, partial-failure banner, empty-list state and a preserved unsent draft.",
+      "Return later is a first-class state: Save and exit records the paused step and draft, the home notice shows the draft project name, and reload persistence restores the screen.",
+      "Permissions are demonstrated rather than only described: role preview exposes a Member gate that blocks project creation and invitations, and the project destination explicitly stops at the prototype boundary."
+    ]
+  },
+  "comparison": "Candidate A is the more disciplined product and UX artifact: its one-required-field path reaches a success screen with Open project as the primary action before invitations, and its analysis is unusually clear about owner-seat, pending-invite and Admin-scope assumptions. Candidate B is the stronger visual and interaction artifact: its desktop composition, role cards above the selectors, adaptive 'Continue without inviting' primary, per-row sending and retry, Member gate and paused-draft summary are more complete. Both mobile screenshots contain a fixed Prototype controls overlay; Candidate B's mobile primary also falls below the first 844px viewport, while Candidate A's does not. Evidence is mixed in both packets: Candidate A's 41-check claim is absent from checks.json, and Candidate B's transcript.md is missing. On balance Candidate B's advantages in visual hierarchy, interaction completeness and implementation outweigh Candidate A's advantages in design rationale and activation sequencing; the pair is close. All seven dimensions are assessable; under the stated weights these scores compute to 3.50 for Candidate A and 3.75 for Candidate B.",
+  "limitations": "Only the create screen is rendered for each candidate (desktop 1280px and mobile 390px); there are no screenshots of the invitation, success, failure, role-preview, project or resume screens, so visual judgments about those surfaces rely on code and analysis rather than rendered evidence. checks.json is a single DOM/axe snapshot per viewport, not a behavioral test log; Candidate A's 41-check claim and Candidate B's transcript.md reference could not be verified, although both applications passed local syntax checks and basic create-flow smoke tests. No manual keyboard, screen-reader or cross-browser audit was performed, and axe is not proof of WCAG conformance. No project codebase or design system was supplied, so fit with project conventions could not be assessed. Both mobile screenshots include a fixed prototype-control overlay that covers content; it was treated as demo chrome rather than product UI. This is one judge pass, not a statistical test and not proof of causation."
+}

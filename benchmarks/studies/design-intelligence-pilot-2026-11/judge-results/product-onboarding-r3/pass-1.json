@@ -1,0 +1,71 @@
+{
+  "reviewer_id": "J1",
+  "pair_id": "product-onboarding-r3",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 2,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:12-53 separates supplied facts, eight working assumptions and unknowns; the role matrix at analysis.md:110-121 correctly gives Owner billing/deletion, Owner/Admin project and member management, and Member project work only; analysis.md:119-123 and 240-243 explicitly avoid inventing pricing, trials or upgrade behaviour, and /condition-a/implementation/app.js:303-304 states the 5/25 limits.",
+      "ux_reasoning": "The core ordering in analysis.md:57-97 is sound (project created before optional invitations, so an invitation failure cannot roll back the project), and app.js:547-586 separates project status from invitation status. However the delivered skip path is a dead end: welcome 'Skip setup for now' routes to the paused screen (app.js:1222-1228), which offers only 'Resume setup' and 'Start over' (app.js:677-680), so the user cannot leave setup for the workspace; and the optional invite step's primary action is broken (see defects).",
+      "design_judgment": "analysis.md:223-250 gives eight explicit trade-offs with costs and residual risks, including one required field versus richer project setup, project-before-invites, per-invite roles, role education in three places, showing the seat limit without pricing, and a resume screen instead of auto-resume; the reasoning is contextual rather than generic.",
+      "visual_hierarchy": "screenshots/desktop.png shows a clear 692px main panel with a large two-line h1, a three-row 01/02/03 path, one filled primary action and a quiet skip, alongside a 356px context aside; the aside repeats the plan chip and carries three dense cards, which competes with the form. screenshots/mobile.png keeps the heading, path and primary CTA above the fold at 390px but places the long roles/limits content after the panel; the fixed prototype-controls bar appears over the content column in this capture.",
+      "interaction_completeness": "analysis.md:198-219 inventories empty, validation, loading, success, partial/total invite failure, retry, reload, role-restriction and plan-limit states, and these are implemented (app.js:928-946 loading, 1002-1050 failure/retry, 308-315 role block, 501-529 full plan). Coverage is strong, but the blank invite list's primary 'Continue without inviting' control raises an error, and app.js:660 states 'Nothing was created or sent' on the paused screen even when the project already exists (app.js:668).",
+      "accessibility_responsiveness": "test-output/checks.json:24-41 and 62-79 report two serious axe rule failures at both 1280 and 390: color-contrast (16 nodes desktop, 13 mobile) and label-content-name-mismatch (1 node). Positives exist: no horizontal overflow (checks.json:19-21, 57-59), one h1, all 11 controls named, main focuses headings, and reduced-motion CSS is present (implementation/styles.css:1552-1560).",
+      "implementation_quality": "No console or page errors and no overflow at 1280/390 (test-output/checks.json:19-22, 57-60); state, persistence and failure simulation are implemented in a readable vanilla-JS structure. The primary-action bug in app.js:488-492 plus 879-898 is a functional defect, and template strings with many inline style declarations (app.js:367-374, 554-586) make the rendering harder to maintain than the companion candidate's class-based markup."
+    },
+    "critical_defects": [
+      "Invite step primary action is broken: with a blank list the button reads 'Continue without inviting' (implementation/app.js:488-492) but is a submit control (app.js:528) that calls validateInvites (app.js:879-898), which rejects the always-present blank row; the user sees 'Add an email address, or remove this row.' instead of continuing. The quiet 'Skip for now' works, but the prominent action on the optional step fails.",
+      "Skip does not leave onboarding: 'Skip setup for now' opens the paused screen (implementation/app.js:1222-1228), whose only actions are 'Resume setup' and 'Start over' (app.js:677-680). There is no workspace destination, so the brief's skip-and-return-later requirement is only half implemented; 'Return to this setup from the workspace home' (app.js:683-684) names a destination the prototype never provides.",
+      "Paused screen copy contradicts its own summary when reached from the invite step: app.js:660 says 'Nothing was created or sent', while the detail list at app.js:668 shows the project as 'created'. 'Start over' (app.js:677-680) also clears that created project without a confirmation step.",
+      "Automated accessibility evidence records serious contrast and label/name failures at both viewports (test-output/checks.json:24-41, 62-79), contradicting the analysis claim of measured contrast compliance."
+    ],
+    "strengths": [
+      "Facts, assumptions and unknowns are cleanly separated, and the role/limit matrix is accurate and explicit (analysis.md:12-53, 110-121).",
+      "Project-before-invitation ordering is a genuinely good activation decision; invite failure is non-destructive and reported per person with retry (analysis.md:84-89, 169-178; app.js:547-650).",
+      "Unusually complete state inventory, including a replaced full-plan form, role-blocked state, seat meter with the owner counted, save/resume persistence and honest prototype boundaries (analysis.md:198-219).",
+      "Entry screen is scannable: one primary CTA, a quiet skip, time estimates and contextual roles/limits in the aside (screenshots/desktop.png).",
+      "The success screen names the project and gives per-invite statuses, and the project view is an honest empty shell rather than a fabricated workspace (app.js:547-650, 737-765)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:5-41 separates supplied facts, nine working assumptions and unknowns; analysis.md:79-91 states Owner/Admin/Member capabilities and the seat rule; analysis.md:60-67 and 166-167 explicitly defer billing, workspace naming, imports and integrations and state that no pricing or upgrade path is invented.",
+      "ux_reasoning": "analysis.md:43-75 defines a two-working-step spine and explains inclusion/deferral/skipping; skip is implemented as a real exit to a workspace with a setup-paused resume card (implementation/app.js:570-596, 830-853), and reload restores progress. The main flaw is the step count disagreement described in defects.",
+      "design_judgment": "analysis.md:69-75 and 115-122 weigh one field versus richer setup, optional invitations, in-place role education versus a separate screen, one confirmation versus a checklist, and failure recovery; analysis.md:139-145 acknowledges the largest activation risk (an empty project) instead of over-claiming.",
+      "visual_hierarchy": "screenshots/desktop.png shows a calm two-column composition: a 3-step rail with workspace facts and a 685px single-decision panel with a serif h1, one filled CTA and a secondary action. screenshots/mobile.png removes the rail but preserves a compact plan/role line, the step label, heading, field and CTA above the fold; the result is less dense and easier to scan than the longer mobile page in Candidate A.",
+      "interaction_completeness": "analysis.md:93-113 maps initial, empty, validation, loading, invite validation/loading, success, partial failure, return-later, full-plan, member-restriction and reload-failure states; implementation/app.js:921-1084 implements these, including retained failed rows and retry, full-plan disabled send/add with explanation (app.js:410-415, 451-459), and a blocked member view (app.js:527-545).",
+      "accessibility_responsiveness": "test-output/checks.json:22-26 and 45-49 report zero axe violations at 1280 and 390, 29/24 passes, one h1, 11/11 named controls and no horizontal overflow (checks.json:17, 40). Implementation/styles.css:1516-1820 defines the 960/720/640/380 breakpoints, and 1822-1831 handles reduced motion; focus, live regions and aria-busy are implemented (app.js:304-321, 445-459).",
+      "implementation_quality": "Single dependency-free IIFE with delegated events, no console/page errors, zero axe violations, and responsive rules at 960/720/640/380 (test-output/checks.json:20-26, 43-49; styles.css:1516-1820). The only clear implementation slip found is the duplicate hard-coded step labels (app.js:299, 430) that disagree with the rail built at app.js:264-268."
+    },
+    "critical_defects": [
+      "Non-blocking information-architecture inconsistency: the panel labels the flow 'Step 1 of 2 \u00b7 Required' and 'Step 2 of 2 \u00b7 Optional' (implementation/app.js:299, 430) while the desktop rail shows three numbered steps, with '3 Start working' (app.js:264-268; screenshots/desktop.png). The progress system contradicts itself.",
+      "Non-blocking feedback gap: the completion screen reports only aggregate counts such as '1 invited \u00b7 1 not sent' (implementation/app.js:473-514) and does not list each invitee's address/role/status the way Candidate A does; failed addresses are named only in the alert.",
+      "The mobile layout hides the entire rail (implementation/styles.css:1524-1526), so the three-step overview and the 'What you can do as Owner' disclosure are absent from the 390px entry screen (screenshots/mobile.png); role capabilities appear only later on the invite step."
+    ],
+    "strengths": [
+      "Skip is a real escape hatch: it lands in a workspace that shows what exists, what is drafted and a resume action (app.js:570-596, 830-853), directly satisfying the brief's return-later requirement.",
+      "All required interaction states are implemented and recoverable, including invite failure retention and retry, full-plan explanation, member restriction and reload persistence (analysis.md:93-113; app.js:921-1084).",
+      "Zero automated accessibility violations at both supplied viewports, with named controls, no overflow and responsive coverage from 1280 down to 320px rules (test-output/checks.json:17-26, 40-49).",
+      "The rail-plus-panel entry screen is visually calm and focused: serif display heading, one filled action, workspace facts kept out of the form's way (screenshots/desktop.png).",
+      "The success screen makes 'Open project' the obvious next step and keeps a workspace alternative; the project view is an honest empty state rather than fabricated tasks or files (app.js:467-524, 707-745)."
+    ]
+  },
+  "comparison": "Both candidates understand the same core product and correctly make project creation the activation event, keep invitations optional, explain roles before assignment, show the Starter limit without pricing, and avoid integrations. Candidate B has the more reliable delivered flow: skip lands in a real workspace with a resume card, the optional step's finish action works without a misleading primary label, and axe reports no violations at either viewport. Candidate A has the stronger written product model and better per-invite failure reporting, and its entry screen is more information-rich, but its optional invite step's primary action ('Continue without inviting') produces a blank-row validation error, its skip path never reaches a workspace, and its paused copy says nothing was created even after the project exists. Visually, Candidate A is denser and more conventional; Candidate B's rail-and-panel composition reads more calmly and keeps a single focus on both supplied viewports.",
+  "limitations": "Only two rendered screenshots per candidate are supplied (desktop 1280 and mobile 390), both showing the entry/project screen; invite, validation, loading, success, failure and paused screens cannot be visually compared, so visual-hierarchy scoring is limited to the entry screens. The automated checks cover only the initial screen at two widths, and axe is not a screen-reader or cross-browser audit. Both analysis documents refer to a transcript that is not included, so broader interaction claims (keyboard order, pause/reload, retry) are assessed from source code, not observed test output. This is one blinded judge pass, not a statistical test or proof of causation."
+}

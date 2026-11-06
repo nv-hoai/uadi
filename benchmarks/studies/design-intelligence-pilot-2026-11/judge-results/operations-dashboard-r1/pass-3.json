@@ -1,0 +1,73 @@
+{
+  "reviewer_id": "J3",
+  "pair_id": "operations-dashboard-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md lines 25-36 define the promised-window order basis, all-orders on-time denominator, attempts-vs-orders distinction, equal-length baseline and 15-minute lag; index.html lines 60-112 expose period, comparison and data coverage; the same definitions appear under the KPI cards in screenshots/desktop.png.",
+      "ux_reasoning": "analysis.md lines 40-56 and 107-121 describe the signal-to-orders journey; app.js lines 1378-1409 and 1534-1552 scope the drawer without mutating dashboard filters, and the signal band in screenshots/desktop.png offers a direct 'Review West orders' action with the weakest region named.",
+      "design_judgment": "analysis.md lines 60-103 explicitly rejects a dual axis, a heat map and a truncated rate axis, pairing a 0-100% trend with a symmetric daily-change chart (screenshots/desktop.png); outcomes and the region table are chosen for part-to-whole and precision reasons with stated trade-offs.",
+      "visual_hierarchy": "screenshots/desktop.png has a clear scan path: 'Needs attention' band, three KPI cards, trend plus outcomes, then change plus regions. However screenshots/mobile.png is 602px wide while test-output/checks.json lines 81-84 report client_width 390 and horizontal_overflow true, so the mobile composition is clipped rather than reflowed.",
+      "interaction_completeness": "app.js lines 1236-1374 cover loading, error, no-data, partial and empty-result states with distinct copy; lines 1732-1757 validate custom dates with four explicit messages; the order drawer adds search, sort, pagination and expandable timelines (lines 1477-1510, 1804-1858). Stale and partial banners have no recovery action.",
+      "accessibility_responsiveness": "test-output/checks.json lines 36-53 and 86-103 report serious color-contrast violations on 10 nodes and target-size violations on 2 nodes in both viewports; the mobile check also reports horizontal overflow (602px document at 390px client width). Mitigations exist: skip link (index.html line 11), aria-live region (line 114), native dialog and keyboardable chart points (app.js line 890).",
+      "implementation_quality": "app.js is a dependency-free IIFE with deterministic data generation and node-test hooks (lines 169, 1941-1961); test-output/checks.json shows no console or page errors. The 602px mobile overflow is a working-result defect, and analysis.md line 178 cites a transcript.md that is absent from the packet."
+    },
+    "critical_defects": [
+      "Mobile layout overflows horizontally: test-output/checks.json reports document_width 602 vs client_width 390 at mobile, and screenshots/mobile.png is a 602px-wide capture; cards and the regional table/actions are clipped.",
+      "Automated accessibility failures: 10 serious color-contrast nodes and 2 serious target-size nodes at both viewports (test-output/checks.json lines 36-53, 86-103).",
+      "Stale and partial data banners give no retry or refresh action (app.js lines 633-655), so those required states have no in-product recovery path.",
+      "The analysis cites transcript.md for checks actually run (analysis.md line 178), but no transcript is present in the packet, so those checks cannot be verified."
+    ],
+    "strengths": [
+      "Decision-first hierarchy: the synthesized key finding and its scoped action appear before the metrics and name the comparison, magnitude and weakest region.",
+      "Metric definitions, units, denominators, coverage dates and the 15-minute lag are visible next to the numbers rather than buried in a glossary.",
+      "Order investigation preserves dashboard context: a scoped dialog with chips, priority sort, search, pagination and per-order event timelines, plus a return to the filter bar.",
+      "Genuine empty-result state is produced from a real filter combination (app.js lines 1620-1650), not a mocked panel, and is explicitly distinguished from no-data.",
+      "Two complementary charts: an honest 0-100% trend and a symmetric percentage-point change chart, each with a data-table disclosure."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "analysis.md lines 19-35 define the delivered-orders rate denominator, attempts as events, the separate orders-placed population, the equal-length baseline and the absence of an SLA; index.html lines 116-140 repeat the definitions and the 15-minute lag, and the header states data through 7 Nov 09:45.",
+      "ux_reasoning": "analysis.md lines 37-55 and 88-96 describe the shift-start and weekly-review journeys; app.js lines 653-735 build thresholded 'Worth checking' actions and lines 832-900 keep the filtered order list and scope chips inline. The journey is coherent, but drilling changes shared filters and offers only 'Reset filters' rather than a return to the prior scope.",
+      "design_judgment": "analysis.md lines 59-100 weigh a truncated rate axis against a deviation-from-baseline chart, a table against bars for regions, and explicitly refuse an invented SLA; screenshots/desktop.png shows the labelled zero line described as 'not a target'.",
+      "visual_hierarchy": "screenshots/desktop.png uses a featured rate card, then trend and 'Worth checking', then regions and orders. The grid is clean, but the 'Worth checking' panel has a large empty lower half (roughly y=830-950) and the long inline order table pushes secondary content far down; screenshots/mobile.png reflows at 390px with no page overflow.",
+      "interaction_completeness": "app.js lines 373-395 add retry to stale and partial banners, lines 904-949 provide error and no-data blocks, and lines 1108-1125 simulate refresh with loading; the order dialog returns focus to its opener (lines 1376-1382). Gaps: inverted custom dates are silently swapped (lines 1233-1237) and the order list has only 'Show more' (lines 832-886), with no search or pagination.",
+      "accessibility_responsiveness": "test-output/checks.json lines 24-40 and 61-77 show no horizontal overflow at 390px and one serious color-contrast node; the page has a skip link (index.html line 11), labelled focusable scroll regions (app.js lines 797, 880) and keyboardable chart points (app.js line 561). analysis.md line 164 correctly notes that no screen-reader or zoom testing was done.",
+      "implementation_quality": "app.js is 1,402 lines with separated rendering, aggregation and event functions, no console or page errors, and a responsive chart rebuild at the breakpoint (lines 1386-1397); tables are contained in scroll regions (styles.css lines 586-592), and the 390px checks confirm the page fits."
+    },
+    "critical_defects": [
+      "The delivery-status filter narrows only the order list, not the headline metrics, charts or region table (index.html lines 91 and 109; app.js matchingOrders lines 817-830), so it behaves differently from the adjacent region and date filters and only partly satisfies the brief's status-filter requirement.",
+      "Drill-down updates the shared filters and provides no one-click return to the previous scope, only 'Reset filters' (app.js lines 1061-1101), so investigating several regions requires manual reconstruction of context.",
+      "Inverted custom date ranges are silently swapped (app.js lines 1233-1237) with no validation message or announced reason.",
+      "One serious color-contrast violation remains at both viewports (test-output/checks.json lines 29-40, 66-77).",
+      "The footer and stale copy state a 5-minute app refresh cadence (index.html line 145; app.js line 382) that is not in the brief, adding an unverified backend behavior."
+    ],
+    "strengths": [
+      "Unusually clear metric model: delivered-orders denominator, attempts as a count, orders placed as a separate non-reconciling population, and explicit absence of a target or forecast.",
+      "The deviation-from-baseline chart makes small weekly movement legible without a truncated axis, names the baseline, and labels the zero line as not a target.",
+      "Thresholded 'Worth checking' panel bridges scanning and investigation with exact numbers and direct actions, and says 'No material change' instead of manufacturing an insight.",
+      "The region table retains non-reporting regions as striped rows with 'No data in this refresh', preventing partial coverage from looking complete.",
+      "Responsive behavior is verified at 390px with no page-level overflow, and every data state has a visible recovery action."
+    ]
+  },
+  "comparison": "Both are complete, coherent dashboards with strong metric definitions and honest comparison handling. Candidate A has the stronger desktop scan path and the better context-preserving investigation flow: its key-finding band comes before the KPIs, and its scoped order drawer keeps the dashboard filters intact. Candidate B has the clearer filter-and-population model, the more decision-oriented chart, and a page that actually fits the mobile viewport, with recovery actions on every data state. On the seven dimensions their profiles balance: A leads on UX reasoning, with the deeper context-preserving order investigation; B leads on accessibility and implementation reliability; product understanding, design judgment, visual hierarchy and interaction completeness are level. With the supplied weights both total 3.55. A's 602px mobile overflow and 10-node contrast failure are the largest concrete defects; B's order-only status filter, missing back-to-prior-scope, and one contrast violation are its main counterweights.",
+  "limitations": "This is one blinded static pass; I did not run either prototype or exercise interactions. Visual judgments come from the supplied desktop captures (1280px) and the mobile captures, but Candidate A's nominal 390px viewport produced a 602px-wide document, so its true mobile layout is inferred from test-output/checks.json plus the capture rather than observed at 390px. The axe output provides only rule counts, not node selectors, so the specific failing elements were not identified. No screen-reader, zoom, reduced-motion, or cross-browser test evidence is available for either candidate; Candidate B's analysis admits these gaps, and Candidate A's cited transcript.md is missing. Neither packet supplies the host project's real stack or design conventions, so convention fit could not be assessed, and no permissions or backend behavior can be evaluated from these artifacts. Scores use the stated weights only as a guide; this pass is not a statistical test or proof of causation."
+}

@@ -1,0 +1,77 @@
+{
+  "reviewer_id": "C1",
+  "pair_id": "subscription-settings-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:9-26 states the illustrative prices, dates, roles and data assumptions; analysis.md:65-88 maps every owner/member capability and every brief goal; analysis.md:112-123 flags proration, tax, client-side authorization and member-invoice assumptions as unresolved. This is a complete reading of the scenario, not a restatement of the brief.",
+      "ux_reasoning": "analysis.md:19-43 identifies the highest-risk problems and orders the IA by owner questions; analysis.md:54-63 explains the key trade-offs; app.js:734-876 makes the plan review show effective date, price, proration estimate and seat-fit blockers, and app.js:847-849 routes Free to the cancellation path instead of treating it as an ordinary plan change. Cancellation is separated (app.js:598-631) and gated by an acknowledgment (app.js:914-925).",
+      "design_judgment": "The calm green/ink palette and single destructive red action keep routine billing visually quiet (screenshots/desktop.png); analysis.md:54-63 rejects countdowns, pre-checked consent, hidden cancellation and fake invoice downloads, and shows annual savings as concrete dollars. Free-plan entry is correctly treated as an end-of-subscription decision rather than a normal plan card.",
+      "visual_hierarchy": "screenshots/desktop.png has a clear scan path: plan identity and status, very large $29/month, renewal/payment meta, primary actions, then the usage meter. screenshots/mobile.png preserves the same first-read order. Deductions: the fixed prototype toolbar visibly covers a strip of the Payment method / Billing period / Invoices area in both screenshots, and the next-payment date is a small 13px meta line beneath the dominant price. The four invoice cards make the mobile page very tall.",
+      "interaction_completeness": "analysis.md:77-88 lists loading, error, empty, payment-failure, success, disabled, canceled, scheduled and busy states; app.js:290-300 renders skeleton/error views; app.js:318-368 renders role, past-due and canceled banners; app.js:1072-1216 implements plan, cancellation, reactivation and card-save success paths; app.js:1145-1163 validates the payment form. The notable gap is that plan changes, card saves and cancellation have no save-failure/retry path.",
+      "accessibility_responsiveness": "test-output/checks.json reports 0 axe violations, 0 controls without an accessible name and no horizontal overflow at 1280 and 390 for both viewports. index.html:11 adds a skip link and index.html:40 uses a main landmark; app.js:1352-1376 implements Escape and a manual focus trap; styles.css:1335-1341 honors prefers-reduced-motion. This is the stronger automated accessibility evidence of the pair, though there is no screen-reader, zoom or contrast artifact, and the custom modal does not inert the background.",
+      "implementation_quality": "app.js is a readable dependency-free IIFE with escaped user-facing values and a coherent state model; it passes the supplied DOM checks. Concrete defects: app.js:1154-1158 accepts any MM/YY with month 1-12, including a past expiry; app.js:1010 hardcodes the invoice plan as 'monthly' even for annual billing; styles.css:646-663 fixes the prototype bar over content; and the mutation handlers always succeed, so error handling is not exercised for writes."
+    },
+    "critical_defects": [
+      "Payment validation accepts an expired card: app.js:1154-1158 checks only MM/YY format and month range, never that the date is in the future, so a card expiring 01/20 would be saved.",
+      "No failure/retry state for the three write actions: plan confirmation, card save and cancellation all complete successfully (app.js:1091-1216). Error handling exists only for initial load and a scripted declined-payment scenario, leaving an important interaction-error state undesigned.",
+      "The fixed prototype toolbar (styles.css:646-663) overlays page content at the bottom of the viewport. The overlap is visible in both screenshots/desktop.png and screenshots/mobile.png; collapsing it still leaves a bar covering a strip of the page.",
+      "The custom modal (app.js:675-688) does not mark the background inert or aria-hidden. The manual Tab trap works, but screen-reader browse mode can still reach the obscured page behind the dialog.",
+      "Invoice detail labels the plan as 'monthly' unconditionally (app.js:1010), which is inconsistent when the workspace is on annual billing."
+    ],
+    "strengths": [
+      "Broadest state coverage: loading skeleton, load error, Free empty workspace, past-due payment, canceled, scheduled change with undo, member view-only and disabled owner actions.",
+      "Cancellation is physically separated from routine billing, explains member and data consequences in plain language, and starts with confirmation disabled behind an acknowledgment.",
+      "Free-plan entry is routed through cancellation (app.js:847-849), preserving the protected destructive path.",
+      "Plan review explains effective date, amount due today, proration basis and seat-fit blockers with the exact removal count.",
+      "Role handling is explicit: persistent view-only banner, disabled actions with visible explanations, and readable invoices for members.",
+      "Clean automated accessibility result: 0 axe violations and 0 unnamed controls at both captured viewports."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "analysis.md:15-29 states prices, account data, change timing, cancellation policy and explicit out-of-scope items; analysis.md:31-39 ranks the risks; analysis.md:61-111 explains the decisions and trade-offs; analysis.md:148-156 lists open questions. The renewal-date-only policy and the absence of dunning are admitted rather than hidden.",
+      "ux_reasoning": "analysis.md:41-87 defines a decision-ordered IA and owner/cancellation/non-owner journeys. The preview-only cadence control is a sharp insight: index.html:165-172 and app.js:318-330 keep price preview separate from a committed billing change. The review lists current -> new -> effective date -> charged today -> next payment -> limit delta (app.js:464-474), and cancellation requires a checkbox plus the typed workspace name (index.html:311-325; app.js:685-689).",
+      "design_judgment": "The neutral/blue system and red-tinted cancellation district are calm and avoid dark patterns; 'Keep my subscription' is the focused safe action (index.html:324), and no success message claims a payment occurred (analysis.md:101-111). Deductions: all changes are deferred to renewal, so an owner blocked at the member limit cannot add seats today; and 'Choose Free' on a plan card opens the ordinary plan dialog (app.js:274-315, 448-506), so an eligible workspace can schedule the end of its paid plan without the cancellation dialog's checkbox/typed-name protection. Over-limit teams are blocked, which limits the exposure.",
+      "visual_hierarchy": "screenshots/desktop.png uses a three-column fact row for current price, next payment and members, making the first three reviewer questions scannable in one pass; plan cards show limits and a clear current-plan marker, and cancellation is a distinct tinted panel. screenshots/mobile.png keeps current state -> plans -> payment -> invoices -> cancellation and compacts invoices into short labelled rows. The in-flow prototype panel is visually loud at the top but does not obscure product content.",
+      "interaction_completeness": "index.html:82-116 and app.js:791-806 implement loading, load error and retry; app.js:518-524, 627-632 and 706-712 inject save failures for plan, card and cancellation with inline errors and no false success; app.js:235-255 implements scheduled change and undo; app.js:685-689 locks both confirmation inputs. Missing: a declined-payment/dunning state despite the billing context, and a whole-workspace empty/Free state (only empty invoices, app.js:345-354).",
+      "accessibility_responsiveness": "The design uses native <dialog> (index.html:237-343), which gives modal containment and focus return, and checks.json reports no horizontal overflow at 1280 and 390. However checks.json reports one serious axe violation in both viewports (aria-progressbar-name: the member meter has no accessible name) and 4 controls without accessible names. Those are concrete accessibility defects, not just untested areas.",
+      "implementation_quality": "The 891-line app.js is concise and mostly semantic: native dialogs, future-expiry validation and first-invalid focus (app.js:581-613), card-number/expiry formatting (app.js:875-887), a stale-action sequence guard (app.js:513, 622) and reusable failure injection. Minor residue: a dead duplicate billingEmailError element (index.html:289), and the mobile table converted to display:block (styles.css:387-392) despite analysis.md:135 claiming table semantics are preserved."
+    },
+    "critical_defects": [
+      "Serious automated accessibility violation: the member meter progressbar has no accessible name (test-output/checks.json, aria-progressbar-name, both viewports); aria-valuetext alone does not name the control.",
+      "test-output/checks.json also reports 4 controls without an accessible name on both desktop and mobile captures.",
+      "No declined-payment/dunning state: analysis.md:25 and 152 explicitly defer card decline, grace period and recovery, leaving a high-risk billing error state undesigned. Load and save errors cover other failure paths but not this one.",
+      "'Choose Free' is a normal plan-card action (app.js:274-315) that opens the ordinary plan review and a single 'Schedule change' confirmation. When the member count is within the Free limit, it can schedule the end of the paid plan without the stronger checkbox-plus-typed-name protection used by the separate cancellation dialog.",
+      "No Free/empty workspace scenario: the only empty state is an empty invoice list (app.js:345-354); there is no zero-plan, no-card or Free-plan workspace view despite Free being part of the brief.",
+      "All plan and billing-period changes are deferred to the next renewal (analysis.md:23, 93), so an owner approaching the 20-member cap cannot add capacity today; the analysis flags this as an open product question rather than resolving it."
+    ],
+    "strengths": [
+      "The three-fact summary (price, next payment, members) is the clearest at-a-glance answer to the owner's first questions in either packet.",
+      "Preview-only cadence control is explicitly labelled and does not change the subscription, preventing the common 'I clicked yearly' error.",
+      "Cancellation is the strongest safety design in the pair: isolated tinted section, checkbox plus typed workspace name, disabled confirm, and a focused safe exit.",
+      "Save-failure injection and inline retry cover plan, payment and cancellation, with busy labels and no double submission.",
+      "Native dialogs, semantic HTML and robust payment validation give a solid implementation base.",
+      "Mobile layout keeps the task order and turns invoices into compact labelled rows with no horizontal overflow."
+    ]
+  },
+  "comparison": "Both packets provide equivalent rendered evidence (desktop at 1280 and mobile at 390), so visual hierarchy is scoreable. Candidate A is the stronger product/UX artifact: its state matrix is broader (past-due, Free empty, canceled, scheduled/undo), it routes Free through the protected cancellation flow, and its automated checks show 0 axe violations and 0 unnamed controls. Candidate B is the stronger visual and implementation artifact: its three-column summary is more scannable, it has no overlay, uses native dialogs, validates future expiry, and injects save failures across all three write actions. Candidate A's lead is narrow but real because B lacks a declined-payment state and has a serious unnamed-progressbar axe finding plus 4 unnamed controls. Weighted totals with all seven dimensions assessable: Candidate A 3.75, Candidate B 3.60. No conclusion about method or condition is drawn.",
+  "limitations": "This is one blinded judge pass, not a statistical test and not proof of causation. Both packets contain only two ready-state screenshots (desktop/mobile); no dialog, error, loading, empty or member-mode screenshots were supplied, so interaction-state appearance was assessed from source, and the analyses' claims of 'dialog screenshots inspected' are not independently evidenced. The supplied checks.json files contain rendered DOM/axe summaries only, not the 39 and 32 scripted assertions claimed in the analyses, so those claims were not treated as verified. Neither candidate has screen-reader, real-device, zoom or cross-browser evidence; Candidate A has no contrast artifact, and Candidate B's contrast claim is only a sampled token check. Visual judgment covers the two captured widths and includes prototype chrome, which is not product UI. Scores reflect only the supplied evidence. Separately, both manifest.json files contain a 'candidate' field that contradicts their packet directory labels; per the judge prompt I treated the directory labels as immutable and did not use those fields to infer any mapping."
+}

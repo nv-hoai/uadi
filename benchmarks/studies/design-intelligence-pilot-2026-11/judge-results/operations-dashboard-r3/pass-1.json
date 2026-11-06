@@ -1,0 +1,72 @@
+{
+  "reviewer_id": "J1",
+  "pair_id": "operations-dashboard-r3",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "condition-a/analysis.md:24-46 defines each metric, unit, denominator, inclusion rule and the absence of targets/forecasts; the UI repeats them in index.html:99-124. Weakness: the model computes failed as an order count (app.js:124-135, 199-203) and subtracts it from order volume, while the page states failed attempts can exceed affected orders (index.html:105-106); analysis.md:37-39 concedes the synthetic data cannot show that distinction.",
+      "ux_reasoning": "The insight strip names the largest negative regional move with exact pp and failed-attempt multiple, with a calm state below 0.5 pp, and a direct 'View West orders' CTA (app.js:486-511; desktop.png). Drills are targeted: on-time tile/day opens late+failed orders, failed tile opens failed-only orders (app.js:1270-1285); regional rows are sortable by volume/worst rate/most failures (app.js:957-980). The drawer repeats origin, period, regions and status and closes on filter change so no stale list remains (app.js:1113-1215).",
+      "design_judgment": "Analysis.md:96-119 explains why counts use zero-based grouped bars, why on-time rate keeps a fixed 0-100% axis (and accepts visually small day-to-day moves), why no target line or gap-to-target chart exists, and why volume's delta is neutral; all are implemented (app.js:729-736, 824-829; screenshot). Status filters hide the rate rather than silently changing its denominator (app.js:275-276, 469-477).",
+      "visual_hierarchy": "Desktop.png shows a clear funnel: freshness/scope, one-sentence insight, three KPI tiles, 2:1 trend/outcomes, full-width sortable regional table, then definitions; density and typography are coherent. Defects: the fixed demo pill overlaps the Delivery outcomes legend in the capture, and mobile.png is a 604 px-wide capture of a 390 px viewport with the regional table's right columns ('On-time change', 'Orders') clipped (test-output/checks.json:71-73).",
+      "interaction_completeness": "States cover loading skeletons, delayed/stale, partial (3 of 5 regions with named missing regions), no-data in range, service error with retry and 'show last successful data', empty order result, invalid custom range, unavailable comparison, status subset and zero regions (analysis.md:134-148; app.js:449-484, 524-538, 1230-1246). Recovery actions are specific and filters survive; a polite live region announces totals (app.js:1288-1296).",
+      "accessibility_responsiveness": "Strong semantics (skip link, one h1, labelled groups, chart data tables, focusable chart points, modal drawer with inert background and focus return: app.js:1183-1215, 832-849), but the rendered axe run records 22 serious contrast failures plus target-size and label-name violations on desktop, 15 on mobile (test-output/checks.json:28-47, 76-96), and mobile has page-level horizontal overflow (document_width 604 vs client_width 390).",
+      "implementation_quality": "Single dependency-free IIFE, deterministic data, clear sectioning and no console/page errors (test-output/checks.json:24-27). However the 390 px layout overflows the document by 214 px while the regional table is still clipped, and KPI cards expose a pointer cursor/hover affordance (styles.css:194-200) although only the footer link opens the drawer (app.js:633-657; verified a body click does nothing)."
+    },
+    "critical_defects": [
+      "Mobile page-level horizontal overflow: captured 604 px document at a 390 px viewport (test-output/checks.json:71-73; screenshots/mobile.png is 604x3483), with the regional table's on-time-change and orders columns clipped and a large blank strip to the right.",
+      "Twenty-two serious colour-contrast violations on desktop (fifteen on mobile) plus two target-size and one label-content-name-mismatch violation in the supplied axe output (test-output/checks.json:28-47, 76-96), so the stated 4.5:1 contrast target (analysis.md:164) is not met by the rendered page.",
+      "Failed attempts are modelled as one-per-order and subtracted from order volume to derive on-time rate (app.js:124-135, 199-203), despite the page saying one order can have several failed attempts (index.html:105-106); the analysis admits the demo cannot show the difference (analysis.md:37-39), so the displayed numbers imply a 1:1 relationship the definition denies.",
+      "KPI tiles are styled as clickable cards (cursor pointer, hover border: styles.css:194-200) but only the small footer link is interactive (app.js:633-657); clicking the metric value or sparkline does nothing."
+    ],
+    "strengths": [
+      "Excellent signal-to-investigation path: the insight sentence computes the worst regional on-time move with pp and a failed-attempt multiplier, stays calm when nothing moved, and offers a region-scoped CTA (app.js:486-511).",
+      "The orders drawer is context-preserving and honest: it states the surface it was opened from, repeats period/regions/status as tags, lists failed and late first, and says 'Showing 240 of N matching orders' instead of pretending to list all (app.js:1113-1171).",
+      "Metric transparency in the UI: units, denominators, comparison dates and the 15-minute lag are repeated in the context strip, tile subtitles and definitions, with no invented target or cause (index.html:99-124; desktop.png).",
+      "Complete and distinguishable state matrix, including partial regions with named missing regions and a comparison-unavailable banner rather than a truncated baseline (analysis.md:134-148; app.js:449-484).",
+      "Regional table is sortable by volume, worst rate or most failures and each row drills to its orders, supporting the 'where' question directly (app.js:934-1002)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 2
+    },
+    "evidence": {
+      "product_understanding": "The metric contracts are rigorous and visible: numerator/denominator ('1,397 resolved deliveries of 1,431 orders due'), exclusion count ('34 excluded: 3 in transit, 31 failed-only'), attempts vs orders ('199 across 180 orders'), pp vs count comparisons and no invented target (app.js:527-562; analysis.md:16-41). It also labels the population as orders whose promised window starts in range and discloses the in-progress period (app.js:450-463).",
+      "ux_reasoning": "The headline answers 'what changed and where' in one sentence and the orders view carries period, comparison, region, status, day, failures-only and search as removable chips, with sorting, paging, inline detail and attempt history (app.js:598-639, 1017-1207; desktop.png). However the region card promises 'Lowest rate first' but never sorts (app.js:938-965; screenshot order Central 95.4%, East 92.4%, North 91.0%, South 91.3%, West 89.4%), and the rate KPI's 'View orders' opens all 1,431 orders rather than the not-on-time set (app.js:545, 1458-1459).",
+      "design_judgment": "Analysis.md:64-90 gives a sound hierarchy (rate primary, failed secondary, volume context), rejects pie/dual-axis/forecast/target choices, uses a 0-100% rate axis with a hatch for the comparison series, and exposes the denominator policy as a deliberate trade-off. The delivered artifact departs from that rationale in the region table ordering and in the desktop grid, and adds an 'in transit' category not named in the brief (disclosed in analysis.md:25, 132).",
+      "visual_hierarchy": "Desktop.png has a strong top third (weekly-review eyebrow, 'Delivery health', bold headline, three well-differentiated KPI cards) and readable typography. But the chart card occupies only the left ~810 px of a 1224 px grid row, leaving an empty right half; Delivery status, On-time rate by region and Largest regional declines render full-width below the grid, and 'Show data table' is detached outside the chart card. Mobile.png is much cleaner and single-column.",
+      "interaction_completeness": "Loading skeletons with aria-busy, ready with precise cutoff, stale with amber banner and retry, partial excluding North from every figure with a dedicated North-only empty page, blocking error with preserved filters, no-data vs no-match vs no-denominator distinctions, and a search-retaining empty result (analysis.md:119-135; app.js:481-508, 1213-1266, 1187-1207). Focus is restored after re-render and day buttons respond to Enter/Space (app.js:1272-1317, 1545-1553).",
+      "accessibility_responsiveness": "Mobile at 390 px has no page-level overflow (test-output/checks.json:69-73); the chart and tables scroll inside labelled containers with a visible scroll hint, structured headings/captions/aria-sort are present, and focus is managed (app.js:750, 878-899, 1106-1124). Residual axe findings are two serious contrast violations and four label-content-name-mismatch violations per viewport (test-output/checks.json:30-47, 74-87), contradicting the 'all >=4.5:1' claim in analysis.md:146.",
+      "implementation_quality": "Code is dependency-free and well sectioned with no console/page errors (test-output/checks.json:28-29). But chartSVG emits one extra closing div (app.js:844-852) that closes .grid after the chart; verified in Chromium that .grid has exactly one child, so status/region/decline cards and the chart footnote render outside the intended grid. The 'Lowest rate first' sort is also missing (app.js:938-962). The analysis claims a 77/77 and 13/13 check suite (analysis.md:167) that is not present in the packet's test-output/checks.json."
+    },
+    "critical_defects": [
+      "Desktop layout is structurally broken: app.js:850 contains a stray '</div>' at the end of chartSVG, which closes .grid after the chart (verified: .grid has one child). Delivery status, On-time rate by region, Largest regional declines and the chart footnote/'Show data table' fall outside the grid and render full-width below, leaving an empty right half beside the chart in screenshots/desktop.png.",
+      "The region card subtitle says 'Lowest rate first' (app.js:965) but regionCard iterates REGIONS order without sorting (app.js:938-962); the rendered table runs Central 95.4%, East 92.4%, North 91.0%, South 91.3%, West 89.4%, so the weakest region is last and the promised scan path is missing.",
+      "Missing verification evidence: analysis.md:167 asserts 77/77 plus 13/13 headless checks, but test-output/checks.json contains only the axe/overflow summary; the drill, keyboard, state and no-overflow claims cannot be checked from the packet's test output.",
+      "Four label-content-name-mismatch violations per viewport (test-output/checks.json:37-43, 82-87) despite the accessible-name claims, and the analysis states all core contrast pairs pass 4.5:1 (analysis.md:146) while axe reports two serious contrast failures."
+    ],
+    "strengths": [
+      "Best-in-class metric transparency: the on-time card shows resolved-vs-orders, the excluded count by reason, and a rate of '—/Not applicable' when no denominator exists (app.js:527-545), while failed attempts are correctly separated from affected orders (app.js:548-554).",
+      "Precise freshness and comparison language: 'Data through Sat 7 Nov, 14:05 · 15 min ago · may lag up to 15 min', explicit in-progress handling and a disclosed equal-length-but-not-equal-weekday baseline (app.js:450-490; analysis.md:92-102).",
+      "The orders destination is a genuine investigation surface: context chips, removable filters, live search that keeps focus and caret, sortable columns with aria-sort, paging, and an inline detail row with promised window and attempt timeline (app.js:1017-1207, 1272-1317).",
+      "State distinctions are well designed: partial excludes North from every figure rather than blending it, no-data is explicitly 'not a load failure', empty search differs from empty filters, and stale data stays visible with a non-alarming amber treatment (analysis.md:119-135; app.js:481-508, 1213-1266).",
+      "Mobile composition is clean at 390 px with no page-level overflow; charts and tables scroll inside labelled regions with a visible hint (screenshots/mobile.png; test-output/checks.json:69-73)."
+    ]
+  },
+  "comparison": "Both candidates deliver complete, dependency-free dashboards with strong metric definitions and full non-happy-path coverage. Candidate A has the better desktop composition and a superior context-preserving drill-down (drawer with origin, tags, sample disclosure and focus return), but its 390 px page overflows by 214 px, its regional table is clipped on mobile, and its failed-attempt/order model is internally inconsistent. Candidate B has the stronger metric contract (resolved denominator, exclusion count, attempts vs orders), better mobile behaviour and fewer accessibility violations, but its desktop grid is broken by a stray closing tag, its promised 'lowest rate first' ordering is not implemented, and its 77/77 verification claim is absent from the supplied checks. Weighted scores using the supplied weights: Candidate A 3.40, Candidate B 3.05; the pair is close, and the difference is driven by A's stronger composition and drill-down versus B's stronger metric transparency and mobile accessibility.",
+  "limitations": "Single blinded pass with no mapping knowledge. Assessment is based on two screenshots per candidate plus code and the supplied axe/overflow summaries; no live interaction, screen-reader, cross-browser or full WCAG evaluation was performed. Candidate A supplies only default desktop/mobile screenshots (non-default states were inferred from code), and its mobile capture is 604 px wide because of the overflow, so the true 390 px appearance is partly inferred. Candidate B's claimed 77/77 drill/keyboard suite is not included in test-output/checks.json, so those claims are unverified. Visual hierarchy was scoreable because both packets contain rendered 390 px/1280 px evidence. This is one judge pass, not a statistical test or proof of causation."
+}

@@ -1,0 +1,77 @@
+{
+  "reviewer_id": "C1",
+  "pair_id": "product-onboarding-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "weighted_score": 3.5,
+    "evidence": {
+      "product_understanding": "inputs/condition-a/analysis.md §1 separates supplied facts (lines 8-18), design assumptions (20-28) and unknowns (30-40), and §2 (44-61) names the activation event as a named project. It avoids invented pricing/upgrades (line 59) and states pending invitations reserve seats as an explicit assumption (line 24).",
+      "ux_reasoning": "inputs/condition-a/analysis.md lines 44-61 and 63-71 justify project-before-invite, optional invitations and role explanation before assignment; app.js 633-654 creates the project before the invite screen. However, the 5-screen welcome→project→invite→success→workspace path is longer than the claimed three steps, and both 'Skip setup for now' and 'Return later' route to pausedView (app.js 739-743), whose only actions are Resume setup and Start over (456-481).",
+      "design_judgment": "Clean, restrained palette and copy; role cards sit above the invite rows (app.js 324-329) and the Starter limit is shown without price or upgrade (160-174). Restraint is good, but the same three-step list is repeated in the rail (107-135) and in the welcome preview (210-214), and the oversized welcome headline (screenshots/desktop.png) dominates more than the product context.",
+      "visual_hierarchy": "screenshots/desktop.png and screenshots/mobile.png show one unambiguous filled primary action ('Create my first project'), a clear Required/Optional split in the rail, and an ordered numbered preview. The mobile screen keeps the CTA above the fold at 390x844, with a compact three-step strip; the strip's wrapped labels are tight but readable.",
+      "interaction_completeness": "app.js implements validation (599-631), simulated loading (640-653), per-row invitation validation and partial failure (691-736), at-limit replacement of the invite form (302-355), success (386-452), workspace summary (486-560) and paused state (456-481). The breadth is strong, but the required 'skip and return later' outcome is a dead end: pausedView offers no workspace exit, so a user cannot skip onboarding and continue working.",
+      "accessibility_responsiveness": "test-output/checks.json desktop/mobile: zero axe violations, zero controls without accessible names, no horizontal overflow, no console/page errors (lines 5-48). app.js uses aria-busy, role=alert, aria-invalid/aria-describedby and focus moves (245-247, 333, 636, 672); styles.css has focus-visible outlines (379-387), a skip link (84) and reduced-motion support (693).",
+      "implementation_quality": "Dependency-free, well-sectioned app.js with HTML escaping (line 80), defensive localStorage load/save (36-76) and no page/console errors in test-output/checks.json. The only substantive logic defect is the skip/return-later dead end described above."
+    },
+    "critical_defects": [
+      "Skip is not a usable exit: 'Skip setup for now' (app.js 786-788) and 'Return later' (789-791) both call pauseSetup (739-743), which renders pausedView with only 'Resume setup' and 'Start over' (456-481). There is no route to the workspace, so a user who skips onboarding cannot continue working, contrary to task.md lines 13-14 and 23."
+    ],
+    "missing_evidence": [
+      "Only the welcome screen is rendered in screenshots/desktop.png and screenshots/mobile.png; no screenshots of the project form, validation, loading, invite/role screen, invitation failure, success, at-limit or paused states. Their visual quality cannot be assessed from prose.",
+      "test-output/checks.json covers only the welcome page at two viewports; the broader functional harness described in analysis.md §5 has no artifact in the packet."
+    ],
+    "strengths": [
+      "Crisp separation of facts, assumptions and unknowns, with explicit consequences and unresolved product questions.",
+      "Project is created before invitations, so abandoning the invite step still leaves a useful project.",
+      "Role capabilities and the Starter seat limit are explained before any role is assigned, without inventing pricing or upgrade behavior.",
+      "Broad state model including partial invitation failure, retry of only unsent addresses, duplicate detection and an at-limit explanation.",
+      "Strong first-screen hierarchy: one primary CTA, explicit Required/Optional labels, and a mobile layout that fits the action in the first viewport."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "weighted_score": 3.65,
+    "evidence": {
+      "product_understanding": "inputs/condition-b/analysis.md lines 10-31 separate supplied facts, design assumptions and unknowns; lines 62-76 define the activation event as a named project and classify included, deferred and skippable work. It explicitly refuses to invent upgrade behavior, integrations or project internals (lines 70-74, 253-258).",
+      "ux_reasoning": "inputs/condition-b/analysis.md lines 60-88 and 92-138 justify a two-surface flow: required project creation, then optional invitations after success. app.js confirms the order (716-756 create, 365-409 success, 775-792 optional invite/skip) and 'Skip for now' lands on workspace home with a paused banner and resume action (758-765, 589-636). Single-role batch invitation is an explicit trade-off (analysis 131).",
+      "design_judgment": "Distinctive, coherent system: dark evergreen context rail, warm paper surface and serif display heading (screenshots/desktop.png). Role capabilities are repeated at the point of role assignment (app.js 533-543), the Starter limit is stated without an upsell (506-520), and there is no fake checklist or tour. The rail's long role copy on the setup screen adds some weight to the simplest step.",
+      "visual_hierarchy": "screenshots/desktop.png has a clear focal card and a subordinate 'After this' aside, with the form's primary button as the strongest control. On screenshots/mobile.png (390x1550, apparently full-page) the dark rail, workspace card and breadcrumb consume roughly the first 285 px before the h1, and the fixed 'Prototype controls' button overlaps the Project name input and the Description 'Optional' label (styles.css 1381-1392, 1601-1611).",
+      "interaction_completeness": "app.js covers empty workspace (666-671), project validation (716-737), loading (739-755), success (365-409), invite validation (794-815), send/loading (820-864), invitation failure with retry and continue (448-462, 829-835), invite success (549-585), member limit (416-520, 947) and skip/resume (758-792). Failure is all-or-nothing rather than per-address, but every required state is reachable and coherent.",
+      "accessibility_responsiveness": "test-output/checks.json reports zero axe violations, 28 passes at both viewports, zero controls without accessible names and no overflow (lines 5-49). app.js uses aria-busy, described-by hints/errors, a fieldset/legend radio group (487-504) and a polite live region (index.html 56); styles.css includes focus-visible outlines (707-709, 1006-1008) and reduced motion (1622-1629). The mobile fixed prototype control overlapping a form field is the responsive defect.",
+      "implementation_quality": "Clean dependency-free IIFE with consistent escaping (app.js 33-40) and guarded localStorage with in-memory fallback (74-104); checks report no console/page errors. The mobile fixed-control overlay (styles.css 1381-1392, 1601-1611) is a real layout oversight, and the packet contains no functional test artifact for the scenarios described in analysis.md §8."
+    },
+    "critical_defects": [
+      "No product-flow blocker found. Major (non-blocking) defect: at 390 px the fixed 'Prototype controls' button overlaps the Project name input and Description 'Optional' label in screenshots/mobile.png, obscuring part of the form and intercepting pointer hits (styles.css 1381-1392, 1601-1611)."
+    ],
+    "missing_evidence": [
+      "Only the setup screen is rendered in screenshots/desktop.png (1280x973) and screenshots/mobile.png (390x1550); there are no screenshots of success, invite, role selection, validation, loading, failure, limit, workspace or paused states.",
+      "test-output/checks.json contains only page-level rendered checks for the default view; the functional harness described in analysis.md §8 is not included.",
+      "The mobile capture is 390x1550 while Candidate A's is 390x844, so above-the-fold comparison at a common viewport height is not possible."
+    ],
+    "strengths": [
+      "Minimal, honest first-run path: project creation is the only required step; invitations are offered after success and skipping lands in the workspace with a resume entry point.",
+      "Roles are explained before assignment in both the invite aside and the role control, and the owner stays Owner.",
+      "Starter member limit is shown early and at the point of invitation without pricing or invented upgrade behavior.",
+      "Invitation failure preserves addresses, offers retry and a valid continue-without route, and the project is never lost.",
+      "Cohesive visual identity and clear desktop hierarchy, with a semantic, well-labeled implementation and clean axe results."
+    ]
+  },
+  "comparison": "Both candidates are strong and comparable in evidence type. Candidate A has the cleaner first-screen visual hierarchy (single primary action, explicit Required/Optional labels, a mobile layout that keeps the CTA in view) and the more exhaustive state machine, including partial invitation failure, per-row errors and an at-limit screen. Candidate B has the better end-to-end first-run logic: its skip action actually reaches the workspace, its invite step is optional after success rather than a wizard step, and its role explanation sits at the point of assignment; it also has the more distinctive visual system. Candidate A's decisive weakness is that 'Skip setup for now' and 'Return later' dead-end on a paused screen with no workspace route (app.js 456-481, 739-743). Candidate B's weaknesses are concentrated on mobile: the rail and breadcrumb push the form down, and the fixed prototype control overlaps the Project name field (screenshots/mobile.png), with invitation failure handled only as an all-or-nothing batch. Weighted scores: Candidate A 3.50, Candidate B 3.65 — a narrow advantage for Candidate B driven by ux_reasoning and interaction_completeness, partly offset by Candidate A's stronger visual hierarchy and accessibility/responsiveness.",
+  "limitations": "This is one blinded judge pass, not a statistical test and not proof of causation. Visual-hierarchy scoring is limited to the single state captured per candidate: Candidate A's welcome screen (1280x900 and 390x844) and Candidate B's setup screen (1280x973 and 390x1550); the capture heights and likely capture modes differ, so the mobile above-the-fold comparison is not exact, and the visual quality of validation, loading, invitation, failure, success, limit and paused states was not scored. Both test-output/checks.json files cover only the default rendered page; the functional test harnesses described in analysis.md are absent, so state behavior was assessed from source code rather than executed tests. No screen-reader, cross-browser or independent functional run was performed. The per-packet manifest 'candidate' fields conflict with their folder names (inputs/condition-a/manifest.json line 5 says condition-b and inputs/condition-b/manifest.json line 5 says condition-a); I kept the immutable folder-based labels Candidate A and Candidate B, did not infer any condition mapping, and did not read mapping.json. I did not modify any evidence file."
+}

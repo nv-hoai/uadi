@@ -1,0 +1,71 @@
+{
+  "reviewer_id": "J3",
+  "pair_id": "subscription-settings-r3",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "inputs/condition-a/analysis.md:7-22 separates illustrative prices, demo data and the cancellation policy from research findings, and defines the owner/member permission split at :17; the six user questions are mapped to specific page regions at :27-34 and the role model is implemented (app.js:274-292 member-lock note; app.js:140-150 role banner).",
+      "ux_reasoning": "inputs/condition-a/analysis.md:36 and :52-82 order the page by the questions an owner asks (status, billing mechanics, limits, history, cancellation) and give a step-by-step owner and member journey; the cancellation flow uses a consequence list, an acknowledgement gate and a safe primary button (app.js:1050-1089), blocked downgrades state how many members must be removed (app.js:809-816), and recovery paths exist (retry at app.js:1349-1363, undo/reactivate at app.js:1470-1473).",
+      "design_judgment": "inputs/condition-a/analysis.md:88-100 gives explicit rationale and trade-offs for summary-first layout, hard-blocked downgrades, safe-primary cancellation, and the simulated card form; :102-105 lists deliberately excluded dark patterns. One inconsistency remains: Free is disabled in Change plan while 12 members exist (app.js:761, 795-816) but the cancellation flow schedules that same move to Free (app.js:1063).",
+      "visual_hierarchy": "inputs/condition-a/screenshots/desktop.png: the summary card leads with plan, price, renewal, next payment and member meter, with one primary and one secondary action; section headings and card titles form a consistent rhythm. inputs/condition-a/screenshots/mobile.png preserves the same order, stacks the stats into label/value rows and converts invoices into labelled cards. Composition flaw: the right-hand Payment method column ends far above the left stack, leaving a large void in 'Plan and billing', and the fixed Prototype controls pill covers the right half of the 'Update payment method' button at ~y=810 in the desktop capture.",
+      "interaction_completeness": "inputs/condition-a/analysis.md:125-139 enumerates loading (aria-busy skeleton), load error with Try again, empty invoices, payment failed, approaching/at limit, blocked downgrade, scheduled change, cancellation, success, disabled and inline validation; the implementations are verifiable in app.js (598-635 loading/error, 1307-1347 scenario switching incl. paymentIssue/noInvoices/nearLimit/atLimit, 1197-1256 payment validation and saving, 1050-1105 cancellation with undo toast).",
+      "accessibility_responsiveness": "One h1, skip link, dialog focus return, aria-live regions and 44px-class targets are present (app.js:640-675, index.html:12, 40-41); checks report no overflow and 20 named controls at 1280 and 390 (inputs/condition-a/test-output/checks.json:24-30, 69-75). But axe reports serious violations in both viewports: two progressbars without accessible names and a malformed definition list (checks.json:31-48), so semantics are not clean despite the manual check claim at analysis.md:176.",
+      "implementation_quality": "Self-contained three-file prototype with no dependencies, network calls or console/page errors (analysis.md:154-160; checks.json:29-30); guarded async tokens and HTML escaping are used (app.js:1246-1255, 60). The quality review still misses the axe regressions it should have caught, and the Free-set path is inconsistent between code paths."
+    },
+    "critical_defects": [
+      "Two ARIA progressbars have no accessible name and the summary <dl> is malformed in both viewports (inputs/condition-a/test-output/checks.json:31-48) - serious axe findings not reflected in the accessibility claims at analysis.md:176.",
+      "Free is disabled as a downgrade at 12 members (app.js:761, 795-816) while the cancellation flow schedules the same destination and member count (app.js:1063), so one path blocks what the other allows.",
+      "The fixed 'Prototype controls' panel obscures the right half of the 'Update payment method' button in inputs/condition-a/screenshots/desktop.png (~y=810) and covers explanatory copy on mobile, hiding a control in the delivered evidence."
+    ],
+    "strengths": [
+      "The visible summary answers plan, price, renewal, next payment and member usage in one card, then moves to detail in the order owners ask for it (analysis.md:27-36; screenshots/desktop.png).",
+      "Cancellation is visually separated, low-emphasis, gated by an acknowledgement checkbox and keeps 'Keep my plan' as the primary action; undo and reactivate are both available (app.js:1050-1105; analysis.md:42).",
+      "Broad, demonstrated state coverage: payment failure, empty invoices, approaching/at limit, scheduled changes, loading/error, success and validation are all selectable or reachable (analysis.md:125-139; app.js:1307-1347).",
+      "Role-conditional copy and disabled actions name the owner and explain the restriction instead of dead-ending (app.js:274-292; analysis.md:110-119).",
+      "Plain-language limit modelling: count, meter, seats remaining, all three plan limits and the invitation consequence (screenshots/desktop.png; analysis.md:43)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "inputs/condition-b/analysis.md:9-20 explicitly labels prices, dates, role visibility and change timing as assumptions, and :19 names the member-visibility choice as a policy call; the six questions and owner/member risk framing are at :22-36. However, the owner view appends 'Only workspace owners can change billing' to its own usage note (app.js:219; visible in both screenshots), and paid members cannot see invoices or payment details at all (app.js:435-443, 491-499).",
+      "ux_reasoning": "The IA is clear and question-ordered with anchored sections (index.html:38-49; analysis.md:40-61), and review dialogs show from/to, effective date, $0 today, next payment and member limit (app.js:721-753). Edge-case gap: every change takes effect at renewal (analysis.md:17, 71), so a workspace at 20/20 that accepts the Business upgrade gets no seats until 1 Dec 2026 (app.js:739-741); there is also no failed-payment recovery path (analysis.md:142).",
+      "design_judgment": "Separating the display-only monthly/annual price comparison from a real cadence change is a strong anti-dark-pattern decision (index.html:105-113; analysis.md:79), as are the explicit refusal to invent a feature matrix (:89) and the refusal to fabricate proration (:81). The cancellation rationale is explicit and balanced (:85, :87), even though the renewal-only timing weakens the upgrade use case.",
+      "visual_hierarchy": "inputs/condition-b/screenshots/desktop.png shows a clear type scale, generous spacing, a highlighted current-plan card and a clean invoice table; inputs/condition-b/screenshots/mobile.png keeps the plan-first order and uses full-width actions. Density is lower (empty space inside the At a glance card, a large gap before Cancellation), the Free warning '3 members - workspace has 12' is cryptic, and the demo pill covers the usage meter on mobile.",
+      "interaction_completeness": "Strong mechanics: safe action receives initial focus in every dialog, Escape is blocked while busy, duplicate submissions are prevented, form errors set aria-invalid and focus the first invalid field, and scheduled changes have Undo/Resume (app.js:647-688, 850-868, 950-978, 1081-1110). Gaps: the empty-invoice branch is implemented but unreachable (analysis.md:100; app.js:502), and no payment-failure/dunning state exists (analysis.md:142).",
+      "accessibility_responsiveness": "The member meter has an explicit aria-label (app.js:267), controls are named, the mobile nav wraps instead of overflowing, and no console errors were reported (test-output/checks.json:26-30, 69-73). Axe still reports a serious contrast violation at both viewports and aria-prohibited-attr on mobile (checks.json:33-44, 74-91), contradicting the blanket contrast claim at analysis.md:125.",
+      "implementation_quality": "Clean static shell plus render functions, hidden state panels and no dependencies; no console or page errors (checks.json:29-30, 71-72). Weak points: the dead `if (!INVOICES.length)` branch (app.js:502), invoice download is only a toast (app.js:1111-1112), and the axe regressions show the stated checks were not decisive."
+    },
+    "critical_defects": [
+      "Owner-facing copy bug: the summary usage note says 'Only workspace owners can change billing' to the workspace owner (app.js:219), visible on both screenshots; this is the wrong audience and creates doubt about permissions.",
+      "Upgrades are scheduled for the renewal date (analysis.md:17, 71; app.js:739-741), so an at-limit workspace that chooses Business cannot add members until 1 Dec 2026 - the main reason to upgrade is deferred by a month.",
+      "The member role loses payment and invoice access entirely (app.js:435-443, 491-499), narrower than the brief's 'non-owners see billing information'; the analysis acknowledges this is a conservative policy call (analysis.md:19, 138).",
+      "No payment-failure/dunning state, and the empty-invoice state is unreachable (analysis.md:100, 142; app.js:502), so error/empty coverage is thinner than the analysis implies."
+    ],
+    "strengths": [
+      "Strongest visual craft in the pair: larger readable type, consistent card rhythm, a highlighted current plan and a calm, trustworthy billing tone (screenshots/desktop.png, screenshots/mobile.png).",
+      "Best anti-dark-pattern detail: 'Show prices' comparison is explicitly isolated from commitment and states that the plan and period are unchanged (index.html:105-113; analysis.md:79).",
+      "Review dialogs are concrete - now/from, effective date, $0 charged today, next payment and new member limit - with the safe action focused first and the destructive control disabled until acknowledged (app.js:721-753, 850-868).",
+      "Scheduled changes are reversible with visible Undo/Resume and status messaging (app.js:236-241, 1081-1110).",
+      "Honest simulation throughout: no payment success is claimed, the invoice download says it is not connected, and no invented feature matrix is used (app.js:1111-1112; analysis.md:89-91)."
+    ]
+  },
+  "comparison": "Candidate A is the more complete billing experience: it answers all six questions in one summary, covers both operational error states that matter (failed payment and empty invoices are reachable), models immediate upgrades with a labelled proration note, and gates cancellation behind consequences plus an explicit acknowledgement; its weaknesses are an inconsistent Free path, two serious ARIA/definition-list failures axe caught, and a demo overlay that hides a button in the desktop screenshot. Candidate B is the stronger visual and rhetorical artifact - the price-toggle separation, safe-action focus, reversible scheduled changes and explicit trade-offs are excellent - but its owner-facing permission copy is wrong, upgrades only land at renewal (a dead end for at-limit workspaces), member invoices/payment are hidden, and dunning is absent. On the supplied weights Candidate A totals 3.90 and Candidate B 3.30.",
+  "limitations": "Both packets provide only default-owner full-page screenshots at 1280 and 390; member views, dialogs, loading, error, payment-failure and success states are judged from code and prose rather than rendered evidence, and fixed demo panels in the full-page captures overlay content. No live interaction run was possible in this read-only pass, no screen reader or axe rerun was performed, no intermediate viewport was supplied, and this is one judge pass, not a statistical test or proof of causation."
+}

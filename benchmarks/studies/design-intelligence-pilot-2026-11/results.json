@@ -1,0 +1,975 @@
+{
+  "schema_version": 2,
+  "study": {
+    "agent": "OpenCode general subagent, identical tools and settings in both conditions",
+    "model": "deepseek-v4.1 / deepseek-v4.1-flash (pinned)",
+    "date": "2026-11-06/2026-11-07",
+    "project_snapshot": "Empty static prototype scaffold v1 copied identically for every run; no shared files or history between conditions",
+    "design": "Exploratory paired pilot: 3 tasks x 3 repetitions x 2 conditions, one pinned model family, randomized blind candidate mapping. Treatment condition had the portable UADI skill installed inside its project. Judges were 3 blinded LLM passes per pair; no independent human reviewers took part."
+  },
+  "pairs": [
+    {
+      "pair_id": "subscription-settings-r1",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "baseline": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate B)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          }
+        ],
+        "duration_seconds": 1518
+      },
+      "uadi": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ],
+        "duration_seconds": 918
+      }
+    },
+    {
+      "pair_id": "subscription-settings-r2",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "baseline": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          }
+        ],
+        "duration_seconds": 2416
+      },
+      "uadi": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate B)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 4
+            }
+          }
+        ],
+        "duration_seconds": 1405
+      }
+    },
+    {
+      "pair_id": "subscription-settings-r3",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "baseline": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          }
+        ],
+        "duration_seconds": 1608
+      },
+      "uadi": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate B)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate B)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate B)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ],
+        "duration_seconds": 1993
+      }
+    },
+    {
+      "pair_id": "product-onboarding-r1",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "baseline": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          }
+        ],
+        "duration_seconds": 2426
+      },
+      "uadi": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ],
+        "duration_seconds": 2266
+      }
+    },
+    {
+      "pair_id": "product-onboarding-r2",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "baseline": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate B)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 2,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate B)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate B)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ],
+        "duration_seconds": 1588
+      },
+      "uadi": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ],
+        "duration_seconds": 1854
+      }
+    },
+    {
+      "pair_id": "product-onboarding-r3",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "baseline": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 2,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          }
+        ],
+        "duration_seconds": 2473
+      },
+      "uadi": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ],
+        "duration_seconds": 2120
+      }
+    },
+    {
+      "pair_id": "operations-dashboard-r1",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "baseline": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          }
+        ],
+        "duration_seconds": 2600
+      },
+      "uadi": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          }
+        ],
+        "duration_seconds": 2587
+      }
+    },
+    {
+      "pair_id": "operations-dashboard-r2",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "baseline": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate B)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate B)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ],
+        "duration_seconds": 2773
+      },
+      "uadi": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          }
+        ],
+        "duration_seconds": 2187
+      }
+    },
+    {
+      "pair_id": "operations-dashboard-r3",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "baseline": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate A)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate A)",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate A)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          }
+        ],
+        "duration_seconds": 2283
+      },
+      "uadi": {
+        "reviewers": [
+          {
+            "id": "J1",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 1 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "J2",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 2 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "J3",
+            "type": "llm",
+            "independent": false,
+            "provenance": "deepseek-v4.1-flash blinded judge pass 3 (candidate B)",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 2
+            }
+          }
+        ],
+        "duration_seconds": 2914
+      }
+    }
+  ]
+}

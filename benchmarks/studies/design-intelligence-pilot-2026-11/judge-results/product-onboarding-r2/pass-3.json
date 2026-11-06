@@ -1,0 +1,72 @@
+{
+  "reviewer_id": "J3",
+  "pair_id": "product-onboarding-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "evidence": {
+      "product_understanding": "Facts, design assumptions and unknowns are explicitly separated (inputs/condition-a/analysis.md:8-42), including the seat-consumption assumption (analysis.md:28) and project visibility left open (analysis.md:38). Role copy stays neutral about Admin settings and the UI shows only the supplied Starter limit. Minor slip: the name hint says 'Everyone in the workspace will see this name' (inputs/condition-a/implementation/app.js:313) although visibility is listed as unknown.",
+      "ux_reasoning": "One required project form, with the invitation offered only after project creation (inputs/condition-a/analysis.md:48-86). Skip is a persistent top-bar action that lands in the workspace with a paused banner naming the saved draft, and resume restores both fields (implementation/app.js:589-712, 758-792). The workspace home covers empty, paused, deferred-invite, invited-tag and at-limit states (analysis.md:133-156).",
+      "design_judgment": "Explicitly rejects a progress wizard because it would make a short task look like a process (inputs/condition-a/analysis.md:105), argues project-before-invite against the tempting invite-first order (analysis.md:78-86), documents the batch-role trade-off (analysis.md:131) and keeps the limit as a limit with no invented upgrade path (analysis.md:166).",
+      "visual_hierarchy": "inputs/condition-a/screenshots/desktop.png (1280px) shows a strong scan order: serif 'Start with one project.' headline, dark context rail, one green primary action, and a balanced form plus 'After this' aside. inputs/condition-a/screenshots/mobile.png (390x1550 full page) shows the primary 'Create project' action at about y=1009, below a 390x844 first fold that is consumed by the workspace card, role disclosure and breadcrumb chrome; the fixed 'Prototype controls' pill overlaps the form near the description field.",
+      "interaction_completeness": "Covers empty-name and malformed/duplicate/over-seat invite validation, aria-busy loading with spinner, success, recoverable failure that preserves addresses and offers Retry or Continue (inputs/condition-a/implementation/app.js:794-865, 448-461), plus limit, skip/resume and localStorage persistence. Coarser than Candidate B: one role for the whole batch, a single invite error string, all-or-nothing failure, and an address already present as a member is still reported as sent (app.js:837-855).",
+      "accessibility_responsiveness": "Skip link, semantic landmarks, visible labels, aria-describedby, aria-invalid, role=alert, polite live region, focus moved to the heading or invalid field, 44px targets and reduced-motion support (inputs/condition-a/analysis.md:186-192). inputs/condition-a/test-output/checks.json reports axe 0 violations, 0 controls without accessible names and no horizontal overflow at 1280 and 390; the 390px first viewport is context-heavy and the fixed prototype control overlays form content (screenshots/mobile.png).",
+      "implementation_quality": "Working dependency-free ES5 prototype with escaped interpolation, async operation tokens and guarded localStorage (inputs/condition-a/implementation/app.js:7-40, 98-104, 740-745); checks.json shows no console or page errors. State is patched through repeated var/string-concatenation render functions, consistent but less maintainable than Candidate B's state-plus-render model."
+    },
+    "critical_defects": [
+      "Mobile at 390px: the only primary action sits below the 844px first fold, and the fixed prototype-controls pill overlaps the description area (inputs/condition-a/screenshots/mobile.png).",
+      "Invitation handling is batch-only: one role for every recipient, one combined error message, and all-or-nothing failure with a full-list retry (inputs/condition-a/implementation/app.js:794-865).",
+      "An address already present as a member is silently included in the 'sent' confirmation because the send loop skips it while ui.inviteSent is set to every parsed email (implementation/app.js:837-855).",
+      "'Step 1 of 2' and 'Step 2 of 2 · Optional' (implementation/app.js:295, 426) still frame the optional invitation as the second half of setup."
+    ],
+    "strengths": [
+      "Facts, assumptions and unknowns are separated, with seat consumption and role ambiguity flagged rather than silently decided (inputs/condition-a/analysis.md:22-42).",
+      "Project-first path with a first-class, persistent skip that preserves the draft and a workspace paused state that names it (analysis.md:60-76; implementation/app.js:758-773).",
+      "The strongest desktop composition of the pair: editorial typography, restrained palette, one obvious action and a useful secondary aside (screenshots/desktop.png).",
+      "Honest home states: empty workspace, paused banner, one deferred-invite prompt, invited tags and at-limit copy without an upgrade invention (analysis.md:133-156).",
+      "Clean automated baseline: axe 0 violations, 0 unnamed controls, no overflow, no console errors (test-output/checks.json)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "evidence": {
+      "product_understanding": "Facts, assumptions and unknowns are separated (inputs/condition-b/analysis.md:8-40), the pending-seat assumption is explicit (analysis.md:24), and Starter/Team limits are used without pricing. Copy overreaches: Admin 'Manages workspace settings' (inputs/condition-b/implementation/app.js:179), 'You can rename it later' (app.js:211, 233) and 'People set their own password' (app.js:348) are not in the brief.",
+      "ux_reasoning": "The project is created before the optional invite, with 'Return later' on each step and saved progress (inputs/condition-b/analysis.md:44-72, 90-91); role cards and the seat meter precede the invite rows, and the at-limit state replaces the form (implementation/app.js:310-355). Flaw: 'Skip setup for now' goes to a paused screen whose only actions are Resume setup and Start over (app.js:786-790, 739-743, 456-482), so there is no route to the workspace until the project is created.",
+      "design_judgment": "Documents project-before-invite, roles-before-assignment, limits-without-pricing and success-as-handoff, with named risks and alternatives (inputs/condition-b/analysis.md:44-61, 104-113). However, the welcome screen plus persistent three-step rail adds ceremony to a one-required-field path, and the skip destination is not resolved.",
+      "visual_hierarchy": "inputs/condition-b/screenshots/desktop.png (1280px) is clean and legible: numbered setup rail, one green CTA and a very large three-line headline, though the stage is left-heavy with a large unused right area. inputs/condition-b/screenshots/mobile.png (390x844) keeps the CTA in the first viewport, but the three-step strip and the body preview repeat the same three steps within 250px.",
+      "interaction_completeness": "The strongest area: empty, per-field and per-address validation, aria-busy loading with spinner and count, solo/invited/partial-failure success, at-limit replacement, restored-session banner and recovery that keeps the project and retries only unsent addresses (inputs/condition-b/implementation/app.js:610-736, 294-300, 148-158). One edge bug: after a partial failure, already-sent rows stay in the form and are re-counted against reduced available seats (app.js:610-631, 719-726), so a near-limit retry can demand removing an address that already sent.",
+      "accessibility_responsiveness": "Skip link, banner/rail/main landmarks, one h1 per screen, aria-current='step', labelled inputs, aria-describedby, role=alert, polite live status, focus to the h1 or first invalid field, and reduced-motion support (analysis.md:94-102; implementation/app.js:118, 564-587). test-output/checks.json reports axe 0 violations, 0 unnamed controls and no horizontal overflow at 1280 and 390; the 390x844 render keeps the primary CTA in view.",
+      "implementation_quality": "Modern 'use strict' state-plus-render architecture with escaped interpolation, guarded localStorage, deep-linkable prototype states (?state=...) and reset (inputs/condition-b/implementation/app.js:9-76, 1028-1036). checks.json shows no console or page errors. The partial-failure seat-validation edge above remains."
+    },
+    "critical_defects": [
+      "Skipping setup with no project lands on a paused screen offering only Resume setup or Start over; there is no path to the workspace without creating a project (inputs/condition-b/implementation/app.js:456-482, 786-790, 816-826).",
+      "Unsupported product promises: Admin manages workspace settings, rename later, and invitees set their own password (implementation/app.js:179, 211, 233, 348).",
+      "A partial-failure retry can raise a false seat error because already-sent rows remain in the form and are re-counted (implementation/app.js:610-631, 719-726).",
+      "The welcome screen, three-step rail and mobile step strip repeat the same three steps and add a screen before the only required input (screenshots/mobile.png; implementation/app.js:204-223)."
+    ],
+    "strengths": [
+      "Most complete state handling, including partial invite failure with per-row errors and retry of only unsent addresses (inputs/condition-b/implementation/app.js:294-300, 691-736).",
+      "Per-recipient role selection with full role cards shown above the invite rows (implementation/app.js:176-188, 361-382).",
+      "At-limit state replaces the invite form and explains it without pricing or upgrade invention (implementation/app.js:302-355).",
+      "An explicit 'Why we ask' block and an optional description keep the project form short (implementation/app.js:263-270).",
+      "Mobile first viewport keeps the primary CTA and skip visible, and the automated checks are axe-clean with no overflow (screenshots/mobile.png; test-output/checks.json)."
+    ]
+  },
+  "comparison": "Candidate A is the leaner, more opinionated interpretation: one required project form, the invitation strictly after success, skip that lands in the workspace with a saved draft, and the stronger desktop craft. Candidate B is broader and more robust in state handling, with per-recipient roles, partial-failure retry and at-limit replacement, but adds a welcome screen and three-step frame, and its 'Skip setup' has no exit to the workspace. Weighted rubric totals (15/20/15/15/15/10/10): Candidate A 3.50, Candidate B 3.35.",
+  "limitations": "Each packet has only two screenshots, and both render only the first screen (Candidate A setup; Candidate B welcome) at 1280 wide and 390 wide, so invite, success, failure, limit, paused and workspace states could not be judged visually. The mobile evidence is not fully equivalent: Candidate A is a 390x1550 full-page capture while Candidate B is a 390x844 viewport. I did not execute either prototype; interaction and accessibility findings rest on code reading plus the supplied axe and overflow checks, which cover the initial screen only. Both are static localStorage demos with simulated delivery, so real permissions, delivery and persistence are unverified. This is one blinded pass, not a statistical test or proof of causation."
+}
