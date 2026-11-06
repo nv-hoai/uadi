@@ -38,7 +38,7 @@ Use this checklist to improve design outcomes. It is a reasoning aid, not a mand
 ## Lightweight technical validation
 
 Run only checks relevant to the change:
-- Schema validation when structured UDS or other artifacts are created.
+- Schema validation when structured UDS or other artifacts are created. For UDS, use the bundled `schemas/design-specification.schema.json` and `component-catalog/catalog.json`; the `npm run validate` command is available in the UADI repository, not automatically in host projects.
 - Typecheck/build when implementation code changes.
 - Browser or component tests when interactions or layout change.
 - Accessibility tooling when available.
