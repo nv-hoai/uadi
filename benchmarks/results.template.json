@@ -10,6 +10,9 @@
     {
       "pair_id": "example-pair-01",
       "task_id": "product-onboarding",
+      "model_family": "EXAMPLE_ONLY",
+      "model_version": "EXAMPLE_ONLY",
+      "repetition": 1,
       "baseline": {
         "duration_seconds": 600,
         "reviewers": [
