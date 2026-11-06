@@ -17,7 +17,7 @@ Read the [canonical Design Intelligence core](docs/DESIGN-INTELLIGENCE.md). It i
 4. Ask only questions whose answers could materially change the design; otherwise state a proportionate assumption and proceed.
 5. Identify the highest-impact task, comprehension, trust and accessibility risks. Prioritize root causes over cosmetic symptoms.
 6. Choose a context-appropriate interaction model and pattern. Explore distinct alternatives only when the problem is substantial or ambiguous.
-7. Design content, hierarchy, visual composition, responsive behavior and important states as one experience.
+7. Design the task flow, content, hierarchy, visual composition, responsive behavior and important states as one experience.
 8. Implement using the host project's conventions. Use UDS when it helps preserve, compare or reuse intent—not as mandatory paperwork.
 9. Inspect the rendered result and exercise consequential interactions when tools are available. Fix the highest-impact defects first.
 10. Report decisions, trade-offs, checks actually performed and remaining uncertainty.
@@ -30,7 +30,7 @@ Read the [canonical Design Intelligence core](docs/DESIGN-INTELLIGENCE.md). It i
 
 ## Guidance and validation
 - [Product Understanding](intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md): investigate product, users, roles, domain rules and constraints.
-- [UX Reasoning](intelligence/UX-REASONING-PLAYBOOK.md): map tasks, decisions, friction, states and recovery.
+- [UX Reasoning](intelligence/UX-REASONING-PLAYBOOK.md): map task flows, decisions, handoffs, edge cases, content, states and recovery.
 - [Visual Design](intelligence/VISUAL-DESIGN-PLAYBOOK.md): establish hierarchy, composition, density and visual consistency.
 - [Pattern library](intelligence/patterns/README.md): select and adapt a solution only when its context fits.
 - [Quality gates](docs/QUALITY-GATES.md): choose checks relevant to the change; never claim an unrun check passed.

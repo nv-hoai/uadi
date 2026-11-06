@@ -13,7 +13,7 @@ Each layer has a distinct responsibility. Use only the depth needed for the task
 | Layer | Responsibility | Primary contents | Output |
 |---|---|---|---|
 | **Core** | Establish the small set of durable principles and decision rules that guide design judgment. | [Design Intelligence](DESIGN-INTELLIGENCE.md), distilled into the agent-facing [SKILL.md](../SKILL.md). | A clear decision priority and shared quality bar. |
-| **Methods** | Explain how to reason: understand evidence, analyze tasks, critique, prioritize, explore and validate. | [Product Understanding](../intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md), [UX Reasoning](../intelligence/UX-REASONING-PLAYBOOK.md), [Visual Design](../intelligence/VISUAL-DESIGN-PLAYBOOK.md), and the relevant [workflows](../workflows/). | A grounded problem analysis, ranked risks and justified design decisions. |
+| **Methods** | Explain how to reason: understand evidence, analyze tasks, critique, prioritize, explore and validate. | [Product Understanding](../intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md), [UX Reasoning](../intelligence/UX-REASONING-PLAYBOOK.md), [Visual Design](../intelligence/VISUAL-DESIGN-PLAYBOOK.md), and the relevant [workflows](../workflows/). | A grounded problem analysis, mapped flow, ranked risks, content decisions and justified design decisions. |
 | **Patterns** | Offer reusable solutions for recurring problems, including when they fit and when they do not. | [Pattern library](../intelligence/patterns/README.md). | A context-adapted solution with explicit trade-offs—not a copied template. |
 | **Examples** | Demonstrate the complete path from evidence through critique and decisions to an inspectable implementation and validation. | [Examples](../examples/), including the [worked onboarding example](../examples/product-onboarding/README.md), the [worked operations dashboard example](../examples/operations-dashboard/README.md) and the [worked SSO discovery example](../examples/sso-discovery/README.md). | A worked reference that makes reasoning and implementation inspectable. |
 | **Benchmarks** | Test whether using UADI improves design outcomes compared with a baseline, while tracking cost and uncertainty. | [Benchmark protocol](BENCHMARKING.md), [task briefs](../benchmarks/), scoring and result artifacts. | Reproducible comparative evidence, limitations and improvement priorities. |
@@ -115,7 +115,7 @@ Do not create an artifact simply because a workflow names one. Use structured ar
 This is a repository-level planning assessment, not a measured score:
 
 - **Core:** principles exist; keep one authoritative source and prevent duplication.
-- **Methods:** substantial playbooks and workflows exist; improve traceability without adding process.
+- **Methods:** substantial playbooks and workflows exist; UX reasoning now covers flow branches, handoffs, edge-case derivation and content design. Improve traceability, alternatives and validation without adding process.
 - **Patterns:** a useful starting library exists; improve consistency and evidence links before expanding it.
 - **Examples:** onboarding, operations-dashboard and SSO discovery worked examples cover a guided flow, an investigation/comparison flow and a brownfield discovery/context-synthesis path; validate them in real reviews before expanding further.
 - **Benchmarks:** protocol and tooling exist; completed, verified pilot evidence is still needed before claiming UADI improves outcomes.

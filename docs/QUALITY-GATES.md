@@ -6,8 +6,12 @@ Use this checklist to improve design outcomes. It is a reasoning aid, not a mand
 
 - Is the target user and their primary goal understood?
 - Does the design support the most important user task directly?
+- Is the primary task flow mapped from trigger to confirmed outcome, including handoffs and recovery?
+- Are high-impact edge cases identified and either handled, explained or explicitly out of scope?
 - Is the information architecture understandable?
 - Are important decisions, friction points and assumptions visible?
+- Is content written in the user's language, with consequences, units and next steps where they matter?
+- Do state messages say what happened, what it means and what the user can do next?
 - Are empty, loading, error, success and disabled states considered?
 
 ## Visual and interaction quality
