@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, readFile, rm, writeFile, stat } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { prepareBenchmarkPair } from "../scripts/prepare-benchmark-pair.mjs";
@@ -24,6 +24,8 @@ test("creates isolated clean condition copies and coordinator mapping", async ()
     }
     const mapping = JSON.parse(await readFile(path.join(result.pairDir, "mapping.json"), "utf8"));
     assert.deepEqual(mapping.run_order, result.order);
+    assert.deepEqual([...Object.values(mapping.blind_mapping)].sort(), ["baseline", "uadi"]);
+    await stat(path.join(result.pairDir, "baseline/evidence/changed-files"));
     await assert.rejects(() => prepareBenchmarkPair({
       studyId: "study-1", pairId: "pair-1", taskId: "product-onboarding", snapshot, runsDir
     }), /Run already exists/);
