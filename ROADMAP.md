@@ -27,7 +27,8 @@ UADI is successful when it measurably improves the design quality of the AI agen
 - [x] Define a multi-task paired benchmark suite, blind-review protocol and local score calculator.
 - [x] Run an exploratory paired benchmark pilot with and without UADI across representative tasks. See the [pilot record](benchmarks/studies/design-intelligence-pilot-2026-11/README.md); it is not confirmatory and its condition scores are confounded by a candidate-position effect.
 - [x] Re-review the pilot with the standard two-reviewer machine panel: blinded independent sessions, evidence crops, frozen round-1 scores, evidence exchange and a final decision. See the [machine review](benchmarks/studies/design-intelligence-pilot-2026-11/machine-review/README.md).
-- [ ] Complete a two-model-family confirmatory study under the two-reviewer machine protocol and resolve candidate-order bias ([#48](https://github.com/nv-hoai/uadi/issues/48)).
+- [x] Redesign the confirmatory study with balanced candidate order, independent reviewer families, calibration seeds, held-out tasks, state capture and paired uncertainty. See the [preregistered design](benchmarks/CONFIRMATORY-STUDY.md).
+- [ ] Run the preregistered two-model-family confirmatory study and resolve candidate-order bias ([#48](https://github.com/nv-hoai/uadi/issues/48), [#52](https://github.com/nv-hoai/uadi/issues/52)).
 - [x] Improve accessibility and interaction review guidance.
 
 **Success signal:** Blind or structured reviews show more useful, coherent and usable results than the same agent working without UADI. Partly addressed: a machine-reviewed result is recorded, but it is not human review and the two-model-family confirmatory study is still open.
@@ -39,7 +40,7 @@ UADI is successful when it measurably improves the design quality of the AI agen
 - [ ] Curate reusable product and UX patterns with context and applicability notes.
 - [ ] Improve project-level design memory through simple repository artifacts.
 - [ ] Detect inconsistencies with existing project conventions when relevant.
-- [ ] Build a repeatable evaluation set for design quality and regression.
+- [ ] Build a repeatable evaluation set for design quality and regression: deterministic gates for the inner loop plus the held-out suite for agent-change acceptance.
 
 **Success signal:** Design quality and consistency improve over repeated tasks while setup remains lightweight.
 

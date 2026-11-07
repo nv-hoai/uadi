@@ -119,7 +119,7 @@ This is a repository-level planning assessment, not a measured score:
 - **Methods:** substantial playbooks and workflows exist; UX reasoning covers flow branches, handoffs, edge-case derivation and content design, design decisions covers alternatives, rationale and trade-offs, and accessibility/interaction review guidance is available. Improve traceability and validation without adding process.
 - **Patterns:** a useful starting library exists and each pattern links to a runnable implementation example; validate applicability and consistency before expanding further.
 - **Examples:** onboarding, operations-dashboard and SSO discovery worked examples cover a guided flow, an investigation/comparison flow and a brownfield discovery/context-synthesis path; validate them in real reviews before expanding further.
-- **Benchmarks:** protocol and tooling exist and one [exploratory pilot](../benchmarks/studies/design-intelligence-pilot-2026-11/README.md) is recorded. Independent human review and a position-controlled multi-model study are still needed before claiming UADI improves outcomes.
+- **Benchmarks:** protocol and tooling exist and one [exploratory pilot](../benchmarks/studies/design-intelligence-pilot-2026-11/README.md) is recorded. A [preregistered confirmatory design](../benchmarks/CONFIRMATORY-STUDY.md) now fixes the pilot's order, judge-independence and state-capture problems. The runs are still needed before claiming UADI improves outcomes.
 
 Prioritize connecting existing material and obtaining credible evaluation evidence over increasing document or pattern count.
 

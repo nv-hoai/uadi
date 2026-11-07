@@ -8,7 +8,7 @@ The [benchmark suite](../benchmarks/README.md) defines three representative task
 
 - Compare the same agent/model version, settings, tools and task context with and without UADI.
 - Start each run from an identical clean project snapshot.
-- Randomize condition order and blind reviewers to the condition where practical.
+- Balance condition order per task and blind reviewers to the condition where practical. Do not randomize each pair independently and hope the block balances.
 - Use the two-reviewer machine panel and repeat each task. Human review is optional.
 - Score actual product outcomes, not whether an agent followed instructions.
 - Include completion time, implementation defects and checks actually run.
@@ -21,11 +21,13 @@ Every study uses the protocol in `docs/MACHINE-REVIEW.md`: two reviewers in sepa
 
 The protocol is stronger than one LLM pass and weaker than independent human review. Reports must say which one they are.
 
+A confirmatory study adds four controls: reviewer model families disjoint from the builders, calibration with seeded defects and a duplicate packet, non-default state captures at two viewports, and a pre-registered paired interval. The repository-only `benchmarks/CONFIRMATORY-STUDY.md` defines the design and `study:validate` checks it before runs start. The benchmark harness is not installed with the skill.
+
 ## What success means
 
 Evidence should show stronger product understanding, UX reasoning, design judgment, visual hierarchy, interaction completeness, accessibility/responsiveness and implementation quality—without unnecessary process overhead.
 
-Do not market benchmark results until real runs have been completed, documented and reviewed under the two-reviewer machine protocol. The included scorer calculates descriptive summaries; it does not establish statistical significance or causation.
+Do not market benchmark results until real runs have been completed, documented and reviewed under the two-reviewer machine protocol. The included scorer calculates descriptive summaries and a paired interval; it does not establish statistical significance or causation.
 
 ## Capturing rendered evidence
 
@@ -39,4 +41,4 @@ The Design Intelligence Pilot (see `benchmarks/studies/design-intelligence-pilot
 
 A second study re-reviewed it with the two-reviewer machine panel: two blinded LLM reviewers, 110 evidence crops, frozen round-1 scores, an evidence exchange and a final decision. Its `evidence_tier` is `machine-reviewed-pilot`; it is not human review. See `benchmarks/studies/design-intelligence-pilot-2026-11/machine-review/README.md`.
 
-The pilot's original swapped-label control found a strong candidate-position effect: in six of nine pairs the same label won after the candidate packets were swapped. The machine review showed a different order interaction, so neither panel's condition deltas should be treated as a clean UADI effect. A confirmatory study still needs a second pinned model family and balanced candidate order; independent human review is optional.
+The pilot's original swapped-label control found a strong candidate-position effect: in six of nine pairs the same label won after the candidate packets were swapped. The machine review showed a different order interaction, so neither panel's condition deltas should be treated as a clean UADI effect. A confirmatory study still needs a second pinned model family, a balanced candidate schedule, an independent judge family, held-out tasks and non-default state captures; independent human review is optional.

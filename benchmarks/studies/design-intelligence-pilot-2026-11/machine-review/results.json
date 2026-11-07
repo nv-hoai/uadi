@@ -87,7 +87,8 @@
             }
           }
         ]
-      }
+      },
+      "uadi_position": "A"
     },
     {
       "pair_id": "subscription-settings-r2",
@@ -164,7 +165,8 @@
             }
           }
         ]
-      }
+      },
+      "uadi_position": "B"
     },
     {
       "pair_id": "subscription-settings-r3",
@@ -241,7 +243,8 @@
             }
           }
         ]
-      }
+      },
+      "uadi_position": "B"
     },
     {
       "pair_id": "product-onboarding-r1",
@@ -318,7 +321,8 @@
             }
           }
         ]
-      }
+      },
+      "uadi_position": "A"
     },
     {
       "pair_id": "product-onboarding-r2",
@@ -395,7 +399,8 @@
             }
           }
         ]
-      }
+      },
+      "uadi_position": "A"
     },
     {
       "pair_id": "product-onboarding-r3",
@@ -472,7 +477,8 @@
             }
           }
         ]
-      }
+      },
+      "uadi_position": "B"
     },
     {
       "pair_id": "operations-dashboard-r1",
@@ -549,7 +555,8 @@
             }
           }
         ]
-      }
+      },
+      "uadi_position": "B"
     },
     {
       "pair_id": "operations-dashboard-r2",
@@ -626,7 +633,8 @@
             }
           }
         ]
-      }
+      },
+      "uadi_position": "A"
     },
     {
       "pair_id": "operations-dashboard-r3",
@@ -703,7 +711,8 @@
             }
           }
         ]
-      }
+      },
+      "uadi_position": "B"
     }
   ]
 }

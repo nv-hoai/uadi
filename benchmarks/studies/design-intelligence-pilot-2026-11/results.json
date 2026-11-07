@@ -113,7 +113,8 @@
           }
         ],
         "duration_seconds": 918
-      }
+      },
+      "uadi_position": "A"
     },
     {
       "pair_id": "subscription-settings-r2",
@@ -220,7 +221,8 @@
           }
         ],
         "duration_seconds": 1405
-      }
+      },
+      "uadi_position": "B"
     },
     {
       "pair_id": "subscription-settings-r3",
@@ -327,7 +329,8 @@
           }
         ],
         "duration_seconds": 1993
-      }
+      },
+      "uadi_position": "B"
     },
     {
       "pair_id": "product-onboarding-r1",
@@ -434,7 +437,8 @@
           }
         ],
         "duration_seconds": 2266
-      }
+      },
+      "uadi_position": "A"
     },
     {
       "pair_id": "product-onboarding-r2",
@@ -541,7 +545,8 @@
           }
         ],
         "duration_seconds": 1854
-      }
+      },
+      "uadi_position": "A"
     },
     {
       "pair_id": "product-onboarding-r3",
@@ -648,7 +653,8 @@
           }
         ],
         "duration_seconds": 2120
-      }
+      },
+      "uadi_position": "B"
     },
     {
       "pair_id": "operations-dashboard-r1",
@@ -755,7 +761,8 @@
           }
         ],
         "duration_seconds": 2587
-      }
+      },
+      "uadi_position": "B"
     },
     {
       "pair_id": "operations-dashboard-r2",
@@ -862,7 +869,8 @@
           }
         ],
         "duration_seconds": 2187
-      }
+      },
+      "uadi_position": "A"
     },
     {
       "pair_id": "operations-dashboard-r3",
@@ -969,7 +977,8 @@
           }
         ],
         "duration_seconds": 2914
-      }
+      },
+      "uadi_position": "B"
     }
   ]
 }

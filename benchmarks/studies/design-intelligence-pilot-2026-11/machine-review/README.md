@@ -24,8 +24,11 @@ This re-review applies the repository's standard [two-reviewer machine protocol]
 | Measure | Baseline | UADI | Change |
 |---|---:|---:|---:|
 | Mean weighted score | 87.64 | 88.40 | **+0.76** |
+| Paired 95% interval for the mean delta | — | — | **−5.0 to +6.5** |
 | Pairs won / lost | — | 4 / 5 | — |
 | Split dimension judgments | — | 11 of 126 | — |
+
+The paired interval includes zero, so the panel does not support a condition claim.
 
 ### By task
 
@@ -82,8 +85,8 @@ The direction is the opposite of the earlier pilot's Candidate-A preference. Wit
 
 ## Artifacts
 
-- [`results.json`](results.json) — scorer input with R1/R2 final scores and run durations.
-- [`scorer-output.json`](scorer-output.json) — full scorer output; `evidence_tier` is `machine-reviewed-pilot`.
+- [`results.json`](results.json) — scorer input with R1/R2 final scores, run durations and the derived `uadi_position` field.
+- [`scorer-output.json`](scorer-output.json) — full scorer output, including the paired interval and position sensitivity; `evidence_tier` is `machine-reviewed-pilot`.
 - [`dashboard.html`](dashboard.html) — permanent, dependency-free review dashboard with filters, dimension and position charts, and a per-pair evidence drawer.
 - [`review/`](review/) — reviewer round-1 results, discussion files, evidence crops, freeze and discussion summary.
 - [`../../../../docs/MACHINE-REVIEW.md`](../../../../docs/MACHINE-REVIEW.md) — the standing protocol.

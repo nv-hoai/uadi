@@ -53,6 +53,85 @@ function average(values) {
   return values.reduce((sum, value) => sum + value, 0) / values.length;
 }
 
+const T_CRITICAL_95 = {
+  1: 12.706, 2: 4.303, 3: 3.182, 4: 2.776, 5: 2.571, 6: 2.447, 7: 2.365, 8: 2.306,
+  9: 2.262, 10: 2.228, 11: 2.201, 12: 2.179, 13: 2.160, 14: 2.145, 15: 2.131,
+  16: 2.120, 17: 2.110, 18: 2.101, 19: 2.093, 20: 2.086, 21: 2.080, 22: 2.074,
+  23: 2.069, 24: 2.064, 25: 2.060, 26: 2.056, 27: 2.052, 28: 2.048, 29: 2.045, 30: 2.042
+};
+
+function tCritical95(degreesOfFreedom) {
+  if (degreesOfFreedom < 1) return null;
+  return T_CRITICAL_95[degreesOfFreedom] ?? 1.96;
+}
+
+function pairedDeltaSummary(deltas) {
+  const n = deltas.length;
+  const mean = average(deltas);
+  if (n < 2) {
+    return { n, mean, sd: null, se: null, df: null, ci95: null, method: "paired 95% t interval" };
+  }
+  const sd = Math.sqrt(deltas.reduce((sum, value) => sum + (value - mean) ** 2, 0) / (n - 1));
+  const se = sd / Math.sqrt(n);
+  const df = n - 1;
+  const critical = tCritical95(df);
+  return {
+    n,
+    mean,
+    sd,
+    se,
+    df,
+    ci95: critical === null ? null : [mean - critical * se, mean + critical * se],
+    method: "paired 95% t interval"
+  };
+}
+
+function summarizePositions(pairResults) {
+  const groups = { A: [], B: [], unknown: [] };
+  for (const pair of pairResults) {
+    if (pair.uadi_position === "A" || pair.uadi_position === "B") groups[pair.uadi_position].push(pair.delta);
+    else groups.unknown.push(pair.delta);
+  }
+  const summarize = (deltas) => ({ pairs: deltas.length, mean_delta: deltas.length ? average(deltas) : null });
+  const a = summarize(groups.A);
+  const b = summarize(groups.B);
+  return {
+    uadi_as_a: a,
+    uadi_as_b: b,
+    unknown_pairs: groups.unknown.length,
+    difference_a_minus_b: a.mean_delta !== null && b.mean_delta !== null ? a.mean_delta - b.mean_delta : null
+  };
+}
+
+function summarizeOrderBalance(pairResults) {
+  const byTask = new Map();
+  let unknown = 0;
+  let totalA = 0;
+  let totalB = 0;
+  for (const pair of pairResults) {
+    if (!byTask.has(pair.task_id)) byTask.set(pair.task_id, { A: 0, B: 0, unknown: 0 });
+    const counts = byTask.get(pair.task_id);
+    if (pair.uadi_position === "A" || pair.uadi_position === "B") {
+      counts[pair.uadi_position] += 1;
+      if (pair.uadi_position === "A") totalA += 1;
+      else totalB += 1;
+    } else {
+      counts.unknown += 1;
+      unknown += 1;
+    }
+  }
+  const tasks = {};
+  let balanced = true;
+  for (const [taskId, counts] of byTask) {
+    const known = counts.A + counts.B;
+    const taskBalanced = known > 0 && counts.unknown === 0 && Math.abs(counts.A - counts.B) <= known % 2;
+    if (!taskBalanced) balanced = false;
+    tasks[taskId] = { uadi_a: counts.A, uadi_b: counts.B, unknown: counts.unknown, balanced: taskBalanced };
+  }
+  const status = pairResults.length === 0 || unknown > 0 ? "unknown" : (balanced ? "balanced" : "unbalanced");
+  return { status, balanced: status === "balanced", unknown_pairs: unknown, uadi_a: totalA, uadi_b: totalB, by_task: tasks };
+}
+
 export function scoreBenchmark(input) {
   assert(input && input.schema_version === 2, "schema_version must be 2");
   assert(input.study && typeof input.study.agent === "string" && input.study.agent.trim(), "study.agent is required");
@@ -70,6 +149,13 @@ export function scoreBenchmark(input) {
     pairIds.add(pair.pair_id);
     assert(typeof pair.task_id === "string" && pair.task_id.trim(), label + ".task_id is required");
     taskIds.add(pair.task_id);
+    if (pair.uadi_position !== undefined) {
+      assert(pair.uadi_position === "A" || pair.uadi_position === "B", label + '.uadi_position must be "A" or "B"');
+    }
+    if (pair.baseline_run_position !== undefined) {
+      assert(pair.baseline_run_position === 1 || pair.baseline_run_position === 2,
+        label + ".baseline_run_position must be 1 or 2");
+    }
 
     const baselineIds = validateCondition(pair.baseline, label + ".baseline");
     const uadiIds = validateCondition(pair.uadi, label + ".uadi");
@@ -97,6 +183,8 @@ export function scoreBenchmark(input) {
       model_family: pair.model_family ?? input.study.model,
       model_version: pair.model_version ?? input.study.model,
       repetition: pair.repetition ?? null,
+      uadi_position: pair.uadi_position ?? null,
+      baseline_run_position: pair.baseline_run_position ?? null,
       baseline_score: baselineScore,
       uadi_score: uadiScore,
       delta: uadiScore - baselineScore,
@@ -105,6 +193,12 @@ export function scoreBenchmark(input) {
       dimensions
     };
   });
+
+  const pairedDelta = pairedDeltaSummary(pairResults.map((pair) => pair.delta));
+  const positionSensitivity = summarizePositions(pairResults);
+  const orderBalance = summarizeOrderBalance(pairResults);
+  const isConfirmatoryDesign = typeof input.study.design_type === "string" &&
+    input.study.design_type.startsWith("confirmatory");
 
   const humanReviewers = new Set();
   const llmReviewers = new Set();
@@ -151,7 +245,8 @@ export function scoreBenchmark(input) {
     ? versionPinnedFamilies.filter(hasCompleteCoverage)
     : [];
   const pilotMinimumMet = qualifiedFamilies.length >= 1;
-  const confirmatoryMinimumMet = qualifiedFamilies.length >= 2 && machineReviewMinimumMet;
+  const confirmatoryMinimumMet = qualifiedFamilies.length >= 2 && machineReviewMinimumMet &&
+    (!isConfirmatoryDesign || orderBalance.balanced);
   const evidenceTier = confirmatoryMinimumMet
     ? (humanReviewMinimumMet ? "confirmatory-human" : "confirmatory-machine")
     : (pilotMinimumMet && machineReviewMinimumMet ? "machine-reviewed-pilot" : (pilotMinimumMet ? "exploratory-pilot" : "insufficient"));
@@ -174,11 +269,18 @@ export function scoreBenchmark(input) {
   if (!machineReviewMinimumMet) protocolWarnings.push("Machine-review minimum not met: every condition requires at least two independent reviewers, human or LLM, who did not produce either candidate.");
   if (!humanReviewMinimumMet) protocolWarnings.push("human-review minimum not met (optional): a machine review cannot establish human-perceived quality.");
   if (llmReviewers.size > 0 && humanReviewers.size === 0) protocolWarnings.push("All reviewers are LLM passes. Machine review is screening-grade and may share model-family blind spots with the builders.");
+  if (isConfirmatoryDesign && !orderBalance.balanced) {
+    protocolWarnings.push("Confirmatory design requires a balanced Candidate A/B schedule per task; run node scripts/validate-study-design.mjs before the study.");
+  }
+  if (isConfirmatoryDesign && positionSensitivity.unknown_pairs > 0) {
+    protocolWarnings.push("Every pair in a confirmatory design must record uadi_position (A or B) so order sensitivity can be reported.");
+  }
   const protocolAssessment = {
     exploratory_pilot_minimum_met: pilotMinimumMet,
     machine_review_minimum_met: machineReviewMinimumMet,
     confirmatory_minimum_met: confirmatoryMinimumMet,
     human_review_minimum_met: humanReviewMinimumMet,
+    order_balance_met: orderBalance.status === "unknown" ? null : orderBalance.balanced,
     evidence_tier: evidenceTier,
     independent_reviewer_ids: [...independentReviewers].sort(),
     human_reviewer_ids: [...humanReviewers].sort(),
@@ -218,9 +320,12 @@ export function scoreBenchmark(input) {
     baseline_mean_duration_seconds: baselineTime,
     uadi_mean_duration_seconds: uadiTime,
     time_change_percent: ((uadiTime - baselineTime) / baselineTime) * 100,
+    paired_delta: pairedDelta,
+    position_sensitivity: positionSensitivity,
+    order_balance: orderBalance,
     dimensions: dimensionSummary,
     pairs: pairResults,
-    interpretation_note: "Descriptive results only. This scorer does not test statistical significance or establish causation; report sample size, reviewer agreement, raw outputs and study limitations."
+    interpretation_note: "Descriptive results with a paired 95% t interval. The interval is not a substitute for the study design: report sample size, reviewer agreement, position sensitivity, raw outputs and limitations, and do not claim superiority when the interval includes zero."
   };
 }
 

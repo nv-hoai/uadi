@@ -15,6 +15,7 @@
     "machine_review_minimum_met": true,
     "confirmatory_minimum_met": false,
     "human_review_minimum_met": false,
+    "order_balance_met": true,
     "evidence_tier": "machine-reviewed-pilot",
     "independent_reviewer_ids": [
       "R1",
@@ -59,6 +60,57 @@
   "baseline_mean_duration_seconds": 2187.222222222222,
   "uadi_mean_duration_seconds": 2027.111111111111,
   "time_change_percent": -7.32029464058928,
+  "paired_delta": {
+    "n": 9,
+    "mean": 0.7638888888888888,
+    "sd": 7.524554711815917,
+    "se": 2.508184903938639,
+    "df": 8,
+    "ci95": [
+      -5.019985499593613,
+      6.547763277371391
+    ],
+    "method": "paired 95% t interval"
+  },
+  "position_sensitivity": {
+    "uadi_as_a": {
+      "pairs": 4,
+      "mean_delta": -3.4375
+    },
+    "uadi_as_b": {
+      "pairs": 5,
+      "mean_delta": 4.125
+    },
+    "unknown_pairs": 0,
+    "difference_a_minus_b": -7.5625
+  },
+  "order_balance": {
+    "status": "balanced",
+    "balanced": true,
+    "unknown_pairs": 0,
+    "uadi_a": 4,
+    "uadi_b": 5,
+    "by_task": {
+      "subscription-settings": {
+        "uadi_a": 1,
+        "uadi_b": 2,
+        "unknown": 0,
+        "balanced": true
+      },
+      "product-onboarding": {
+        "uadi_a": 2,
+        "uadi_b": 1,
+        "unknown": 0,
+        "balanced": true
+      },
+      "operations-dashboard": {
+        "uadi_a": 1,
+        "uadi_b": 2,
+        "unknown": 0,
+        "balanced": true
+      }
+    }
+  },
   "dimensions": {
     "product_understanding": {
       "baseline": 3.7777777777777777,
@@ -103,6 +155,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": null,
       "baseline_score": 90,
       "uadi_score": 86.25,
       "delta": -3.75,
@@ -152,6 +206,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 2,
+      "uadi_position": "B",
+      "baseline_run_position": null,
       "baseline_score": 85,
       "uadi_score": 88.75,
       "delta": 3.75,
@@ -201,6 +257,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": null,
       "baseline_score": 85,
       "uadi_score": 87.5,
       "delta": 2.5,
@@ -250,6 +308,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": null,
       "baseline_score": 96.25,
       "uadi_score": 93.75,
       "delta": -2.5,
@@ -299,6 +359,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 2,
+      "uadi_position": "A",
+      "baseline_run_position": null,
       "baseline_score": 89.375,
       "uadi_score": 91.875,
       "delta": 2.5,
@@ -348,6 +410,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": null,
       "baseline_score": 82.5,
       "uadi_score": 100,
       "delta": 17.5,
@@ -397,6 +461,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 1,
+      "uadi_position": "B",
+      "baseline_run_position": null,
       "baseline_score": 90.625,
       "uadi_score": 88.75,
       "delta": -1.875,
@@ -446,6 +512,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 2,
+      "uadi_position": "A",
+      "baseline_run_position": null,
       "baseline_score": 90,
       "uadi_score": 80,
       "delta": -10,
@@ -495,6 +563,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": null,
       "baseline_score": 80,
       "uadi_score": 78.75,
       "delta": -1.25,
@@ -539,5 +609,5 @@
       }
     }
   ],
-  "interpretation_note": "Descriptive results only. This scorer does not test statistical significance or establish causation; report sample size, reviewer agreement, raw outputs and study limitations."
+  "interpretation_note": "Descriptive results with a paired 95% t interval. The interval is not a substitute for the study design: report sample size, reviewer agreement, position sensitivity, raw outputs and limitations, and do not claim superiority when the interval includes zero."
 }

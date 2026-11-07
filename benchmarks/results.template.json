@@ -14,6 +14,8 @@
       "model_family": "EXAMPLE_ONLY",
       "model_version": "EXAMPLE_ONLY",
       "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
       "baseline": {
         "duration_seconds": 600,
         "reviewers": [
