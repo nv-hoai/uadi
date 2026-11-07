@@ -12,6 +12,7 @@
     "benchmark:score": "node scripts/score-benchmark.mjs",
     "benchmark:prepare": "node scripts/prepare-benchmark-pair.mjs",
     "study:validate": "node scripts/validate-study-design.mjs",
+    "study:freeze": "node scripts/freeze-study-design.mjs",
     "quality:gates": "node scripts/quality-gates.mjs",
     "evidence:capture": "node scripts/capture-evidence.mjs",
     "review:validate": "node scripts/validate-peer-review.mjs",

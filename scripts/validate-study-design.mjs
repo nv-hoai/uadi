@@ -175,11 +175,15 @@ export function validateStudyDesign(input, context = {}) {
 
   const frozen = input.frozen ?? {};
   let frozenPlaceholders = 0;
-  for (const key of ["snapshot_hash", "prompt_hash", "skill_hash"]) {
+  for (const key of ["snapshot_hash", "prompt_hash", "skill_hash", "protocol_hash"]) {
     if (!isNonEmptyString(frozen[key])) add(errors, "frozen." + key, "is required");
     else if (frozen[key].includes("REPLACE")) frozenPlaceholders += 1;
     else if (!HASH_PATTERN.test(frozen[key])) {
       add(errors, "frozen." + key, "must be sha256:<64 lowercase hex digest> or a REPLACE placeholder");
+    }
+    if (context?.frozenActuals?.[key] && isNonEmptyString(frozen[key]) && !frozen[key].includes("REPLACE") &&
+        frozen[key] !== context.frozenActuals[key]) {
+      add(errors, "frozen." + key, "does not match the current hashed sources; re-freeze before running");
     }
   }
   if (frozenPlaceholders > 0) {
@@ -425,6 +429,8 @@ export function validateStudyDesign(input, context = {}) {
 
 async function loadDesignContext(input) {
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+  const { computeFrozenHashes } = await import("./freeze-study-design.mjs");
+  const frozenActuals = await computeFrozenHashes(root).catch(() => null);
   const ids = [...(input.tasks ?? []), ...(input.held_out_tasks ?? [])]
     .map((task) => task?.task_id).filter(isNonEmptyString);
   const taskContents = {};
@@ -461,7 +467,7 @@ async function loadDesignContext(input) {
       }
     }
   }
-  return { taskContents, guidanceSources };
+  return { taskContents, guidanceSources, frozenActuals };
 }
 
 async function main() {

@@ -1,0 +1,6 @@
+{"packets":[
+ {"id":"packet-accessible-name","seeded_defects":["accessible-name"],"note":"Icon-only toolbar button with no accessible name."},
+ {"id":"packet-claim-behavior-mismatch","seeded_defects":["claim-behavior-mismatch"],"note":"analysis.md claims checks passed with no test-output evidence; no evidence/ directory exists."},
+ {"id":"packet-sort-order-mismatch","seeded_defects":["sort-order-mismatch"],"note":"List presented as sorted by last name is not sorted."},
+ {"id":"packet-clean","seeded_defects":[],"note":"No seeded defect; a reviewer who flags a critical defect here is over-flagging."}
+],"scoring":"A reviewer is calibrated for a dimension if they identify each seeded critical defect of the matching kind. Missing a seeded defect disqualifies that reviewer for the affected dimension. Citing a critical defect on the clean packet is over-flagging and must be counted against calibration."}

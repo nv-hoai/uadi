@@ -61,7 +61,7 @@ function validDesign() {
     builders,
     tasks,
     held_out_tasks: heldOutTasks,
-    frozen: { snapshot_hash: HASH, prompt_hash: HASH, skill_hash: HASH, time_budget_minutes: 20 },
+    frozen: { snapshot_hash: HASH, prompt_hash: HASH, skill_hash: HASH, protocol_hash: HASH, time_budget_minutes: 20 },
     design: { repetitions: 3, assumed_pair_sd_points: 7.5, pairs },
     review: {
       reviewer_families: [
