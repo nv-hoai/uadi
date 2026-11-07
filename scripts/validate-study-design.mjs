@@ -280,9 +280,20 @@ export function validateStudyDesign(input, context = {}) {
   }
 
   const review = input.review ?? {};
-  const reviewerFamilies = Array.isArray(review.reviewer_families) ? review.reviewer_families : [];
-  if (reviewerFamilies.length === 0) add(errors, "review.reviewer_families", "must name at least one reviewer model family");
-  if (reviewerFamilies.some((family) => !isNonEmptyString(family))) add(errors, "review.reviewer_families", "entries must be non-empty strings");
+  const reviewerEntriesRaw = Array.isArray(review.reviewer_families) ? review.reviewer_families : [];
+  const reviewerFamilies = [];
+  if (reviewerEntriesRaw.length === 0) add(errors, "review.reviewer_families", "must name at least one reviewer family with its pinned version");
+  reviewerEntriesRaw.forEach((entry, index) => {
+    const where = "review.reviewer_families[" + index + "]";
+    if (!entry || typeof entry !== "object") {
+      add(errors, where, "must be an object with model_family and model_version");
+      return;
+    }
+    if (!isNonEmptyString(entry.model_family)) add(errors, where + ".model_family", "is required");
+    else if (reviewerFamilies.includes(entry.model_family)) add(errors, where + ".model_family", "must be unique across reviewers");
+    else reviewerFamilies.push(entry.model_family);
+    if (!isNonEmptyString(entry.model_version)) add(errors, where + ".model_version", "is required (pin the exact served version)");
+  });
   if (reviewerFamilies.length === 1) addWarning(warnings, "review.reviewer_families", "one reviewer family shares a single set of blind spots; prefer two");
   const overlap = reviewerFamilies.filter((family) => builderFamilies.includes(family));
   if (overlap.length > 0) add(errors, "review.reviewer_families", "reviewers must not share a builder family: " + overlap.join(", "));

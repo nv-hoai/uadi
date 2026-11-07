@@ -227,8 +227,14 @@
   },
   "review": {
     "reviewer_families": [
-      "reviewer-a",
-      "reviewer-b"
+      {
+        "model_family": "reviewer-a",
+        "model_version": "reviewer-a-v1"
+      },
+      {
+        "model_family": "reviewer-b",
+        "model_version": "reviewer-b-v1"
+      }
     ],
     "reviewers_per_condition": 2,
     "builder_family_excluded": true,

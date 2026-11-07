@@ -64,7 +64,10 @@ function validDesign() {
     frozen: { snapshot_hash: HASH, prompt_hash: HASH, skill_hash: HASH, time_budget_minutes: 20 },
     design: { repetitions: 3, assumed_pair_sd_points: 7.5, pairs },
     review: {
-      reviewer_families: ["reviewer-a", "reviewer-b"],
+      reviewer_families: [
+        { model_family: "reviewer-a", model_version: "reviewer-a-v1" },
+        { model_family: "reviewer-b", model_version: "reviewer-b-v1" }
+      ],
       reviewers_per_condition: 2,
       builder_family_excluded: true,
       blinded: true,
@@ -133,7 +136,10 @@ test("rejects an unbalanced candidate position schedule", () => {
 
 test("rejects reviewers from a builder model family", () => {
   const input = validDesign();
-  input.review.reviewer_families = ["builder-a", "reviewer-b"];
+  input.review.reviewer_families = [
+    { model_family: "builder-a", model_version: "builder-a-v1" },
+    { model_family: "reviewer-b", model_version: "reviewer-b-v1" }
+  ];
   const result = validateStudyDesign(input);
   assert.equal(result.valid, false);
   assert.ok(result.errors.some((error) => error.message.includes("must not share a builder family")));
@@ -208,6 +214,14 @@ function taskContext(input) {
   }
   return { taskContents, guidanceSources: [{ path: "SKILL.md", content: "# Skill\n\nNo task identifiers here." }] };
 }
+
+test("reviewer entries missing a pinned version are rejected", () => {
+  const input = validDesign();
+  input.review.reviewer_families = [{ model_family: "judge-a" }, { model_family: "judge-b", model_version: "judge-b-v1" }];
+  const result = validateStudyDesign(input);
+  assert.equal(result.valid, false);
+  assert.ok(result.errors.some((error) => error.path.includes("model_version")));
+});
 
 test("task files must exist, carry the canonical sections and the declared version", () => {
   const input = validDesign();
