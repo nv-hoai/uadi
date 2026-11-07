@@ -163,11 +163,15 @@ includes zero, the result is inconclusive, not a small win.
 
 ## How this connects to the agent loop
 
-The public tasks and the confirmatory design are for **evidence**. The held-out suite and the
-deterministic gates are for **agent improvement**:
+The public tasks and the confirmatory design are for **evidence**. The deterministic gates
+and the held-out suite are for **agent improvement**:
 
 1. an agent proposes the smallest guidance or harness change;
-2. deterministic gates run on the public tasks (minutes);
+2. deterministic gates run on the public tasks (minutes) via
+   `npm run quality:gates -- --dir <run-dir>` — accessible names, axe critical/serious
+   violations, mobile overflow at `390x844`, required states, viewport evidence and
+   claim-behavior cross-checks. Browser gates reuse the renderer environment when
+   available and report themselves as skipped otherwise; a skipped gate is never evidence;
 3. the held-out suite runs on the same change (the acceptance test);
 4. the confirmatory protocol runs only when a publishable claim is needed.
 

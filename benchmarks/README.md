@@ -26,7 +26,7 @@ For every pair:
 
 1. Pin the host agent, exact model/version, settings, tool access, task prompt, time budget and clean project snapshot.
 2. Start baseline and UADI from separate copies of the same snapshot. Do not let either condition inherit files, history or context from the other.
-3. Randomize and balance condition order across repetitions; record the order in coordinator-only metadata.
+3. Randomize and balance condition order across repetitions; record the order in coordinator-only metadata. For a preregistered study, pass `--study-design` to `benchmark:prepare`: the scaffold then enforces the pair's precomputed `uadi_position` and `baseline_run_position` instead of rolling dice per pair.
 4. Preserve prompts, transcripts, changed files, rendered screenshots and test outputs for both conditions.
 5. Have reviewers score the delivered product, not whether the agent mentioned UADI or followed its playbook.
 6. Record elapsed time and checks actually executed. Do not count unrun tests as passing.
@@ -61,6 +61,22 @@ The design adds the controls the pilot lacked: balanced Candidate A/B order per 
 families disjoint from the builders, calibration seeds and a duplicate packet, held-out tasks,
 required interaction-state screenshots, version hashes and a paired 95% interval with a
 pre-registered minimum detectable effect. The validator is a preflight check, not a result.
+
+### Deterministic gates (agent-loop inner loop)
+
+Between iterations, agents run deterministic gates on the built deliverable instead of
+waiting for the full confirmatory protocol:
+
+```bash
+npm run quality:gates -- --dir benchmarks/runs/<study>/<pair>/<condition>
+```
+
+The gates check accessible control names, axe critical/serious violations, mobile overflow
+at `390x844`, required interaction states, viewport screenshot evidence, and that
+`analysis.md` success claims actually have test-output evidence. Static gates run anywhere;
+browser gates reuse the renderer environment when available and report themselves as
+skipped otherwise — a skipped gate is never evidence. The same gates run in CI on a fixture
+deliverable (`tests/fixtures/quality-gates/good`).
 
 ## Scoring rubric
 

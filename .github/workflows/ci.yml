@@ -41,6 +41,8 @@ jobs:
         run: npm run study:validate -- benchmarks/studies/confirmatory-2026-11/study-design.json
       - name: Validate UDS prototype contract
         run: npm run prototype:check -- examples/minimal/design-specification.json
+      - name: Run deterministic quality gates on the fixture deliverable
+        run: npm run quality:gates -- --dir tests/fixtures/quality-gates/good --no-browser
 
   react-renderer:
     name: React renderer checks
@@ -67,6 +69,8 @@ jobs:
         run: npm run build
       - name: Run browser, visual and accessibility tests
         run: npm test
+      - name: Run deterministic quality gates with the browser on the fixture
+        run: node ../scripts/quality-gates.mjs --dir ../tests/fixtures/quality-gates/good
       - name: Upload Playwright diagnostics
         if: always()
         uses: actions/upload-artifact@v4
