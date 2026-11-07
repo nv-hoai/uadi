@@ -167,6 +167,28 @@ Then:
 node scripts/score-benchmark.mjs <study>/results.json
 ```
 
+## Dashboard
+
+Generate a permanent, dependency-free dashboard for any review directory:
+
+```bash
+node scripts/build-review-dashboard.mjs \
+  --review <review-dir> \
+  --out <study>/dashboard.html \
+  --title "Review dashboard" \
+  --status "Machine-reviewed" \
+  --back-link ../README.md \
+  --back-label "Study record"
+```
+
+The dashboard embeds scores, splits and reviewer rationale; links evidence crops and raw reviewer files with relative paths; and works from a static server or `file://`. It is read-only: it never reads `mapping.json` and does not replace the validator.
+
+Then:
+
+```bash
+node scripts/score-benchmark.mjs <study>/results.json
+```
+
 The scorer now reports:
 
 - `machine_review_minimum_met` — at least two independent reviewers per condition, human or LLM.

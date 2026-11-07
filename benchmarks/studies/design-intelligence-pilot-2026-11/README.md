@@ -98,7 +98,7 @@ By task: subscription **+0.83**, onboarding **+5.83**, operations **−4.38**. T
 
 The randomized mapping created an order interaction: when UADI was Candidate A the mean delta was **−3.44**; when it was Candidate B it was **+4.13**. That is the opposite direction from the earlier panel's Candidate-A preference, so it is a composition or order effect, not a clean condition effect.
 
-The panel is a machine review, not human review, and both reviewers share the builder's model family. Full method, scores and artifacts: [machine-review/README.md](machine-review/README.md).
+The panel is a machine review, not human review, and both reviewers share the builder's model family. Full method, scores and artifacts: [machine-review/README.md](machine-review/README.md). Open [machine-review/dashboard.html](machine-review/dashboard.html) for the filterable dashboard and evidence drawer.
 
 ## The position-control finding
 

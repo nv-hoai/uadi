@@ -39,6 +39,7 @@ npm run validate -- <artifact.json>             # JSON Schema validation (ajv)
 npm run prototype:check -- <uds.json>           # full UDS schema + renderer contract check
 npm run benchmark:prepare / npm run benchmark:score
 npm run review:validate -- --review <dir> --runs <dir>   # validate a two-reviewer machine review
+npm run review:dashboard -- --review <dir> --out <file>  # build a reusable review dashboard
 npm run install:skill -- --agent codex          # install skill into a host agent
 ```
 

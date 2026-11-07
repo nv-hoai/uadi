@@ -1,484 +1,178 @@
 {
-  "finalized_at": "2026-11-07T05:02:27.587Z",
-  "rule": "Agreed dimension scores are final. Remaining one-point differences are averaged and flagged; two-point differences are escalated to a chair.",
+  "finalized_at": "2026-11-07T05:31:17.478Z",
+  "rule": "Agreed integer scores are final. One-point splits are averaged and flagged. Two-point splits require a chair decision.",
+  "overall": {
+    "baseline": 87.63888888888889,
+    "uadi": 88.40277777777777,
+    "delta": 0.7638888888888857,
+    "wins": 4,
+    "losses": 5,
+    "ties": 0,
+    "splits": 11
+  },
   "pairs": [
     {
-      "pair_id": "subscription-settings-r1",
-      "candidate_a": {
-        "product_understanding": 4,
-        "ux_reasoning": 4,
-        "design_judgment": 4,
-        "visual_hierarchy": 3,
-        "interaction_completeness": 3,
-        "accessibility_responsiveness": 2,
-        "implementation_quality": 3.5
-      },
-      "candidate_b": {
-        "product_understanding": 4,
-        "ux_reasoning": 4,
-        "design_judgment": 3,
-        "visual_hierarchy": 3,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 4,
-        "implementation_quality": 3
-      },
-      "weighted_a": 86.25,
-      "weighted_b": 90,
-      "agreement": {
-        "candidate_a": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "split"
-        },
-        "candidate_b": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        }
-      },
+      "pair": "subscription-settings-r1",
+      "task": "subscription-settings",
+      "repetition": 1,
+      "candidate_a_condition": "uadi",
+      "baseline": 90,
+      "uadi": 86.25,
       "disputes": [
         {
           "candidate": "candidate_a",
           "dimension": "implementation_quality",
           "r1": 3,
           "r2": 4,
-          "mean": 3.5
+          "panel": 3.5
         }
       ]
     },
     {
-      "pair_id": "subscription-settings-r2",
-      "candidate_a": {
-        "product_understanding": 4,
-        "ux_reasoning": 3.5,
-        "design_judgment": 3,
-        "visual_hierarchy": 3,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 3,
-        "implementation_quality": 3
-      },
-      "candidate_b": {
-        "product_understanding": 4,
-        "ux_reasoning": 4,
-        "design_judgment": 3,
-        "visual_hierarchy": 4,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 2,
-        "implementation_quality": 3
-      },
-      "weighted_a": 85,
-      "weighted_b": 88.75,
-      "agreement": {
-        "candidate_a": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "split",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        },
-        "candidate_b": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        }
-      },
+      "pair": "subscription-settings-r2",
+      "task": "subscription-settings",
+      "repetition": 2,
+      "candidate_a_condition": "baseline",
+      "baseline": 85,
+      "uadi": 88.75,
       "disputes": [
         {
           "candidate": "candidate_a",
           "dimension": "ux_reasoning",
           "r1": 3,
           "r2": 4,
-          "mean": 3.5
+          "panel": 3.5
         }
       ]
     },
     {
-      "pair_id": "subscription-settings-r3",
-      "candidate_a": {
-        "product_understanding": 4,
-        "ux_reasoning": 4,
-        "design_judgment": 4,
-        "visual_hierarchy": 2,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 2,
-        "implementation_quality": 3
-      },
-      "candidate_b": {
-        "product_understanding": 3.5,
-        "ux_reasoning": 4,
-        "design_judgment": 4,
-        "visual_hierarchy": 3.5,
-        "interaction_completeness": 3,
-        "accessibility_responsiveness": 3,
-        "implementation_quality": 3
-      },
-      "weighted_a": 85,
-      "weighted_b": 87.5,
-      "agreement": {
-        "candidate_a": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        },
-        "candidate_b": {
-          "product_understanding": "split",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "split",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        }
-      },
+      "pair": "subscription-settings-r3",
+      "task": "subscription-settings",
+      "repetition": 3,
+      "candidate_a_condition": "baseline",
+      "baseline": 85,
+      "uadi": 87.5,
       "disputes": [
         {
           "candidate": "candidate_b",
           "dimension": "product_understanding",
           "r1": 4,
           "r2": 3,
-          "mean": 3.5
+          "panel": 3.5
         },
         {
           "candidate": "candidate_b",
           "dimension": "visual_hierarchy",
           "r1": 3,
           "r2": 4,
-          "mean": 3.5
+          "panel": 3.5
         }
       ]
     },
     {
-      "pair_id": "product-onboarding-r1",
-      "candidate_a": {
-        "product_understanding": 4,
-        "ux_reasoning": 4,
-        "design_judgment": 4,
-        "visual_hierarchy": 3,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 3,
-        "implementation_quality": 4
-      },
-      "candidate_b": {
-        "product_understanding": 4,
-        "ux_reasoning": 4,
-        "design_judgment": 4,
-        "visual_hierarchy": 3,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 4,
-        "implementation_quality": 4
-      },
-      "weighted_a": 93.75,
-      "weighted_b": 96.25,
-      "agreement": {
-        "candidate_a": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        },
-        "candidate_b": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        }
-      },
+      "pair": "product-onboarding-r1",
+      "task": "product-onboarding",
+      "repetition": 1,
+      "candidate_a_condition": "uadi",
+      "baseline": 96.25,
+      "uadi": 93.75,
       "disputes": []
     },
     {
-      "pair_id": "product-onboarding-r2",
-      "candidate_a": {
-        "product_understanding": 4,
-        "ux_reasoning": 4,
-        "design_judgment": 4,
-        "visual_hierarchy": 3,
-        "interaction_completeness": 3.5,
-        "accessibility_responsiveness": 3,
-        "implementation_quality": 4
-      },
-      "candidate_b": {
-        "product_understanding": 3,
-        "ux_reasoning": 3,
-        "design_judgment": 3.5,
-        "visual_hierarchy": 4,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 4,
-        "implementation_quality": 4
-      },
-      "weighted_a": 91.875,
-      "weighted_b": 89.375,
-      "agreement": {
-        "candidate_a": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "split",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        },
-        "candidate_b": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "split",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        }
-      },
+      "pair": "product-onboarding-r2",
+      "task": "product-onboarding",
+      "repetition": 2,
+      "candidate_a_condition": "uadi",
+      "baseline": 89.375,
+      "uadi": 91.875,
       "disputes": [
         {
           "candidate": "candidate_a",
           "dimension": "interaction_completeness",
           "r1": 4,
           "r2": 3,
-          "mean": 3.5
+          "panel": 3.5
         },
         {
           "candidate": "candidate_b",
           "dimension": "design_judgment",
           "r1": 3,
           "r2": 4,
-          "mean": 3.5
+          "panel": 3.5
         }
       ]
     },
     {
-      "pair_id": "product-onboarding-r3",
-      "candidate_a": {
-        "product_understanding": 3,
-        "ux_reasoning": 3,
-        "design_judgment": 4,
-        "visual_hierarchy": 3,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 2,
-        "implementation_quality": 4
-      },
-      "candidate_b": {
-        "product_understanding": 4,
-        "ux_reasoning": 4,
-        "design_judgment": 4,
-        "visual_hierarchy": 4,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 4,
-        "implementation_quality": 4
-      },
-      "weighted_a": 82.5,
-      "weighted_b": 100,
-      "agreement": {
-        "candidate_a": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        },
-        "candidate_b": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        }
-      },
+      "pair": "product-onboarding-r3",
+      "task": "product-onboarding",
+      "repetition": 3,
+      "candidate_a_condition": "baseline",
+      "baseline": 82.5,
+      "uadi": 100,
       "disputes": []
     },
     {
-      "pair_id": "operations-dashboard-r1",
-      "candidate_a": {
-        "product_understanding": 4,
-        "ux_reasoning": 4,
-        "design_judgment": 4,
-        "visual_hierarchy": 3.5,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 2,
-        "implementation_quality": 3
-      },
-      "candidate_b": {
-        "product_understanding": 4,
-        "ux_reasoning": 3,
-        "design_judgment": 4,
-        "visual_hierarchy": 3,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 3,
-        "implementation_quality": 4
-      },
-      "weighted_a": 90.625,
-      "weighted_b": 88.75,
-      "agreement": {
-        "candidate_a": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "split",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        },
-        "candidate_b": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        }
-      },
+      "pair": "operations-dashboard-r1",
+      "task": "operations-dashboard",
+      "repetition": 1,
+      "candidate_a_condition": "baseline",
+      "baseline": 90.625,
+      "uadi": 88.75,
       "disputes": [
         {
           "candidate": "candidate_a",
           "dimension": "visual_hierarchy",
           "r1": 4,
           "r2": 3,
-          "mean": 3.5
+          "panel": 3.5
         }
       ]
     },
     {
-      "pair_id": "operations-dashboard-r2",
-      "candidate_a": {
-        "product_understanding": 4,
-        "ux_reasoning": 3,
-        "design_judgment": 3,
-        "visual_hierarchy": 3,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 2,
-        "implementation_quality": 3
-      },
-      "candidate_b": {
-        "product_understanding": 4,
-        "ux_reasoning": 4,
-        "design_judgment": 4,
-        "visual_hierarchy": 3,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 2.5,
-        "implementation_quality": 3
-      },
-      "weighted_a": 80,
-      "weighted_b": 90,
-      "agreement": {
-        "candidate_a": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        },
-        "candidate_b": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "split",
-          "implementation_quality": "agreed"
-        }
-      },
+      "pair": "operations-dashboard-r2",
+      "task": "operations-dashboard",
+      "repetition": 2,
+      "candidate_a_condition": "uadi",
+      "baseline": 90,
+      "uadi": 80,
       "disputes": [
         {
           "candidate": "candidate_b",
           "dimension": "accessibility_responsiveness",
           "r1": 3,
           "r2": 2,
-          "mean": 2.5
+          "panel": 2.5
         }
       ]
     },
     {
-      "pair_id": "operations-dashboard-r3",
-      "candidate_a": {
-        "product_understanding": 4,
-        "ux_reasoning": 4,
-        "design_judgment": 3,
-        "visual_hierarchy": 3,
-        "interaction_completeness": 4,
-        "accessibility_responsiveness": 1,
-        "implementation_quality": 2
-      },
-      "candidate_b": {
-        "product_understanding": 4,
-        "ux_reasoning": 3,
-        "design_judgment": 4,
-        "visual_hierarchy": 2.5,
-        "interaction_completeness": 3.5,
-        "accessibility_responsiveness": 2.5,
-        "implementation_quality": 2
-      },
-      "weighted_a": 80,
-      "weighted_b": 78.75,
-      "agreement": {
-        "candidate_a": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "agreed",
-          "interaction_completeness": "agreed",
-          "accessibility_responsiveness": "agreed",
-          "implementation_quality": "agreed"
-        },
-        "candidate_b": {
-          "product_understanding": "agreed",
-          "ux_reasoning": "agreed",
-          "design_judgment": "agreed",
-          "visual_hierarchy": "split",
-          "interaction_completeness": "split",
-          "accessibility_responsiveness": "split",
-          "implementation_quality": "agreed"
-        }
-      },
+      "pair": "operations-dashboard-r3",
+      "task": "operations-dashboard",
+      "repetition": 3,
+      "candidate_a_condition": "baseline",
+      "baseline": 80,
+      "uadi": 78.75,
       "disputes": [
         {
           "candidate": "candidate_b",
           "dimension": "visual_hierarchy",
           "r1": 3,
           "r2": 2,
-          "mean": 2.5
+          "panel": 2.5
         },
         {
           "candidate": "candidate_b",
           "dimension": "interaction_completeness",
           "r1": 4,
           "r2": 3,
-          "mean": 3.5
+          "panel": 3.5
         },
         {
           "candidate": "candidate_b",
           "dimension": "accessibility_responsiveness",
           "r1": 3,
           "r2": 2,
-          "mean": 2.5
+          "panel": 2.5
         }
       ]
     }
@@ -491,16 +185,16 @@
     "out/r1/subscription-settings-r3.discussion.json": "4bf6f6ba13789a0dfaab1150e2e673cd0ab747484ed8115e67e7627efc8ab987",
     "out/r2/subscription-settings-r3.discussion.json": "aadacb3f3a3aab7f72b5d5b99b53419450883360a5d3534d648916dd5932484d",
     "out/r1/product-onboarding-r1.discussion.json": "de8706a9c4523e265a165cc4f281e028eb96a7d17b04e75d9cb7ea4f09369af4",
-    "out/r2/product-onboarding-r1.discussion.json": "a2b8e5e5c3419c476df3675f451a2ae3189ee8641d23b60302be497c158ca768",
+    "out/r2/product-onboarding-r1.discussion.json": "5a785f96e535a48ecba4c78ffae140dd256b7689f1bde442ad4ae35a82f26357",
     "out/r1/product-onboarding-r2.discussion.json": "ea9948a3ee4c2d15b76af9cbeb6f2a8d83445a7b8bf544984763fec72004ab8b",
     "out/r2/product-onboarding-r2.discussion.json": "86023a6c383c8d088133ca5dd5f56f8ac76ec90ada64045f7a5768624a136326",
     "out/r1/product-onboarding-r3.discussion.json": "238d903af7382a4071f775170e0c87b8316eedd2ab9f0fa65db9f8b11fbd9a3c",
     "out/r2/product-onboarding-r3.discussion.json": "1ffac9e136e10a34a31cae0f7feccef2d0ceae58f103c3dbfa39ff8c2f1bb8df",
-    "out/r1/operations-dashboard-r1.discussion.json": "7301f0da20dec2904655eb08007578fcb6534c1409b6a27f760e9f19a8005d13",
-    "out/r2/operations-dashboard-r1.discussion.json": "5521d4866da2d17ad2646116ed91265d3997c72bd62fe598409867b22c84d7c8",
-    "out/r1/operations-dashboard-r2.discussion.json": "5b23bf32abb02e96e4510cfeb7bc513e51d69121bc6708be83c8fb2253cd7052",
-    "out/r2/operations-dashboard-r2.discussion.json": "421778d6cd8e69fd089dde65006f5e6219b4dd265b3f2955d10d74a733790c4e",
-    "out/r1/operations-dashboard-r3.discussion.json": "b1216cfc03099e7dea25b488f0ab2cd92466ee4b224e1bfd00b69390eb856a39",
-    "out/r2/operations-dashboard-r3.discussion.json": "9e5c810139f1f74f4149b4788a2e7000834026583f15b168d5f5806d969ac37a"
+    "out/r1/operations-dashboard-r1.discussion.json": "791f434e0236ab5625620faecd7f6d1c0a39f323abef580565621d235b9dbafa",
+    "out/r2/operations-dashboard-r1.discussion.json": "1576216ff2aff2b8c1118d032ab4c31533b9eb6e30ffe5bdc8d326ff0a2b9cfe",
+    "out/r1/operations-dashboard-r2.discussion.json": "b6586698381210a5b7534b4b5715b9b240977dd7703418b24672ae11d57a18df",
+    "out/r2/operations-dashboard-r2.discussion.json": "731e8ecb65ff6a1fefc5a5f1498f0fb1174d4caf96f083b70f306d1eb6dd5660",
+    "out/r1/operations-dashboard-r3.discussion.json": "4581cf90426b487910b4d7888e98284b33bee101477d10fa93687fa4a8f8c7ef",
+    "out/r2/operations-dashboard-r3.discussion.json": "1b1d53aeac0a63c5ead435f032ad8479098b8f56d4bd8056aa8569107f0b117b"
   }
 }

@@ -112,6 +112,7 @@ Human owners remain in control of product decisions. Use the host project's norm
 - [Two-reviewer machine review](docs/MACHINE-REVIEW.md) — the standing benchmark review workflow
 - [Exploratory paired benchmark pilot](benchmarks/studies/design-intelligence-pilot-2026-11/README.md) — real runs, preserved evidence and position-control finding
 - [Machine review of the pilot](benchmarks/studies/design-intelligence-pilot-2026-11/machine-review/README.md) — two blinded reviewers, evidence crops, frozen scores and a final decision
+- [Review dashboard](benchmarks/studies/design-intelligence-pilot-2026-11/machine-review/dashboard.html) — filterable pair table, dimension and position charts, evidence drawer
 - [Roadmap](ROADMAP.md)
 
 ## License
