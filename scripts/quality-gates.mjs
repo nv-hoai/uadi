@@ -27,6 +27,20 @@ const SUCCESS_CLAIMS = [
   /no errors (were )?found/i
 ];
 const FAILURE_MARKERS = /\b(fail|failed|failure|error:|✗|✘)\b/i;
+const NEGATION_CUES = /\b(never|not|no|without|must not|doesn't|does not|didn't|did not|don't|do not|won't|will not)\b/i;
+
+// A success claim only counts when it asserts completion. Sentences that
+// describe the absence of a claim ("never says a payment succeeded") are
+// design principles, not evidence violations.
+function isNegated(sentence) {
+  return NEGATION_CUES.test(sentence);
+}
+
+function sentencesContaining(text, index, length) {
+  const start = text.lastIndexOf(".", Math.max(0, index - 1)) + 1;
+  const dot = text.indexOf(".", index + length);
+  return text.slice(start, dot === -1 ? text.length : dot);
+}
 
 function gate(id, status, details = {}, reason) {
   return { id, status, ...(reason ? { reason } : {}), ...details };
@@ -140,7 +154,10 @@ export async function runQualityGates(dir, options = {}) {
     gates.push(gate("viewport-evidence", "pass", { screenshots: screenshotNames.length }));
   }
 
-  const sourceFiles = await listFilesRecursive(found.deliverableDir);
+  // Exclude dot-directories (e.g. installed skill copies) so reference text
+  // cannot mask states the deliverable itself does not implement.
+  const sourceFiles = (await listFilesRecursive(found.deliverableDir))
+    .filter((name) => !name.split("/").some((segment) => segment.startsWith(".")));
   const sourceText = (await Promise.all(
     sourceFiles.filter((name) => /\.(html|js|css|jsx|tsx|ts)$/i.test(name)).map((name) => readFile(path.join(found.deliverableDir, name), "utf8").catch(() => ""))
   )).join("\n").toLowerCase();
@@ -151,8 +168,12 @@ export async function runQualityGates(dir, options = {}) {
     : gate("required-states", "fail", { missing_states: missingStates }));
 
   // Claim-behavior cross-check: analysis.md claims must have evidence.
-  const analysisPath = path.join(absolute, "analysis.md");
-  if (!(await exists(analysisPath))) {
+  const analysisCandidates = [path.join(absolute, "analysis.md"), path.join(found.deliverableDir, "analysis.md")];
+  let analysisPath = null;
+  for (const candidate of analysisCandidates) {
+    if (await exists(candidate)) { analysisPath = candidate; break; }
+  }
+  if (!analysisPath) {
     gates.push(gate("claim-behavior", "skipped", {}, "no analysis.md present"));
   } else {
     const analysis = await readFile(analysisPath, "utf8");
@@ -163,12 +184,24 @@ export async function runQualityGates(dir, options = {}) {
         problems.push("analysis.md references " + rel + " but it does not exist");
       }
     }
-    const successClaims = SUCCESS_CLAIMS.filter((pattern) => pattern.test(analysis));
+    const successClaims = [];
+    for (const pattern of SUCCESS_CLAIMS) {
+      for (const match of analysis.matchAll(new RegExp(pattern.source, pattern.flags.includes("g") ? pattern.flags : pattern.flags + "g"))) {
+        if (!isNegated(sentencesContaining(analysis, match.index, match[0].length))) {
+          successClaims.push(pattern);
+        }
+      }
+    }
     if (successClaims.length > 0) {
       const testOutputDir = evidenceDir ? path.join(evidenceDir, "test-output") : null;
       const outputs = testOutputDir ? await listFilesRecursive(testOutputDir).catch(() => []) : [];
-      const outputText = (await Promise.all(outputs.map((name) => readFile(path.join(testOutputDir, name), "utf8").catch(() => "")))).join("\n");
-      if (outputs.length === 0) {
+      const checksFile = evidenceDir ? path.join(evidenceDir, "checks.json") : null;
+      const hasChecksFile = checksFile ? await exists(checksFile) : false;
+      const outputText = (await Promise.all(
+        [...outputs.map((name) => path.join(testOutputDir, name)), ...(hasChecksFile ? [checksFile] : [])]
+          .map((file) => readFile(file, "utf8").catch(() => ""))
+      )).join("\n");
+      if (outputs.length === 0 && !hasChecksFile) {
         problems.push("analysis.md claims success but evidence/test-output is missing or empty");
       } else if (FAILURE_MARKERS.test(outputText)) {
         problems.push("analysis.md claims success but evidence/test-output contains failure markers");

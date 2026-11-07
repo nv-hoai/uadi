@@ -1,0 +1,39 @@
+{
+  "dir": "/home/nvhoai/projects/personal/uadi/benchmarks/runs/agent-loop-cycle-0/amended",
+  "ok": false,
+  "gates": [
+    {
+      "id": "accessible-names",
+      "status": "pass",
+      "violations": 0
+    },
+    {
+      "id": "viewport-evidence",
+      "status": "fail",
+      "missing_viewports": [
+        "390x844",
+        "1280x900"
+      ]
+    },
+    {
+      "id": "required-states",
+      "status": "pass",
+      "states": 6
+    },
+    {
+      "id": "claim-behavior",
+      "status": "pass",
+      "success_claims_checked": 0
+    },
+    {
+      "id": "axe",
+      "status": "pass",
+      "critical_or_serious": 0
+    },
+    {
+      "id": "mobile-overflow",
+      "status": "pass",
+      "overflow_pixels": 0
+    }
+  ]
+}

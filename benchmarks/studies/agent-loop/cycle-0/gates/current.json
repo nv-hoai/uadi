@@ -1,0 +1,68 @@
+{
+  "dir": "/home/nvhoai/projects/personal/uadi/benchmarks/runs/agent-loop-cycle-0/current",
+  "ok": false,
+  "gates": [
+    {
+      "id": "accessible-names",
+      "status": "fail",
+      "violations": 6,
+      "details": [
+        {
+          "tag": "select",
+          "label": "roleSel",
+          "snippet": "<select id=\"roleSel\">\n          <option value=\"owner\">Owner (can change billing)"
+        },
+        {
+          "tag": "select",
+          "label": "stateSel",
+          "snippet": "<select id=\"stateSel\">\n          <option value=\"default\">Default</option>\n      "
+        },
+        {
+          "tag": "input",
+          "label": "(no label)",
+          "snippet": "<input type=\"radio\" name=\"previewPeriod\" value=\"monthly\" checked>"
+        },
+        {
+          "tag": "input",
+          "label": "(no label)",
+          "snippet": "<input type=\"radio\" name=\"previewPeriod\" value=\"annual\">"
+        },
+        {
+          "tag": "input",
+          "label": "ack1",
+          "snippet": "<input type=\"checkbox\" id=\"ack1\">"
+        },
+        {
+          "tag": "input",
+          "label": "ack2",
+          "snippet": "<input type=\"checkbox\" id=\"ack2\">"
+        }
+      ]
+    },
+    {
+      "id": "viewport-evidence",
+      "status": "pass",
+      "screenshots": 12
+    },
+    {
+      "id": "required-states",
+      "status": "pass",
+      "states": 6
+    },
+    {
+      "id": "claim-behavior",
+      "status": "pass",
+      "success_claims_checked": 0
+    },
+    {
+      "id": "axe",
+      "status": "pass",
+      "critical_or_serious": 0
+    },
+    {
+      "id": "mobile-overflow",
+      "status": "pass",
+      "overflow_pixels": 0
+    }
+  ]
+}
