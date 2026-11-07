@@ -70,10 +70,11 @@
     }
   ],
   "frozen": {
-    "snapshot_hash": "sha256:0ce25cb44662ccb10b336b834395ee24b136d6085ff4e16a30f3ab3c0390b037",
-    "prompt_hash": "sha256:3058287d63c3858154d91760c0f335f91206213f728e28c5fc022b9457d952f6",
-    "skill_hash": "sha256:08ac4749e2685b8ad3d4483bc51b258aad76ba9efeae72347d55df67463d41ad",
-    "time_budget_minutes": 20
+    "snapshot_hash": "sha256:c2c5f4e67a48e02234ff9aeb369ac3d9125a27405223abeea77bf305d980f7ef",
+    "prompt_hash": "sha256:cb74ed7951bee6377d2738095a1432287058f25bf0758faddf795e972fa40c31",
+    "skill_hash": "sha256:560b72e49703adc7aa646da7e7b7dbdc5bfa6019831fa36eb23d10972e288f98",
+    "time_budget_minutes": 20,
+    "protocol_hash": "sha256:c4fd1d4a2e10bea61e3aa4a84b3cf0b5b57a0f2489fada442606249a344cbd74"
   },
   "design": {
     "repetitions": 3,
@@ -295,8 +296,9 @@
   },
   "selection_status": "selected",
   "hash_inputs": {
-    "skill_hash": "sha256 of SKILL.md (file bytes)",
-    "snapshot_hash": "sha256 of the byte-concatenation of benchmarks/tasks/*.md sorted by filename",
-    "prompt_hash": "sha256 of benchmarks/studies/design-intelligence-pilot-2026-11/prompt-template.md (file bytes)"
+    "skill_hash": "sha256 over the installed skill bundle (SKILL_FILES, sorted; per file: path, NUL, file bytes, NUL)",
+    "snapshot_hash": "sha256 over benchmarks/snapshot/** with the same bundle rule (clean project snapshot)",
+    "prompt_hash": "sha256 of benchmarks/run-instructions.md (shared run instructions + both condition paragraphs). Each composed per-condition prompt is hashed per pair in mapping.json",
+    "protocol_hash": "sha256 of benchmarks/CONFIRMATORY-STUDY.md"
   }
 }

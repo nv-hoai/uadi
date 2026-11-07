@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SKILL_FILES = [
+export const SKILL_FILES = [
   "SKILL.md",
   "docs/DESIGN-INTELLIGENCE.md",
   "docs/QUALITY-GATES.md",

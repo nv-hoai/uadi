@@ -73,6 +73,7 @@
     "snapshot_hash": "sha256:REPLACE_WITH_SNAPSHOT_HASH",
     "prompt_hash": "sha256:REPLACE_WITH_PROMPT_HASH",
     "skill_hash": "sha256:REPLACE_WITH_SKILL_HASH",
+    "protocol_hash": "sha256:REPLACE_WITH_PROTOCOL_HASH",
     "time_budget_minutes": 20
   },
   "design": {
