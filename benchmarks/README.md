@@ -78,6 +78,28 @@ browser gates reuse the renderer environment when available and report themselve
 skipped otherwise — a skipped gate is never evidence. The same gates run in CI on a fixture
 deliverable (`tests/fixtures/quality-gates/good`).
 
+### Running a build
+
+The canonical procedure for a benchmark build is:
+
+1. Read the task brief, design and implement the deliverable.
+2. Capture evidence with the shipped script — **never write your own screenshot code**:
+
+   ```bash
+   npm run evidence:capture -- --dir <project-dir> --out <run-dir>/evidence/screenshots
+   ```
+
+   It writes `<viewport>-<state>.png` at `390x844` and `1280x900` and activates states
+   through the page's own controls (hash, state select, or state button). If a state
+   cannot be activated it says so and exits 1; make the state reachable and re-run.
+3. Run the gates and keep the JSON alongside the evidence:
+
+   ```bash
+   npm run quality:gates -- --dir <run-dir> --json > <run-dir>/evidence/quality-gates.json
+   ```
+4. Record only checks that were actually run. A success claim without test-output
+   evidence fails the claim-behavior gate.
+
 ## Scoring rubric
 
 Score each dimension from 0 to 4:
