@@ -20,6 +20,26 @@ The design, balanced schedule, frozen hashes and 4-point minimum detectable effe
 committed before the first run. Any change after runs begin is a protocol deviation and
 will be reported.
 
+## Reviewer calibration (must pass before the real packets)
+
+[`calibration/`](calibration/calibration-manifest.json) holds four author-built packets:
+three seeded with known critical defects (`accessible-name`, `claim-behavior-mismatch`,
+`sort-order-mismatch`) and one clean packet.
+
+1. Each reviewer (crouton-alpha-free and beam-free) grades all four packets with the same
+   blind judge prompt, in its own session, without seeing the manifest.
+2. The coordinator then compares the graded rationales against the manifest:
+   - **Calibrated**: the reviewer caught each seeded defect they were judging for.
+   - **Not calibrated**: a reviewer who misses a seeded defect is removed for the
+     affected dimension (and their scores for that dimension are not used).
+   - **Over-flagging**: a critical defect cited on the clean packet counts against
+     calibration.
+3. After the first real pair is built, duplicate one real packet under a different label
+   and have both reviewers re-grade it. The duplicate measures test-retest consistency
+   and is excluded from the main analysis.
+
+Calibration results are recorded in the study record before any score is frozen.
+
 ## How to make it runnable
 
 Already validated: `npm run study:validate -- benchmarks/studies/confirmatory-2026-11/study-design.json`

@@ -1,10 +1,39 @@
 #!/usr/bin/env node
 import { cp, mkdir, readFile, writeFile, stat } from "node:fs/promises";
+import crypto from "node:crypto";
 import path from "node:path";
 import { randomInt } from "node:crypto";
 import { fileURLToPath } from "node:url";
+import { installSkill } from "./install-skill.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+function parseInstructionSections(markdown) {
+  const sections = {};
+  let current = null;
+  for (const line of markdown.split("\n")) {
+    const heading = /^##\s+(.+?)\s*$/.exec(line);
+    if (heading) { current = heading[1]; sections[current] = []; continue; }
+    if (current) sections[current].push(line);
+  }
+  const trim = (name) => (sections[name] ?? []).join("\n").trim();
+  const shared = trim("Shared run instructions");
+  const baseline = trim("Baseline addition");
+  const uadi = trim("UADI addition");
+  if (!shared || !baseline || !uadi) {
+    throw new Error("benchmarks/run-instructions.md must contain 'Shared run instructions', 'Baseline addition' and 'UADI addition' sections");
+  }
+  return { shared, baseline, uadi };
+}
+
+export function composePrompt(brief, instructions, condition) {
+  const paragraph = condition === "baseline" ? instructions.baseline : instructions.uadi;
+  return brief.trimEnd() + "\n\n---\n\n## Run instructions\n\n" + instructions.shared + "\n\n" + paragraph + "\n";
+}
+
+function sha256Hex(text) {
+  return "sha256:" + crypto.createHash("sha256").update(text).digest("hex");
+}
 
 const VALID_FLAGS = ["--study-id", "--pair-id", "--task-id", "--snapshot", "--runs-dir", "--study-design"];
 
@@ -68,6 +97,36 @@ export async function prepareBenchmarkPair(options) {
 
   const schedule = options.studyDesign ? await loadPreregisteredSchedule(options.studyDesign, options) : null;
   const order = schedule ? schedule.runOrder : (randomInt(2) === 0 ? ["baseline", "uadi"] : ["uadi", "baseline"]);
+
+  const runInstructions = parseInstructionSections(
+    await readFile(path.join(ROOT, "benchmarks/run-instructions.md"), "utf8")
+  );
+  const briefPath = path.join(ROOT, "benchmarks/tasks/" + options.taskId + ".md");
+  const briefText = await readFile(briefPath, "utf8").catch((error) => {
+    if (error.code === "ENOENT") {
+      if (schedule) throw new Error("Task brief benchmarks/tasks/" + options.taskId + ".md not found for the preregistered task");
+      return "# Task prompt\n\nCopy the exact benchmark task prompt here.\n";
+    }
+    throw error;
+  });
+  const conditionPrompts = {
+    baseline: composePrompt(briefText, runInstructions, "baseline"),
+    uadi: composePrompt(briefText, runInstructions, "uadi")
+  };
+  const promptHashes = {
+    baseline: sha256Hex(conditionPrompts.baseline),
+    uadi: sha256Hex(conditionPrompts.uadi)
+  };
+
+  if (schedule) {
+    const design = JSON.parse(await readFile(path.resolve(options.studyDesign), "utf8"));
+    const instructionBytes = await readFile(path.join(ROOT, "benchmarks/run-instructions.md"));
+    const actual = "sha256:" + crypto.createHash("sha256").update(instructionBytes).digest("hex");
+    if (design.frozen?.prompt_hash && design.frozen.prompt_hash !== actual) {
+      throw new Error("Run instructions changed since the study was frozen (frozen.prompt_hash mismatch). Re-freeze and re-validate before running.");
+    }
+  }
+
   await mkdir(pairDir, { recursive: true });
   for (const condition of ["baseline", "uadi"]) {
     const conditionDir = path.join(pairDir, condition);
@@ -75,8 +134,11 @@ export async function prepareBenchmarkPair(options) {
     await mkdir(path.join(conditionDir, "evidence", "test-output"), { recursive: true });
     await mkdir(path.join(conditionDir, "evidence", "changed-files"), { recursive: true });
     await cp(snapshot, path.join(conditionDir, "project"), { recursive: true });
-    await writeFile(path.join(conditionDir, "prompt.md"), "# Task prompt\n\nCopy the exact benchmark task prompt here.\n");
+    await writeFile(path.join(conditionDir, "prompt.md"), conditionPrompts[condition]);
     await writeFile(path.join(conditionDir, "transcript.md"), "# Run transcript\n\nRecord the complete transcript here.\n");
+    if (schedule && condition === "uadi") {
+      await installSkill({ agent: "codex", cwd: path.join(conditionDir, "project"), force: true });
+    }
   }
   await mkdir(path.join(pairDir, "blind", "condition-a"), { recursive: true });
   await mkdir(path.join(pairDir, "blind", "condition-b"), { recursive: true });
@@ -98,7 +160,9 @@ export async function prepareBenchmarkPair(options) {
     metadata.baseline_run_position = schedule.baselineRunPosition;
     metadata.study_design = path.resolve(options.studyDesign);
     metadata.schedule = "preregistered";
+    metadata.frozen = JSON.parse(await readFile(path.resolve(options.studyDesign), "utf8")).frozen ?? null;
   }
+  metadata.prompt_hashes = promptHashes;
   await writeFile(path.join(pairDir, "mapping.json"), JSON.stringify(metadata, null, 2) + "\n");
   return { pairDir, order, schedule };
 }

@@ -63,6 +63,18 @@ test("a preregistered schedule drives run order and candidate position determini
     assert.equal(mapping.uadi_position, "B");
     assert.equal(mapping.baseline_run_position, 2);
     assert.equal(mapping.schedule, "preregistered");
+    assert.ok(mapping.prompt_hashes.baseline.startsWith("sha256:"));
+    assert.ok(mapping.prompt_hashes.uadi !== mapping.prompt_hashes.baseline);
+
+    // Composed prompt: task brief + shared instructions + condition paragraph;
+    // UADI project contains the installed skill.
+    const uadiPrompt = await readFile(path.join(first.pairDir, "uadi/prompt.md"), "utf8");
+    const baselinePrompt = await readFile(path.join(first.pairDir, "baseline/prompt.md"), "utf8");
+    assert.ok(uadiPrompt.includes("# Benchmark Task"));
+    assert.ok(uadiPrompt.includes("UADI design skill"));
+    assert.ok(baselinePrompt.includes("No design skill"));
+    assert.ok(!baselinePrompt.includes("UADI design skill"));
+    assert.ok(await readFile(path.join(first.pairDir, "uadi/project/.agents/skills/uadi/SKILL.md"), "utf8"));
 
     const second = await prepareBenchmarkPair({
       studyId: "confirmatory-2026-11", pairId: "alpha-subscription-settings-r2",
@@ -87,6 +99,30 @@ test("a preregistered schedule drives run order and candidate position determini
       studyId: "confirmatory-2026-11", pairId: "alpha-subscription-settings-r1",
       taskId: "product-onboarding", snapshot, studyDesign: designFile, runsDir: negativeRuns
     }), /preregistered for task subscription-settings/);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("a tampered frozen prompt hash refuses preparation", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "uadi-benchmark-tamper-"));
+  try {
+    const snapshot = path.join(root, "snapshot");
+    await mkdir(snapshot);
+    const designFile = path.join(root, "study-design.json");
+    await writeFile(designFile, JSON.stringify({
+      study_id: "confirmatory-2026-11",
+      frozen: { prompt_hash: "sha256:" + "0".repeat(64), skill_hash: "sha256:" + "0".repeat(64), snapshot_hash: "sha256:" + "0".repeat(64), protocol_hash: "sha256:" + "0".repeat(64), time_budget_minutes: 20 },
+      design: {
+        pairs: [
+          { pair_id: "alpha-subscription-settings-r1", task_id: "subscription-settings", repetition: 1, uadi_position: "B", baseline_run_position: 2 }
+        ]
+      }
+    }));
+    await assert.rejects(() => prepareBenchmarkPair({
+      studyId: "confirmatory-2026-11", pairId: "alpha-subscription-settings-r1",
+      taskId: "subscription-settings", snapshot, studyDesign: designFile, runsDir: path.join(root, "runs")
+    }), /changed since the study was frozen/);
   } finally {
     await rm(root, { recursive: true, force: true });
   }
