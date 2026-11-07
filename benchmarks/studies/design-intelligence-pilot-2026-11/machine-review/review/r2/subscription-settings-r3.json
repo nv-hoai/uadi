@@ -1,0 +1,104 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "subscription-settings-r3",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:48:44+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md lines 9-21 separate supplied limits from illustrative prices, dates, tax and cancellation policy, and the role model is explicit. The interface labels simulated payments and estimated tax instead of claiming a real charge. Only confirmation of the refund and over-limit policies would sharpen it.",
+      "ux_reasoning": "The summary answers plan, price, renewal, next payment and 12/20 members, then billing, member limits, invoices and an isolated cancellation zone (evidence/subscription-settings-r3/a/summary.png). Blocked downgrades, period changes and the next-invoice breakdown all expose consequences before confirmation. The owner journey is coherent from summary to destructive action.",
+      "design_judgment": "Changes are scheduled at renewal, downgrades over the limit are hard-blocked, cancellation is separated and the safe action is primary. The optional cancellation reason and labelled 9% tax estimate are transparent rather than deceptive. The decision to give each billing concern its own card adds length, but the trade-off is defensible.",
+      "visual_hierarchy": "Desktop summary and billing cards are well composed, but the floating prototype pill covers the 'Update payment method' button (evidence/subscription-settings-r3/a/payment-button-overlap.png). More seriously, the mobile cancellation action sits roughly 290px below its explanatory copy (evidence/subscription-settings-r3/a/mobile-cancel-gap.png) because .cancel-copy flex-basis becomes a height in the column layout (styles.css lines 697 and 1240). Fixing both would raise this to 3 or 4.",
+      "interaction_completeness": "The build implements loading, load error, empty invoices, payment-failed banner (app.js line 123), near/at-limit, blocked downgrade, scheduled change, cancellation and success states, plus validation and busy handling. The 10-state table in analysis.md lines 125-138 matches the code. A member-removal hand-off after a blocked downgrade is the remaining gap.",
+      "accessibility_responsiveness": "checks.json reports two axe aria-progressbar-name violations and one definition-list violation on both viewports; the meters at app.js line 258 have aria-valuetext but no accessible name. Responsive widths are otherwise clean at 320-1280. Naming the meters and fixing the dl structure would raise this to 3.",
+      "implementation_quality": "The render-function architecture and state model are consistent and the reported interaction checks pass. The mobile flex-basis bug and invalid definition list are avoidable CSS/markup defects, and the single 1548-line app.js is still a monolith. Adding layout tests for the cancellation zone and fixing semantics would raise this."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r3/a/summary.png",
+        "caption": "Desktop summary with plan, $49/month, renewal, $53.41 next payment and 12 of 20 members.",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r3/a/payment-button-overlap.png",
+        "caption": "Floating prototype controls covering the Update payment method button.",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r3/a/mobile-cancel-gap.png",
+        "caption": "Mobile cancellation copy and its action separated by a large empty gap.",
+        "dimension": "visual_hierarchy"
+      }
+    ],
+    "critical_defects": [
+      "On mobile, the cancellation action is separated from its copy by roughly 290px because .cancel-copy flex-basis acts as a height in the column layout (styles.css lines 697 and 1240).",
+      "The floating prototype controls cover the Update payment method button in the desktop capture.",
+      "Two progressbars lack accessible names and a definition list is structurally invalid (checks.json)."
+    ],
+    "strengths": [
+      "Most complete state coverage in the pair, including a payment-failed banner and recovery path.",
+      "Clear summary with renewal, next payment and member count in one card.",
+      "Blocked downgrade, separated cancellation and labelled simulated tax.",
+      "Explicit role banner and named owner for member view."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md lines 9-20 label every price, date and policy as an assumption and correctly describe the owner/member boundary, including the deliberately conservative invoice restriction. The interface never claims a real charge and explains missing downloads. The main gap is that failed-payment recovery is explicitly out of scope.",
+      "ux_reasoning": "The page opens with an at-a-glance card answering plan, price, renewal and 12/20 seats (evidence/subscription-settings-r3/b/summary.png), then plans, payment, invoices and a separated cancellation section, with a persistent on-page navigator. The price-display toggle is clearly separated from a real cadence change. The 'Move to Free' action correctly routes to the cancellation review (app.js line 353 and line 1056), so there is one path to Free.",
+      "design_judgment": "The analysis states explicit trade-offs (immediate versus scheduled changes, acknowledgement versus typed phrase, hiding versus locking owner controls), and the build matches them. Free is routed through cancellation with a consequence list, avoiding the competing-path problem seen elsewhere. The decision to omit failed-payment recovery is defensible only because it is declared, not hidden.",
+      "visual_hierarchy": "This is the most coherent composition of the pair: a dominant price, clean section navigator, restrained colour and generous spacing; the plan cards compare cleanly (evidence/subscription-settings-r3/b/plans.png). The only visible overlap is the small demo pill over the Members row on mobile (evidence/subscription-settings-r3/b/mobile-controls-row.png), which is prototype chrome rather than product content.",
+      "interaction_completeness": "Loading, load error, empty payment and invoices, success, disabled, scheduled plan/cadence states, undo, validation, busy and cancellation gating are implemented and covered by 38 assertions (analysis.md lines 120-125). There is no failed-payment or dunning state at all (analysis.md line 142), unlike Candidate A. Adding that recovery path would raise this to 4.",
+      "accessibility_responsiveness": "checks.json reports one color-contrast failure on desktop and one prohibited ARIA attribute plus a contrast failure on mobile. Controls are all named and the layout stacks without overflow. Correcting the contrast pair and the prohibited attribute would raise this to 4.",
+      "implementation_quality": "The 1232-line app.js and 2335-line styles.css are organised into render helpers with a clean state model and no reported console errors. The missing failed-payment state and the ARIA misuse are the main quality gaps. Adding the state and tightening semantics would raise this."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r3/b/summary.png",
+        "caption": "Desktop at-a-glance card with Pro, $30/month, 1 December renewal and 12 of 20 members.",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r3/b/plans.png",
+        "caption": "Plan comparison with the Free conflict warning and Move to Free routed to cancellation.",
+        "dimension": "ux_reasoning"
+      },
+      {
+        "file": "evidence/subscription-settings-r3/b/mobile-controls-row.png",
+        "caption": "Demo pill overlapping the Members row on mobile (prototype chrome).",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "No failed-payment or dunning state is implemented (analysis.md line 142).",
+      "checks.json reports one color-contrast failure on desktop and a prohibited ARIA attribute plus a contrast failure on mobile.",
+      "The demo pill overlaps the Members row on mobile, though it is prototype chrome."
+    ],
+    "strengths": [
+      "Best visual hierarchy and whitespace in the pair, with a clear at-a-glance summary.",
+      "Free is routed through cancellation, with member consequences stated before confirmation.",
+      "Explicit, honest trade-offs and no dark patterns.",
+      "Clean automated accessibility apart from one contrast pair and one ARIA attribute."
+    ]
+  },
+  "comparison": "Candidate B is more visually coherent and more accessible, and routes Free through the cancellation flow, while Candidate A covers payment failure and a broader state set. Candidate A's mobile cancellation spacing bug, unnamed progressbars and control overlap outweigh its extra states, so Candidate B wins the pair.",
+  "limitations": "Only default-state screenshots were supplied, so dialogs and alternate states were assessed from code and checks.json. The axe results were available as counts without node details, and no screen-reader, cross-browser, zoom or real-provider behaviour could be tested. The demo control panels are chrome, but their overlap is visible in the captures."
+}

@@ -1,0 +1,110 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "subscription-settings-r3",
+  "blind": true,
+  "reviewed_at": "2026-11-07T04:51:10Z",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:11-21 states prices, dates, change timing, cancellation policy, the simulated card form and the 9% tax estimate as explicit assumptions, and maps each user question to a page region (analysis.md:27-34). The over-limit cancellation policy is declared rather than hidden, which is the right move for an open product rule.",
+      "ux_reasoning": "The order is status -> billing mechanics -> members/limits -> invoices -> cancellation, with separate reviewed flows for plan and billing period and an explicit seats-remaining explanation before a limit is hit (analysis.md:52-84). Member guidance names the owner and keeps invoices available, and duplicate usage in the summary and members section is a defensible scanning trade-off.",
+      "design_judgment": "The trade-off table at analysis.md:88-101 is candid about hard-blocking downgrades, period-end cancellation, safe-primary confirmations and the honest label on the local .txt receipt. The invented 9% tax is visually labelled as an estimate and excluded from any claim of success.",
+      "visual_hierarchy": "The summary is excellent and the members/limits pair scans well (evidence summary-desktop.png, limits-desktop.png), but the fixed prototype pill covers the right half of the Update payment method button on desktop (payment-overlay-desktop.png) and the second line of the review note on mobile (summary-mobile.png). The payment card also leaves uneven whitespace against the two stacked left cards.",
+      "interaction_completeness": "Loading, load error, empty invoices, approaching/at-limit, payment-failed, blocked downgrade, scheduled change, validation, busy and cancellation states are all implemented (analysis.md:125-138; app.js:244-262, 400-500), and the invoice action produces a real local text file rather than a false PDF claim (app.js:1371-1399).",
+      "accessibility_responsiveness": "axe reports two unnamed progressbars and an invalid definition list at both viewports (checks.json); app.js:258 and 496 create meters without aria-label, and the summary <dl> contains a span directly (app.js:244-262). Mobile layout and the wrapped settings rail hold without overflow, but the overlay/ARIA defects keep this at adequate.",
+      "implementation_quality": "A single 65KB app.js with icon helpers, render sections and native <dialog> works and produced no scripted runtime errors, but the file is large and the accessibility regressions show the audit gap in its own quality review."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r3/a/summary-desktop.png",
+        "caption": "Summary leading with plan, price, renewal, next payment and seat meter",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r3/a/payment-overlay-desktop.png",
+        "caption": "Fixed prototype-controls pill covering half of the Update payment method button",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r3/a/limits-desktop.png",
+        "caption": "Seat usage meter beside the complete Free/Pro/Business member limit list",
+        "dimension": "ux_reasoning"
+      },
+      {
+        "file": "evidence/subscription-settings-r3/a/summary-mobile.png",
+        "caption": "Mobile summary actions with the prototype pill hiding the review note",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "Two unnamed progressbars and an invalid definition list are serious axe failures at both viewports (checks.json; app.js:244-262, 496).",
+      "The fixed prototype panel covers product content: the Update payment method button on desktop and the review note on mobile."
+    ],
+    "strengths": [
+      "Clear status-first IA with a dedicated members/plan-limit section",
+      "Explicit trade-off table and safe-primary cancellation confirmation",
+      "Designed loading, error, payment-failure and at-limit states with honest simulation labels"
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:15-20 declares prices, dates, renewal-only change timing and data-retention assumptions clearly, and the role analysis distinguishes owner from member. However it makes payment card details and invoices owner-only (app.js:433-447, 491-502), which goes beyond the brief's instruction that non-owners see billing information even though the trade-off is acknowledged.",
+      "ux_reasoning": "The page flows at-a-glance -> plans -> payment -> invoices -> separate cancellation, with an explicit price-display mode, a reviewed cadence change and reversible scheduled states (analysis.md:43-71). The cancellation preview names the nine members who would lose access and the Free limit, which makes the highest-risk action understandable before commitment.",
+      "design_judgment": "There is strong reasoning about honest simulation, no invented feature matrix and reversible schedules (analysis.md:75-91), but the conservative member privacy choice removes receipts from members and the green 'Save $60.00 a year' chip sits close to promotional framing. The fixed demo bar is also allowed to cover the usage meter.",
+      "visual_hierarchy": "The at-a-glance summary and plan cards are composed well, with a clear price focus, tabular figures and restrained green accents (evidence summary-desktop.png, plans-desktop.png). On mobile the demo-controls pill covers the member meter and permission text (toolbar-mobile.png), and the separate Monthly billing card repeats renewal data already in the summary.",
+      "interaction_completeness": "Loading, load error, empty payment, empty invoices, at-limit, validation, pending confirmations, scheduled/undo and cancel/resume states are implemented (analysis.md:95-107), and clicking an invoice download explains that no integration exists (app.js:1111). The destructive action stays disabled until the consequence checkbox is checked.",
+      "accessibility_responsiveness": "checks.json reports a serious color-contrast failure on desktop and an aria-prohibited-attr failure on mobile; the fixed demo pill additionally covers the seat meter on mobile (toolbar-mobile.png). The section navigator correctly wraps to include Cancellation (nav-mobile.png) and no horizontal overflow appears.",
+      "implementation_quality": "A 54KB app.js with helper functions, fixture data and native <dialog> passes syntax and scripted interaction checks with no console errors; it is functional but monolithic and ships with the ARIA/contrast regressions noted above."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r3/b/summary-desktop.png",
+        "caption": "At-a-glance summary with price, next payment and an 8-seats-available meter",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r3/b/plans-desktop.png",
+        "caption": "Inline plan cards with price-display toggle and explicit member limits",
+        "dimension": "ux_reasoning"
+      },
+      {
+        "file": "evidence/subscription-settings-r3/b/toolbar-mobile.png",
+        "caption": "Demo-controls pill covering the member meter and permission line on mobile",
+        "dimension": "accessibility_responsiveness"
+      },
+      {
+        "file": "evidence/subscription-settings-r3/b/nav-mobile.png",
+        "caption": "Wrapped section navigator keeps the Cancellation entry visible on mobile",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "Members are locked out of payment details and invoices (app.js:433-447, 491-502), so non-owners cannot see all billing information as the brief requires.",
+      "Serious axe failures: color-contrast on desktop and aria-prohibited-attr on mobile (checks.json); the demo pill also covers the seat meter on mobile."
+    ],
+    "strengths": [
+      "Inline plan comparison with display and commitment separated",
+      "Reversible scheduled changes and a cancellation preview naming affected members",
+      "Honest no-provider copy and refusal to invent a feature matrix"
+    ]
+  },
+  "comparison": "Both candidates are complete and well argued; Candidate B has the better plan-card composition, while Candidate A keeps billing information visible to members and pairs usage with a full limit breakdown. B's member lockout, duplicate billing card and mobile overlay hold it slightly behind A, whose main weakness is the unnamed meters and the same prototype-panel intrusion.",
+  "limitations": "Only the default desktop and mobile screenshots were available, so dialogs, loading/error and cancellation states were judged from source and checks.json rather than rendered evidence. No live interaction, screen-reader or cross-browser testing was possible, and the invented pricing/tax/policy assumptions cannot be verified against the brief."
+}

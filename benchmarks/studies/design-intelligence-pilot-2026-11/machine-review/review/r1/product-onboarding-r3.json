@@ -1,0 +1,100 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "product-onboarding-r3",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:57:00+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:26-53 separates facts, assumptions and unknowns and keeps billing and deletion with the Owner. However analysis.md:110-117 presents 'Admin: Manage workspace settings' as fact although it is not supplied and is not listed as an assumption; flagging or removing that row would raise this.",
+      "ux_reasoning": "analysis.md:61-96 justifies one required field and optional invitations, but the welcome card is an extra surface before the form, and the mobile page runs to 1,666 px with roles repeated in the rail and the invite step. Starting at the project form, as the flow diagram implies, would raise this.",
+      "design_judgment": "analysis.md:223-250 gives eight explicit trade-offs with costs, including role education in three layers, the resume screen and the honest project stub. The welcome screen's cost is the only decision not weighed, so acknowledging it would strengthen an already strong rationale.",
+      "visual_hierarchy": "desktop-welcome-card.png is calm and well grouped, but mobile-controls-gap.png and the 1,666 px mobile page show three equally weighted cards with the prototype bar wedged between them. A shorter first viewport with plan and roles collapsed would raise this.",
+      "interaction_completeness": "app.js:433-570 renders validation and failure states, and app.js:957-1075 simulates partial and total sends with retry, while analysis.md:198-219 enumerates plan-limit, role and resume states. The supplied screenshots only show the welcome screen, so the other states rest on code rather than rendered evidence.",
+      "accessibility_responsiveness": "checks.json:25-37 and :63-74 report serious axe failures: 16 color-contrast nodes on desktop and 13 on mobile, plus one label-content-name mismatch. index.html:15 gives the brand link an aria-label that omits its visible 'Your workspace' text; fixing the colour tokens and that label would raise this substantially.",
+      "implementation_quality": "The code is dependency-free and runs without console or page errors, but the supplied automated output documents unresolved contrast and accessible-name defects, and analysis.md:321-324 points to a transcript.md absent from the packet. A clean axe result and an included audit log would raise this."
+    },
+    "evidence": [
+      {
+        "file": "evidence/product-onboarding-r3/a/desktop-welcome-card.png",
+        "caption": "Desktop: welcome card with a three-step list and one primary action",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/product-onboarding-r3/a/desktop-roles-contrast.png",
+        "caption": "Desktop roles and limits rail; axe reports serious contrast failures on this surface",
+        "dimension": "accessibility_responsiveness"
+      },
+      {
+        "file": "evidence/product-onboarding-r3/a/mobile-controls-gap.png",
+        "caption": "Mobile: prototype bar sits between the welcome and workspace cards, adding to a long page",
+        "dimension": "visual_hierarchy"
+      }
+    ],
+    "critical_defects": [
+      "Axe reports 16 desktop and 13 mobile color-contrast failures plus one label-content-name mismatch (checks.json:25-37, :63-74).",
+      "Brand link aria-label 'Tandem workspace home' omits the visible 'Your workspace' text (index.html:15).",
+      "Welcome screen adds a surface and a click before the single required field."
+    ],
+    "strengths": [
+      "Strong role and limit treatment with per-row role hints and an explicit Owner exclusion.",
+      "Honest project shell and a detailed activation-risk table.",
+      "Partial and total invitation failure, retry, plan limit and resume are implemented."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:17-29 separates facts, nine assumptions and nine unknowns, including the seat-hold rule and Owner-only billing, and app.js:15-27 keeps Admin and Member copy to supplied capabilities. The 2-character and duplicate-name rules (analysis.md:28; app.js:921-929) are invented but disclosed; confirming they are prototype-only is the remaining gap.",
+      "ux_reasoning": "The first screen is the single required field with a visible skip, and app.js:326-330,443 puts the role guide before the invite controls. Dropping the duplicate-name check, which blocks a legitimately repeated project name, would make the path strictly less obstructive.",
+      "design_judgment": "analysis.md:69-75 discusses the one-field, optional-invite and role-placement choices, but the two-character minimum and unique-name constraint are product rules added without a stated need. Justifying or removing them would raise this.",
+      "visual_hierarchy": "desktop-form-panel.png and mobile-first-screen.png show a single-decision panel with a clear serif hierarchy, generous spacing and no overlap, while desktop-rail.png keeps step and plan context secondary. This is the cleanest composition in the pair.",
+      "interaction_completeness": "app.js:336-475 renders per-row invite validation and states, and app.js:960-1075 handles sending, partial failure, retry and finish-without-inviting, with paused/resume and role preview elsewhere. The supplied screenshots only show step 1, so later states are verified from code rather than rendered output.",
+      "accessibility_responsiveness": "checks.json reports 0 axe violations and 0 unnamed controls at both viewports, and mobile-first-screen.png fits without horizontal overflow or overlays. A screen-reader pass would be needed before claiming more than the automated result.",
+      "implementation_quality": "app.js is dependency-free, escaped and consistently structured; index.html is minimal and checks.json shows no console or page errors. The extra name rules are product choices rather than implementation breakage."
+    },
+    "evidence": [
+      {
+        "file": "evidence/product-onboarding-r3/b/desktop-form-panel.png",
+        "caption": "Desktop: single-decision project panel with serif heading and one required field",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/product-onboarding-r3/b/desktop-rail.png",
+        "caption": "Desktop: two-step rail, plan/seat/role summary and collapsed Owner capabilities",
+        "dimension": "ux_reasoning"
+      },
+      {
+        "file": "evidence/product-onboarding-r3/b/mobile-first-screen.png",
+        "caption": "Mobile: full first screen fits without overlap or horizontal scroll",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "Project names shorter than 2 characters and duplicate project names are rejected by validation rules the brief does not supply (app.js:921-929; disclosed at analysis.md:28)."
+    ],
+    "strengths": [
+      "Direct one-field first screen with role guidance before assignment.",
+      "Zero axe violations and no rendered overlap at either viewport.",
+      "Complete failure, limit and resume coverage in code, with explicit assumptions."
+    ]
+  },
+  "comparison": "Candidate A offers the richer product reasoning and role/limit treatment, but its rendered page fails serious contrast checks and adds a welcome surface before the required field. Candidate B starts directly at the one-field project form, renders cleanly on both viewports with zero axe violations, and its main product liberty is a disclosed minimum-length and unique-name rule.",
+  "limitations": "Only the first screen of each prototype was screenshotted, so invite, success, failure, limit and resume states were assessed from code and prose rather than rendered output. Screen-reader behavior, cross-browser rendering and the transcripts referenced by both candidates were unavailable."
+}

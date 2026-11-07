@@ -1,0 +1,77 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "product-onboarding-r3",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:49:16+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md separates facts, eight assumptions and unknowns (lines 12-53), but the capability matrix presents 'Admin can manage workspace settings' as fact (line 115) and neither the assumptions nor unknowns list flags that inference. Declaring it as an assumption would raise this to 4.",
+      "ux_reasoning": "Project creation precedes invitations and a failed invite never rolls back the project (analysis.md lines 84-89), with Save & exit, a deliberate resume screen and per-row roles (implementation/app.js). However the first screen is a welcome that adds a click before the only required field, and its three-item preview reads as a process (evidence/desktop-welcome.png).",
+      "design_judgment": "analysis.md §6 states eight trade-offs with costs, including the three-layer role explanation (line 236) and the choice of a resume screen over auto-resume (line 246).",
+      "visual_hierarchy": "desktop-welcome.png has a clear headline and single filled primary action, but the aside stacks three information panels and the small time estimates add noise; at 390px the prototype bar floats over the card boundary (mobile-welcome.png). A leaner first screen would raise this.",
+      "interaction_completeness": "The implementation covers validation, loading, project and invite success, partial/network invite failure with retry, seat limit with a replaced form, skipped/resume with saved draft, role restrictions and a project shell; these are code paths, not just analysis (implementation/app.js state inventory in analysis.md §5).",
+      "accessibility_responsiveness": "checks.json reports serious axe failures on both viewports: color-contrast on 16 desktop / 13 mobile nodes and label-content-name-mismatch on 1 node. The CSS token --ink-3 #6f7a71 on --paper #f3f1ec (implementation/styles.css:7-12) is about 4.0:1, below 4.5:1, so much of the muted text fails despite strong focus and heading semantics. Fixing the muted token and the name mismatch would raise this to 3 or 4.",
+      "implementation_quality": "A 1,323-line vanilla app with tokenised CSS, localStorage with guarded fallbacks, focus management and clearly separated prototype tooling; no console or page errors in checks.json."
+    },
+    "evidence": [
+      { "file": "evidence/product-onboarding-r3/a/desktop-welcome.png", "caption": "Desktop welcome with three-step preview and low-contrast time estimates at the right", "dimension": "visual_hierarchy" },
+      { "file": "evidence/product-onboarding-r3/a/desktop-aside.png", "caption": "Dense aside panels in muted small text carry workspace, role and scope facts", "dimension": "design_judgment" },
+      { "file": "evidence/product-onboarding-r3/a/mobile-welcome.png", "caption": "Mobile welcome: CTA visible but the prototype bar floats over the panel boundary", "dimension": "accessibility_responsiveness" }
+    ],
+    "critical_defects": [
+      "Serious color-contrast violations: 16 desktop and 13 mobile nodes per checks.json; --ink-3 #6f7a71 on --paper #f3f1ec is approximately 4.0:1.",
+      "label-content-name-mismatch violation on one node in both viewports.",
+      "Capability matrix presents Admin workspace-settings access as fact rather than an assumption.",
+      "Welcome screen adds a click before the only required field."
+    ],
+    "strengths": [
+      "Deep analysis: facts, assumptions, unknowns, capability matrix and a risk table with residual risks.",
+      "Project is created before invitations, so invitation failure cannot undo activation.",
+      "Partial, total and network invitation failure modes with retry are implemented."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md separates facts, nine working assumptions and unknowns (lines 7-41), explicitly labels the likely-inferred Admin restrictions (line 24) and the prototype-only uniqueness rule (line 28), and keeps role copy within the brief (line 84).",
+      "ux_reasoning": "Starts on the only required field, defers description and all other setup (analysis.md lines 56-67), keeps invitations optional with a 'Finish setup without inviting' action, and preserves a paused draft plus resume card. The minor inconsistency is a 'Step 1 of 2' label beside a three-item rail.",
+      "design_judgment": "analysis.md §2 explains the one-field choice and §3/§4 name costs, including why a separate role screen was rejected (line 73) and why role guide height is accepted on mobile (line 107).",
+      "visual_hierarchy": "desktop-step1.png has a calm document-like panel with one serif headline and one filled action, the rail secondary (desktop-rail.png), and mobile-step1.png fits the required badge, field and CTA inside the first 844px viewport.",
+      "interaction_completeness": "Implements validation (empty, length, duplicate), loading, invite success, partial failure with retry of failed rows, full-plan explanation with finish action, paused/resume, member-role restriction and a success summary (implementation/app.js inviteStep, successStep, workspaceView).",
+      "accessibility_responsiveness": "checks.json shows one h1, zero unnamed controls and axe 0 violations on desktop and mobile; semantic main, ordered step list with aria-current, aria-invalid/describedby errors, live announcements and focus-to-heading are implemented (implementation/app.js:219-330, 781).",
+      "implementation_quality": "A 1,257-line app with escapeHtml on interpolations, guarded localStorage, focus restoration and prototype controls isolated from product UI; no console or page errors."
+    },
+    "evidence": [
+      { "file": "evidence/product-onboarding-r3/b/desktop-step1.png", "caption": "Desktop step 1 puts the single required field and primary action on the first screen", "dimension": "visual_hierarchy" },
+      { "file": "evidence/product-onboarding-r3/b/desktop-rail.png", "caption": "Rail carries progress, plan, seats and role disclosure without competing with the form", "dimension": "ux_reasoning" },
+      { "file": "evidence/product-onboarding-r3/b/mobile-step1.png", "caption": "Mobile step 1 fits the whole required task in the first viewport", "dimension": "accessibility_responsiveness" }
+    ],
+    "critical_defects": [
+      "The panel labels itself 'Step 1 of 2' while the rail shows three numbered steps (implementation/app.js:293 vs 219-256), a minor consistency issue."
+    ],
+    "strengths": [
+      "Shortest credible path: the required field is the first screen and description is deferred.",
+      "Clean accessibility evidence on both viewports (one h1, no unnamed controls, axe clean).",
+      "Failure, retry, at-limit, paused/resume and role-restriction states are implemented."
+    ]
+  },
+  "comparison": "Candidate A offers the deeper product analysis and more failure granularity, but Candidate B delivers the shorter first-run path, a cleaner mobile viewport and passing automated accessibility checks. Candidate A's serious contrast failures and welcome detour are the clearest differences; B is ahead on every dimension except design reasoning depth, where they tie.",
+  "limitations": "Screenshots cover only the first screen, so the invite, success, workspace and project views were judged from source and checks.json. Axe results are not a full WCAG audit; screen-reader behaviour, real invitation delivery and touch-target ergonomics were not measured."
+}

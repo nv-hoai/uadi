@@ -1,0 +1,105 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "subscription-settings-r2",
+  "blind": true,
+  "reviewed_at": "2026-11-07T04:51:10Z",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:10-30 declares the synthetic product name, prices, dates, proration rule and role visibility, and explicitly labels them placeholders rather than findings. The six owner questions and the deliberate over-limit cancellation policy are stated with their open questions (analysis.md:192-198).",
+      "ux_reasoning": "The page pairs plan and usage so the limit is visible beside the price, offers an in-page navigator and a two-step change dialog with a downgrade acknowledgement (analysis.md:49-84). It loses ground by keeping all plan comparison inside the change dialog and by splitting the routine money area into three similarly weighted tiles, so comparing plans is slower than in Candidate B.",
+      "design_judgment": "The trade-offs (hide actions vs show dead buttons, no invented annual urgency, cancellation separated but not buried) are argued at analysis.md:88-112. Two choices weaken it: the invoice rows offer a 'Download' control that only raises a toast (app.js:1878-1879), and the heavy fixed prototype panel sits inside the product frame.",
+      "visual_hierarchy": "The plan and usage cards are clean and readable (evidence plan-usage-desktop.png), but the 880px content column forces body copy to wrap and the three small tiles in 'Payment and invoices' flatten the hierarchy. The black prototype panel is visually louder than any product element on the left rail.",
+      "interaction_completeness": "Loading, load failure, empty invoices, near/at limit, past due, scheduled change with undo, card validation, simulated provider failure, busy and cancellation-gated states are implemented (analysis.md:149-166; app.js:474-560). Cancellation requires an acknowledgement before the destructive button enables.",
+      "accessibility_responsiveness": "checks.json shows zero unnamed controls but one serious target-size violation on two desktop nodes; mobile is clean and the mobile page has no horizontal overflow. Native <dialog> plus focus return on close (app.js:1700-1730) covers the keyboard basics; fixing the touch targets would raise this to 4.",
+      "implementation_quality": "A single 65KB app.js with clearly named render functions and a native dialog passes syntax and scripted interaction checks with no console or page errors; it is functional but large for the scope."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r2/a/plan-usage-desktop.png",
+        "caption": "Adjacent plan and usage cards with amber approaching-limit warning and plain consequence",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r2/a/invoices-desktop.png",
+        "caption": "Invoice history whose Download action only reports that downloads are not part of the prototype",
+        "dimension": "interaction_completeness"
+      },
+      {
+        "file": "evidence/subscription-settings-r2/a/cancel-desktop.png",
+        "caption": "Cancellation separated after a rule with explicit confirmation copy",
+        "dimension": "ux_reasoning"
+      },
+      {
+        "file": "evidence/subscription-settings-r2/a/toolbar-mobile.png",
+        "caption": "Collapsed prototype panel covering the member count and meter on mobile",
+        "dimension": "visual_hierarchy"
+      }
+    ],
+    "critical_defects": [
+      "Invoice 'Download' buttons are a dead end: they only show a toast (app.js:1878-1879), so the labelled control does not deliver what it promises.",
+      "Desktop axe target-size violation on two nodes (checks.json)."
+    ],
+    "strengths": [
+      "Most explicit fact/assumption separation and risk register of the pair",
+      "Plan and usage paired so the member limit is legible at a glance",
+      "Native dialog focus handling and Esc blocked while a save is in flight"
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:16-25 lists every synthetic price, date, proration assumption and over-limit policy, calls them implementation choices rather than product facts, and names the role split. The one policy judgement (existing members stay, invites blocked) is flagged for confirmation (analysis.md:178).",
+      "ux_reasoning": "The page orders summary -> inline plans -> payment/invoices -> separated cancellation (analysis.md:36-58), separates monthly/annual price display from a real cadence change, and treats upgrade and downgrade reviews differently with an exact shortfall when a downgrade does not fit (analysis.md:75-84). This gives the owner plan comparison and commitment review without leaving the page.",
+      "design_judgment": "The trade-offs are unusually explicit (analysis.md:59-92): no fake download, a separate review for cadence, conservative cancellation friction, and plan cards that stay visible to members. The design avoids urgency devices and labels prototype actions honestly.",
+      "visual_hierarchy": "The desktop composition is the strongest of the pair: one dominant summary, a clear section rhythm, inline plan cards with tabular figures and restrained green accents (evidence summary-desktop.png, plans-desktop.png). The light secondary text is a contrast failure rather than a hierarchy failure, and is scored under accessibility.",
+      "interaction_completeness": "Implemented states cover loading, load error, empty payment, empty invoices, at-limit, scheduled changes with undo, canceled with reactivate, inline validation, unresolved payment after a card update and pending confirmations (analysis.md:121-139). The invoice 'View' action opens a receipt detail rather than pretending to download (app.js:690-696).",
+      "accessibility_responsiveness": "checks.json reports six serious color-contrast failures at both desktop and mobile plus an aria-prohibited-attr violation on mobile; the muted secondary text is visibly light in evidence plans-desktop.png. Controls are named and mobile has no horizontal overflow, but the contrast failures keep this at adequate.",
+      "implementation_quality": "A single 58KB app.js with scoped helpers and a long but structured template layer passes syntax and a 71-check scripted run with no console errors; the structure is workable though monolithic."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r2/b/summary-desktop.png",
+        "caption": "Single summary panel combining plan, price, next payment and seat consequence",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r2/b/plans-desktop.png",
+        "caption": "Inline plan comparison with price-display toggle; light secondary text shows the contrast issue",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r2/b/plans-mobile.png",
+        "caption": "Mobile plan cards and price-display control preserve the comparison order",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "Six serious color-contrast failures on both desktop and mobile (checks.json), including the small plan price notes.",
+      "Mobile aria-prohibited-attr violation (checks.json)."
+    ],
+    "strengths": [
+      "Inline plan comparison with display and commitment clearly separated",
+      "Distinct upgrade and downgrade review models with exact over-limit blocking",
+      "Honest payment/cancellation copy and an unresolved-payment state that never fakes success"
+    ]
+  },
+  "comparison": "Candidate B has the more complete surface and the stronger composition: inline plan comparison, a separate display-vs-commit cadence control and differentiated upgrade/downgrade reviews. Candidate A is cleaner on automated accessibility (one touch-target issue versus B's six contrast failures) and more conservative about downloads, but its comparison workflow is hidden behind a dialog and its prototype panel intrudes, so B wins overall.",
+  "limitations": "Only the default desktop and mobile states are captured; dialog, loading, error and cancellation screens could not be seen and were assessed from source and checks.json. No live interaction or assistive-technology testing was possible, and the sample prices/proration assumptions cannot be validated from the brief."
+}

@@ -1,0 +1,709 @@
+{
+  "schema_version": 2,
+  "study": {
+    "agent": "OpenCode general subagent, identical tools and settings in both conditions",
+    "model": "deepseek-v4.1 / deepseek-v4.1-flash (pinned)",
+    "date": "2026-11-06/2026-11-07",
+    "project_snapshot": "Empty static prototype scaffold v1 copied identically for every run",
+    "design": "Two-reviewer machine review of the exploratory pilot. Two blinded LLM reviewers graded all nine pairs in separate sessions, captured evidence crops, froze round-1 scores, exchanged evidence, and produced final scores before the condition mapping was revealed.",
+    "review_protocol": "two-reviewer-machine",
+    "review_frozen_at": "2026-11-07T04:57:07.689Z",
+    "review_rule": "Agreed integer scores are final. One-point splits are averaged and flagged. No two-point splits occurred.",
+    "human_review": "none"
+  },
+  "pairs": [
+    {
+      "pair_id": "subscription-settings-r1",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "baseline": {
+        "duration_seconds": 1518,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 918,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "subscription-settings-r2",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "baseline": {
+        "duration_seconds": 2416,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1405,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "subscription-settings-r3",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "baseline": {
+        "duration_seconds": 1608,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1993,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "product-onboarding-r1",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "baseline": {
+        "duration_seconds": 2426,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 2266,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "product-onboarding-r2",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "baseline": {
+        "duration_seconds": 1588,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1854,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "product-onboarding-r3",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "baseline": {
+        "duration_seconds": 2473,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 2120,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "operations-dashboard-r1",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "baseline": {
+        "duration_seconds": 2600,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 2587,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "operations-dashboard-r2",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "baseline": {
+        "duration_seconds": 2773,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 2187,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "operations-dashboard-r3",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "baseline": {
+        "duration_seconds": 2283,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 1,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 1,
+              "implementation_quality": 2
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 2914,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; same model family as the builder",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 2
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

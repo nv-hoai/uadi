@@ -1,0 +1,101 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "product-onboarding-r1",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:55:00+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:16-33 separates supplied facts, seven labelled assumptions (owner seat, pending invites, Admin settings) and nine unknowns, and index.html:257-275 mirrors the brief except for the Admin settings claim that is flagged in the assumptions. Only clearer confirmation of that inference would make it stronger.",
+      "ux_reasoning": "analysis.md:45-63 and 73-75 define a one-field project-first path with an optional invite step, skip on both steps and a resume card; index.html:167-170 makes Open project primary. The 2-character minimum in app.js:313-317 is the one gratuitous validation rule; removing it would make the path strictly shorter.",
+      "design_judgment": "analysis.md:79-101 records eight decisions with explicit costs (invitations less discoverable, descriptions missing, no upgrade path) and alternatives, which is the strongest trade-off treatment in the pair. A direct comparison of mobile role-guide placement would strengthen it further.",
+      "visual_hierarchy": "desktop-stepper-form.png shows a clear h1 and a balanced form/rail split, but mobile-controls-overlap.png shows the floating Prototype controls bar covering the 'Your workspace at a glance' heading. Reserving space for the demo bar or collapsing it on mobile would raise this.",
+      "interaction_completeness": "app.js:326-370 and 686-758 implement create and invite validation, loading, partial invitation failure with retry, seat-limit disabling and reload persistence; checks.json reports no console or page errors. Showing the failure and resume screens in the supplied screenshots would make completeness easier to verify.",
+      "accessibility_responsiveness": "checks.json:34 reports 2 controls without an accessible name, while axe found 0 violations and index.html:74-84,125-129 supplies labels, aria-describedby and progressbar semantics. Naming the two controls and fixing the mobile overlap would raise this.",
+      "implementation_quality": "app.js is dependency-free, escaped and split by view; index.html carries semantic landmarks and demo controls are isolated from the product flow. The 1-character-name rejection and two unnamed controls are the only maintainability/quality blemishes."
+    },
+    "evidence": [
+      {
+        "file": "evidence/product-onboarding-r1/a/desktop-stepper-form.png",
+        "caption": "Desktop: two-step rail, a single-question h1 and one required field",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/product-onboarding-r1/a/desktop-seat-meter.png",
+        "caption": "Desktop rail: workspace glossary, Starter 1-of-5 meter and Team 25 footnote",
+        "dimension": "product_understanding"
+      },
+      {
+        "file": "evidence/product-onboarding-r1/a/mobile-controls-overlap.png",
+        "caption": "Mobile: floating Prototype controls bar covers the workspace-at-a-glance heading",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "Floating Prototype controls bar obscures the 'Your workspace at a glance' heading in the mobile screenshot.",
+      "Two controls lack an accessible name in checks.json (desktop and mobile).",
+      "Project-name validation rejects a 1-character name (app.js:313-317) although the brief sets no minimum."
+    ],
+    "strengths": [
+      "Explicit facts/assumptions/unknowns model with the owner-seat interpretation disclosed.",
+      "Project-first path with optional invitations, skip/resume card and Open project as the primary action.",
+      "Partial invitation failure, retry, seat-limit disabling and reload persistence are implemented, not only described."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:18-37 separates facts, seven assumptions and eight unknowns; §3 states 'You stay the Owner' and offers only Admin/Member invitations. Confirming whether pending invites reserve a seat (assumption 4) would make the model stronger.",
+      "ux_reasoning": "analysis.md:42-58 and 83-91 put one required name field first and invitations after project creation; app.js:315-334 validates only empty or over-long names. The third rail item, 'Start working', is a destination rather than a setup step; labelling it as such would sharpen the path.",
+      "design_judgment": "analysis.md:166-189 pairs each activation risk with a mitigation, and §2 justifies project-first and the deliberate omission of a welcome screen. Adding an explicit cost line per decision, as Candidate A does, would raise this.",
+      "visual_hierarchy": "desktop-heading-form.png shows a confident serif hierarchy, and desktop-step-rail.png keeps the three steps and plan summary secondary. mobile-controls-overlap.png shows the floating Prototype controls bar covering the NEXT callout, so the mobile composition is visibly interrupted; collapsing that bar on mobile would raise this.",
+      "interaction_completeness": "app.js:380-535 implements per-row sending states, partial failure with retry, seat metering and save/exit; checks.json reports 0 console errors and no unnamed controls. Screenshots of failure, success and resume states would make it verifiable from the packet.",
+      "accessibility_responsiveness": "checks.json shows 0 axe violations and 0 unnamed controls at both viewports, and index.html:38-39 provides polite live regions plus a skip link. The mobile overlay is treated under visual hierarchy rather than as a semantic defect; collapsing it would still improve the viewport result.",
+      "implementation_quality": "app.js:1290-1360 uses delegated events and escaped template rendering; index.html is minimal and semantic. The missing transcript.md referenced in analysis.md:239 prevents fully verifying the claimed extra checks."
+    },
+    "evidence": [
+      {
+        "file": "evidence/product-onboarding-r1/b/desktop-heading-form.png",
+        "caption": "Desktop: serif heading, one required name field, optional description and next-step callout",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/product-onboarding-r1/b/desktop-step-rail.png",
+        "caption": "Desktop: three-step rail and compact workspace summary",
+        "dimension": "ux_reasoning"
+      },
+      {
+        "file": "evidence/product-onboarding-r1/b/mobile-controls-overlap.png",
+        "caption": "Mobile: floating Prototype controls bar covers part of the NEXT callout",
+        "dimension": "visual_hierarchy"
+      }
+    ],
+    "critical_defects": [
+      "Floating Prototype controls bar covers part of the NEXT callout on mobile.",
+      "analysis.md:239 cites a transcript.md that is not in the packet, so its extra verification claims are unverifiable."
+    ],
+    "strengths": [
+      "Role cards and seat meter appear before role assignment, with Owner explicitly not invitable.",
+      "Complete state coverage including partial invitation failure, per-row retry and a paused workspace.",
+      "Clean semantics: one h1 per view, zero unnamed controls and zero axe violations at both viewports."
+    ]
+  },
+  "comparison": "Candidate A has the more rigorous product and trade-off write-up and a very direct one-field path, while Candidate B is equally complete and visually stronger, with cleaner heading and control semantics. Both implement project-first onboarding, optional invitations, skip/resume and recoverable failure; Candidate B's mobile control overlap is offset by its zero-violation accessibility result and stronger typographic hierarchy.",
+  "limitations": "Only initial-state screenshots were supplied, so invite, success, failure, limit and resume screens could not be visually assessed. Email delivery, backend behavior, screen readers, cross-browser rendering and the extra test transcripts referenced by both candidates were unavailable; prototype control overlays are demo chrome, which limits visual conclusions."
+}

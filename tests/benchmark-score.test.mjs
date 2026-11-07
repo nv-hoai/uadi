@@ -117,14 +117,14 @@ test("recognizes the minimum multi-model protocol only with three distinct repet
   assert.deepEqual(result.protocol_assessment.model_families.sort(), ["family-a", "family-b"]);
 });
 
-test("an LLM-only panel cannot qualify a confirmatory study", () => {
+test("an LLM-only panel qualifies a machine-reviewed confirmatory study but not a human review", () => {
   const input = fixture();
   input.pairs = [];
   for (const model_family of ["family-a", "family-b"]) {
     for (const task_id of ["subscription-settings", "product-onboarding", "operations-dashboard"]) {
       for (const repetition of [1, 2, 3]) {
         const pair = fixture().pairs[0];
-        const judge = (id, score) => reviewer(id, score, { type: "llm", independent: true, provenance: "judge-model pass 1" });
+        const judge = (id, score) => reviewer(id, score, { type: "llm", independent: true, provenance: "machine reviewer pass 1" });
         input.pairs.push({
           ...pair,
           pair_id: model_family + "-" + task_id + "-" + repetition,
@@ -140,10 +140,40 @@ test("an LLM-only panel cannot qualify a confirmatory study", () => {
   }
   const result = scoreBenchmark(input);
   assert.equal(result.protocol_assessment.qualified_model_families.length, 2);
+  assert.equal(result.protocol_assessment.machine_review_minimum_met, true);
   assert.equal(result.protocol_assessment.human_review_minimum_met, false);
-  assert.equal(result.protocol_assessment.confirmatory_minimum_met, false);
-  assert.ok(result.protocol_assessment.llm_judge_passes > 0);
+  assert.equal(result.protocol_assessment.confirmatory_minimum_met, true);
+  assert.equal(result.protocol_assessment.evidence_tier, "confirmatory-machine");
+  assert.deepEqual(result.protocol_assessment.llm_reviewer_ids.sort(), ["J1", "J2"]);
   assert.ok(result.protocol_assessment.warnings.some((warning) => warning.includes("human-review minimum")));
+});
+
+test("does not qualify a confirmatory study when fewer than two reviewers are independent", () => {
+  const input = fixture();
+  input.pairs = [];
+  for (const model_family of ["family-a", "family-b"]) {
+    for (const task_id of ["subscription-settings", "product-onboarding", "operations-dashboard"]) {
+      for (const repetition of [1, 2, 3]) {
+        const pair = fixture().pairs[0];
+        const judge = (id, score) => reviewer(id, score, { type: "llm", independent: false });
+        input.pairs.push({
+          ...pair,
+          pair_id: model_family + "-" + task_id + "-" + repetition,
+          task_id,
+          model_family,
+          model_version: model_family + "-v1",
+          repetition,
+          baseline: { duration_seconds: 100, reviewers: [judge("J1", 2), judge("J2", 2)] },
+          uadi: { duration_seconds: 90, reviewers: [judge("J1", 3), judge("J2", 3)] }
+        });
+      }
+    }
+  }
+  const result = scoreBenchmark(input);
+  assert.equal(result.protocol_assessment.machine_review_minimum_met, false);
+  assert.equal(result.protocol_assessment.confirmatory_minimum_met, false);
+  assert.equal(result.protocol_assessment.evidence_tier, "exploratory-pilot");
+  assert.ok(result.protocol_assessment.warnings.some((warning) => warning.includes("Machine-review minimum")));
 });
 
 

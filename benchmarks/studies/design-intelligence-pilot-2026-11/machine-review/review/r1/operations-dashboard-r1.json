@@ -1,0 +1,75 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "operations-dashboard-r1",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:47:42+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md §2 defines orders by promised-delivery window, distinguishes attempt counts from orders affected (164 attempts / 149 orders / 32 final failures), and states the comparison-unavailable rule; the UI repeats these definitions under each KPI (crop desktop-signal-kpis.png).",
+      "ux_reasoning": "The journey is explicit in analysis.md §3 and real in the UI: signal band → KPI → outcome/region → scoped drawer. app.js:1428 keeps drill scope in chips rather than mutating dashboard filters, and app.js:1495 gives the drawer its own empty state, which preserves context on the secondary investigation path.",
+      "design_judgment": "analysis.md §4 justifies the full-scale 0–100% rate axis plus a separate symmetric pp-change chart instead of truncating the main axis (screenshot: two coordinated charts), and rejects a heat map for the region table. The trade-offs are named rather than hidden.",
+      "visual_hierarchy": "Desktop composition is strong: one red-edged 'Needs attention' band, three equal KPI cards with units and definitions, then trend/outcomes and a region table (crop desktop-signal-kpis.png). Scan order is unambiguous and density is comfortable.",
+      "interaction_completeness": "States are genuinely rendered in app.js:1236–1350 (skeleton with aria-busy, stale/partial banners, error panel, no-data, computed empty result) and the drawer adds search, sort, pagination and timeline (app.js:1477–1549). Nothing critical is only described.",
+      "accessibility_responsiveness": "test-output/checks.json reports 10 colour-contrast nodes and 2 target-size violations on both viewports, and mobile horizontal_overflow=true with document_width 602 at a 390px client; the crop mobile-region-table.png shows the region table cut at 'RATE CHANGE' (the scroll hint is present, but the page itself overflows).",
+      "implementation_quality": "Vanilla HTML/CSS/JS is well structured with no console or page errors, but the mobile page overflow (602px document at 390px) and the contrast failures are shipped defects rather than analysis gaps."
+    },
+    "evidence": [
+      { "file": "evidence/operations-dashboard-r1/a/desktop-signal-kpis.png", "caption": "Insight band plus three KPI cards with units, definitions, deltas and drill actions", "dimension": "visual_hierarchy" },
+      { "file": "evidence/operations-dashboard-r1/a/mobile-region-table.png", "caption": "Mobile region table clipped at 'RATE CHANGE'; document is 602px wide at a 390px viewport", "dimension": "accessibility_responsiveness" }
+    ],
+    "critical_defects": [
+      "Mobile page overflows horizontally: checks.json reports document_width 602 vs client_width 390, and the mobile crop shows the region table cut mid-column.",
+      "axe reports 10 colour-contrast violations and 2 target-size violations in both desktop and mobile renders (test-output/checks.json)."
+    ],
+    "strengths": [
+      "Signal-first hierarchy with the comparison baseline in the same band as the headline.",
+      "Complete state model, including a genuinely computed empty filter result and a drawer-level empty/search state.",
+      "Region/day/outcome drills carry explicit scope chips and do not silently mutate the dashboard filters."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md §2 defines each metric with population and denominator, states that orders placed do not reconcile with delivered orders, and invents no target (§2 'No supplied target'); the limitations in §7 are concrete.",
+      "ux_reasoning": "analysis.md §3–4.6 describes a scan → worth-checking → region → order flow that the UI implements (screenshot: 'Worth checking' links, region rows, order table). Day drill sets an explicit one-day scope with a 'Daily view' badge, so context is never silently narrowed.",
+      "design_judgment": "analysis.md §4.2 explains plotting deviation from the previous-period average with a labelled zero line rather than a 0–100% or truncated rate axis; the crop desktop-kpis-chart.png shows that choice rendered and readable, and §4.7 names the status-filter trade-off rather than hiding it.",
+      "visual_hierarchy": "Hierarchy is legible (accent-bordered rate card, then attempts, then volume) but the page is denser and uses smaller text than Candidate A, and the 'Worth checking' panel leaves a large empty tail below its last link in desktop-kpis-chart.png. Coherent, not elegant.",
+      "interaction_completeness": "All seven data states plus comparison-off are rendered in app.js:905–970 with recovery copy; the order table is inline with a details dialog and 'Show more'. The empty-order state is forced by the prototype control (app.js:818) rather than produced by a filter combination, which is the one weak spot.",
+      "accessibility_responsiveness": "Only one colour-contrast violation on each viewport and no page-level overflow at 390px (checks.json), and the mobile crop mobile-regions-orders.png shows tables contained with an explicit 'Scroll sideways' hint. Missing heading/section labels for the prototype bar and the empty forced state keep it below the top score.",
+      "implementation_quality": "No console or page errors, clean vanilla structure, and the mobile breakpoint genuinely re-renders the chart with a narrower viewBox; the responsive tables behave as claimed."
+    },
+    "evidence": [
+      { "file": "evidence/operations-dashboard-r1/b/desktop-kpis-chart.png", "caption": "KPI row, deviation-from-baseline chart with labelled zero line, and threshold-based 'Worth checking' panel", "dimension": "design_judgment" },
+      { "file": "evidence/operations-dashboard-r1/b/mobile-regions-orders.png", "caption": "Mobile region/order tables scroll inside their cards; no page-level horizontal overflow", "dimension": "accessibility_responsiveness" }
+    ],
+    "critical_defects": [
+      "The empty-order state is simulated only through the prototype control (index.html data-state 'empty-orders'; app.js:818), so a real filter combination that returns nothing is not demonstrated.",
+      "The 'Worth checking' panel has a large unused area below its links on desktop, weakening the otherwise tight grid."
+    ],
+    "strengths": [
+      "Deviation-from-baseline chart with a labelled zero line and a note that it is not a target.",
+      "Explicit status-filter scope note and a separate orders list, avoiding degenerate 100%/0% rates.",
+      "Clean mobile behaviour with in-panel table scrolling and no page overflow.",
+      "Factual 15-minute lag presented in the header, not as an alarm."
+    ]
+  },
+  "comparison": "Candidate A has the stronger desktop composition and a more complete investigation drawer, while Candidate B's deviation chart and threshold panel make the change easier to act on. Candidate B is also clearly better in measured accessibility and mobile behaviour (one contrast violation and no page overflow versus ten violations and a 602px document), which narrowly outweighs Candidate A's visual polish.",
+  "limitations": "Only default-state screenshots were supplied, so non-default states could not be visually verified (only their code and the candidates' own test output). axe covers only the rules it ran, and full-page crops render fixed-position prototype controls at their viewport position, which can overstate or shift apparent overlaps. Contrast ratios were not independently measured."
+}

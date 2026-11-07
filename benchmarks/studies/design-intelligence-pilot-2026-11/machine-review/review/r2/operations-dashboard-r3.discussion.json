@@ -1,0 +1,116 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "operations-dashboard-r3",
+  "round": 2,
+  "counterpart": "R1",
+  "responses": [
+    {
+      "candidate": "a",
+      "dimension": "design_judgment",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 3,
+      "position": "revise",
+      "reason": "R1's point is visible in the default render: 'Trend by day' opens with Order volume selected even though analysis.md and the KPI row declare on-time rate the primary metric, and there is no change-from-baseline view. That is a real inconsistency between the stated hierarchy and the default chart, so design judgment moves to 3.",
+      "evidence": "out/r2/evidence/operations-dashboard-r3/a/desktop-insight-kpis.png (Order volume tab active); analysis.md section 3."
+    },
+    {
+      "candidate": "a",
+      "dimension": "visual_hierarchy",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 3,
+      "position": "revise",
+      "reason": "R1's outcome crop shows the floating prototype pill sitting over the 'Delivered on time' row; my own r3 outcome crop shows the same. I had judged the underlying composition while discounting the overlay, but visual hierarchy must be judged from the rendered page, and a persistent control covering a KPI or outcome value is a compositional defect, so 3.",
+      "evidence": "out/r1/evidence/operations-dashboard-r3/a/desktop-outcomes-overlay.png; out/r2/evidence/operations-dashboard-r3/a/desktop-outcomes-regions.png."
+    },
+    {
+      "candidate": "a",
+      "dimension": "implementation_quality",
+      "round1_score": 3,
+      "counterpart_round1_score": 2,
+      "final_score": 2,
+      "position": "revise",
+      "reason": "R1's mobile crop shows the region table cut at 'FAILED AT' with no visible sideways hint while the document is 604px at a 390px client. Combined with the 22 desktop and 15 mobile contrast failures and the persistent control overlay, the shipped result has multiple avoidable defects, so 2 fits better than 3.",
+      "evidence": "out/r1/evidence/operations-dashboard-r3/a/mobile-regions-clipped.png; condition-a/test-output/checks.json."
+    },
+    {
+      "candidate": "b",
+      "dimension": "ux_reasoning",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "Neither R1's rationale nor its crops address the region table: the caption says 'Lowest rate first' (app.js 965) while rows are emitted in REGIONS order (app.js 937-962), starting with Central 95.4% instead of West 89.4%. The separate declines panel helps, but the main 'where' table's scan order is wrong, so 3.",
+      "evidence": "out/r2/evidence/operations-dashboard-r3/b/desktop-region-order.png; condition-b/implementation/app.js 937-965."
+    },
+    {
+      "candidate": "b",
+      "dimension": "visual_hierarchy",
+      "round1_score": 2,
+      "counterpart_round1_score": 3,
+      "final_score": 2,
+      "position": "maintain",
+      "reason": "R1 reads the empty right side as a spacious two-thirds chart. A DOM measurement of the rendered page shows the 12-column .grid is only 405px tall and contains only .card-chart, while .card-status starts at y=1098 outside it, because chartSVG's extra closing div (app.js 850) closes .grid early. The layout is structurally broken, not merely spacious.",
+      "evidence": "out/r2/evidence/operations-dashboard-r3/b/desktop-broken-grid.png; condition-b/implementation/app.js 845-853; rendered boxes .grid [28,659,1224,405] vs .card-status [28,1098,1224,408]."
+    },
+    {
+      "candidate": "b",
+      "dimension": "interaction_completeness",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "The unsorted region table is a predictable-behaviour failure: the panel promises lowest-first order and delivers fixed array order. Search, paging and sorting in the orders view are real, but this visible mis-ordering keeps interaction completeness at 3.",
+      "evidence": "condition-b/implementation/app.js 937-965; out/r2/evidence/operations-dashboard-r3/b/desktop-region-order.png."
+    },
+    {
+      "candidate": "b",
+      "dimension": "accessibility_responsiveness",
+      "round1_score": 2,
+      "counterpart_round1_score": 3,
+      "final_score": 2,
+      "position": "maintain",
+      "reason": "I accept that there is no page-level horizontal overflow, which R1's checks and crops support. checks.json still reports two contrast and four label-content-name-mismatch violations on both viewports, and four serious name mismatches are not a minor residue, so 2 stands.",
+      "evidence": "condition-b/test-output/checks.json."
+    },
+    {
+      "candidate": "b",
+      "dimension": "implementation_quality",
+      "round1_score": 2,
+      "counterpart_round1_score": 3,
+      "final_score": 2,
+      "position": "maintain",
+      "reason": "R1 notes the visible empty column and overlay but not the cause: the stray closing div in chartSVG (app.js 850) closes the grid, pushing the status, region and declines cards out of the 12-column layout. That structural markup defect plus the unsorted region table supports 2.",
+      "evidence": "condition-b/implementation/app.js 845-853; out/r2/evidence/operations-dashboard-r3/b/desktop-broken-grid.png."
+    }
+  ],
+  "final_scores": {
+    "candidate_a": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 1,
+      "implementation_quality": 2
+    },
+    "candidate_b": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 2
+    }
+  },
+  "differences_remaining": [
+    "Candidate B ux_reasoning: final 3 vs R1 4. The region table caption promises a lowest-first sort that the rows do not apply.",
+    "Candidate B visual_hierarchy: final 2 vs R1 3. The 12-column grid is closed early by markup, so the status/region/declines cards escape the intended layout.",
+    "Candidate B interaction_completeness: final 3 vs R1 4. The region table's promised ordering is a predictable-behaviour failure.",
+    "Candidate B accessibility_responsiveness: final 2 vs R1 3. Four serious name mismatches and two contrast nodes remain.",
+    "Candidate B implementation_quality: final 2 vs R1 3. The stray closing div at app.js 850 is a structural rendering bug, not just an empty column."
+  ],
+  "summary": "Candidate A lost a point on design judgment, visual hierarchy and implementation after R1's crops showed the volume-first default trend, the prototype overlay and the clipped mobile region table, while its product, UX and interaction scores stand. Candidate B's five disputed dimensions stay unchanged because the broken grid and unsorted region table are stronger evidence than R1's reading; Candidate A still wins the pair."
+}

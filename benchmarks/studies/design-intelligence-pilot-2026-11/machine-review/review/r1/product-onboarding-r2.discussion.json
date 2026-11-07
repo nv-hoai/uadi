@@ -1,0 +1,62 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "product-onboarding-r2",
+  "round": 2,
+  "counterpart": "R2",
+  "responses": [
+    {
+      "candidate": "a",
+      "dimension": "interaction_completeness",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 4,
+      "position": "revise",
+      "reason": "Re-checking the brief after reading R2's state list, the requirement is a recoverable invitation failure, not partial delivery. app.js:794-857 preserves every address on failure and offers Retry or Continue without inviting, and the batch-role model is internally consistent; my earlier 3 penalised an unrequested per-address success state.",
+      "evidence": "inputs/r1/product-onboarding-r2/condition-a/implementation/app.js:794-857; inputs/r1/product-onboarding-r2/condition-a/analysis.md:129"
+    },
+    {
+      "candidate": "a",
+      "dimension": "accessibility_responsiveness",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 3,
+      "position": "revise",
+      "reason": "R2's mobile-overlap.png makes clear that the floating prototype panel covers the Description label's 'Optional' tag at 390px, which is relevant viewport behavior rather than only composition. I had counted that defect solely under visual hierarchy and left accessibility at 4; that split was inconsistent.",
+      "evidence": "out/r2/evidence/product-onboarding-r2/a/mobile-overlap.png; inputs/r1/product-onboarding-r2/condition-a/screenshots/mobile.png"
+    },
+    {
+      "candidate": "b",
+      "dimension": "design_judgment",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "analysis.md:55-61 and :106 show a project-first rationale and invite-gate mitigations, but the welcome screen (app.js:204-222) and the 3-invite cap (app.js:11,335-336) are material choices with no stated cost or alternative. Candidate A's nine costed decisions remain the stronger design rationale, so I keep 3.",
+      "evidence": "inputs/r1/product-onboarding-r2/condition-b/analysis.md:55-61,104-113; inputs/r1/product-onboarding-r2/condition-b/implementation/app.js:11,204-222,335-336"
+    }
+  ],
+  "final_scores": {
+    "candidate_a": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "candidate_b": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    }
+  },
+  "differences_remaining": [
+    "candidate_b.design_judgment: R1 final 3 vs R2 4; R1 maintains 3 because the welcome screen and 3-invite cap are not costed in the analysis."
+  ],
+  "summary": "I revised Candidate A's accessibility to 3 after accepting that the mobile bar obscures the Description label, and revised A's interaction completeness to 4 because the brief requires a recoverable invitation failure rather than partial delivery. I kept Candidate B's design judgment at 3 because the welcome screen and 3-invite cap are still not weighed as costs."
+}

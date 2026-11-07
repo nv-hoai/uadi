@@ -1,0 +1,76 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "product-onboarding-r1",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:49:16+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md separates supplied facts (lines 8-14), seven labelled assumptions including the load-bearing owner-seat reading (line 18) and the Admin settings inference flagged as needing confirmation (line 20), and ten explicit unknowns (lines 26-33); the UI copy follows that declared assumption (implementation/index.html:269).",
+      "ux_reasoning": "The path is create -> success -> optional invite (implementation/index.html:56-291) with skip on both steps (implementation/app.js:1091, 1114), a contextual resume card (implementation/app.js:873-912) and a deep-link guard in setView, so a solo owner reaches a project without inviting. The only friction is an invented 2-character minimum (implementation/app.js:315) that rejects a valid one-character name.",
+      "design_judgment": "analysis.md §4 gives eight decisions with explicit costs, e.g. invitations being one click less discoverable (line 80), and reasons about moving the role guide below the form on mobile (line 89).",
+      "visual_hierarchy": "The desktop crops show one clear primary action and a calm two-column layout (evidence/desktop-form.png, desktop-rail.png), but the rail is denser than the form and at 390px the floating 'Prototype controls' bar covers the 'Your workspace at a glance' heading (mobile-overlap.png). A less dense mobile rail and non-overlapping demo chrome would raise this to 4.",
+      "interaction_completeness": "Eight demo states are selectable (implementation/index.html:396-405); project-creation failure (implementation/app.js:352-365), partial invitation failure with retry (implementation/app.js:749+) and seat-limit disabling are implemented, not merely described.",
+      "accessibility_responsiveness": "checks.json reports 2 controls without an accessible name in both viewports; fieldsets with legends, a progressbar meter and reduced-motion support are present (implementation/app.js:508-520). Naming every control and keeping the demo panel out of content flow would raise this.",
+      "implementation_quality": "A 1,251-line IIFE with esc() on interpolated values, guarded localStorage (implementation/app.js:106-125) and view-scoped render functions; no dependencies or console errors."
+    },
+    "evidence": [
+      { "file": "evidence/product-onboarding-r1/a/desktop-form.png", "caption": "Desktop create step with one required field, collapsed optional description and the skip action", "dimension": "ux_reasoning" },
+      { "file": "evidence/product-onboarding-r1/a/desktop-rail.png", "caption": "Context rail states the workspace model and Starter 1-of-5 seats before action", "dimension": "product_understanding" },
+      { "file": "evidence/product-onboarding-r1/a/mobile-overlap.png", "caption": "At 390px the floating prototype bar covers the 'Your workspace at a glance' heading", "dimension": "visual_hierarchy" }
+    ],
+    "critical_defects": [
+      "checks.json records 2 controls without an accessible name on both desktop and mobile.",
+      "Mobile prototype-controls bar overlaps the 'Your workspace at a glance' heading at 390px (evidence .../a/mobile-overlap.png).",
+      "Project-name validation rejects names shorter than 2 characters although the brief only requires a name."
+    ],
+    "strengths": [
+      "Facts, assumptions and unknowns are clearly separated, including the owner-seat interpretation.",
+      "Activation is preserved: success is reached before the optional invitation step.",
+      "Create failure, partial invitation failure, retry, seat limit and resume are implemented."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md separates facts (lines 5-16), assumptions (18-26) and unknowns (28-37), and the role table keeps Admin outside billing/deletion without claiming settings rights (line 112).",
+      "ux_reasoning": "Project-first ordering with a dynamic primary action - 'Continue without inviting' when empty, 'Send N invitations' when filled (implementation/app.js:402-429) - plus Save & exit and a paused-from resume (implementation/app.js:262-289). The optional invite step still sits before the 'project ready' screen, adding one surface before confirmation (implementation/app.js:984).",
+      "design_judgment": "analysis.md §2 'Why project-first' (lines 83-91) and the risk/mitigation set (166-188) name alternatives and costs, including the height role cards add (line 169).",
+      "visual_hierarchy": "desktop-form.png shows an editorial heading, one filled primary action and a quiet secondary exit; desktop-rail.png keeps progress and workspace facts subordinate, and mobile-form.png keeps the field and CTA within the first viewport.",
+      "interaction_completeness": "Per-row sending, sent and failed states with retry and partial failure (implementation/app.js:451-511), an Owner/Admin/Member preview with a Member gate (implementation/app.js:1261-1274), seat cap and empty states are implemented.",
+      "accessibility_responsiveness": "checks.json: one h1, zero controls without an accessible name, axe 0 violations on both viewports; skip link, aria-pressed segmented control, live regions and focus-to-heading are present (implementation/index.html:13,46-50). The only blemish is the 12.5px 'Save & exit' text link with no padding (implementation/styles.css:628-635), a sub-24px tap target on mobile.",
+      "implementation_quality": "Event delegation (implementation/app.js:1361) with epoch guards on async work (implementation/app.js:342-348), escapeHtml on interpolated strings, guarded storage and a pagehide save (implementation/app.js:1455); a 73-line shell with rendered views keeps it maintainable."
+    },
+    "evidence": [
+      { "file": "evidence/product-onboarding-r1/b/desktop-form.png", "caption": "Desktop create card with editorial hierarchy, one required field and a single filled primary action", "dimension": "visual_hierarchy" },
+      { "file": "evidence/product-onboarding-r1/b/desktop-rail.png", "caption": "Rail labels the required step, optional invitation and destination before action", "dimension": "ux_reasoning" },
+      { "file": "evidence/product-onboarding-r1/b/mobile-form.png", "caption": "Mobile step 1 keeps the name field and CTA in the first viewport", "dimension": "accessibility_responsiveness" }
+    ],
+    "critical_defects": [
+      "The 'Save & exit' control is a 12.5px text link with zero padding (styles.css:628-635), below the 24px minimum target size on mobile."
+    ],
+    "strengths": [
+      "Strong editorial hierarchy and a clean single-focus card on both viewports.",
+      "Dynamic primary action adapts to whether invitations have been entered.",
+      "Per-row invitation status, partial failure and retry are implemented with role preview gates."
+    ]
+  },
+  "comparison": "Candidate B has the stronger first screen and the cleaner accessibility evidence (one h1, no unnamed controls, axe clean), while Candidate A matches it on product reasoning and ships a few more recovery states such as project-creation failure and a deep-link guard. Both keep the solo path unblocked; B edges ahead on visual hierarchy and verified accessible naming.",
+  "limitations": "Only step-1 desktop and mobile screenshots were supplied, so later screens were judged from source and checks.json rather than visually. Touch-target sizes, screen-reader behaviour and real async delivery could not be measured; the floating prototype controls are demo chrome and may not reflect product UI."
+}

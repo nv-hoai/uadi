@@ -1,0 +1,50 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "product-onboarding-r3",
+  "round": 2,
+  "counterpart": "R2",
+  "responses": [
+    {
+      "candidate": "a",
+      "dimension": "implementation_quality",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 4,
+      "position": "revise",
+      "reason": "The contrast and label-content-name failures are already fully counted under accessibility, and R2's maintainability evidence matches the code: tokenised CSS, guarded localStorage, focus management and no console or page errors. On re-check, the implementation itself is clean and the 3 was double-counting the accessibility defects.",
+      "evidence": "inputs/r1/product-onboarding-r3/condition-a/implementation/styles.css:7-24; inputs/r1/product-onboarding-r3/condition-a/implementation/app.js; inputs/r1/product-onboarding-r3/condition-a/test-output/checks.json"
+    },
+    {
+      "candidate": "b",
+      "dimension": "design_judgment",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 4,
+      "position": "revise",
+      "reason": "analysis.md:69-75 gives explicit alternatives and costs for one-field setup, optional invitations, role placement and rejecting a separate role screen, and :107 explicitly accepts role-card height on mobile. The 2-character and unique-name rules are disclosed as prototype-only at :28, so they are a declared product liberty rather than a missing design rationale.",
+      "evidence": "inputs/r1/product-onboarding-r3/condition-b/analysis.md:28,69-75,107"
+    }
+  ],
+  "final_scores": {
+    "candidate_a": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 4
+    },
+    "candidate_b": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    }
+  },
+  "differences_remaining": [],
+  "summary": "I revised Candidate A's implementation quality to 4 because its contrast and name failures are already scored under accessibility, and revised Candidate B's design judgment to 4 after re-reading its explicit reasons for rejecting a separate role screen and accepting role-card height. All round-1 differences are resolved."
+}

@@ -1,0 +1,107 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "operations-dashboard-r3",
+  "blind": true,
+  "reviewed_at": "2026-11-07T04:51:21Z",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 1,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md section 2 defines order volume by promised-window end, the rate as delivered-in-window divided by order volume, and failed attempts as events; the insight and KPI cards repeat the comparison basis and the 15-minute delay (evidence/operations-dashboard-r3/a/desktop-insight-kpis.png). No target, forecast or cause is invented.",
+      "ux_reasoning": "Multi-select region and status chips, a sortable regional table and a drawer that restates range, regions and statuses support both the shift-start and weekly-review journeys. Selecting a status subset hides the rate rather than showing a degenerate 0%/100%, and the insight names West and offers a direct order action.",
+      "design_judgment": "analysis.md section 5 justifies zero-based grouped bars, a 0-100% rate axis with its trade-off stated, an outcome stack and a sortable table; the rendered trend and outcome split follows that rationale (desktop-outcomes-regions.png). The 0.5 pp threshold is disclosed as a review aid, not an SLA.",
+      "visual_hierarchy": "The insight band, three KPI cards with sparklines and the trend/outcome row form a clear scan path (desktop-insight-kpis.png), with the regional table and definitions in a sensible order. The floating Prototype controls pill covers outcome values in the capture, but the underlying composition is the strongest of the three pairs.",
+      "interaction_completeness": "Loading, stale, partial, no-data, error, empty drawer, invalid custom range and no-region states are all implemented (analysis.md section 7). Drawer paging and sorting and chart-day drill are present, and a filter change closes a stale drawer instead of leaving mismatched rows.",
+      "accessibility_responsiveness": "checks.json reports 22 serious contrast nodes on desktop (15 on mobile), a label/name mismatch, two target-size failures and a 604 px document at a 390 px client. Semantics, skip link and keyboard chart operation exist, but the measured failures are extensive and make the page weak under this dimension.",
+      "implementation_quality": "No console or page errors and the 1,547-line app is coherent, but the regional table widens the mobile page to 604 px and the 22 contrast failures point at unchecked colour tokens. The prototype overlay also covers content by default."
+    },
+    "evidence": [
+      {
+        "file": "evidence/operations-dashboard-r3/a/desktop-insight-kpis.png",
+        "caption": "West insight strip and three KPI cards with units and percentage-point deltas",
+        "dimension": "product_understanding"
+      },
+      {
+        "file": "evidence/operations-dashboard-r3/a/desktop-outcomes-regions.png",
+        "caption": "Grouped-bar trend, labelled outcome stack and sortable regional table; the prototype pill overlays outcome values",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/operations-dashboard-r3/a/mobile-left-390.png",
+        "caption": "Left 390 px of a 604 px-wide mobile capture: filter chips, insight and KPI cards",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "22 serious colour-contrast nodes on desktop and 15 on mobile, plus two target-size failures.",
+      "Mobile document is 604 px wide at a 390 px client, causing page-level horizontal scrolling.",
+      "The fixed Prototype controls pill overlays product values in the captured states."
+    ],
+    "strengths": [
+      "Multi-select region and status filters with pressed states.",
+      "Outcome mix and per-row order links make the 'where' question actionable without claiming cause.",
+      "Broad state coverage including invalid ranges and no-region selections."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 2
+    },
+    "rationale": {
+      "product_understanding": "analysis.md section 2 defines the rate denominator, attempt-level failures and the promised-window population, and the rate card displays the exclusion count ('34 excluded: 3 in transit, 31 failed-only'). The no-target and no-cause stance is applied consistently.",
+      "ux_reasoning": "The journey is complete and well signposted from headline to KPIs, chart, status, region, declines and orders. But the region table caption says 'Lowest rate first' (app.js 965) while rows render in REGIONS order (app.js 937-962) as Central 95.4%, East 92.4%, North 91.0%, South 91.3%, West 89.4% (desktop-region-order.png), so the 'where is the problem' scan starts in the wrong place; the separate declines panel partly compensates.",
+      "design_judgment": "analysis.md sections 4-6 give a sound rationale for the delivered-orders denominator, zero-based rates, hatch-pattern comparison bars, an 8/4 chart and status row, and a region/declines pairing. The design choices are appropriate even though the layout does not render as designed.",
+      "visual_hierarchy": "The chart card occupies 8 of 12 columns while the status card is pushed below it, leaving the entire right half of the row empty (desktop-broken-grid.png); the status, region and declines cards then run full width. This is a conspicuous composition failure, not a stylistic preference.",
+      "interaction_completeness": "All data states are implemented and the orders view keeps search, paging and sorting while filters change. The region table's promised lowest-first ordering is not applied, and the grid defect means the intended side-by-side status panel never appears, so behaviour falls short of the analysis.",
+      "accessibility_responsiveness": "checks.json shows two contrast nodes and four label-content-name-mismatch nodes, but no page-level horizontal overflow at 390 px and all 40 controls named. The findings are narrower than Candidate A's but still serious.",
+      "implementation_quality": "A stray closing div in chartSVG (app.js line 850) closes the 12-column .grid early: measured .grid height is 405 px and contains only .card-chart, with the status, region and decline cards rendered outside it. That markup bug breaks the designed layout and the region sort promise, despite clean code and no console errors."
+    },
+    "evidence": [
+      {
+        "file": "evidence/operations-dashboard-r3/b/desktop-broken-grid.png",
+        "caption": "Chart card at 8 of 12 columns with an empty right half; the status card is pushed to a full-width row below",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/operations-dashboard-r3/b/desktop-region-order.png",
+        "caption": "Regional table ordered Central, East, North, South, West despite the 'Lowest rate first' caption",
+        "dimension": "ux_reasoning"
+      },
+      {
+        "file": "evidence/operations-dashboard-r3/b/desktop-declines.png",
+        "caption": "Largest regional declines panel, which is correctly ranked and partially offsets the table ordering",
+        "dimension": "interaction_completeness"
+      },
+      {
+        "file": "evidence/operations-dashboard-r3/b/mobile-chart-region.png",
+        "caption": "Mobile stacking of KPIs, chart and status with no page-level overflow",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "Extra closing div in chartSVG (app.js 850) closes the .grid after the chart, so the status, region and declines cards escape the 12-column layout and the desktop shows a half-empty row.",
+      "Region table claims 'Lowest rate first' but renders rows in alphabetical REGIONS order (app.js 937-965).",
+      "Four label-content-name-mismatch nodes and two contrast nodes in both viewports."
+    ],
+    "strengths": [
+      "Exclusion count and attempt-event definitions make the rate auditable.",
+      "Correct 'Largest regional declines' ranking with explicit no-cause copy.",
+      "No page-level mobile overflow and the fewest contrast findings in this pair."
+    ]
+  },
+  "comparison": "Candidate A is the more finished product: correct drill paths, multi-select filters, all states and a coherent visual hierarchy, at the cost of extensive contrast failures and page overflow. Candidate B has a strong rationale, but its markup closes the 12-column grid after the chart and its regional table contradicts its own sort caption, producing a visibly broken desktop layout.",
+  "limitations": "Only the supplied screenshots, one desktop and one mobile automated check run, and the source were available; hover, focus traps, keyboard traversal, live state switching, intermediate breakpoints and screen-reader behaviour could not be exercised. The axe results cover only the rules that ran, and fixed overlays appear at their capture positions in full-page screenshots."
+}

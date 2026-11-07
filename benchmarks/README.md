@@ -32,15 +32,20 @@ For every pair:
 6. Record elapsed time and checks actually executed. Do not count unrun tests as passing.
 7. Report missing runs, deviations, failed implementations and all exclusions. Never silently replace an inconvenient result.
 
-### Review independence, repeated judging and labels
+### Review protocol: two-reviewer machine panel
 
-For a confirmatory result, use at least two human reviewers who did not produce either condition and who score independently. Record each reviewer with `"type": "human"` and `"independent": true`; the scorer will not count a panel without both fields toward the confirmatory human-review minimum. Two model calls, multiple models from one provider, or multiple calls in one session are not independent human reviewers and must be recorded with `"type": "llm"`. They may be used as supplementary exploratory judging only.
+Every study reported from this repository uses the two-reviewer machine review in `docs/MACHINE-REVIEW.md`. The short version:
 
-For an LLM-judge panel, run at least **three separate judge passes per pair**. Each pass must use a fresh context, the same complete evidence packet, the same rubric and the same candidate order; do not let judges see previous scores or notes. Use stable reviewer IDs (for example, J1, J2, J3), record `"type": "llm"` and an optional `provenance` string (model/version and pass identifier), and retain each pass independently. Three passes from one model are repeated measurements, not three independent human reviewers and not a substitute for the human panel. The scorer reports LLM judge passes separately and never counts them toward the human-review minimum.
+1. Prepare two identical blinded packets per pair (Candidate A/B) with no condition names, workspace paths, transcripts or `mapping.json`.
+2. Two reviewers grade independently in separate sessions, capture at least two evidence crops per candidate per pair, and write a cited rationale for every dimension.
+3. Freeze round 1 by hashing every result before either reviewer sees the other.
+4. Exchange scores and evidence. Each reviewer either maintains a score with evidence or revises it because the other evidence changed the judgment.
+5. Agreed integer scores are final. One-point splits are averaged and flagged; two-point splits need an optional chair.
+6. Reveal the condition mapping only after discussion files are written, then publish scores, splits and evidence.
 
-Prevent arm-label swaps by using the exact stable labels **Candidate A** and **Candidate B** in every prompt and in every evidence filename. Candidate A always means the contents of `blind/condition-a`; Candidate B always means `blind/condition-b`. Do not rename these candidates X/Y, infer their identity from content, or change the mapping between judge passes. The coordinator-only `mapping.json` maps those folders to baseline/UADI; judges must not receive it while condition blinding is required. Use [JUDGE-PROMPT.md](JUDGE-PROMPT.md) verbatim and attach the same manifest to all passes. After all scores are locked, the coordinator applies the private mapping once. Never ask a judge to guess which candidate is UADI.
+Reviewers may be LLM sessions. Record `"type": "llm"` and `"independent": true` only when the session had no shared context and no access to the mapping. Human review is optional, recorded separately with `"type": "human"`, and is **not required** for a machine-reviewed study. The scorer's `machine_review_minimum_met` gate requires at least two independent reviewers per condition of either type; `confirmatory_minimum_met` additionally requires two pinned model families. `evidence_tier` reports where the study stands.
 
-Keep the condition-to-output mapping with a coordinator who does not score. The coordinator removes condition hints, verifies that the two candidate packets contain equivalent evidence types, and reveals the mapping only after all human scores and exploratory judge passes are locked.
+Use the exact stable labels **Candidate A** and **Candidate B** in every prompt and evidence filename. Candidate A always means the contents of `blind/condition-a`; Candidate B always means `blind/condition-b`. Do not rename them, infer their identity from content, or change the mapping between passes. Use [JUDGE-PROMPT.md](JUDGE-PROMPT.md) verbatim and give every reviewer the same manifest. The coordinator keeps `mapping.json`, verifies that both packets contain equivalent evidence types, and reveals the mapping once, after scores are frozen.
 
 
 ## Scoring rubric
@@ -78,7 +83,7 @@ node scripts/score-benchmark.mjs benchmarks/my-study.json
 npm test
 ~~~
 
-The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/losses, per-dimension deltas and elapsed-time change. It also assesses the sample against the exploratory (9-pair) and confirmatory multi-model (18-pair) minimums and lists missing model/task/repetition coverage. Confirmatory qualification additionally requires at least two eligible independent human reviewers per condition; `human_review_minimum_met` reports that gate, and `llm_judge_passes` counts supplementary LLM passes separately. This is a protocol check, not a statistical-significance test. It rejects incomplete scores, mismatched reviewer panels, missing reviewer provenance and malformed pairs. A negative time-change percentage means the UADI condition was faster; a positive value means it took longer.
+The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/losses, per-dimension deltas and elapsed-time change. It also assesses the sample against the exploratory (9-pair) and confirmatory multi-model (18-pair) minimums and lists missing model/task/repetition coverage. Confirmatory qualification requires at least two independent reviewers per condition (`machine_review_minimum_met`, human or LLM) plus two qualifying model families. `human_review_minimum_met` is an optional higher tier, and `evidence_tier` summarizes where the study stands. This is a protocol check, not a statistical-significance test. It rejects incomplete scores, mismatched reviewer panels, missing reviewer provenance and malformed pairs. A negative time-change percentage means the UADI condition was faster; a positive value means it took longer.
 
 ## Interpretation and reporting
 
@@ -92,6 +97,7 @@ The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/
 
 ## Recorded studies
 
-- [Design Intelligence Pilot (exploratory)](studies/design-intelligence-pilot-2026-11/README.md) — nine pairs across the three tasks with one pinned model family, three blinded LLM judge passes per pair and no independent human reviewers. It met the exploratory sample-size check but not the confirmatory multi-model or human-review minimum. A swapped-label control found a strong candidate-position effect, so its condition deltas are not evidence of improvement.
+- [Design Intelligence Pilot (exploratory)](studies/design-intelligence-pilot-2026-11/README.md) — nine pairs across the three tasks with one pinned model family. It met the exploratory sample-size check.
+- [Two-reviewer machine review of the pilot](studies/design-intelligence-pilot-2026-11/machine-review/README.md) — two blinded LLM reviewers, 110 evidence crops, frozen round-1 scores, an evidence exchange and a final decision. Evidence tier: `machine-reviewed-pilot`. Not human review.
 
-No confirmatory result has been recorded. The benchmark tasks and scorer make evaluation repeatable; they are not evidence of improvement by themselves.
+No human-reviewed or two-model-family confirmatory result has been recorded. The benchmark tasks and scorer make evaluation repeatable; they are not evidence of improvement by themselves.

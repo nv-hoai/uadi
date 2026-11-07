@@ -1,0 +1,77 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "operations-dashboard-r2",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:47:42+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:21–25 gives a metric contract per metric with unit, scope and comparison, and :36–43 separates supplied facts from prototype assumptions; the UI repeats denominators in the KPI cards (screenshot). The one-attempt-per-order assumption is disclosed rather than implied.",
+      "ux_reasoning": "The orient → judge → locate → investigate loop is coherent and filters are preserved in the dialog (analysis.md:100). Two gaps: the analysis states the chart is deliberately not interactive (:78), so chart segments cannot lead to orders, and the drill list is a fixed 20-row sample with no pagination (:100), which stops the investigation at scale.",
+      "design_judgment": "The 0–100% rate axis (:73) is an honest choice, but it leaves the primary chart a nearly flat line at 97.4% with no change-view alternative, so the main visual carries little decision value; the insight band does the work instead. The dark hero card and subordinate cards are well argued but the chart trade-off costs usefulness.",
+      "visual_hierarchy": "The dark rate card correctly dominates, but the chart panel contains a large empty plot area and the 'Orders by status' panel ends far above it, leaving a blank right column (crop desktop-rate-chart.png). The 97.8% point label also overlaps the series in an illegible dark-on-dark block.",
+      "interaction_completeness": "States are implemented in app.js:792–900 and the prototype panel: loading skeletons, stale, partial, error, no data, comparison-off and a true-zero empty result from West + Failed attempt. Status focus swaps the hero card and hides the rate rather than leaving a stale rate.",
+      "accessibility_responsiveness": "checks.json reports three label-content-name-mismatch violations on both viewports and mobile document_width 580 against client_width 390; crop mobile-regions.png shows the region table cut at 'FAILED ATT...' and a blank strip beside the cards.",
+      "implementation_quality": "No console or page errors and the structure is clean, but the shipped mobile layout overflows by 190px and the rate label collides with the line (crop desktop-rate-marker.png), both visible defects rather than spec omissions."
+    },
+    "evidence": [
+      { "file": "evidence/operations-dashboard-r2/a/desktop-rate-chart.png", "caption": "Primary 0–100% rate chart almost flat at 97.4%, with a large empty plot and blank right column under the status panel", "dimension": "visual_hierarchy" },
+      { "file": "evidence/operations-dashboard-r2/a/desktop-rate-marker.png", "caption": "The 97.8% point label overlaps the series in low-contrast dark green", "dimension": "implementation_quality" },
+      { "file": "evidence/operations-dashboard-r2/a/mobile-regions.png", "caption": "Mobile region table cut at the page edge; document width 580 at a 390 viewport", "dimension": "accessibility_responsiveness" }
+    ],
+    "critical_defects": [
+      "Mobile document width is 580px at a 390px viewport (test-output/checks.json), producing page-level horizontal overflow and a clipped region table.",
+      "Primary trend chart is effectively flat on a 0–100% axis with no change-from-baseline alternative, so the main visualization does not support the comparison decision.",
+      "Drill-down exposes only a 20-row sample with no pagination or full-list path (analysis.md:100)."
+    ],
+    "strengths": [
+      "Distinctive hero rate card with subordinate metric cards that encode hierarchy.",
+      "Genuine true-zero empty result (West + Failed attempt) with recovery actions.",
+      "Explicit metric contracts, evidence classes and a strong misleading-interpretations section."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:20–34 defines denominators, the promised-date basis and the case where the on-time rate is undefined; the UI refuses to compute a rate for a single status (screenshot; app.js:797). Partial coverage and stale data are treated as separate conditions.",
+      "ux_reasoning": "The headline sentence → KPI → small multiples → region → status → orders page flow carries context in chips, keeps the parent period visible when a day is drilled, and returns via Back (:54–61). The order drawer traps focus and restores it to the originating row.",
+      "design_judgment": "analysis.md:64–73 chooses separate small multiples with zero-based count bars and a full 0–100% rate axis, avoiding dual axes and truncation; the region table pairs 0–100% bars with exact numbers, and the status mix is labelled. Alternatives and their costs are stated.",
+      "visual_hierarchy": "Typography and spacing are disciplined, but the floating 'Prototype controls' panel covers the 5–6 Nov bars in the performance chart (crop desktop-chart-overlay.png), which interrupts both the chart and the scan path. The rate line is flat like Candidate A's but is at least annotated per point.",
+      "interaction_completeness": "All eight conditions including 'undefined metric' and 'empty drill-down' are rendered (app.js:1035–1402); chart days are focusable buttons, the order view keeps chips, and the status filter narrows counts while attempts remain attempt-level.",
+      "accessibility_responsiveness": "No page-level overflow on desktop and only 2px at 390px, and tables scroll inside their panels (crop mobile-regions-mix.png). axe still reports three contrast and three label-content-name-mismatch violations, so it is not clean.",
+      "implementation_quality": "No console or page errors and a maintainable vanilla structure, but the fixed prototype panel overlaps product content, which is a visible defect in the shipped default view."
+    },
+    "evidence": [
+      { "file": "evidence/operations-dashboard-r2/b/desktop-chart-overlay.png", "caption": "Floating prototype panel obscures the 5–6 Nov bars in the performance charts", "dimension": "visual_hierarchy" },
+      { "file": "evidence/operations-dashboard-r2/b/mobile-regions-mix.png", "caption": "Mobile region table and status mix render inside their cards without page overflow", "dimension": "accessibility_responsiveness" }
+    ],
+    "critical_defects": [
+      "The fixed prototype controls panel overlays and hides chart bars in the default desktop view.",
+      "axe reports three colour-contrast and three label-content-name-mismatch violations on both viewports (test-output/checks.json)."
+    ],
+    "strengths": [
+      "Honest, clearly separated small multiples with zero-based count axes and no dual axis.",
+      "Refuses to show a rate when the status filter makes the denominator undefined.",
+      "Order view preserves period, region, status and day as chips with a Back control and a focus-trapped detail drawer.",
+      "Responsive layout keeps tables inside their cards with no page-level overflow."
+    ]
+  },
+  "comparison": "Candidate A has the more distinctive visual identity and an equally strong product analysis, but its primary chart is uninformative, its chart is not a drill entry point, and its mobile page overflows by 190px. Candidate B is more complete as a working investigation surface — clickable chart days, an undefined-metric state, preserved context and contained mobile tables — despite an overlapping prototype panel.",
+  "limitations": "Only the default desktop and mobile screenshots were available, so non-default states could not be judged visually; conclusions about them rest on code and the candidates' self-reported checks. Fixed-position prototype controls appear mid-page in full-page captures, which complicates judging overlap. No screen-reader or independent contrast measurement was performed."
+}

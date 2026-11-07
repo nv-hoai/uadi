@@ -21,6 +21,14 @@ principles — read it before changing any guidance docs.
   (`fixes #<n>`) so it auto-closes. Open an issue before large changes to schemas,
   workflows, or architecture (see `CONTRIBUTING.md`).
 
+## Benchmark evidence
+
+Any benchmark result must follow the two-reviewer machine review in `docs/MACHINE-REVIEW.md`.
+Two reviewers work in separate blinded sessions, capture evidence crops, freeze round-1 scores
+before seeing each other, exchange evidence and publish a final decision with remaining splits.
+Human review is optional and may not be claimed unless it actually happened. A reported study
+must pass `machine_review_minimum_met`; do not describe a machine review as human review.
+
 ## Commands
 
 Root (after `npm ci`):
@@ -30,6 +38,7 @@ npm test                                        # node --test, runs tests/*.test
 npm run validate -- <artifact.json>             # JSON Schema validation (ajv)
 npm run prototype:check -- <uds.json>           # full UDS schema + renderer contract check
 npm run benchmark:prepare / npm run benchmark:score
+npm run review:validate -- --review <dir> --runs <dir>   # validate a two-reviewer machine review
 npm run install:skill -- --agent codex          # install skill into a host agent
 ```
 

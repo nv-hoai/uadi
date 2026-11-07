@@ -1,0 +1,63 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "subscription-settings-r2",
+  "round": 2,
+  "counterpart": "R2",
+  "responses": [
+    {
+      "candidate": "a",
+      "dimension": "ux_reasoning",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "R2's crop confirms the plan/usage row is clear, but it does not address the flow costs I scored: plan comparison exists only inside the change dialog, and routine billing is split across three similarly weighted tiles, so the decision content and the maintenance content scan at the same level. Candidate B keeps comparison inline and separates display from commitment, which is why A stays at strong rather than excellent.",
+      "evidence": "evidence/subscription-settings-r2/a/plan-usage-desktop.png; analysis.md:49-69 (IA: plan/usage, billing period, payment method, invoices); evidence/subscription-settings-r2/a/invoices-desktop.png"
+    },
+    {
+      "candidate": "a",
+      "dimension": "design_judgment",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "The trade-off reasoning is strong, but R2's rationale does not address the invoice 'Download' control, which only raises the toast 'Invoice downloads aren't part of this prototype' (app.js:1878-1879). Presenting a dead-end control as a download action is a contextual choice that erodes trust in a billing surface; removing it or replacing it with a 'View' action would justify 4.",
+      "evidence": "condition-a/implementation/app.js:1878-1879; evidence/subscription-settings-r2/a/invoices-desktop.png (Download labels); analysis.md:195 (download stubs noted as a risk)"
+    },
+    {
+      "candidate": "b",
+      "dimension": "design_judgment",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 3,
+      "position": "revise",
+      "reason": "R2's evidence exposed a real contradiction I had missed: analysis.md:59 says Free is not a selectable plan change and moves only through cancellation, yet the Free plan card renders an enabled 'Downgrade to Free' button wired to a plan review (data-action='review-plan', data-plan='free'), which would dead-end at the 12-over-3 seat block. The stated model and built UI should agree, so the judgment score drops to strong.",
+      "evidence": "out/r2/evidence/subscription-settings-r2/b/plans-free-downgrade.png (enabled button); condition-b/implementation/app.js:580-590 (plan review action for the Free card); analysis.md:59 (cancellation-only routing claim)"
+    }
+  ],
+  "final_scores": {
+    "candidate_a": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "candidate_b": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    }
+  },
+  "differences_remaining": [
+    "a/ux_reasoning: R2 scores 4, I keep 3 — plan comparison is confined to a dialog and three routine tiles flatten the decision/maintenance hierarchy.",
+    "a/design_judgment: R2 scores 4, I keep 3 — the Download control is a dead-end that only shows a 'not part of this prototype' toast."
+  ],
+  "summary": "I accepted R2's Free-downgrade finding for Candidate B, which brings its design judgment down to 3. I maintained both disputed Candidate A scores because R2's rationale did not address the dialog-only comparison or the dead-end Download control; Candidate B still wins the pair on composition, inline comparison and state coverage."
+}

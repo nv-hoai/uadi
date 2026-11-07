@@ -1,0 +1,94 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "subscription-settings-r2",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:48:44+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md lines 11-30 separate demo identity, prices and dates from supplied facts, name the owner/member boundary, and avoid claiming a successful charge. The over-limit cancellation consequence ('choose which three people keep access') is labelled as an assumption rather than research. Only a confirmed retention policy would sharpen it.",
+      "ux_reasoning": "Plan and usage sit side by side so price, renewal and 18/20 seats are answered in one glance (evidence/subscription-settings-r2/a/plan-and-usage.png), then billing, payment, invoices and a separated cancellation section. Upgrade, downgrade and cycle change each expose effective date, charge today and member-limit effect. The cancellation section is discoverable through the page navigation and its own heading.",
+      "design_judgment": "The two-step change dialog, cancellation separated but not buried, and a non-committal price comparison are well argued (analysis.md lines 88-118). The prototype also refuses to fake a downgrade that would exceed the member limit (app.js line 500 region) and labels proration as an estimate. Showing the plan comparison only inside the dialog is the main trade-off, and it is explained.",
+      "visual_hierarchy": "The summary/usage row is clear and the blue accent is restrained, but the page is dense with nested cards and the collapsed prototype bar covers the member usage meter on mobile (evidence/subscription-settings-r2/a/mobile-usage-overlay.png). Moving the demo bar out of content and reducing card nesting would raise this to 4.",
+      "interaction_completeness": "Past-due banner, failed card tile, loading/error, empty invoices, provider-failure alert, busy states, downgrade acknowledgement and a persistent scheduled-change notice are implemented (app.js lines 151-166 state table; analysis.md lines 170-177). The reported 36 assertions cover the critical paths. Adding a member-removal hand-off after a blocked downgrade would strengthen it.",
+      "accessibility_responsiveness": "checks.json reports no unnamed controls and no mobile axe violations, and the progressbar is labelled (app.js line 474). The desktop run still flags two target-size failures, and the mobile screenshot shows content obscured by the prototype bar. Fixing target sizes and the overlay would raise this to 4.",
+      "implementation_quality": "The 1997-line app.js and 2461-line styles.css follow consistent render helpers, with labelled landmarks, one h1 and no console errors. The file size and full-string re-rendering make maintenance harder, and the target-size issues show the CSS scale needs review. Splitting modules and auditing control sizes would raise this."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r2/a/plan-and-usage.png",
+        "caption": "Desktop plan summary beside member usage with '2 seats left' and the consequence sentence.",
+        "dimension": "ux_reasoning"
+      },
+      {
+        "file": "evidence/subscription-settings-r2/a/mobile-usage-overlay.png",
+        "caption": "Collapsed prototype-controls bar covering the amber member usage meter on mobile.",
+        "dimension": "visual_hierarchy"
+      }
+    ],
+    "critical_defects": [
+      "The collapsed prototype-controls bar covers the member usage meter on mobile (evidence mobile-usage-overlay.png).",
+      "Axe reports two desktop target-size failures (checks.json), although mobile has none.",
+      "The page relies on many nested cards, which flattens the hierarchy between routine and decision content."
+    ],
+    "strengths": [
+      "Plan and usage are adjacent, making the member limit legible at a glance.",
+      "States include past due, provider failure and blocked downgrade, all with honest copy.",
+      "Role handling keeps read-only facts visible and explains every missing action.",
+      "Accessibility markup is largely correct: named controls, labelled progressbar and landmarks."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md lines 14-25 separate the supplied limits from synthetic prices, dates and cancellation policy, and lines 109-119 give a clear owner/member matrix. The interface never claims a charge succeeded and keeps the failed payment visibly unresolved. The Free-plan routing inconsistency noted below weakens the otherwise strong model.",
+      "ux_reasoning": "The single summary answers plan, price, renewal and 16/20 seats, then plans, payment, invoices and a separated cancellation section (evidence/subscription-settings-r2/b/summary.png). The price-display toggle is explicitly non-committal, and change review states effective date and amount due. The owner journey is coherent, but the enabled 'Downgrade to Free' creates a second, blocked path to Free alongside cancellation.",
+      "design_judgment": "Most decisions are well reasoned (analysis.md lines 60-92), but line 59 says Free is not a selectable plan change and is routed through cancellation, while renderPlanCard (app.js line 587) renders an enabled 'Downgrade to Free' button (evidence/subscription-settings-r2/b/plans-free-downgrade.png). That contradiction between the stated model and the built UI is the main judgement flaw. Removing that path or documenting it consistently would raise this to 4.",
+      "visual_hierarchy": "This is the strongest composition of the pair: a dominant price, calm warm-grey canvas, restrained green action colour, clear plan-card comparison and a top-of-page demo band that does not cover product content. The summary and plan sections scan cleanly at both widths. Only minor density polish separates it from an ideal billing page.",
+      "interaction_completeness": "The build covers loading, load error, empty payment and invoices, failed payment, 'payment updated but unresolved', scheduled plan/cadence states, undo, validation, busy states and blocked downgrades, backed by 71 checks (analysis.md lines 151-163). Free still dead-ends at a blocked review, so a hand-off to member management is the missing link.",
+      "accessibility_responsiveness": "checks.json reports six color-contrast failures on both desktop and mobile, which is a serious rendered defect for small labels and muted copy. Controls are otherwise named and the progressbar is labelled. Correcting the palette pairs would raise this to 3 or 4; the analysis does not claim a contrast pass.",
+      "implementation_quality": "The 1484-line app.js and 1917-line styles.css are consistently structured, with no console errors and a coherent state model. The Free-routing mismatch between the analysis and renderPlanCard, plus the contrast failures, show the build and documentation drifted. Aligning the two and fixing the palette would raise this."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r2/b/summary.png",
+        "caption": "Desktop summary with Pro, $29/month, 1 December renewal and a 16-of-20 usage bar.",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r2/b/plans-free-downgrade.png",
+        "caption": "Enabled 'Downgrade to Free' action on the Free plan card, contradicting the stated cancellation-only route.",
+        "dimension": "design_judgment"
+      }
+    ],
+    "critical_defects": [
+      "Axe reports six color-contrast failures on both desktop and mobile (checks.json).",
+      "The UI offers an enabled 'Downgrade to Free' path while analysis.md line 59 says Free is routed only through cancellation.",
+      "The Free downgrade dead-ends at a blocked review requiring member removal, with no member-management hand-off."
+    ],
+    "strengths": [
+      "Best visual composition in the pair: clear price hierarchy, calm palette and clean plan cards.",
+      "Price display is cleanly separated from a billing commitment.",
+      "Payment failure stays visibly unresolved after a card update, with no false success.",
+      "Broad state coverage and 71 scripted checks."
+    ]
+  },
+  "comparison": "Candidate A and Candidate B are close: Candidate B has the stronger visual composition and broader scenario coverage, while Candidate A is cleaner under automated accessibility and keeps plan and usage in a single glance. Candidate B's six contrast failures and its enabled Free-downgrade path, which contradicts its own stated model, tip the result to Candidate A.",
+  "limitations": "Only default-state screenshots were supplied, so dialogs and alternate data states were judged from code and checks.json. Axe counts were available without node details, and no screen-reader, cross-browser or real payment-provider behaviour could be assessed. The fixed prototype controls are demo chrome, but their overlap is visible in the captures."
+}
