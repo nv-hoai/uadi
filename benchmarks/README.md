@@ -6,7 +6,7 @@ This benchmark asks whether UADI helps the same AI agent produce better product 
 
 Use all three tasks for a representative evaluation:
 
-1. [Subscription settings](subscription-settings.md) — permissions, billing, sensitive actions and responsive settings.
+1. [Subscription settings](tasks/subscription-settings.md) — permissions, billing, sensitive actions and responsive settings.
 2. [First-run onboarding](tasks/product-onboarding.md) — activation, progressive disclosure, optional setup and role understanding.
 3. [Operations dashboard](tasks/operations-dashboard.md) — metric comprehension, information density, comparisons and investigation flow.
 

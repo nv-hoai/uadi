@@ -46,10 +46,13 @@ That yields three A and three B pairs, and three baseline-first and three UADI-f
 
 ## Preregister before running
 
-1. Copy [`study-design.template.json`](study-design.template.json) to a study-specific file.
+1. Copy [`study-design.template.json`](study-design.template.json) to a study-specific file,
+   or use the preregistered [`studies/confirmatory-2026-11/study-design.json`](studies/confirmatory-2026-11/study-design.json).
 2. Fill in the builder families, exact versions, task versions, reviewer families, the
    study-level `frozen` hashes, time budget and decision rule. A pair can override a frozen
-   value only to record a justified deviation.
+   value only to record a justified deviation. A design that still names placeholder families
+   (`builder-a`/`builder-b`, `reviewer-a`/`reviewer-b`, `EXAMPLE_ONLY`) is reported as
+   `BLOCKED (pending family selection)` and is not yet runnable.
 3. Validate it:
 
    ```bash
@@ -63,9 +66,14 @@ That yields three A and three B pairs, and three baseline-first and three UADI-f
    refuses to qualify an unbalanced schedule as confirmatory.
 
 The validator enforces coverage, order balance, reviewer independence, calibration seeds,
-state-capture declarations, version hashes, cost recording and the decision rule. It does not
-prove that the reviewers stayed blind or that every declared state screenshot exists; the
-coordinator still has to preserve and audit the evidence bundle.
+state-capture declarations, version hashes, cost recording and the decision rule. When the
+CLI runs, it also checks the task files themselves: every declared task must exist as
+`benchmarks/tasks/<task_id>.md`, carry the canonical seven sections, declare the declared
+`Task version: <version>`, and no held-out task identifier may appear in guidance or prompt
+content. Frozen hashes must be `sha256:<64 hex digest>` values (a `REPLACE` placeholder is
+a warning, not evidence). The validator does not prove that the reviewers stayed blind or
+that every declared state screenshot exists; the coordinator still has to preserve and audit
+the evidence bundle.
 
 ## Reviewer independence and calibration
 

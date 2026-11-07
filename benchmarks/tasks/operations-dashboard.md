@@ -1,5 +1,7 @@
 # Benchmark Task: Operations Performance Dashboard
 
+Task version: 1.0.0
+
 ## Scenario
 You are designing a weekly operations dashboard for a logistics SaaS product. Operations managers use it to spot delivery problems, understand whether performance is improving and drill into affected orders.
 
@@ -14,7 +16,7 @@ You are designing a weekly operations dashboard for a logistics SaaS product. Op
 - No revenue, customer lifetime value or driver productivity data is available.
 - No predictive forecasts or root-cause classifications are available.
 
-## Primary user and outcome
+## Primary users and outcomes
 The primary user is an operations manager starting a shift or weekly review. They need to understand delivery health, notice meaningful deterioration, compare periods, identify affected regions or statuses, and open relevant orders to investigate.
 
 ## Constraints and risks
