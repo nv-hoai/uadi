@@ -13,6 +13,7 @@
     "benchmark:prepare": "node scripts/prepare-benchmark-pair.mjs",
     "study:validate": "node scripts/validate-study-design.mjs",
     "quality:gates": "node scripts/quality-gates.mjs",
+    "evidence:capture": "node scripts/capture-evidence.mjs",
     "review:validate": "node scripts/validate-peer-review.mjs",
     "review:dashboard": "node scripts/build-review-dashboard.mjs",
     "review:crop": "node scripts/crop-evidence.mjs"

@@ -1,0 +1,40 @@
+
+> uadi@0.1.0 quality:gates
+> node scripts/quality-gates.mjs --dir benchmarks/runs/agent-loop-cycle-1/public --json
+
+{
+  "dir": "/home/nvhoai/projects/personal/uadi/benchmarks/runs/agent-loop-cycle-1/public",
+  "ok": true,
+  "gates": [
+    {
+      "id": "accessible-names",
+      "status": "pass",
+      "violations": 0
+    },
+    {
+      "id": "viewport-evidence",
+      "status": "pass",
+      "screenshots": 12
+    },
+    {
+      "id": "required-states",
+      "status": "pass",
+      "states": 6
+    },
+    {
+      "id": "claim-behavior",
+      "status": "pass",
+      "success_claims_checked": 0
+    },
+    {
+      "id": "axe",
+      "status": "pass",
+      "critical_or_serious": 0
+    },
+    {
+      "id": "mobile-overflow",
+      "status": "pass",
+      "overflow_pixels": 0
+    }
+  ]
+}
