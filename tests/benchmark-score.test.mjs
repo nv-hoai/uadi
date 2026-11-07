@@ -304,3 +304,29 @@ test("rejects an unknown candidate position", () => {
   input.pairs[0].uadi_position = "C";
   assert.throws(() => scoreBenchmark(input), /uadi_position must be "A" or "B"/);
 });
+
+test("reports token spend and median durations when recorded", () => {
+  const input = fixture();
+  input.pairs = [];
+  const tokens = [5000, 4000];
+  const durations = [1200, 1800];
+  for (const [index, value] of tokens.entries()) {
+    const pair = fixture().pairs[0];
+    input.pairs.push({
+      ...pair,
+      pair_id: "tokens-" + index,
+      task_id: "task-" + index,
+      baseline: { ...pair.baseline, duration_seconds: durations[index], tokens: value },
+      uadi: { ...pair.uadi, duration_seconds: durations[index] + 300, tokens: value * 2 }
+    });
+  }
+  const result = scoreBenchmark(input);
+  assert.equal(result.tokens.pairs, 2);
+  assert.equal(result.tokens.baseline_mean, 4500);
+  assert.equal(result.tokens.uadi_mean, 9000);
+  assert.equal(result.tokens.baseline_median, 4500);
+  assert.ok(result.tokens.change_percent > 0);
+  assert.equal(result.baseline_median_duration_seconds, 1500);
+  assert.equal(result.pairs[0].baseline_tokens, 5000);
+  assert.equal(result.pairs[0].uadi_tokens, 10000);
+});

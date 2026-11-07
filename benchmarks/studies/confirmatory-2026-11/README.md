@@ -20,6 +20,16 @@ The design, balanced schedule, frozen hashes and 4-point minimum detectable effe
 committed before the first run. Any change after runs begin is a protocol deviation and
 will be reported.
 
+### Protocol deviation 1 — concurrent execution (recorded before unblinding)
+
+Execution mode changed from `sequential` to `concurrent-recorded` at 1/36 runs: three
+pair-workers run concurrently, each taking one pair at a time and running its two
+conditions in the preregistered order (per `mapping.json`). The outcome comparisons,
+candidate order, blinding and scoring are unaffected; wall-clock timing is now
+interpreted as descriptive only, and token spend is the recorded efficiency metric
+(recorded for every run, per `execution.record_tokens`). The deviation was made before
+any score was computed and without regard to any result.
+
 ## Reviewer calibration (must pass before the real packets)
 
 [`calibration/`](calibration/calibration-manifest.json) holds four author-built packets:
