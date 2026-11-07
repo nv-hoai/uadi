@@ -103,6 +103,28 @@ function summarizePositions(pairResults) {
   };
 }
 
+function median(values) {
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
+function tokenSummary(pairResults) {
+  const values = pairResults.filter((pair) => typeof pair.baseline_tokens === "number" && typeof pair.uadi_tokens === "number");
+  if (values.length === 0) return null;
+  const baseline = values.map((pair) => pair.baseline_tokens);
+  const uadi = values.map((pair) => pair.uadi_tokens);
+  return {
+    pairs: values.length,
+    baseline_mean: average(baseline),
+    uadi_mean: average(uadi),
+    baseline_median: median(baseline),
+    uadi_median: median(uadi),
+    change_percent: ((average(uadi) - average(baseline)) / average(baseline)) * 100,
+    method: "estimated tokens (run transcript + deliverables, chars/4); use API token counts where available"
+  };
+}
+
 function summarizeOrderBalance(pairResults) {
   const byTask = new Map();
   let unknown = 0;
@@ -156,6 +178,11 @@ export function scoreBenchmark(input) {
       assert(pair.baseline_run_position === 1 || pair.baseline_run_position === 2,
         label + ".baseline_run_position must be 1 or 2");
     }
+    for (const condition of ["baseline", "uadi"]) {
+      const tokens = pair[condition]?.tokens;
+      if (tokens !== undefined) assert(Number.isFinite(tokens) && tokens >= 0,
+        label + "." + condition + ".tokens must be a non-negative number when recorded");
+    }
 
     const baselineIds = validateCondition(pair.baseline, label + ".baseline");
     const uadiIds = validateCondition(pair.uadi, label + ".uadi");
@@ -190,11 +217,14 @@ export function scoreBenchmark(input) {
       delta: uadiScore - baselineScore,
       baseline_duration_seconds: pair.baseline.duration_seconds,
       uadi_duration_seconds: pair.uadi.duration_seconds,
+      baseline_tokens: pair.baseline.tokens ?? null,
+      uadi_tokens: pair.uadi.tokens ?? null,
       dimensions
     };
   });
 
   const pairedDelta = pairedDeltaSummary(pairResults.map((pair) => pair.delta));
+  const tokens = tokenSummary(pairResults);
   const positionSensitivity = summarizePositions(pairResults);
   const orderBalance = summarizeOrderBalance(pairResults);
   const isConfirmatoryDesign = typeof input.study.design_type === "string" &&
@@ -297,6 +327,7 @@ export function scoreBenchmark(input) {
   const uadiScore = average(pairResults.map((pair) => pair.uadi_score));
   const baselineTime = average(pairResults.map((pair) => pair.baseline_duration_seconds));
   const uadiTime = average(pairResults.map((pair) => pair.uadi_duration_seconds));
+  const medianDuration = (key) => median(pairResults.map((pair) => pair[key]));
   const dimensionSummary = Object.fromEntries(Object.keys(DIMENSIONS).map((dimension) => [
     dimension,
     {
@@ -319,7 +350,10 @@ export function scoreBenchmark(input) {
     pairs_lost_by_uadi: pairResults.filter((pair) => pair.delta < 0).length,
     baseline_mean_duration_seconds: baselineTime,
     uadi_mean_duration_seconds: uadiTime,
+    baseline_median_duration_seconds: medianDuration("baseline_duration_seconds"),
+    uadi_median_duration_seconds: medianDuration("uadi_duration_seconds"),
     time_change_percent: ((uadiTime - baselineTime) / baselineTime) * 100,
+    tokens,
     paired_delta: pairedDelta,
     position_sensitivity: positionSensitivity,
     order_balance: orderBalance,

@@ -54,7 +54,10 @@
   "pairs_lost_by_uadi": 5,
   "baseline_mean_duration_seconds": 2187.222222222222,
   "uadi_mean_duration_seconds": 2027.111111111111,
+  "baseline_median_duration_seconds": 2416,
+  "uadi_median_duration_seconds": 2120,
   "time_change_percent": -7.32029464058928,
+  "tokens": null,
   "paired_delta": {
     "n": 9,
     "mean": 0.18518518518518412,
@@ -157,6 +160,8 @@
       "delta": 4.583333333333329,
       "baseline_duration_seconds": 1518,
       "uadi_duration_seconds": 918,
+      "baseline_tokens": null,
+      "uadi_tokens": null,
       "dimensions": {
         "product_understanding": {
           "baseline": 3.6666666666666665,
@@ -208,6 +213,8 @@
       "delta": -7.5,
       "baseline_duration_seconds": 2416,
       "uadi_duration_seconds": 1405,
+      "baseline_tokens": null,
+      "uadi_tokens": null,
       "dimensions": {
         "product_understanding": {
           "baseline": 4,
@@ -259,6 +266,8 @@
       "delta": -10.416666666666671,
       "baseline_duration_seconds": 1608,
       "uadi_duration_seconds": 1993,
+      "baseline_tokens": null,
+      "uadi_tokens": null,
       "dimensions": {
         "product_understanding": {
           "baseline": 4,
@@ -310,6 +319,8 @@
       "delta": 2.5,
       "baseline_duration_seconds": 2426,
       "uadi_duration_seconds": 2266,
+      "baseline_tokens": null,
+      "uadi_tokens": null,
       "dimensions": {
         "product_understanding": {
           "baseline": 4,
@@ -361,6 +372,8 @@
       "delta": 17.5,
       "baseline_duration_seconds": 1588,
       "uadi_duration_seconds": 1854,
+      "baseline_tokens": null,
+      "uadi_tokens": null,
       "dimensions": {
         "product_understanding": {
           "baseline": 3,
@@ -412,6 +425,8 @@
       "delta": 10.833333333333329,
       "baseline_duration_seconds": 2473,
       "uadi_duration_seconds": 2120,
+      "baseline_tokens": null,
+      "uadi_tokens": null,
       "dimensions": {
         "product_understanding": {
           "baseline": 4,
@@ -463,6 +478,8 @@
       "delta": -0.4166666666666714,
       "baseline_duration_seconds": 2600,
       "uadi_duration_seconds": 2587,
+      "baseline_tokens": null,
+      "uadi_tokens": null,
       "dimensions": {
         "product_understanding": {
           "baseline": 4,
@@ -514,6 +531,8 @@
       "delta": -5.416666666666657,
       "baseline_duration_seconds": 2773,
       "uadi_duration_seconds": 2187,
+      "baseline_tokens": null,
+      "uadi_tokens": null,
       "dimensions": {
         "product_understanding": {
           "baseline": 3.3333333333333335,
@@ -565,6 +584,8 @@
       "delta": -10,
       "baseline_duration_seconds": 2283,
       "uadi_duration_seconds": 2914,
+      "baseline_tokens": null,
+      "uadi_tokens": null,
       "dimensions": {
         "product_understanding": {
           "baseline": 3.3333333333333335,

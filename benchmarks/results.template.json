@@ -49,7 +49,8 @@
               "implementation_quality": 2
             }
           }
-        ]
+        ],
+        "tokens": 4200
       },
       "uadi": {
         "duration_seconds": 650,
@@ -84,7 +85,8 @@
               "implementation_quality": 3
             }
           }
-        ]
+        ],
+        "tokens": 5100
       }
     }
   ]
