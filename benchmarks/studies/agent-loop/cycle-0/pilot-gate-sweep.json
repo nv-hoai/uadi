@@ -1,0 +1,152 @@
+{
+  "operations-dashboard": {
+    "r1-baseline": {
+      "names": 6,
+      "axe": 10,
+      "overflow": 212,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r1-uadi": {
+      "names": 1,
+      "axe": 1,
+      "overflow": 0,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r2-baseline": {
+      "names": 0,
+      "axe": 6,
+      "overflow": 2,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r2-uadi": {
+      "names": 0,
+      "axe": 3,
+      "overflow": 190,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r3-baseline": {
+      "names": 8,
+      "axe": 23,
+      "overflow": 214,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r3-uadi": {
+      "names": 6,
+      "axe": 6,
+      "overflow": 0,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    }
+  },
+  "product-onboarding": {
+    "r1-baseline": {
+      "names": 0,
+      "axe": 5,
+      "overflow": 0,
+      "states": 2,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r1-uadi": {
+      "names": 3,
+      "axe": 0,
+      "overflow": 0,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r2-baseline": {
+      "names": 1,
+      "axe": 0,
+      "overflow": 0,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r2-uadi": {
+      "names": 0,
+      "axe": 0,
+      "overflow": 0,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r3-baseline": {
+      "names": 0,
+      "axe": 17,
+      "overflow": 0,
+      "states": 2,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r3-uadi": {
+      "names": 0,
+      "axe": 0,
+      "overflow": 0,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    }
+  },
+  "subscription-settings": {
+    "r1-baseline": {
+      "names": 2,
+      "axe": 0,
+      "overflow": 0,
+      "states": 2,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r1-uadi": {
+      "names": 4,
+      "axe": 1,
+      "overflow": 0,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r2-baseline": {
+      "names": 3,
+      "axe": 0,
+      "overflow": 0,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r2-uadi": {
+      "names": 0,
+      "axe": 6,
+      "overflow": 0,
+      "states": 0,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r3-baseline": {
+      "names": 2,
+      "axe": 3,
+      "overflow": 0,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    },
+    "r3-uadi": {
+      "names": 2,
+      "axe": 1,
+      "overflow": 0,
+      "states": 1,
+      "claims": "pass",
+      "viewports": 2
+    }
+  }
+}

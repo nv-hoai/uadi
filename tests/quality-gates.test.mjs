@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { runQualityGates, unnamedControls } from "../scripts/quality-gates.mjs";
@@ -49,4 +51,33 @@ test("a missing deliverable fails with a clear gate instead of a crash", async (
   assert.equal(result.ok, false);
   assert.equal(result.gates[0].id, "deliverable");
   assert.equal(result.gates[0].status, "fail");
+});
+
+test("negated success wording is a design principle, not a claim violation", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "uadi-gates-claim-"));
+  try {
+    await writeFile(path.join(root, "index.html"), '<!doctype html><html lang="en"><body><button aria-label="Save">Save</button></body></html>');
+    await writeFile(path.join(root, "analysis.md"), "# Analysis\n\nThe interface never says a payment succeeded, and it must not imply one.\n");
+    const result = await runQualityGates(root, { enableBrowser: false });
+    const claim = result.gates.find((g) => g.id === "claim-behavior");
+    assert.equal(claim.status, "pass");
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("a real success claim passes when evidence/checks.json backs it", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "uadi-gates-claim2-"));
+  try {
+    await mkdir(path.join(root, "evidence"), { recursive: true });
+    await writeFile(path.join(root, "index.html"), '<!doctype html><html lang="en"><body><button aria-label="Save">Save</button></body></html>');
+    await writeFile(path.join(root, "analysis.md"), "# Analysis\n\nAll checks passed.\n");
+    await writeFile(path.join(root, "evidence", "checks.json"), '{"checks": ["rendered at 390x844"], "result": "ok"}\n');
+    const result = await runQualityGates(root, { enableBrowser: false });
+    const claim = result.gates.find((g) => g.id === "claim-behavior");
+    assert.equal(claim.status, "pass");
+    assert.equal(claim.success_claims_checked, 1);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });

@@ -29,6 +29,7 @@ Use this checklist to improve design outcomes. It is a reasoning aid, not a mand
 
 - Is the interface usable with keyboard navigation, visible focus and no traps?
 - Are semantics, names, labels, contrast and focus states appropriate?
+- Every icon-only or image-only control exposes an accessible name that matches its action (for example `aria-label="Delete project"`). A bare button containing only an icon or glyph is never acceptable; an unlabeled interactive element is a critical defect, not a minor nit.
 - Does the layout work at relevant viewport sizes, zoom and reflow?
 - Are touch targets and text sizes usable?
 - Have motion and other potentially exclusionary patterns been considered?

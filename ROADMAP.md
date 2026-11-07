@@ -40,7 +40,7 @@ UADI is successful when it measurably improves the design quality of the AI agen
 - [ ] Curate reusable product and UX patterns with context and applicability notes.
 - [ ] Improve project-level design memory through simple repository artifacts.
 - [ ] Detect inconsistencies with existing project conventions when relevant.
-- [ ] Build a repeatable evaluation set for design quality and regression: deterministic gates for the inner loop plus the held-out suite for agent-change acceptance.
+- [x] Build a repeatable evaluation set for design quality and regression: deterministic gates for the inner loop plus the held-out suite for agent-change acceptance. First cycle recorded: [cycle 0](benchmarks/studies/agent-loop/cycle-0/README.md).
 
 **Success signal:** Design quality and consistency improve over repeated tasks while setup remains lightweight.
 
