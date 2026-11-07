@@ -14,16 +14,16 @@
   },
   "builders": [
     {
-      "model_family": "builder-a",
-      "model_version": "builder-a-v1",
-      "agent": "EXAMPLE_ONLY",
-      "settings": "EXAMPLE_ONLY"
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "agent": "OpenCode subagent",
+      "settings": "identical tools and time budget"
     },
     {
-      "model_family": "builder-b",
-      "model_version": "builder-b-v1",
-      "agent": "EXAMPLE_ONLY",
-      "settings": "EXAMPLE_ONLY"
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "agent": "OpenCode subagent",
+      "settings": "identical tools and time budget"
     }
   ],
   "tasks": [
@@ -79,144 +79,144 @@
     "repetitions": 3,
     "pairs": [
       {
-        "pair_id": "builder-a-subscription-settings-r1",
-        "model_family": "builder-a",
+        "pair_id": "deepseek-subscription-settings-r1",
+        "model_family": "deepseek",
         "task_id": "subscription-settings",
         "repetition": 1,
         "uadi_position": "A",
         "baseline_run_position": 1
       },
       {
-        "pair_id": "builder-a-subscription-settings-r2",
-        "model_family": "builder-a",
+        "pair_id": "deepseek-subscription-settings-r2",
+        "model_family": "deepseek",
         "task_id": "subscription-settings",
         "repetition": 2,
         "uadi_position": "B",
         "baseline_run_position": 2
       },
       {
-        "pair_id": "builder-a-subscription-settings-r3",
-        "model_family": "builder-a",
+        "pair_id": "deepseek-subscription-settings-r3",
+        "model_family": "deepseek",
         "task_id": "subscription-settings",
         "repetition": 3,
         "uadi_position": "A",
         "baseline_run_position": 1
       },
       {
-        "pair_id": "builder-a-product-onboarding-r1",
-        "model_family": "builder-a",
+        "pair_id": "deepseek-product-onboarding-r1",
+        "model_family": "deepseek",
         "task_id": "product-onboarding",
         "repetition": 1,
         "uadi_position": "A",
         "baseline_run_position": 1
       },
       {
-        "pair_id": "builder-a-product-onboarding-r2",
-        "model_family": "builder-a",
+        "pair_id": "deepseek-product-onboarding-r2",
+        "model_family": "deepseek",
         "task_id": "product-onboarding",
         "repetition": 2,
         "uadi_position": "B",
         "baseline_run_position": 2
       },
       {
-        "pair_id": "builder-a-product-onboarding-r3",
-        "model_family": "builder-a",
+        "pair_id": "deepseek-product-onboarding-r3",
+        "model_family": "deepseek",
         "task_id": "product-onboarding",
         "repetition": 3,
         "uadi_position": "A",
         "baseline_run_position": 1
       },
       {
-        "pair_id": "builder-a-operations-dashboard-r1",
-        "model_family": "builder-a",
+        "pair_id": "deepseek-operations-dashboard-r1",
+        "model_family": "deepseek",
         "task_id": "operations-dashboard",
         "repetition": 1,
         "uadi_position": "A",
         "baseline_run_position": 1
       },
       {
-        "pair_id": "builder-a-operations-dashboard-r2",
-        "model_family": "builder-a",
+        "pair_id": "deepseek-operations-dashboard-r2",
+        "model_family": "deepseek",
         "task_id": "operations-dashboard",
         "repetition": 2,
         "uadi_position": "B",
         "baseline_run_position": 2
       },
       {
-        "pair_id": "builder-a-operations-dashboard-r3",
-        "model_family": "builder-a",
+        "pair_id": "deepseek-operations-dashboard-r3",
+        "model_family": "deepseek",
         "task_id": "operations-dashboard",
         "repetition": 3,
         "uadi_position": "A",
         "baseline_run_position": 1
       },
       {
-        "pair_id": "builder-b-subscription-settings-r1",
-        "model_family": "builder-b",
+        "pair_id": "muse-spark-subscription-settings-r1",
+        "model_family": "muse-spark",
         "task_id": "subscription-settings",
         "repetition": 1,
         "uadi_position": "B",
         "baseline_run_position": 2
       },
       {
-        "pair_id": "builder-b-subscription-settings-r2",
-        "model_family": "builder-b",
+        "pair_id": "muse-spark-subscription-settings-r2",
+        "model_family": "muse-spark",
         "task_id": "subscription-settings",
         "repetition": 2,
         "uadi_position": "A",
         "baseline_run_position": 1
       },
       {
-        "pair_id": "builder-b-subscription-settings-r3",
-        "model_family": "builder-b",
+        "pair_id": "muse-spark-subscription-settings-r3",
+        "model_family": "muse-spark",
         "task_id": "subscription-settings",
         "repetition": 3,
         "uadi_position": "B",
         "baseline_run_position": 2
       },
       {
-        "pair_id": "builder-b-product-onboarding-r1",
-        "model_family": "builder-b",
+        "pair_id": "muse-spark-product-onboarding-r1",
+        "model_family": "muse-spark",
         "task_id": "product-onboarding",
         "repetition": 1,
         "uadi_position": "B",
         "baseline_run_position": 2
       },
       {
-        "pair_id": "builder-b-product-onboarding-r2",
-        "model_family": "builder-b",
+        "pair_id": "muse-spark-product-onboarding-r2",
+        "model_family": "muse-spark",
         "task_id": "product-onboarding",
         "repetition": 2,
         "uadi_position": "A",
         "baseline_run_position": 1
       },
       {
-        "pair_id": "builder-b-product-onboarding-r3",
-        "model_family": "builder-b",
+        "pair_id": "muse-spark-product-onboarding-r3",
+        "model_family": "muse-spark",
         "task_id": "product-onboarding",
         "repetition": 3,
         "uadi_position": "B",
         "baseline_run_position": 2
       },
       {
-        "pair_id": "builder-b-operations-dashboard-r1",
-        "model_family": "builder-b",
+        "pair_id": "muse-spark-operations-dashboard-r1",
+        "model_family": "muse-spark",
         "task_id": "operations-dashboard",
         "repetition": 1,
         "uadi_position": "B",
         "baseline_run_position": 2
       },
       {
-        "pair_id": "builder-b-operations-dashboard-r2",
-        "model_family": "builder-b",
+        "pair_id": "muse-spark-operations-dashboard-r2",
+        "model_family": "muse-spark",
         "task_id": "operations-dashboard",
         "repetition": 2,
         "uadi_position": "A",
         "baseline_run_position": 1
       },
       {
-        "pair_id": "builder-b-operations-dashboard-r3",
-        "model_family": "builder-b",
+        "pair_id": "muse-spark-operations-dashboard-r3",
+        "model_family": "muse-spark",
         "task_id": "operations-dashboard",
         "repetition": 3,
         "uadi_position": "B",
@@ -227,8 +227,14 @@
   },
   "review": {
     "reviewer_families": [
-      "reviewer-a",
-      "reviewer-b"
+      {
+        "model_family": "crouton-alpha",
+        "model_version": "crouton-alpha-free"
+      },
+      {
+        "model_family": "beam",
+        "model_version": "beam-free"
+      }
     ],
     "reviewers_per_condition": 2,
     "builder_family_excluded": true,
@@ -287,7 +293,7 @@
     "publish_cost": true,
     "publish_negative_results": true
   },
-  "selection_status": "pending",
+  "selection_status": "selected",
   "hash_inputs": {
     "skill_hash": "sha256 of SKILL.md (file bytes)",
     "snapshot_hash": "sha256 of the byte-concatenation of benchmarks/tasks/*.md sorted by filename",

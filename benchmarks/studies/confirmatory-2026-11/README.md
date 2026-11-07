@@ -7,14 +7,24 @@
 - `study-design.json` — the preregistered design: 2 builder families × 3 public tasks × 3 repetitions = 18 pairs (36 runs), balanced Candidate A/B and run order per task, independent reviewer families, calibration seeds and a duplicate packet, held-out tasks, required state capture at two viewports, paired 95% interval, 4-point pre-registered minimum effect.
 - Held-out tasks are authored (`held-out-billing-recovery`, `held-out-activation-recovery`, `held-out-capacity-investigation`) and marked `ready`. They are never used to edit guidance.
 - Frozen hashes are real digests (see `hash_inputs` in the manifest for exactly what each covers).
-- Model families are **not selected yet** (`selection_status: "pending"`, families `builder-a`/`builder-b` and `reviewer-a`/`reviewer-b`). The validator reports `run status: BLOCKED (pending family selection)` and exits 0, so CI stays green while the design is in this state.
+- Model families are **selected** (`selection_status: "selected"`):
+  - Builder A: `deepseek` (`deepseek-v4.1-flash` via `opencode-go`)
+  - Builder B: `muse-spark` (`muse-spark-1.3-contributor` via `opencode-go`)
+  - Reviewers: `crouton-alpha` (`crouton-alpha-free`) and `beam` (`beam-free`), both disjoint from the builders
+  - Agent for all runs: OpenCode subagent, identical tools and time budget in both conditions (same as the pilot)
 - The three public task files and the three held-out task files live in `benchmarks/tasks/`, each declaring its task version and carrying the canonical seven sections. The validator checks them and fails on a missing file, a missing section, a version mismatch, or a held-out identifier appearing in guidance or prompt content.
+
+## Preregistration
+
+The design, balanced schedule, frozen hashes and 4-point minimum detectable effect are
+committed before the first run. Any change after runs begin is a protocol deviation and
+will be reported.
 
 ## How to make it runnable
 
-1. Choose two builder model families and two reviewer families disjoint from them; pin exact model versions; replace `EXAMPLE_ONLY` agent/settings with the real agent and identical settings.
-2. Set `selection_status` to `"selected"` and re-freeze the hashes if any hashed file changed.
-3. Re-run `npm run study:validate -- benchmarks/studies/confirmatory-2026-11/study-design.json` until it prints `run status: ready to run`.
+Already validated: `npm run study:validate -- benchmarks/studies/confirmatory-2026-11/study-design.json`
+prints `run status: ready to run`. (If any hashed file changes before the first run,
+re-freeze the hashes and re-validate.)
 
 ## Tracking
 
