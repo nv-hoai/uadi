@@ -1,14 +1,38 @@
 #!/usr/bin/env node
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ARCHETYPES = ["settings", "onboarding", "dashboard"];
 const REQUIRED_STATES = ["default", "loading", "empty", "error", "success", "restricted"];
 const REQUIRED_VIEWPORTS = ["390x844", "1280x900"];
+const REQUIRED_TASK_SECTIONS = [
+  "Scenario",
+  "Product facts",
+  "Primary users and outcomes",
+  "Constraints and risks",
+  "Task prompt",
+  "Expected deliverables",
+  "Reviewer questions"
+];
+const PLACEHOLDER_FAMILY_PATTERN = /^(builder|reviewer)-[a-z]$/i;
+const PLACEHOLDER_VERSION_PATTERN = /^(builder|reviewer)-[a-z]-v\d+$/i;
+const HASH_PATTERN = /^sha256:[0-9a-f]{64}$/;
 
 function isNonEmptyString(value) {
   return typeof value === "string" && value.trim().length > 0;
+}
+
+function isPlaceholder(value) {
+  if (!isNonEmptyString(value)) return false;
+  const trimmed = value.trim();
+  return trimmed === "EXAMPLE_ONLY" || trimmed === "TBD" ||
+    PLACEHOLDER_FAMILY_PATTERN.test(trimmed) || PLACEHOLDER_VERSION_PATTERN.test(trimmed);
+}
+
+function isPlaceholderFamily(family, version) {
+  return PLACEHOLDER_FAMILY_PATTERN.test(String(family ?? "").trim()) ||
+    PLACEHOLDER_VERSION_PATTERN.test(String(version ?? "").trim());
 }
 
 function add(errors, where, message) {
@@ -26,7 +50,7 @@ function countBy(values) {
   }, {});
 }
 
-export function validateStudyDesign(input) {
+export function validateStudyDesign(input, context = {}) {
   const errors = [];
   const warnings = [];
 
@@ -69,6 +93,12 @@ export function validateStudyDesign(input) {
   if (builderSettings.length > 1 && new Set(builderSettings).size > 1) {
     add(errors, "builders[].settings", "builder settings must be identical across model families");
   }
+  const placeholderBuilders = builders.filter((builder) =>
+    isPlaceholderFamily(builder?.model_family, builder?.model_version) ||
+    isPlaceholder(builder?.agent) || isPlaceholder(builder?.settings));
+  if (placeholderBuilders.length > 0) {
+    addWarning(warnings, "builders", "placeholder builder families — family selection pending");
+  }
 
   const tasks = Array.isArray(input.tasks) ? input.tasks : [];
   if (tasks.length < 3) add(errors, "tasks", "must contain at least three public tasks");
@@ -108,11 +138,49 @@ export function validateStudyDesign(input) {
     if (!heldOutArchetypes.includes(archetype)) add(errors, "held_out_tasks", "must cover the " + archetype + " archetype");
   }
 
+  // Verify task files on disk when the CLI supplies them. The pure validator skips
+  // this step so unit tests can validate a design object without the repository layout.
+  const taskContents = context?.taskContents ?? null;
+  if (taskContents && typeof taskContents === "object") {
+    const checkTaskFile = (task, where) => {
+      if (!isNonEmptyString(task?.task_id)) return;
+      const content = taskContents[task.task_id];
+      if (content === null || content === undefined) {
+        add(errors, where + ".task_id", "task file benchmarks/tasks/" + task.task_id + ".md not found");
+        return;
+      }
+      for (const section of REQUIRED_TASK_SECTIONS) {
+        if (!content.includes("## " + section)) {
+          add(errors, where + ".task_id", "task file benchmarks/tasks/" + task.task_id + ".md is missing the \"## " + section + "\" section");
+        }
+      }
+      if (isNonEmptyString(task?.task_version) && !content.includes("Task version: " + task.task_version)) {
+        add(errors, where + ".task_id", "task file benchmarks/tasks/" + task.task_id + ".md must declare \"Task version: " + task.task_version + "\"");
+      }
+    };
+    for (const [index, task] of tasks.entries()) checkTaskFile(task, "tasks[" + index + "]");
+    for (const [index, task] of heldOutTasks.entries()) checkTaskFile(task, "held_out_tasks[" + index + "]");
+
+    const guidanceSources = Array.isArray(context?.guidanceSources) ? context.guidanceSources : [];
+    for (const taskId of heldOutIds) {
+      const variants = [taskId, taskId.replace(/-/g, "_")];
+      for (const source of guidanceSources) {
+        const text = typeof source?.content === "string" ? source.content : "";
+        if (variants.some((variant) => text.includes(variant))) {
+          add(errors, "held_out_tasks", "held-out task \"" + taskId + "\" appears in guidance or prompt content (" + (source?.path ?? "unknown source") + ")");
+        }
+      }
+    }
+  }
+
   const frozen = input.frozen ?? {};
   let frozenPlaceholders = 0;
   for (const key of ["snapshot_hash", "prompt_hash", "skill_hash"]) {
     if (!isNonEmptyString(frozen[key])) add(errors, "frozen." + key, "is required");
     else if (frozen[key].includes("REPLACE")) frozenPlaceholders += 1;
+    else if (!HASH_PATTERN.test(frozen[key])) {
+      add(errors, "frozen." + key, "must be sha256:<64 lowercase hex digest> or a REPLACE placeholder");
+    }
   }
   if (frozenPlaceholders > 0) {
     addWarning(warnings, "frozen", "replace the template placeholder hashes with the frozen values");
@@ -218,6 +286,9 @@ export function validateStudyDesign(input) {
   if (reviewerFamilies.length === 1) addWarning(warnings, "review.reviewer_families", "one reviewer family shares a single set of blind spots; prefer two");
   const overlap = reviewerFamilies.filter((family) => builderFamilies.includes(family));
   if (overlap.length > 0) add(errors, "review.reviewer_families", "reviewers must not share a builder family: " + overlap.join(", "));
+  if (reviewerFamilies.some((family) => PLACEHOLDER_FAMILY_PATTERN.test(family))) {
+    addWarning(warnings, "review.reviewer_families", "placeholder reviewer families — family selection pending");
+  }
   if (!Number.isInteger(review.reviewers_per_condition) || review.reviewers_per_condition < 2) {
     add(errors, "review.reviewers_per_condition", "must be at least 2");
   }
@@ -308,6 +379,14 @@ export function validateStudyDesign(input) {
     if (claimed < 2) addWarning(warnings, "hypothesis.minimum_detectable_effect_points", "a two-point effect is close to the rubric's own noise; consider a larger effect or more pairs");
   }
 
+  const hasPlaceholderHash = frozenPlaceholders > 0 || placeholderPairs > 0;
+  const selectionPending = input.selection_status === "pending" || placeholderBuilders.length > 0 ||
+    reviewerFamilies.some((family) => PLACEHOLDER_FAMILY_PATTERN.test(family));
+  const runnable = !hasPlaceholderHash && !selectionPending;
+  const blockedReason = selectionPending
+    ? "pending family selection"
+    : (hasPlaceholderHash ? "placeholder frozen hashes" : null);
+
   const summary = {
     builders: builderFamilies,
     tasks: taskIds,
@@ -325,10 +404,53 @@ export function validateStudyDesign(input) {
       by_task: runBalanceByTask
     },
     reviewer_families: reviewerFamilies,
-    builder_reviewer_overlap: overlap
+    builder_reviewer_overlap: overlap,
+    runnable,
+    blocked_reason: blockedReason
   };
 
   return { valid: errors.length === 0, errors, warnings, summary };
+}
+
+async function loadDesignContext(input) {
+  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+  const ids = [...(input.tasks ?? []), ...(input.held_out_tasks ?? [])]
+    .map((task) => task?.task_id).filter(isNonEmptyString);
+  const taskContents = {};
+  for (const taskId of new Set(ids)) {
+    try {
+      taskContents[taskId] = await readFile(path.join(root, "benchmarks/tasks/" + taskId + ".md"), "utf8");
+    } catch {
+      taskContents[taskId] = null;
+    }
+  }
+  const guidancePaths = [
+    "SKILL.md",
+    "docs/DESIGN-INTELLIGENCE.md",
+    "docs/QUALITY-GATES.md",
+    "docs/ACCESSIBILITY-AND-INTERACTION-REVIEW.md",
+    "docs/BENCHMARKING.md",
+    "benchmarks/studies/design-intelligence-pilot-2026-11/prompt-template.md"
+  ];
+  const guidanceSources = [];
+  for (const relative of guidancePaths) {
+    try { guidanceSources.push({ path: relative, content: await readFile(path.join(root, relative), "utf8") }); }
+    catch { /* source file is optional */ }
+  }
+  const patternsDir = path.join(root, "intelligence");
+  for (const entry of await readdir(patternsDir, { withFileTypes: true }).catch(() => [])) {
+    const full = path.join(patternsDir, entry.name);
+    if (entry.isFile() && entry.name.endsWith(".md")) {
+      guidanceSources.push({ path: path.join("intelligence", entry.name), content: await readFile(full, "utf8") });
+    } else if (entry.isDirectory()) {
+      for (const child of await readdir(full).catch(() => [])) {
+        if (child.endsWith(".md")) {
+          guidanceSources.push({ path: path.join("intelligence", entry.name, child), content: await readFile(path.join(full, child), "utf8") });
+        }
+      }
+    }
+  }
+  return { taskContents, guidanceSources };
 }
 
 async function main() {
@@ -348,7 +470,8 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  const result = validateStudyDesign(input);
+  const context = await loadDesignContext(input);
+  const result = validateStudyDesign(input, context);
   if (json) {
     console.log(JSON.stringify(result, null, 2));
   } else {
@@ -360,6 +483,11 @@ async function main() {
         result.summary.builders.length + " builders, " + result.summary.tasks.length + " public tasks, " +
         result.summary.held_out_tasks.length + " held-out tasks");
       console.log("  order balance: " + (result.summary.order_balance.balanced ? "ok" : "FAILED"));
+      if (result.valid && result.summary.runnable) {
+        console.log("  run status: ready to run");
+      } else if (result.valid) {
+        console.log("  run status: BLOCKED (" + (result.summary.blocked_reason ?? "not runnable") + ")");
+      }
     }
   }
   process.exitCode = result.valid ? 0 : 1;

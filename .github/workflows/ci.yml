@@ -37,6 +37,10 @@ jobs:
         run: npm run validate -- component-catalog/catalog.json
       - name: Validate confirmatory study template
         run: npm run study:validate -- benchmarks/study-design.template.json
+      - name: Validate preregistered study design
+        run: npm run study:validate -- benchmarks/studies/confirmatory-2026-11/study-design.json
+      - name: Validate UDS prototype contract
+        run: npm run prototype:check -- examples/minimal/design-specification.json
 
   react-renderer:
     name: React renderer checks

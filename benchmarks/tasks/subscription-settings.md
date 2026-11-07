@@ -1,10 +1,11 @@
 # Benchmark Task: Subscription Settings Experience
 
-## Scenario
+Task version: 1.0.0
 
+## Scenario
 You are working on a B2B SaaS product used by small companies. Workspace owners manage a paid subscription. The current settings page is a dense form with unclear plan limits and a destructive cancellation action mixed into the main settings.
 
-The product has:
+## Product facts
 - A Free plan for up to 3 members.
 - A Pro plan for up to 20 members.
 - A Business plan for up to 100 members.
@@ -12,8 +13,7 @@ The product has:
 - A workspace owner role that can change billing.
 - Members who can view plan details but cannot change billing.
 
-## User and business goals
-
+## Primary users and outcomes
 Workspace owners need to quickly understand:
 1. Which plan they are on.
 2. What they pay and when the next payment occurs.
@@ -24,8 +24,7 @@ Workspace owners need to quickly understand:
 
 The business wants plan upgrades to be understandable and trustworthy, without dark patterns or accidental cancellations.
 
-## Known constraints
-
+## Constraints and risks
 - The experience must work on desktop and mobile.
 - Do not invent payment provider APIs or claim a payment succeeded.
 - Cancellation must be clearly separated from routine billing actions and require a deliberate confirmation.
@@ -35,7 +34,6 @@ The business wants plan upgrades to be understandable and trustworthy, without d
 - Use the host project's existing stack and design conventions if a project is supplied. If no codebase is supplied, provide a framework-neutral specification and a clear prototype.
 
 ## Task prompt
-
 Design the subscription settings experience for this product.
 
 First understand the user goals and constraints. Identify the highest-risk UX problems. Propose a coherent information architecture and explain important decisions. Then implement a responsive experience or, if implementation is unavailable, provide a sufficiently detailed specification and interaction states.
@@ -43,7 +41,6 @@ First understand the user goals and constraints. Identify the highest-risk UX pr
 Do not add features outside the scenario unless you explain why they are necessary. Do not use deceptive urgency, hidden cancellation paths or fabricated customer research.
 
 ## Expected deliverables
-
 - Brief product/UX analysis with assumptions called out.
 - Information architecture and primary owner journey.
 - Key design decisions and trade-offs.
@@ -53,7 +50,6 @@ Do not add features outside the scenario unless you explain why they are necessa
 - Short quality review noting unresolved risks.
 
 ## Reviewer questions
-
 - Can an owner identify plan, price and renewal date quickly?
 - Are member usage and plan limits understandable?
 - Is upgrade/downgrade behavior understandable before commitment?

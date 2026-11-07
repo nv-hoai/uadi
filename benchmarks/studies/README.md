@@ -12,5 +12,6 @@ Two records exist:
 
 - [Design Intelligence Pilot](design-intelligence-pilot-2026-11/README.md) — exploratory pilot, one model family.
 - [Two-reviewer machine review](design-intelligence-pilot-2026-11/machine-review/README.md) — the standard machine panel applied to the pilot. `evidence_tier: machine-reviewed-pilot`.
+- [Confirmatory study](confirmatory-2026-11/README.md) — preregistered design only. Held-out tasks and frozen hashes are in place; model families are pending selection. No runs exist yet.
 
 The pilot's swapped-label control found a strong candidate-position effect, and the later machine panel found an order interaction in the opposite direction. Neither panel isolates a clean UADI effect, so no condition delta should be read as evidence of improvement or harm.

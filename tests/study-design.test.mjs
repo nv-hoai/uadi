@@ -177,6 +177,84 @@ test("rejects duplicate pair identifiers and missing version hashes", () => {
   assert.ok(result.errors.some((error) => error.path.includes("skill_hash")));
 });
 
+test("a design with concrete model families is runnable", () => {
+  const input = validDesign();
+  const renamed = JSON.stringify(input)
+    .replaceAll("builder-a", "builder-family-one")
+    .replaceAll("builder-b", "builder-family-two")
+    .replaceAll("reviewer-a", "judge-family-one")
+    .replaceAll("reviewer-b", "judge-family-two");
+  const result = validateStudyDesign(JSON.parse(renamed));
+  assert.equal(result.valid, true, JSON.stringify(result.errors));
+  assert.equal(result.summary.runnable, true);
+  assert.equal(result.summary.blocked_reason, null);
+});
+
+function fakeTaskContent(version = "1.0.0") {
+  return ["# Task", "", "Task version: " + version, "",
+    "## Scenario", "text",
+    "## Product facts", "text",
+    "## Primary users and outcomes", "text",
+    "## Constraints and risks", "text",
+    "## Task prompt", "text",
+    "## Expected deliverables", "text",
+    "## Reviewer questions", "text"].join("\n");
+}
+
+function taskContext(input) {
+  const taskContents = {};
+  for (const task of [...input.tasks, ...input.held_out_tasks]) {
+    taskContents[task.task_id] = fakeTaskContent(task.task_version);
+  }
+  return { taskContents, guidanceSources: [{ path: "SKILL.md", content: "# Skill\n\nNo task identifiers here." }] };
+}
+
+test("task files must exist, carry the canonical sections and the declared version", () => {
+  const input = validDesign();
+  const context = taskContext(input);
+  assert.equal(validateStudyDesign(input, context).valid, true, "all files present");
+
+  const missing = taskContext(input);
+  missing.taskContents["operations-dashboard"] = null;
+  const missingResult = validateStudyDesign(input, missing);
+  assert.equal(missingResult.valid, false);
+  assert.ok(missingResult.errors.some((error) => error.message.includes("task file benchmarks/tasks/operations-dashboard.md not found")));
+
+  const wrongVersion = taskContext(input);
+  wrongVersion.taskContents["product-onboarding"] = fakeTaskContent("9.9.9");
+  const versionResult = validateStudyDesign(input, wrongVersion);
+  assert.equal(versionResult.valid, false);
+  assert.ok(versionResult.errors.some((error) => error.message.includes("Task version: 1.0.0")));
+
+  const noSections = taskContext(input);
+  noSections.taskContents["held-out-billing-recovery"] = "# Task\n\nTask version: 1.0.0\n\n## Scenario\ntext";
+  const sectionResult = validateStudyDesign(input, noSections);
+  assert.equal(sectionResult.valid, false);
+  assert.ok(sectionResult.errors.some((error) => error.message.includes("missing the \"## Task prompt\" section")));
+});
+
+test("a held-out task identifier appearing in guidance or prompt content is rejected", () => {
+  const input = validDesign();
+  const context = taskContext(input);
+  context.guidanceSources.push({ path: "intelligence/UX-REASONING-PLAYBOOK.md", content: "See held_out_capacity_investigation for details." });
+  const result = validateStudyDesign(input, context);
+  assert.equal(result.valid, false);
+  assert.ok(result.errors.some((error) => error.message.includes("appears in guidance or prompt content")));
+});
+
+test("placeholder families are not runnable; malformed frozen hashes are rejected", () => {
+  const placeholders = validateStudyDesign(validDesign());
+  assert.equal(placeholders.valid, true);
+  assert.equal(placeholders.summary.runnable, false);
+  assert.equal(placeholders.summary.blocked_reason, "pending family selection");
+
+  const input = validDesign();
+  input.frozen.skill_hash = "not-a-digest";
+  const malformed = validateStudyDesign(input);
+  assert.equal(malformed.valid, false);
+  assert.ok(malformed.errors.some((error) => error.path === "frozen.skill_hash"));
+});
+
 test("CLI returns a non-zero status for an invalid design", async () => {
   const dir = await mkdtemp(path.join(os.tmpdir(), "uadi-study-design-"));
   try {

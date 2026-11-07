@@ -1,6 +1,6 @@
 # Subscription settings reference example
 
-A working React reference implementation for the [subscription settings benchmark](../../benchmarks/subscription-settings.md).
+A working React reference implementation for the [subscription settings benchmark](../../benchmarks/tasks/subscription-settings.md).
 
 ## Open it
 

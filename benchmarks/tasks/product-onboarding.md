@@ -1,5 +1,7 @@
 # Benchmark Task: First-Run Product Onboarding
 
+Task version: 1.0.0
+
 ## Scenario
 You are designing first-run onboarding for a B2B collaboration product used by small teams. A workspace owner has just created an account and needs to reach a useful first outcome without being forced through setup that may not apply.
 

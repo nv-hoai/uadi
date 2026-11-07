@@ -131,7 +131,7 @@ test("rejects unsupported agents", async () => {
 // repository-only evidence tooling and is not copied into host projects.
 const EXTERNAL_SKILL_LINKS = new Map([
   ["docs/BENCHMARKING.md", new Set(["../benchmarks/README.md"])],
-  ["examples/subscription-settings/README.md", new Set(["../../benchmarks/subscription-settings.md"])],
+  ["examples/subscription-settings/README.md", new Set(["../../benchmarks/tasks/subscription-settings.md"])],
   ["examples/product-onboarding/README.md", new Set(["../../benchmarks/tasks/product-onboarding.md"])],
   ["examples/operations-dashboard/README.md", new Set(["../../benchmarks/tasks/operations-dashboard.md"])]
 ]);
