@@ -35,6 +35,8 @@ jobs:
         run: npm run validate -- examples/minimal/project-context.json
       - name: Validate component catalog
         run: npm run validate -- component-catalog/catalog.json
+      - name: Validate confirmatory study template
+        run: npm run study:validate -- benchmarks/study-design.template.json
 
   react-renderer:
     name: React renderer checks

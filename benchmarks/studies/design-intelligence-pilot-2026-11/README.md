@@ -41,8 +41,9 @@ All scores are weighted on the benchmark's 100-point rubric. Higher is better.
 | Pairs lost | — | 5 | — |
 | Mean duration | 36.5 min | 33.8 min | −7.3% |
 | Median duration | 40.3 min | 35.3 min | −12.3% |
+| Paired 95% interval for the mean delta | — | — | **−7.2 to +7.6** |
 
-The mean difference is 0.2 points on a 100-point scale, with more losses than wins. This is indistinguishable from noise under the study's design, and the position-control result below prevents a condition-level interpretation.
+The mean difference is 0.2 points on a 100-point scale, with more losses than wins. The paired interval includes zero by a wide margin. This is indistinguishable from noise under the study's design, and the position-control result below prevents a condition-level interpretation.
 
 ### By task
 
@@ -91,10 +92,11 @@ The pilot was later re-reviewed with the repository's standard machine protocol.
 | Measure | Baseline | UADI | Change |
 |---|---:|---:|---:|
 | Machine-panel mean | 87.64 | 88.40 | **+0.76** |
+| Paired 95% interval for the mean delta | — | — | **−5.0 to +6.5** |
 | Pairs won / lost | — | 4 / 5 | — |
 | Split dimension judgments | — | 11 of 126 | — |
 
-By task: subscription **+0.83**, onboarding **+5.83**, operations **−4.38**. The panel agreed with the earlier panel on the task ordering but not on magnitude, and it put subscription slightly positive.
+The interval includes zero, so the +0.76 is not a condition effect. By task: subscription **+0.83**, onboarding **+5.83**, operations **−4.38**. The panel agreed with the earlier panel on the task ordering but not on magnitude, and it put subscription slightly positive.
 
 The randomized mapping created an order interaction: when UADI was Candidate A the mean delta was **−3.44**; when it was Candidate B it was **+4.13**. That is the opposite direction from the earlier panel's Candidate-A preference, so it is a composition or order effect, not a clean condition effect.
 
@@ -159,8 +161,8 @@ The safest reading is that the LLM panel has a substantial Candidate-A preferenc
 
 Committed in this directory:
 
-- [`results.json`](results.json) — the scorer input with all nine pairs, three LLM reviewers per condition, durations and model metadata.
-- [`scorer-output.json`](scorer-output.json) — the full output of `npm run benchmark:score`.
+- [`results.json`](results.json) — the scorer input with all nine pairs, three LLM reviewers per condition, durations and model metadata. The `uadi_position` field was derived from the coordinator mapping after the review; no score changed.
+- [`scorer-output.json`](scorer-output.json) — the full output of `npm run benchmark:score`, including the paired interval and position sensitivity.
 - [`review-summary.json`](review-summary.json) — derived per-task, per-dimension, position-control and agreement statistics.
 - [`prompt-template.md`](prompt-template.md) — the exact condition and judge prompt structure.
 - [`judge-results/`](judge-results/) — the 27 blinded main-panel judge outputs.
@@ -182,7 +184,7 @@ node scripts/capture-benchmark-evidence.mjs --project <project-dir> --out <evide
 
 ## Next steps for a confirmatory study
 
-Tracking issue: [#48](https://github.com/nv-hoai/uadi/issues/48).
+Tracking issues: [#48](https://github.com/nv-hoai/uadi/issues/48) and the redesign in [#52](https://github.com/nv-hoai/uadi/issues/52). The preregistered design is in [`benchmarks/CONFIRMATORY-STUDY.md`](../../CONFIRMATORY-STUDY.md); it turns these next steps into a validated manifest before the first run.
 
 1. Run the standard two-reviewer machine review in `docs/MACHINE-REVIEW.md`. Human review is optional and not required by this repository.
 2. Add a second pinned model family, with three repetitions per task for each family.

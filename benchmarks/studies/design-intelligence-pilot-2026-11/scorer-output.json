@@ -8,10 +8,19 @@
   },
   "protocol_assessment": {
     "exploratory_pilot_minimum_met": true,
+    "machine_review_minimum_met": false,
     "confirmatory_minimum_met": false,
     "human_review_minimum_met": false,
+    "order_balance_met": true,
+    "evidence_tier": "exploratory-pilot",
+    "independent_reviewer_ids": [],
     "human_reviewer_ids": [],
-    "llm_judge_passes": 27,
+    "llm_reviewer_ids": [
+      "J1",
+      "J2",
+      "J3"
+    ],
+    "llm_judge_passes": 3,
     "model_families": [
       "deepseek-v4.1"
     ],
@@ -30,8 +39,9 @@
     },
     "warnings": [
       "Confirmatory multi-model minimum not met: require two qualifying model families, each with at least three unique repetitions for all three tasks.",
-      "Confirmatory human-review minimum not met: every condition requires at least two independent human reviewers who did not produce either condition.",
-      "LLM judge passes are supplementary only (27 recorded) and do not count toward the human-review minimum."
+      "Machine-review minimum not met: every condition requires at least two independent reviewers, human or LLM, who did not produce either candidate.",
+      "human-review minimum not met (optional): a machine review cannot establish human-perceived quality.",
+      "All reviewers are LLM passes. Machine review is screening-grade and may share model-family blind spots with the builders."
     ]
   },
   "pair_count": 9,
@@ -45,6 +55,57 @@
   "baseline_mean_duration_seconds": 2187.222222222222,
   "uadi_mean_duration_seconds": 2027.111111111111,
   "time_change_percent": -7.32029464058928,
+  "paired_delta": {
+    "n": 9,
+    "mean": 0.18518518518518412,
+    "sd": 9.64903004784406,
+    "se": 3.216343349281353,
+    "df": 8,
+    "ci95": [
+      -7.231702578257615,
+      7.602072948627984
+    ],
+    "method": "paired 95% t interval"
+  },
+  "position_sensitivity": {
+    "uadi_as_a": {
+      "pairs": 4,
+      "mean_delta": 4.791666666666668
+    },
+    "uadi_as_b": {
+      "pairs": 5,
+      "mean_delta": -3.5000000000000027
+    },
+    "unknown_pairs": 0,
+    "difference_a_minus_b": 8.291666666666671
+  },
+  "order_balance": {
+    "status": "balanced",
+    "balanced": true,
+    "unknown_pairs": 0,
+    "uadi_a": 4,
+    "uadi_b": 5,
+    "by_task": {
+      "subscription-settings": {
+        "uadi_a": 1,
+        "uadi_b": 2,
+        "unknown": 0,
+        "balanced": true
+      },
+      "product-onboarding": {
+        "uadi_a": 2,
+        "uadi_b": 1,
+        "unknown": 0,
+        "balanced": true
+      },
+      "operations-dashboard": {
+        "uadi_a": 1,
+        "uadi_b": 2,
+        "unknown": 0,
+        "balanced": true
+      }
+    }
+  },
   "dimensions": {
     "product_understanding": {
       "baseline": 3.7037037037037033,
@@ -89,6 +150,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": null,
       "baseline_score": 82.91666666666667,
       "uadi_score": 87.5,
       "delta": 4.583333333333329,
@@ -138,6 +201,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 2,
+      "uadi_position": "B",
+      "baseline_run_position": null,
       "baseline_score": 92.91666666666667,
       "uadi_score": 85.41666666666667,
       "delta": -7.5,
@@ -187,6 +252,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": null,
       "baseline_score": 92.5,
       "uadi_score": 82.08333333333333,
       "delta": -10.416666666666671,
@@ -236,6 +303,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": null,
       "baseline_score": 89.58333333333333,
       "uadi_score": 92.08333333333333,
       "delta": 2.5,
@@ -285,6 +354,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 2,
+      "uadi_position": "A",
+      "baseline_run_position": null,
       "baseline_score": 75.83333333333333,
       "uadi_score": 93.33333333333333,
       "delta": 17.5,
@@ -334,6 +405,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": null,
       "baseline_score": 81.25,
       "uadi_score": 92.08333333333333,
       "delta": 10.833333333333329,
@@ -383,6 +456,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 1,
+      "uadi_position": "B",
+      "baseline_run_position": null,
       "baseline_score": 90,
       "uadi_score": 89.58333333333333,
       "delta": -0.4166666666666714,
@@ -432,6 +507,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 2,
+      "uadi_position": "A",
+      "baseline_run_position": null,
       "baseline_score": 89.58333333333333,
       "uadi_score": 84.16666666666667,
       "delta": -5.416666666666657,
@@ -481,6 +558,8 @@
       "model_family": "deepseek-v4.1",
       "model_version": "deepseek-v4.1-flash",
       "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": null,
       "baseline_score": 86.25,
       "uadi_score": 76.25,
       "delta": -10,
@@ -525,5 +604,5 @@
       }
     }
   ],
-  "interpretation_note": "Descriptive results only. This scorer does not test statistical significance or establish causation; report sample size, reviewer agreement, raw outputs and study limitations."
+  "interpretation_note": "Descriptive results with a paired 95% t interval. The interval is not a substitute for the study design: report sample size, reviewer agreement, position sensitivity, raw outputs and limitations, and do not claim superiority when the interval includes zero."
 }

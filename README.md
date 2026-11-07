@@ -110,6 +110,7 @@ Human owners remain in control of product decisions. Use the host project's norm
 - [Accessibility and interaction review](docs/ACCESSIBILITY-AND-INTERACTION-REVIEW.md)
 - [Benchmarking Design Intelligence](docs/BENCHMARKING.md)
 - [Two-reviewer machine review](docs/MACHINE-REVIEW.md) — the standing benchmark review workflow
+- [Confirmatory study design](benchmarks/CONFIRMATORY-STUDY.md) — balanced order, independent judge families, held-out tasks and paired uncertainty
 - [Exploratory paired benchmark pilot](benchmarks/studies/design-intelligence-pilot-2026-11/README.md) — real runs, preserved evidence and position-control finding
 - [Machine review of the pilot](benchmarks/studies/design-intelligence-pilot-2026-11/machine-review/README.md) — two blinded reviewers, evidence crops, frozen scores and a final decision
 - [Review dashboard](benchmarks/studies/design-intelligence-pilot-2026-11/machine-review/dashboard.html) — filterable pair table, dimension and position charts, evidence drawer

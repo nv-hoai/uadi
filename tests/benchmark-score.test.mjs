@@ -241,3 +241,66 @@ test("does not count duplicate repetition labels toward a sample minimum", () =>
   assert.equal(result.protocol_assessment.exploratory_pilot_minimum_met, false);
   assert.ok(result.protocol_assessment.warnings.some((warning) => warning.includes("Duplicate repetition")));
 });
+
+test("reports a paired interval and position sensitivity instead of a bare mean", () => {
+  const input = fixture();
+  input.pairs = [];
+  const deltas = [0, 25, 50, 25];
+  const positions = ["A", "B", "B", "A"];
+  for (const [index, delta] of deltas.entries()) {
+    const pair = fixture().pairs[0];
+    const uadiScore = 2 + delta / 25;
+    input.pairs.push({
+      ...pair,
+      pair_id: "uncertainty-" + index,
+      uadi_position: positions[index],
+      uadi: { duration_seconds: 90, reviewers: [reviewer("r1", uadiScore), reviewer("r2", uadiScore)] }
+    });
+  }
+  const result = scoreBenchmark(input);
+  assert.equal(result.paired_delta.n, 4);
+  assert.equal(result.paired_delta.mean, 25);
+  assert.ok(result.paired_delta.ci95[0] < 0);
+  assert.ok(result.paired_delta.ci95[1] > 50);
+  assert.equal(result.position_sensitivity.uadi_as_a.pairs, 2);
+  assert.equal(result.position_sensitivity.uadi_as_b.pairs, 2);
+  assert.equal(result.position_sensitivity.unknown_pairs, 0);
+  assert.equal(result.order_balance.balanced, true);
+});
+
+test("a confirmatory design does not qualify with an all-A candidate schedule", () => {
+  const input = fixture();
+  input.study.design_type = "confirmatory";
+  input.pairs = [];
+  for (const model_family of ["family-a", "family-b"]) {
+    for (const task_id of ["subscription-settings", "product-onboarding", "operations-dashboard"]) {
+      for (const repetition of [1, 2, 3]) {
+        const pair = fixture().pairs[0];
+        input.pairs.push({
+          ...pair,
+          pair_id: model_family + "-" + task_id + "-" + repetition,
+          task_id,
+          model_family,
+          model_version: model_family + "-v1",
+          repetition,
+          uadi_position: "A"
+        });
+      }
+    }
+  }
+  const unbalanced = scoreBenchmark(input);
+  assert.equal(unbalanced.order_balance.balanced, false);
+  assert.equal(unbalanced.protocol_assessment.confirmatory_minimum_met, false);
+  assert.ok(unbalanced.protocol_assessment.warnings.some((warning) => warning.includes("balanced Candidate A/B")));
+
+  for (const pair of input.pairs) pair.uadi_position = pair.model_family === "family-a" ? "A" : "B";
+  const balanced = scoreBenchmark(input);
+  assert.equal(balanced.order_balance.balanced, true);
+  assert.equal(balanced.protocol_assessment.confirmatory_minimum_met, true);
+});
+
+test("rejects an unknown candidate position", () => {
+  const input = fixture();
+  input.pairs[0].uadi_position = "C";
+  assert.throws(() => scoreBenchmark(input), /uadi_position must be "A" or "B"/);
+});

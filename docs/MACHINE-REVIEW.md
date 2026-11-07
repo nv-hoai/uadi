@@ -19,6 +19,33 @@ The two-reviewer machine panel does that by forcing two separate model sessions 
 
 No tier allows a claim of human validation, usability improvement in the field, or statistical significance without the corresponding evidence.
 
+## Confirmatory study requirements
+
+A confirmatory machine study must also pass the preregistered design in
+[`benchmarks/CONFIRMATORY-STUDY.md`](../benchmarks/CONFIRMATORY-STUDY.md):
+
+- **Balanced order.** Candidate A/B and baseline-first/UADI-first are balanced per task across
+  the two builder families. Do not randomize each pair independently and hope the block balances.
+- **Independent judges.** Reviewer model families are disjoint from builder families. A
+  same-family panel may still be run, but it is reported as a limitation and cannot support a
+  confirmatory claim.
+- **Calibration.** Reviewers grade seeded defective and clean packets, and one duplicate packet,
+  before the real packets. Missing a seeded critical defect disqualifies that reviewer for the
+  affected dimension.
+- **State evidence.** Capture default, loading, empty, error, success and restricted states at
+  `390x844` and `1280x900`, with prototype chrome hidden. Score interaction completeness from
+  rendered states, not prose alone.
+- **Held-out tasks.** At least one held-out task per archetype exists and is never used to edit
+  the guidance under test.
+- **Uncertainty.** Report a paired 95% interval and a pre-registered minimum detectable effect.
+  An interval that includes zero is inconclusive, not a small win.
+
+Validate the design before the first run:
+
+```bash
+npm run study:validate -- benchmarks/studies/<study>/study-design.json
+```
+
 ## Roles
 
 - **Coordinator** — prepares identical blinded packets, keeps `mapping.json`, freezes round 1, validates outputs, reveals the mapping. Never scores.
@@ -193,6 +220,9 @@ The scorer now reports:
 
 - `machine_review_minimum_met` — at least two independent reviewers per condition, human or LLM.
 - `human_review_minimum_met` — optional human tier.
+- `order_balance_met` — `true`/`false` when positions are recorded, `null` when they are not; confirmatory qualification requires `true`.
+- `paired_delta` — mean, standard deviation and paired 95% t interval over pair deltas.
+- `position_sensitivity` — mean delta when UADI was Candidate A versus Candidate B.
 - `evidence_tier` — `exploratory-pilot`, `machine-reviewed-pilot`, `confirmatory-machine` or `confirmatory-human`.
 
 ## Limitations to publish every time
@@ -202,4 +232,6 @@ The scorer now reports:
 - Blinding is textual; residual stylistic hints may remain.
 - Default-state screenshots do not cover dialogs, errors, loading or role-restricted states unless those are captured too.
 - Averaging a one-point split is a decision rule, not agreement.
+- An unbalanced candidate order can create a position effect larger than the condition effect; report position sensitivity and balance the schedule.
+- A reported mean without a paired interval is not a condition claim.
 - Machine review is screening-grade; it does not establish human-perceived quality or statistical significance.

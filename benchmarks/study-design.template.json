@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "study_id": "confirmatory-YYYY-MM",
+  "status": "preregistered",
+  "design_type": "confirmatory-machine",
+  "protocol_version": "confirmatory-1",
+  "created_at": "2000-01-01",
+  "hypothesis": {
+    "primary": "UADI improves weighted design quality versus the same agent without UADI.",
+    "direction": "superiority",
+    "primary_outcome": "paired weighted-score delta (UADI - baseline)",
+    "minimum_detectable_effect_points": 4,
+    "alpha": 0.05
+  },
+  "builders": [
+    {
+      "model_family": "builder-a",
+      "model_version": "builder-a-v1",
+      "agent": "EXAMPLE_ONLY",
+      "settings": "EXAMPLE_ONLY"
+    },
+    {
+      "model_family": "builder-b",
+      "model_version": "builder-b-v1",
+      "agent": "EXAMPLE_ONLY",
+      "settings": "EXAMPLE_ONLY"
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "subscription-settings",
+      "archetype": "settings",
+      "task_version": "1.0.0",
+      "split": "public"
+    },
+    {
+      "task_id": "product-onboarding",
+      "archetype": "onboarding",
+      "task_version": "1.0.0",
+      "split": "public"
+    },
+    {
+      "task_id": "operations-dashboard",
+      "archetype": "dashboard",
+      "task_version": "1.0.0",
+      "split": "public"
+    }
+  ],
+  "held_out_tasks": [
+    {
+      "task_id": "held-out-billing-recovery",
+      "archetype": "settings",
+      "task_version": "1.0.0",
+      "status": "to-author",
+      "used_for_guidance_changes": false
+    },
+    {
+      "task_id": "held-out-activation-recovery",
+      "archetype": "onboarding",
+      "task_version": "1.0.0",
+      "status": "to-author",
+      "used_for_guidance_changes": false
+    },
+    {
+      "task_id": "held-out-capacity-investigation",
+      "archetype": "dashboard",
+      "task_version": "1.0.0",
+      "status": "to-author",
+      "used_for_guidance_changes": false
+    }
+  ],
+  "frozen": {
+    "snapshot_hash": "sha256:REPLACE_WITH_SNAPSHOT_HASH",
+    "prompt_hash": "sha256:REPLACE_WITH_PROMPT_HASH",
+    "skill_hash": "sha256:REPLACE_WITH_SKILL_HASH",
+    "time_budget_minutes": 20
+  },
+  "design": {
+    "repetitions": 3,
+    "pairs": [
+      {
+        "pair_id": "builder-a-subscription-settings-r1",
+        "model_family": "builder-a",
+        "task_id": "subscription-settings",
+        "repetition": 1,
+        "uadi_position": "A",
+        "baseline_run_position": 1
+      },
+      {
+        "pair_id": "builder-a-subscription-settings-r2",
+        "model_family": "builder-a",
+        "task_id": "subscription-settings",
+        "repetition": 2,
+        "uadi_position": "B",
+        "baseline_run_position": 2
+      },
+      {
+        "pair_id": "builder-a-subscription-settings-r3",
+        "model_family": "builder-a",
+        "task_id": "subscription-settings",
+        "repetition": 3,
+        "uadi_position": "A",
+        "baseline_run_position": 1
+      },
+      {
+        "pair_id": "builder-a-product-onboarding-r1",
+        "model_family": "builder-a",
+        "task_id": "product-onboarding",
+        "repetition": 1,
+        "uadi_position": "A",
+        "baseline_run_position": 1
+      },
+      {
+        "pair_id": "builder-a-product-onboarding-r2",
+        "model_family": "builder-a",
+        "task_id": "product-onboarding",
+        "repetition": 2,
+        "uadi_position": "B",
+        "baseline_run_position": 2
+      },
+      {
+        "pair_id": "builder-a-product-onboarding-r3",
+        "model_family": "builder-a",
+        "task_id": "product-onboarding",
+        "repetition": 3,
+        "uadi_position": "A",
+        "baseline_run_position": 1
+      },
+      {
+        "pair_id": "builder-a-operations-dashboard-r1",
+        "model_family": "builder-a",
+        "task_id": "operations-dashboard",
+        "repetition": 1,
+        "uadi_position": "A",
+        "baseline_run_position": 1
+      },
+      {
+        "pair_id": "builder-a-operations-dashboard-r2",
+        "model_family": "builder-a",
+        "task_id": "operations-dashboard",
+        "repetition": 2,
+        "uadi_position": "B",
+        "baseline_run_position": 2
+      },
+      {
+        "pair_id": "builder-a-operations-dashboard-r3",
+        "model_family": "builder-a",
+        "task_id": "operations-dashboard",
+        "repetition": 3,
+        "uadi_position": "A",
+        "baseline_run_position": 1
+      },
+      {
+        "pair_id": "builder-b-subscription-settings-r1",
+        "model_family": "builder-b",
+        "task_id": "subscription-settings",
+        "repetition": 1,
+        "uadi_position": "B",
+        "baseline_run_position": 2
+      },
+      {
+        "pair_id": "builder-b-subscription-settings-r2",
+        "model_family": "builder-b",
+        "task_id": "subscription-settings",
+        "repetition": 2,
+        "uadi_position": "A",
+        "baseline_run_position": 1
+      },
+      {
+        "pair_id": "builder-b-subscription-settings-r3",
+        "model_family": "builder-b",
+        "task_id": "subscription-settings",
+        "repetition": 3,
+        "uadi_position": "B",
+        "baseline_run_position": 2
+      },
+      {
+        "pair_id": "builder-b-product-onboarding-r1",
+        "model_family": "builder-b",
+        "task_id": "product-onboarding",
+        "repetition": 1,
+        "uadi_position": "B",
+        "baseline_run_position": 2
+      },
+      {
+        "pair_id": "builder-b-product-onboarding-r2",
+        "model_family": "builder-b",
+        "task_id": "product-onboarding",
+        "repetition": 2,
+        "uadi_position": "A",
+        "baseline_run_position": 1
+      },
+      {
+        "pair_id": "builder-b-product-onboarding-r3",
+        "model_family": "builder-b",
+        "task_id": "product-onboarding",
+        "repetition": 3,
+        "uadi_position": "B",
+        "baseline_run_position": 2
+      },
+      {
+        "pair_id": "builder-b-operations-dashboard-r1",
+        "model_family": "builder-b",
+        "task_id": "operations-dashboard",
+        "repetition": 1,
+        "uadi_position": "B",
+        "baseline_run_position": 2
+      },
+      {
+        "pair_id": "builder-b-operations-dashboard-r2",
+        "model_family": "builder-b",
+        "task_id": "operations-dashboard",
+        "repetition": 2,
+        "uadi_position": "A",
+        "baseline_run_position": 1
+      },
+      {
+        "pair_id": "builder-b-operations-dashboard-r3",
+        "model_family": "builder-b",
+        "task_id": "operations-dashboard",
+        "repetition": 3,
+        "uadi_position": "B",
+        "baseline_run_position": 2
+      }
+    ],
+    "assumed_pair_sd_points": 7.5
+  },
+  "review": {
+    "reviewer_families": [
+      "reviewer-a",
+      "reviewer-b"
+    ],
+    "reviewers_per_condition": 2,
+    "builder_family_excluded": true,
+    "blinded": true,
+    "calibration": {
+      "seed_pairs": 3,
+      "clean_seed_pairs": 1,
+      "required_critical_defects": [
+        "accessible-name",
+        "claim-behavior-mismatch",
+        "sort-order-mismatch"
+      ],
+      "duplicate_packet": true
+    },
+    "state_capture": {
+      "viewports": [
+        "390x844",
+        "1280x900"
+      ],
+      "required_states": [
+        "default",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "restricted"
+      ],
+      "hide_prototype_chrome": true
+    }
+  },
+  "decision_rule": {
+    "primary_outcome": "paired weighted-score delta (UADI - baseline)",
+    "confidence_interval": "paired 95% t interval",
+    "superiority_requires_ci_lower_bound_above": 0,
+    "minimum_effect_points": 4,
+    "no_task_or_family_regression_below_points": -2,
+    "require_order_balance": true,
+    "require_reviewer_calibration": true,
+    "require_held_out_suite_for_guidance_changes": true
+  },
+  "execution": {
+    "mode": "sequential",
+    "concurrency": "none",
+    "time_budget_minutes": 20,
+    "record_tokens": true,
+    "record_cost": true
+  },
+  "reporting": {
+    "report_by": [
+      "model_family",
+      "task",
+      "dimension"
+    ],
+    "publish_reviewer_disagreement": true,
+    "publish_position_sensitivity": true,
+    "publish_cost": true,
+    "publish_negative_results": true
+  }
+}

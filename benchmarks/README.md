@@ -47,6 +47,20 @@ Reviewers may be LLM sessions. Record `"type": "llm"` and `"independent": true` 
 
 Use the exact stable labels **Candidate A** and **Candidate B** in every prompt and evidence filename. Candidate A always means the contents of `blind/condition-a`; Candidate B always means `blind/condition-b`. Do not rename them, infer their identity from content, or change the mapping between passes. Use [JUDGE-PROMPT.md](JUDGE-PROMPT.md) verbatim and give every reviewer the same manifest. The coordinator keeps `mapping.json`, verifies that both packets contain equivalent evidence types, and reveals the mapping once, after scores are frozen.
 
+### Confirmatory study design
+
+A confirmatory study must be preregistered and validated before the first run. Use
+[`CONFIRMATORY-STUDY.md`](CONFIRMATORY-STUDY.md) and
+[`study-design.template.json`](study-design.template.json):
+
+```bash
+npm run study:validate -- benchmarks/studies/<study>/study-design.json
+```
+
+The design adds the controls the pilot lacked: balanced Candidate A/B order per task, reviewer
+families disjoint from the builders, calibration seeds and a duplicate packet, held-out tasks,
+required interaction-state screenshots, version hashes and a paired 95% interval with a
+pre-registered minimum detectable effect. The validator is a preflight check, not a result.
 
 ## Scoring rubric
 
@@ -72,7 +86,7 @@ Weighted score = sum of (dimension score / 4 × dimension weight). Maximum 100.
 
 ## Record and calculate results
 
-Start with [results.template.json](results.template.json). It contains one clearly synthetic example pair to verify the scorer; replace the entire sample with real observations before reporting any result. Add one entry per paired run. Each pair must record task_id, model_family, exact model_version and repetition number. Each condition must contain elapsed time in seconds and at least two reviewers with all seven 0–4 dimension scores; each reviewer must declare `id`, `type` (`human` or `llm`) and `independent` (boolean), plus optional `provenance`. Keep study.model as a human-readable study-level summary; pair-level model fields are the source of truth for multi-model analysis.
+Start with [results.template.json](results.template.json). It contains one clearly synthetic example pair to verify the scorer; replace the entire sample with real observations before reporting any result. Add one entry per paired run. Each pair must record task_id, model_family, exact model_version and repetition number. Each condition must contain elapsed time in seconds and at least two reviewers with all seven 0–4 dimension scores; each reviewer must declare `id`, `type` (`human` or `llm`) and `independent` (boolean), plus optional `provenance`. Keep study.model as a human-readable study-level summary; pair-level model fields are the source of truth for multi-model analysis. For a confirmatory design, also record `uadi_position` (`A` or `B`) and `baseline_run_position` (`1` or `2`) so the scorer can report position sensitivity and order balance. Set `study.design_type` to `confirmatory` (or `confirmatory-machine`) so an unbalanced schedule cannot qualify as confirmatory.
 
 The same reviewer IDs must appear in both conditions for a pair, with the same `type` and `independent` values. Keep IDs anonymous (for example, R1 and R2); do not store personal information.
 
@@ -83,7 +97,7 @@ node scripts/score-benchmark.mjs benchmarks/my-study.json
 npm test
 ~~~
 
-The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/losses, per-dimension deltas and elapsed-time change. It also assesses the sample against the exploratory (9-pair) and confirmatory multi-model (18-pair) minimums and lists missing model/task/repetition coverage. Confirmatory qualification requires at least two independent reviewers per condition (`machine_review_minimum_met`, human or LLM) plus two qualifying model families. `human_review_minimum_met` is an optional higher tier, and `evidence_tier` summarizes where the study stands. This is a protocol check, not a statistical-significance test. It rejects incomplete scores, mismatched reviewer panels, missing reviewer provenance and malformed pairs. A negative time-change percentage means the UADI condition was faster; a positive value means it took longer.
+The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/losses, per-dimension deltas and elapsed-time change. It also reports a paired 95% t interval, position sensitivity and order balance. It assesses the sample against the exploratory (9-pair) and confirmatory multi-model (18-pair) minimums and lists missing model/task/repetition coverage. Confirmatory qualification requires at least two independent reviewers per condition (`machine_review_minimum_met`, human or LLM) plus two qualifying model families. `human_review_minimum_met` is an optional higher tier, and `evidence_tier` summarizes where the study stands. This is a protocol check, not a statistical-significance test. It rejects incomplete scores, mismatched reviewer panels, missing reviewer provenance and malformed pairs. A negative time-change percentage means the UADI condition was faster; a positive value means it took longer.
 
 ## Interpretation and reporting
 
@@ -100,4 +114,4 @@ The scorer reports weighted baseline/UADI means, paired score deltas, wins/ties/
 - [Design Intelligence Pilot (exploratory)](studies/design-intelligence-pilot-2026-11/README.md) — nine pairs across the three tasks with one pinned model family. It met the exploratory sample-size check.
 - [Two-reviewer machine review of the pilot](studies/design-intelligence-pilot-2026-11/machine-review/README.md) — two blinded LLM reviewers, 110 evidence crops, frozen round-1 scores, an evidence exchange and a final decision. Evidence tier: `machine-reviewed-pilot`. Not human review.
 
-No human-reviewed or two-model-family confirmatory result has been recorded. The benchmark tasks and scorer make evaluation repeatable; they are not evidence of improvement by themselves.
+No human-reviewed or two-model-family confirmatory result has been recorded. The benchmark tasks and scorer make evaluation repeatable; they are not evidence of improvement by themselves. The confirmatory study design is preregistered in [`CONFIRMATORY-STUDY.md`](CONFIRMATORY-STUDY.md) and tracked by [#48](https://github.com/nv-hoai/uadi/issues/48) and [#52](https://github.com/nv-hoai/uadi/issues/52); it becomes evidence only after the runs and review are complete.
