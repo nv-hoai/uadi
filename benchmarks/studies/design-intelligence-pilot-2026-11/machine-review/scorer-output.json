@@ -1,0 +1,543 @@
+{
+  "study": {
+    "agent": "OpenCode general subagent, identical tools and settings in both conditions",
+    "model": "deepseek-v4.1 / deepseek-v4.1-flash (pinned)",
+    "date": "2026-11-06/2026-11-07",
+    "project_snapshot": "Empty static prototype scaffold v1 copied identically for every run",
+    "design": "Two-reviewer machine review of the exploratory pilot. Two blinded LLM reviewers graded all nine pairs in separate sessions, captured evidence crops, froze round-1 scores, exchanged evidence, and produced final scores before the condition mapping was revealed.",
+    "review_protocol": "two-reviewer-machine",
+    "review_frozen_at": "2026-11-07T04:57:07.689Z",
+    "review_rule": "Agreed integer scores are final. One-point splits are averaged and flagged. No two-point splits occurred.",
+    "human_review": "none"
+  },
+  "protocol_assessment": {
+    "exploratory_pilot_minimum_met": true,
+    "machine_review_minimum_met": true,
+    "confirmatory_minimum_met": false,
+    "human_review_minimum_met": false,
+    "evidence_tier": "machine-reviewed-pilot",
+    "independent_reviewer_ids": [
+      "R1",
+      "R2"
+    ],
+    "human_reviewer_ids": [],
+    "llm_reviewer_ids": [
+      "R1",
+      "R2"
+    ],
+    "llm_judge_passes": 2,
+    "model_families": [
+      "deepseek-v4.1"
+    ],
+    "qualified_model_families": [
+      "deepseek-v4.1"
+    ],
+    "task_coverage": [
+      "subscription-settings",
+      "product-onboarding",
+      "operations-dashboard"
+    ],
+    "pair_counts_by_model_and_task": {
+      "deepseek-v4.1::subscription-settings": 3,
+      "deepseek-v4.1::product-onboarding": 3,
+      "deepseek-v4.1::operations-dashboard": 3
+    },
+    "warnings": [
+      "Confirmatory multi-model minimum not met: require two qualifying model families, each with at least three unique repetitions for all three tasks.",
+      "human-review minimum not met (optional): a machine review cannot establish human-perceived quality.",
+      "All reviewers are LLM passes. Machine review is screening-grade and may share model-family blind spots with the builders."
+    ]
+  },
+  "pair_count": 9,
+  "task_count": 3,
+  "baseline_weighted_score": 87.63888888888889,
+  "uadi_weighted_score": 88.40277777777777,
+  "mean_score_delta": 0.7638888888888857,
+  "pairs_won_by_uadi": 4,
+  "pairs_tied": 0,
+  "pairs_lost_by_uadi": 5,
+  "baseline_mean_duration_seconds": 2187.222222222222,
+  "uadi_mean_duration_seconds": 2027.111111111111,
+  "time_change_percent": -7.32029464058928,
+  "dimensions": {
+    "product_understanding": {
+      "baseline": 3.7777777777777777,
+      "uadi": 3.9444444444444446,
+      "delta": 0.16666666666666666
+    },
+    "ux_reasoning": {
+      "baseline": 3.7222222222222223,
+      "uadi": 3.6666666666666665,
+      "delta": -0.05555555555555555
+    },
+    "design_judgment": {
+      "baseline": 3.611111111111111,
+      "uadi": 3.7777777777777777,
+      "delta": 0.16666666666666666
+    },
+    "visual_hierarchy": {
+      "baseline": 3.0555555555555554,
+      "uadi": 3.2222222222222223,
+      "delta": 0.16666666666666666
+    },
+    "interaction_completeness": {
+      "baseline": 4,
+      "uadi": 3.6666666666666665,
+      "delta": -0.3333333333333333
+    },
+    "accessibility_responsiveness": {
+      "baseline": 2.7222222222222223,
+      "uadi": 2.7222222222222223,
+      "delta": 0
+    },
+    "implementation_quality": {
+      "baseline": 3.2222222222222223,
+      "uadi": 3.388888888888889,
+      "delta": 0.16666666666666666
+    }
+  },
+  "pairs": [
+    {
+      "pair_id": "subscription-settings-r1",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "baseline_score": 90,
+      "uadi_score": 86.25,
+      "delta": -3.75,
+      "baseline_duration_seconds": 1518,
+      "uadi_duration_seconds": 918,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 3,
+          "delta": 0
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 4,
+          "uadi": 2,
+          "delta": -2
+        },
+        "implementation_quality": {
+          "baseline": 3,
+          "uadi": 3.5,
+          "delta": 0.5
+        }
+      }
+    },
+    {
+      "pair_id": "subscription-settings-r2",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "baseline_score": 85,
+      "uadi_score": 88.75,
+      "delta": 3.75,
+      "baseline_duration_seconds": 2416,
+      "uadi_duration_seconds": 1405,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 3.5,
+          "uadi": 4,
+          "delta": 0.5
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 3,
+          "delta": 0
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "accessibility_responsiveness": {
+          "baseline": 3,
+          "uadi": 2,
+          "delta": -1
+        },
+        "implementation_quality": {
+          "baseline": 3,
+          "uadi": 3,
+          "delta": 0
+        }
+      }
+    },
+    {
+      "pair_id": "subscription-settings-r3",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "baseline_score": 85,
+      "uadi_score": 87.5,
+      "delta": 2.5,
+      "baseline_duration_seconds": 1608,
+      "uadi_duration_seconds": 1993,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 3.5,
+          "delta": -0.5
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "design_judgment": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "visual_hierarchy": {
+          "baseline": 2,
+          "uadi": 3.5,
+          "delta": 1.5
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        },
+        "implementation_quality": {
+          "baseline": 3,
+          "uadi": 3,
+          "delta": 0
+        }
+      }
+    },
+    {
+      "pair_id": "product-onboarding-r1",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "baseline_score": 96.25,
+      "uadi_score": 93.75,
+      "delta": -2.5,
+      "baseline_duration_seconds": 2426,
+      "uadi_duration_seconds": 2266,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "design_judgment": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 3,
+          "delta": 0
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "accessibility_responsiveness": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "implementation_quality": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        }
+      }
+    },
+    {
+      "pair_id": "product-onboarding-r2",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "baseline_score": 89.375,
+      "uadi_score": 91.875,
+      "delta": 2.5,
+      "baseline_duration_seconds": 1588,
+      "uadi_duration_seconds": 1854,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "ux_reasoning": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "design_judgment": {
+          "baseline": 3.5,
+          "uadi": 4,
+          "delta": 0.5
+        },
+        "visual_hierarchy": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 3.5,
+          "delta": -0.5
+        },
+        "accessibility_responsiveness": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "implementation_quality": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        }
+      }
+    },
+    {
+      "pair_id": "product-onboarding-r3",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "baseline_score": 82.5,
+      "uadi_score": 100,
+      "delta": 17.5,
+      "baseline_duration_seconds": 2473,
+      "uadi_duration_seconds": 2120,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "ux_reasoning": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "design_judgment": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "accessibility_responsiveness": {
+          "baseline": 2,
+          "uadi": 4,
+          "delta": 2
+        },
+        "implementation_quality": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        }
+      }
+    },
+    {
+      "pair_id": "operations-dashboard-r1",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "baseline_score": 90.625,
+      "uadi_score": 88.75,
+      "delta": -1.875,
+      "baseline_duration_seconds": 2600,
+      "uadi_duration_seconds": 2587,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "design_judgment": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "visual_hierarchy": {
+          "baseline": 3.5,
+          "uadi": 3,
+          "delta": -0.5
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "accessibility_responsiveness": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        },
+        "implementation_quality": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        }
+      }
+    },
+    {
+      "pair_id": "operations-dashboard-r2",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "baseline_score": 90,
+      "uadi_score": 80,
+      "delta": -10,
+      "baseline_duration_seconds": 2773,
+      "uadi_duration_seconds": 2187,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "design_judgment": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 3,
+          "delta": 0
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "accessibility_responsiveness": {
+          "baseline": 2.5,
+          "uadi": 2,
+          "delta": -0.5
+        },
+        "implementation_quality": {
+          "baseline": 3,
+          "uadi": 3,
+          "delta": 0
+        }
+      }
+    },
+    {
+      "pair_id": "operations-dashboard-r3",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek-v4.1",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "baseline_score": 80,
+      "uadi_score": 78.75,
+      "delta": -1.25,
+      "baseline_duration_seconds": 2283,
+      "uadi_duration_seconds": 2914,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 2.5,
+          "delta": -0.5
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 3.5,
+          "delta": -0.5
+        },
+        "accessibility_responsiveness": {
+          "baseline": 1,
+          "uadi": 2.5,
+          "delta": 1.5
+        },
+        "implementation_quality": {
+          "baseline": 2,
+          "uadi": 2,
+          "delta": 0
+        }
+      }
+    }
+  ],
+  "interpretation_note": "Descriptive results only. This scorer does not test statistical significance or establish causation; report sample size, reviewer agreement, raw outputs and study limitations."
+}

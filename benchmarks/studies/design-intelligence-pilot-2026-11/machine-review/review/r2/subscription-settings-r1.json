@@ -1,0 +1,94 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "subscription-settings-r1",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:48:44+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md lines 17-27 separate the supplied plan limits from assumed prices, dates and change timing, and the prototype refuses to invent a proration figure. The owner/member split and the honest 'no payment was processed' copy are carried into the UI. Only confirmation of real product policy would strengthen this further.",
+      "ux_reasoning": "The page answers plan, price and renewal in the first card, then plans, payment, invoices and an isolated cancellation zone (crop evidence/subscription-settings-r1/a/summary-plans.png). The preview monthly/yearly control is explicitly non-committal (index.html line 171), and over-limit downgrades are blocked in review (app.js line 500). Immediate-upgrade desire is the unhandled branch, though it is flagged as an open question.",
+      "design_judgment": "Scheduling all changes for renewal avoids invented proration, and cancellation requires both a checkbox and the typed workspace name (app.js line 687) with 'Keep my subscription' as the primary action. The trade-off of slower immediate upgrades is stated in analysis.md line 93. Showing plan comparison inline rather than only in a dialog is a defensible strength.",
+      "visual_hierarchy": "The summary crop is calm and scannable: one blue accent, prices and renewal date at clear sizes, plan cards with a current-plan badge. The large yellow prototype panel dominates the top, the page runs 2173px, and the invoice table is repetitive. Moving demo chrome out of the page flow and tightening invoice density would raise this to 4.",
+      "interaction_completeness": "Loading, load error, empty invoices, blocked downgrade, busy and failed-save states are implemented (index.html lines 43-52; app.js lines 439-443). There is no past-due or failed-payment state at all, which is a relevant billing condition. Adding payment-failure and recovery states would raise this to 4.",
+      "accessibility_responsiveness": "checks.json reports four controls without accessible names and an axe aria-progressbar-name violation; index.html line 151 defines the member meter with no accessible name. Keyboard dialogs, focus return and mobile stacking are implemented (mobile card rows are legible in evidence/subscription-settings-r1/a/mobile-invoices.png). Naming every control and the progressbar would raise this to 3.",
+      "implementation_quality": "Static markup is kept separate from 891 lines of render and event code, and the reported syntax check and 32 assertions passed (analysis.md lines 139-142). The single monolithic controller and the unnamed controls are the main weaknesses. Splitting state modules and keeping labels in the markup template would raise this."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r1/a/summary-plans.png",
+        "caption": "Desktop summary (plan, price, next payment, 7 of 20 members) followed by the monthly/yearly preview and three plan cards.",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r1/a/mobile-invoices.png",
+        "caption": "Mobile invoice table reflowed into labelled cards without horizontal overflow.",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "No failed-payment or past-due state is implemented (scenarioSelect in index.html lines 43-52 offers only ready, near/at limit, loading, error and empty invoices).",
+      "checks.json reports four controls without accessible names and an axe aria-progressbar-name violation; index.html line 151 has no accessible name on the meter.",
+      "The prototype panel is a large in-flow yellow block at the top, and the invoice section is long and repetitive."
+    ],
+    "strengths": [
+      "Typed workspace-name plus checkbox confirmation for cancellation, with the safe action primary.",
+      "Monthly/yearly preview is explicitly separated from a real billing change.",
+      "Over-limit downgrades are blocked with member counts; plan change, payment and cancellation success are honest about simulation.",
+      "Strong role handling: named owner, disabled controls with explanations, invoices still viewable."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md lines 9-17 label prices, dates and proration as synthetic, and lines 65-75 give an explicit capability matrix for owner and member. The UI never claims a charge succeeded, and the seat, card and invoice facts match the brief. The only gap is that several billing policies are assumptions rather than resolved rules.",
+      "ux_reasoning": "The landing card answers plan, price, next payment and 18/20 seats with a warning meter (evidence/subscription-settings-r1/b/summary.png), then routine billing, invoices and a separated cancellation section. Change-plan review states effective date, amount today and seat fit (app.js lines 760-830). Plan comparison is one click away rather than visible on the page, which costs some orientation.",
+      "design_judgment": "Immediate upgrades versus scheduled downgrades and routing Free through cancellation are coherent choices (analysis.md lines 58-59; app.js lines 790-800), and no retention tricks are used. Hiding the plan table inside a dialog while a fixed toolbar sits over the page are weaker contextual decisions. A persistent, non-overlapping plan comparison would raise this to 4.",
+      "visual_hierarchy": "The summary is the strongest region in either candidate: large price, calm green accent, tabular facts and an amber usage bar. However, evidence/subscription-settings-r1/b/controls-overlap.png shows the fixed dark toolbar covering the Billing period card and the Invoices heading, breaking the page composition. Making the controls non-overlapping or collapsible by default would raise this to 4.",
+      "interaction_completeness": "Past-due banner, failed invoice status, 'payment updated but unresolved' (app.js line 1201), busy states, card validation, cancellation acknowledgement (app.js line 894) and an undoable scheduled change are implemented, with 39 scripted checks (analysis.md line 131). A typed confirmation for cancellation is the one plausible addition.",
+      "accessibility_responsiveness": "checks.json reports zero controls without accessible names and no axe violations, the member meter is labelled (app.js line 430), and the mobile layout stacks without overflow. Remaining exposure is manual screen-reader and zoom testing, not a rendered defect.",
+      "implementation_quality": "The prototype runs with no console or page errors and uses consistent state and handler patterns (app.js). It is still 1450 lines of string-concatenated HTML in one file, which is harder to maintain than a markup/render split. Extracting templates and splitting state would raise this to 4."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r1/b/summary.png",
+        "caption": "Desktop summary with plan, price, renewal and an amber 18-of-20 member meter.",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r1/b/controls-overlap.png",
+        "caption": "Fixed prototype toolbar obscuring the Billing period card and Invoices section heading.",
+        "dimension": "visual_hierarchy"
+      }
+    ],
+    "critical_defects": [
+      "The fixed prototype toolbar overlaps and obscures product content in the supplied desktop capture (evidence controls-overlap.png).",
+      "Plan comparison is absent from the page and lives only in the Change plan dialog, so pricing options are not scannable without a click.",
+      "app.js is a 1450-line single-file renderer that builds all markup as strings."
+    ],
+    "strengths": [
+      "Clean automated accessibility result: no unnamed controls and no axe violations.",
+      "Payment-failure handling is honest and remains unresolved after a card update.",
+      "Clear owner/member capability matrix implemented with named owner and disabled controls.",
+      "Strong price and renewal typography with a useful near-limit warning."
+    ]
+  },
+  "comparison": "Candidate B is more complete on system states (past-due payment, failed invoice and unresolved payment after a card update) and is clean under automated accessibility, while Candidate A has the stronger cancellation safeguard, inline plan comparison and more rigorous analysis. Candidate A's missing payment-failure state and four unnamed controls outweigh its deeper confirmation flow, so Candidate B edges the pair despite its overlapping toolbar.",
+  "limitations": "Only the default owner screenshots exist, so dialogs and non-default states were assessed from code and checks.json rather than rendered evidence. Axe results were taken from checks.json without the underlying node lists, and no screen-reader, cross-browser, zoom or real-provider behaviour was available. The fixed prototype-control panels are demo chrome, but they do obscure content in the supplied captures."
+}

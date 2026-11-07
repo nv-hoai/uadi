@@ -1,0 +1,42 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "product-onboarding-r1",
+  "round": 2,
+  "counterpart": "R2",
+  "responses": [
+    {
+      "candidate": "b",
+      "dimension": "visual_hierarchy",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "R2's mobile-form.png shows the top of the form cleanly, but the full supplied mobile screenshot and my mobile-controls-overlap.png show the floating Prototype controls bar cutting across the NEXT callout ('Skipping the invitation step never blocks your project'). The core hierarchy is strong, but the rendered page is still visibly interrupted; a non-overlapping or collapsed bar would justify 4.",
+      "evidence": "inputs/r1/product-onboarding-r1/condition-b/screenshots/mobile.png; out/r1/evidence/product-onboarding-r1/b/mobile-controls-overlap.png; out/r2/evidence/product-onboarding-r1/b/mobile-form.png"
+    }
+  ],
+  "final_scores": {
+    "candidate_a": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "candidate_b": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    }
+  },
+  "differences_remaining": [
+    "candidate_b.visual_hierarchy: R1 final 3 vs R2 4; R1 maintains 3 because the floating prototype bar visibly covers the NEXT callout in the rendered mobile screenshot."
+  ],
+  "summary": "Only Candidate B's visual hierarchy was disputed. I kept 3 because the rendered mobile screenshot still has the prototype bar covering the NEXT callout, even though R2's crop shows a clean core form; all other dimensions matched."
+}

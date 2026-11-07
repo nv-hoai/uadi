@@ -1,0 +1,117 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "operations-dashboard-r3",
+  "round": 2,
+  "counterpart": "R2",
+  "responses": [
+    {
+      "candidate": "a",
+      "dimension": "design_judgment",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "R2 credits the zero-based grouped bars, the 0-100% axis and the disclosed 0.5 pp threshold, all of which are sound. I keep 3 because the analysis declares on-time rate the primary metric yet the trend defaults to Order volume and offers no change-from-baseline view, so the delivered design is slightly at odds with its own hierarchy. R2's evidence does not address that default.",
+      "evidence": "out/r1/evidence/operations-dashboard-r3/a/desktop-outcomes-overlay.png"
+    },
+    {
+      "candidate": "a",
+      "dimension": "visual_hierarchy",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "The insight band, three KPI cards and trend/outcome row form a clear path, but the fixed prototype pill covers the 'Delivered on time' row and the outcomes card carries a large dead area beneath its footnote. R2 calls this the strongest composition of the three pairs; I see a strong composition with two visible blemishes, so 3 rather than 4.",
+      "evidence": "out/r2/evidence/operations-dashboard-r3/a/desktop-outcomes-regions.png"
+    },
+    {
+      "candidate": "a",
+      "dimension": "implementation_quality",
+      "round1_score": 2,
+      "counterpart_round1_score": 3,
+      "final_score": 2,
+      "position": "maintain",
+      "reason": "R2 lists the same defects (604px mobile document, 22 contrast nodes, overlay over content) but still scores 3. A shipped mobile page that overflows by 214px with a region table clipped mid-column and no visible scroll hint, plus extensive contrast failures, is not a fully working result; 2 reflects that while acknowledging the code is coherent and error-free.",
+      "evidence": "out/r1/evidence/operations-dashboard-r3/a/mobile-regions-clipped.png"
+    },
+    {
+      "candidate": "b",
+      "dimension": "ux_reasoning",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 3,
+      "position": "revise",
+      "reason": "R2's crop shows the region table caption 'Lowest rate first' while rows render Central 95.4%, East 92.4%, North 91.0%, South 91.3%, West 89.4% in fixed order. I missed that the promised ranking is not applied; the correctly ranked 'Largest regional declines' panel partly compensates, but the table's scan order is wrong, so 3 is correct.",
+      "evidence": "out/r2/evidence/operations-dashboard-r3/b/desktop-region-order.png"
+    },
+    {
+      "candidate": "b",
+      "dimension": "visual_hierarchy",
+      "round1_score": 3,
+      "counterpart_round1_score": 2,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "R2 identifies the half-empty chart row as a conspicuous composition failure. I agree it is conspicuous and already scored it down from excellent, but the headline, rate-first card row and section order remain clear and scannable; one broken row does not make the hierarchy merely adequate, so I keep 3.",
+      "evidence": "out/r2/evidence/operations-dashboard-r3/b/desktop-broken-grid.png"
+    },
+    {
+      "candidate": "b",
+      "dimension": "interaction_completeness",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 4,
+      "position": "maintain",
+      "reason": "R2 folds the unsorted table and the broken grid into this dimension, but both are layout/correctness defects, not missing states or feedback. Loading, stale, partial, error, no-data, empty result, no-denominator and in-progress variants are all implemented, the orders view keeps search/paging/sorting and drill chips; the interaction set is complete, so I keep 4.",
+      "evidence": "out/r1/operations-dashboard-r3.json (candidate_b interaction_completeness rationale) and out/r2/evidence/operations-dashboard-r3/b/desktop-declines.png"
+    },
+    {
+      "candidate": "b",
+      "dimension": "accessibility_responsiveness",
+      "round1_score": 3,
+      "counterpart_round1_score": 2,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "R2 scores 2 for two contrast nodes and four label/name mismatches, but also records no page-level overflow and all 40 controls named. Candidate A in this pair has 22 contrast nodes plus a 604px document and I scored it 1; B's findings are real but much narrower, so 3 preserves that measured gap.",
+      "evidence": "out/r2/evidence/operations-dashboard-r3/b/mobile-chart-region.png"
+    },
+    {
+      "candidate": "b",
+      "dimension": "implementation_quality",
+      "round1_score": 3,
+      "counterpart_round1_score": 2,
+      "final_score": 2,
+      "position": "revise",
+      "reason": "R2's source-level finding changes my judgment: a stray closing div in chartSVG (app.js:850) closes the 12-column grid after the chart, so the status, region and decline cards escape the intended layout. Combined with the unimplemented region sort, that is a structural markup bug rather than a styling nit; 2 is right.",
+      "evidence": "out/r2/evidence/operations-dashboard-r3/b/desktop-broken-grid.png and out/r2/operations-dashboard-r3.json (candidate_b implementation_quality rationale)"
+    }
+  ],
+  "final_scores": {
+    "candidate_a": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 1,
+      "implementation_quality": 2
+    },
+    "candidate_b": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 2
+    }
+  },
+  "differences_remaining": [
+    "design_judgment, candidate A: I keep 3 against R2's 4 because the default trend shows volume despite on-time rate being declared primary, and no change view is offered.",
+    "visual_hierarchy, candidate A: I keep 3 against R2's 4 because the prototype pill covers an outcome row and the outcomes card leaves dead space.",
+    "implementation_quality, candidate A: I keep 2 against R2's 3 because the 604px mobile document, clipped table and 22 contrast nodes are shipped defects.",
+    "visual_hierarchy, candidate B: I keep 3 against R2's 2 because the rest of the hierarchy is strong despite the half-empty chart row.",
+    "interaction_completeness, candidate B: I keep 4 against R2's 3 because the sort and grid problems are layout defects, not missing interaction states.",
+    "accessibility_responsiveness, candidate B: I keep 3 against R2's 2 because there is no page overflow and the findings are far narrower than candidate A's."
+  ],
+  "summary": "I revised Candidate B's ux_reasoning and implementation_quality after the counterpart identified the unsorted region table and the stray closing div that breaks the 12-column grid, which narrows B's lead to 3.35 against 3.20. The other six positional disputes were maintained, mostly weighting the same measured defects differently."
+}

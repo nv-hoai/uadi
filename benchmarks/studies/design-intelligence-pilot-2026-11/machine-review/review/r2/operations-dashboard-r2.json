@@ -1,0 +1,102 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "operations-dashboard-r2",
+  "blind": true,
+  "reviewed_at": "2026-11-07T04:51:21Z",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md sections 1-2 define the delivered-orders rate denominator (on-time plus late), failed attempts as events, and orders in scope by promised window; the header states the snapshot time, the possible 15-minute lag and 'not a live view' (evidence/operations-dashboard-r2/a/desktop-signal-kpis.png). The status breakdown and KPI definitions keep those populations visible.",
+      "ux_reasoning": "Filter -> insight -> KPI -> chart -> status/region -> dialog is a coherent funnel, and the dialog restates the range, region and status. However the rate/attempt chart is explicitly non-interactive (app.js line 477, role=\"img\"), so the brief's chart-segment drill path is absent and investigation starts only from cards, status rows and region rows.",
+      "design_judgment": "analysis.md sections 3-4 justify the dark primary rate card, separate rate and failed-attempt scales, zero-based bars and a labelled status breakdown rather than a pie; the rendered desktop follows that order. The 0-100% axis is an honest anti-truncation choice, but it leaves most of the rate plot empty (desktop-rate-chart.png).",
+      "visual_hierarchy": "The dark on-time card is a strong focal point and the yellow insight band is visually distinct (desktop-signal-kpis.png). The rate chart spends roughly half its height on empty 0-80% space, and the green 'View on-time orders' link on the dark card is faint, which weakens both hierarchy and legibility.",
+      "interaction_completeness": "Loading, stale, partial, no-data, error, empty-result and comparison-off states are implemented, and the status filter hides the rate and switches the hero to a count (app.js 565-610). The order view is a 20-row sample without search or pagination, so deeper investigation is described in the analysis rather than implemented.",
+      "accessibility_responsiveness": "checks.json reports three serious label-content-name-mismatch nodes in both viewports and a 580 px document against a 390 px client, so the page pans horizontally. Controls are named and the dialog exists, but these are measurable failures.",
+      "implementation_quality": "No console or page errors and the single-file app is readable. The regional table's sizing widens the mobile document to 580 px and three controls have accessible names that omit their visible text; these are contained CSS and ARIA defects rather than structural problems."
+    },
+    "evidence": [
+      {
+        "file": "evidence/operations-dashboard-r2/a/desktop-signal-kpis.png",
+        "caption": "Snapshot box, filters, dark on-time rate card and the largest-change insight strip",
+        "dimension": "product_understanding"
+      },
+      {
+        "file": "evidence/operations-dashboard-r2/a/desktop-rate-chart.png",
+        "caption": "0-100% rate chart whose upper portion is empty apart from a nearly flat line",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/operations-dashboard-r2/a/mobile-left-390.png",
+        "caption": "Left 390 px of a 580 px-wide mobile capture at the filters and hero card",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "Page-level horizontal overflow on mobile: 580 px document against a 390 px client (checks.json).",
+      "Three serious label-content-name-mismatch nodes in both viewports.",
+      "The chart has no drill targets and the order view is a 20-row sample with no search or pagination."
+    ],
+    "strengths": [
+      "Clear primary-metric hierarchy with a dark rate card and a one-sentence change insight.",
+      "Honest full-scale rate axis with a separate zero-based failed-attempt chart.",
+      "All seven data states plus a true-zero empty result computed from the data."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md section 2 states the delivered-orders denominator, attempt-level failures and the promised-delivery-date basis, and the rate card surfaces the excluded count directly ('34 excluded: 3 in transit, 31 failed-only', evidence/operations-dashboard-r2/b/desktop-kpis.png). No target, forecast or cause is invented.",
+      "ux_reasoning": "The headline names direction, magnitude and worst region, then the order flows through KPI, chart, region and status to a scoped orders dialog. Chart days are real drill targets (chart-hit buttons, app.js 539 and 584) and drillToDay (1160-1168) makes the one-day scope explicit.",
+      "design_judgment": "analysis.md sections 4-5 justify three small multiples over a dual axis, zero-based rate and attempt scales, region rows that filter both dashboard and orders, and a status filter scoped to the order list. The rendered desktop follows those decisions consistently and labels the comparison as a baseline rather than a target.",
+      "visual_hierarchy": "Small multiples keep the page compact and the KPI row orderly (desktop-kpis.png), but the three cards are visually equal even though rate is primary. The fixed 280 px Prototype controls panel covers the right side of the chart and two order bars in the desktop capture (desktop-chart-overlay.png) and floats over the on-time card on mobile (mobile-kpis.png).",
+      "interaction_completeness": "All data states plus the empty drill-down are wired, drill chips and recovery actions are retained, and the order dialog returns focus to its originating row. The orders view keeps paging and sorting, and the simulated refresh resolves back to normal (refreshData 1108-1125).",
+      "accessibility_responsiveness": "checks.json reports three contrast nodes and three label-content-name-mismatch nodes in both viewports, plus a 2 px document overflow (392 vs 390). Controls are named and tables sit in labelled scroll regions, but the mismatch findings are real.",
+      "implementation_quality": "No console or page errors and the code is organised into metric, chart, card and order functions. The fixed prototype panel is positioned over product content (styles.css 691-698) and the 2 px mobile overflow remains; both are contained defects rather than architectural ones."
+    },
+    "evidence": [
+      {
+        "file": "evidence/operations-dashboard-r2/b/desktop-kpis.png",
+        "caption": "Headline sentence and three KPI cards with units, populations and comparison deltas",
+        "dimension": "product_understanding"
+      },
+      {
+        "file": "evidence/operations-dashboard-r2/b/desktop-chart-overlay.png",
+        "caption": "Small-multiple charts with the fixed Prototype controls panel obscuring the rightmost bars",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/operations-dashboard-r2/b/mobile-kpis.png",
+        "caption": "Mobile KPI stack with the collapsed Prototype controls pill floating over the on-time card",
+        "dimension": "visual_hierarchy"
+      }
+    ],
+    "critical_defects": [
+      "Fixed 280 px Prototype controls panel obscures chart and order data on desktop and floats over the on-time card on mobile (styles.css 691-698).",
+      "Three contrast nodes and three label-content-name-mismatch nodes in both viewports.",
+      "2 px page-level overflow at a 390 px client."
+    ],
+    "strengths": [
+      "Chart-day drill-down that turns a point into an explicit one-day scope.",
+      "Excluded-order count beside the rate makes the denominator auditable.",
+      "Compact small multiples and a consistent filter and context bar."
+    ]
+  },
+  "comparison": "Candidate B delivers comparable analytical depth with chart-day drill-down, a compact small-multiple chart and no meaningful page overflow, although its fixed prototype panel covers data. Candidate A's dark hero and insight band are stronger focal points, but its non-clickable chart, 20-row sample, three name mismatches and 580 px mobile document leave more gaps.",
+  "limitations": "Only the supplied screenshots, one desktop and one mobile automated check run, and the source were available; hover, focus traps, live state switching, intermediate breakpoints and screen-reader behaviour could not be exercised. The axe results cover only the rules that ran, and fixed overlays appear at their capture positions in full-page screenshots."
+}

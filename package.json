@@ -10,7 +10,9 @@
     "prototype:check": "node scripts/prototype-check.mjs",
     "test": "node --test",
     "benchmark:score": "node scripts/score-benchmark.mjs",
-    "benchmark:prepare": "node scripts/prepare-benchmark-pair.mjs"
+    "benchmark:prepare": "node scripts/prepare-benchmark-pair.mjs",
+    "review:validate": "node scripts/validate-peer-review.mjs",
+    "review:crop": "node scripts/crop-evidence.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1",

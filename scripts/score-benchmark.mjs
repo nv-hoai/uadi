@@ -107,15 +107,21 @@ export function scoreBenchmark(input) {
   });
 
   const humanReviewers = new Set();
-  const llmJudgePasses = new Set();
+  const llmReviewers = new Set();
+  const independentReviewers = new Set();
   let humanReviewMinimumMet = true;
+  let machineReviewMinimumMet = true;
   for (const pair of input.pairs) {
-    const baselineHumans = pair.baseline.reviewers.filter((reviewer) => reviewer.type === "human" && reviewer.independent === true);
-    const uadiHumans = pair.uadi.reviewers.filter((reviewer) => reviewer.type === "human" && reviewer.independent === true);
+    const baselineIndependent = pair.baseline.reviewers.filter((reviewer) => reviewer.independent === true);
+    const uadiIndependent = pair.uadi.reviewers.filter((reviewer) => reviewer.independent === true);
+    const baselineHumans = baselineIndependent.filter((reviewer) => reviewer.type === "human");
+    const uadiHumans = uadiIndependent.filter((reviewer) => reviewer.type === "human");
+    if (baselineIndependent.length < 2 || uadiIndependent.length < 2) machineReviewMinimumMet = false;
     if (baselineHumans.length < 2 || uadiHumans.length < 2) humanReviewMinimumMet = false;
-    for (const reviewer of baselineHumans) humanReviewers.add(reviewer.id);
+    for (const reviewer of baselineIndependent) independentReviewers.add(reviewer.id);
     for (const reviewer of [...pair.baseline.reviewers, ...pair.uadi.reviewers]) {
-      if (reviewer.type === "llm") llmJudgePasses.add(pair.pair_id + ":" + reviewer.id);
+      if (reviewer.type === "human") humanReviewers.add(reviewer.id);
+      if (reviewer.type === "llm") llmReviewers.add(reviewer.id);
     }
   }
 
@@ -145,7 +151,10 @@ export function scoreBenchmark(input) {
     ? versionPinnedFamilies.filter(hasCompleteCoverage)
     : [];
   const pilotMinimumMet = qualifiedFamilies.length >= 1;
-  const confirmatoryMinimumMet = qualifiedFamilies.length >= 2 && humanReviewMinimumMet;
+  const confirmatoryMinimumMet = qualifiedFamilies.length >= 2 && machineReviewMinimumMet;
+  const evidenceTier = confirmatoryMinimumMet
+    ? (humanReviewMinimumMet ? "confirmatory-human" : "confirmatory-machine")
+    : (pilotMinimumMet && machineReviewMinimumMet ? "machine-reviewed-pilot" : (pilotMinimumMet ? "exploratory-pilot" : "insufficient"));
   const protocolWarnings = [];
   if (!modelMetadataComplete) protocolWarnings.push("Model metadata incomplete: every pair must record model_family, exact model_version and a positive repetition number.");
   for (const family of modelFamilies) {
@@ -162,14 +171,19 @@ export function scoreBenchmark(input) {
   }
   if (!pilotMinimumMet) protocolWarnings.push("Exploratory pilot minimum not met: require at least three unique repetitions for each of the three tasks on one model family with one pinned model version.");
   if (qualifiedFamilies.length < 2) protocolWarnings.push("Confirmatory multi-model minimum not met: require two qualifying model families, each with at least three unique repetitions for all three tasks.");
-  if (!humanReviewMinimumMet) protocolWarnings.push("Confirmatory human-review minimum not met: every condition requires at least two independent human reviewers who did not produce either condition.");
-  if (llmJudgePasses.size > 0) protocolWarnings.push("LLM judge passes are supplementary only (" + llmJudgePasses.size + " recorded) and do not count toward the human-review minimum.");
+  if (!machineReviewMinimumMet) protocolWarnings.push("Machine-review minimum not met: every condition requires at least two independent reviewers, human or LLM, who did not produce either candidate.");
+  if (!humanReviewMinimumMet) protocolWarnings.push("human-review minimum not met (optional): a machine review cannot establish human-perceived quality.");
+  if (llmReviewers.size > 0 && humanReviewers.size === 0) protocolWarnings.push("All reviewers are LLM passes. Machine review is screening-grade and may share model-family blind spots with the builders.");
   const protocolAssessment = {
     exploratory_pilot_minimum_met: pilotMinimumMet,
+    machine_review_minimum_met: machineReviewMinimumMet,
     confirmatory_minimum_met: confirmatoryMinimumMet,
     human_review_minimum_met: humanReviewMinimumMet,
+    evidence_tier: evidenceTier,
+    independent_reviewer_ids: [...independentReviewers].sort(),
     human_reviewer_ids: [...humanReviewers].sort(),
-    llm_judge_passes: llmJudgePasses.size,
+    llm_reviewer_ids: [...llmReviewers].sort(),
+    llm_judge_passes: llmReviewers.size,
     model_families: modelFamilies,
     qualified_model_families: qualifiedFamilies,
     task_coverage: [...taskIds],

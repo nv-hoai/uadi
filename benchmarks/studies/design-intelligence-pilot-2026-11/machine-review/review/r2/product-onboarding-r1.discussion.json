@@ -1,0 +1,26 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "product-onboarding-r1",
+  "round": 2,
+  "counterpart": "R1",
+  "responses": [
+    {
+      "candidate": "b",
+      "dimension": "visual_hierarchy",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 3,
+      "position": "revise",
+      "reason": "R1's crop shows the floating Prototype controls bar covering the NEXT callout mid-sentence (the text is cut after 'Skipping ... step never blocks your p'), not merely sitting over whitespace. I had credited Candidate B's mobile composition because the name field and CTA remain visible, but I penalised Candidate A for the same kind of overlay covering a heading; the same defect is present here, so consistency requires 3. The intact CTA and clean desktop hierarchy keep it at 3 rather than lower.",
+      "evidence": "out/r1/evidence/product-onboarding-r1/b/mobile-controls-overlap.png; my round-1 evidence/product-onboarding-r1/b/mobile-form.png"
+    }
+  ],
+  "final_scores": {
+    "candidate_a": { "product_understanding": 4, "ux_reasoning": 4, "design_judgment": 4, "visual_hierarchy": 3, "interaction_completeness": 4, "accessibility_responsiveness": 3, "implementation_quality": 4 },
+    "candidate_b": { "product_understanding": 4, "ux_reasoning": 4, "design_judgment": 4, "visual_hierarchy": 3, "interaction_completeness": 4, "accessibility_responsiveness": 4, "implementation_quality": 4 }
+  },
+  "differences_remaining": [
+    "None. The only round-1 disagreement, candidate_b.visual_hierarchy (R2 4 vs R1 3), was revised to 3 after reviewing R1's mobile crop."
+  ],
+  "summary": "The pair had one disagreement. R1's mobile crop showed Candidate B's demo bar cutting through the next-step callout, which is the same composition defect I had already counted against Candidate A, so I lowered B's visual hierarchy from 4 to 3. All other scores were identical, and B still leads narrowly because its semantics, control labelling and desktop hierarchy are stronger."
+}

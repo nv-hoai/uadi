@@ -1,0 +1,276 @@
+{
+  "overall": {
+    "baseline": 87.63888888888889,
+    "uadi": 88.40277777777777,
+    "delta": 0.7638888888888857,
+    "wins": 4,
+    "losses": 5,
+    "ties": 0,
+    "split_scores": 11
+  },
+  "by_task": {
+    "subscription-settings": {
+      "label": "Subscription settings",
+      "baseline": 86.66666666666667,
+      "uadi": 87.5,
+      "wins": 2,
+      "losses": 1
+    },
+    "product-onboarding": {
+      "label": "First-run onboarding",
+      "baseline": 89.375,
+      "uadi": 95.20833333333333,
+      "wins": 2,
+      "losses": 1
+    },
+    "operations-dashboard": {
+      "label": "Operations dashboard",
+      "baseline": 86.875,
+      "uadi": 82.5,
+      "wins": 0,
+      "losses": 3
+    }
+  },
+  "by_dimension": {
+    "product_understanding": {
+      "baseline": 3.7777777777777777,
+      "uadi": 3.9444444444444446,
+      "delta": 0.16666666666666696
+    },
+    "ux_reasoning": {
+      "baseline": 3.7222222222222223,
+      "uadi": 3.6666666666666665,
+      "delta": -0.0555555555555558
+    },
+    "design_judgment": {
+      "baseline": 3.611111111111111,
+      "uadi": 3.7777777777777777,
+      "delta": 0.16666666666666652
+    },
+    "visual_hierarchy": {
+      "baseline": 3.0555555555555554,
+      "uadi": 3.2222222222222223,
+      "delta": 0.16666666666666696
+    },
+    "interaction_completeness": {
+      "baseline": 4,
+      "uadi": 3.6666666666666665,
+      "delta": -0.3333333333333335
+    },
+    "accessibility_responsiveness": {
+      "baseline": 2.7222222222222223,
+      "uadi": 2.7222222222222223,
+      "delta": 0
+    },
+    "implementation_quality": {
+      "baseline": 3.2222222222222223,
+      "uadi": 3.388888888888889,
+      "delta": 0.16666666666666652
+    }
+  },
+  "pairs": [
+    {
+      "pair_id": "subscription-settings-r1",
+      "task_id": "subscription-settings",
+      "repetition": 1,
+      "candidate_a_condition": "uadi",
+      "baseline_score": 90,
+      "uadi_score": 86.25,
+      "delta": -3.75,
+      "baseline_round1": 87.5,
+      "uadi_round1": 88.125,
+      "splits": [
+        {
+          "candidate": "candidate_a",
+          "dimension": "implementation_quality",
+          "r1": 3,
+          "r2": 4,
+          "panel": 3.5
+        }
+      ]
+    },
+    {
+      "pair_id": "subscription-settings-r2",
+      "task_id": "subscription-settings",
+      "repetition": 2,
+      "candidate_a_condition": "baseline",
+      "baseline_score": 85,
+      "uadi_score": 88.75,
+      "delta": 3.75,
+      "baseline_round1": 86.875,
+      "uadi_round1": 90.625,
+      "splits": [
+        {
+          "candidate": "candidate_a",
+          "dimension": "ux_reasoning",
+          "r1": 3,
+          "r2": 4,
+          "panel": 3.5
+        }
+      ]
+    },
+    {
+      "pair_id": "subscription-settings-r3",
+      "task_id": "subscription-settings",
+      "repetition": 3,
+      "candidate_a_condition": "baseline",
+      "baseline_score": 85,
+      "uadi_score": 87.5,
+      "delta": 2.5,
+      "baseline_round1": 86.875,
+      "uadi_round1": 86.25,
+      "splits": [
+        {
+          "candidate": "candidate_b",
+          "dimension": "product_understanding",
+          "r1": 4,
+          "r2": 3,
+          "panel": 3.5
+        },
+        {
+          "candidate": "candidate_b",
+          "dimension": "visual_hierarchy",
+          "r1": 3,
+          "r2": 4,
+          "panel": 3.5
+        }
+      ]
+    },
+    {
+      "pair_id": "product-onboarding-r1",
+      "task_id": "product-onboarding",
+      "repetition": 1,
+      "candidate_a_condition": "uadi",
+      "baseline_score": 96.25,
+      "uadi_score": 93.75,
+      "delta": -2.5,
+      "baseline_round1": 98.125,
+      "uadi_round1": 93.75,
+      "splits": []
+    },
+    {
+      "pair_id": "product-onboarding-r2",
+      "task_id": "product-onboarding",
+      "repetition": 2,
+      "candidate_a_condition": "uadi",
+      "baseline_score": 89.375,
+      "uadi_score": 91.875,
+      "delta": 2.5,
+      "baseline_round1": 89.375,
+      "uadi_round1": 93.125,
+      "splits": [
+        {
+          "candidate": "candidate_a",
+          "dimension": "interaction_completeness",
+          "r1": 4,
+          "r2": 3,
+          "panel": 3.5
+        },
+        {
+          "candidate": "candidate_b",
+          "dimension": "design_judgment",
+          "r1": 3,
+          "r2": 4,
+          "panel": 3.5
+        }
+      ]
+    },
+    {
+      "pair_id": "product-onboarding-r3",
+      "task_id": "product-onboarding",
+      "repetition": 3,
+      "candidate_a_condition": "baseline",
+      "baseline_score": 82.5,
+      "uadi_score": 100,
+      "delta": 17.5,
+      "baseline_round1": 81.25,
+      "uadi_round1": 98.125,
+      "splits": []
+    },
+    {
+      "pair_id": "operations-dashboard-r1",
+      "task_id": "operations-dashboard",
+      "repetition": 1,
+      "candidate_a_condition": "baseline",
+      "baseline_score": 90.625,
+      "uadi_score": 88.75,
+      "delta": -1.875,
+      "baseline_round1": 90.625,
+      "uadi_round1": 91.25,
+      "splits": [
+        {
+          "candidate": "candidate_a",
+          "dimension": "visual_hierarchy",
+          "r1": 4,
+          "r2": 3,
+          "panel": 3.5
+        }
+      ]
+    },
+    {
+      "pair_id": "operations-dashboard-r2",
+      "task_id": "operations-dashboard",
+      "repetition": 2,
+      "candidate_a_condition": "uadi",
+      "baseline_score": 90,
+      "uadi_score": 80,
+      "delta": -10,
+      "baseline_round1": 90,
+      "uadi_round1": 80,
+      "splits": [
+        {
+          "candidate": "candidate_b",
+          "dimension": "accessibility_responsiveness",
+          "r1": 3,
+          "r2": 2,
+          "panel": 2.5
+        }
+      ]
+    },
+    {
+      "pair_id": "operations-dashboard-r3",
+      "task_id": "operations-dashboard",
+      "repetition": 3,
+      "candidate_a_condition": "baseline",
+      "baseline_score": 80,
+      "uadi_score": 78.75,
+      "delta": -1.25,
+      "baseline_round1": 85,
+      "uadi_round1": 82.5,
+      "splits": [
+        {
+          "candidate": "candidate_b",
+          "dimension": "visual_hierarchy",
+          "r1": 3,
+          "r2": 2,
+          "panel": 2.5
+        },
+        {
+          "candidate": "candidate_b",
+          "dimension": "interaction_completeness",
+          "r1": 4,
+          "r2": 3,
+          "panel": 3.5
+        },
+        {
+          "candidate": "candidate_b",
+          "dimension": "accessibility_responsiveness",
+          "r1": 3,
+          "r2": 2,
+          "panel": 2.5
+        }
+      ]
+    }
+  ],
+  "rule": "Agreed integer scores are final. One-point splits are averaged and flagged. No two-point splits occurred.",
+  "reviewers": {
+    "r1": "LLM, separate blinded session",
+    "r2": "LLM, separate blinded session"
+  },
+  "limitations": [
+    "Both reviewers are LLM sessions of the same model family that built the candidates.",
+    "This is a machine review, not a human review.",
+    "Default-state screenshots only for visual scoring.",
+    "Eleven of 126 dimension judgments remained split after discussion."
+  ]
+}

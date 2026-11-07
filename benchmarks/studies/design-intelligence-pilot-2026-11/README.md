@@ -2,7 +2,7 @@
 
 **Status: exploratory pilot. Not confirmatory evidence of improvement.**
 
-This study ran the same pinned model with and without UADI on all three benchmark tasks. It met the benchmark's exploratory pilot sample-size check (nine pairs: three tasks × three repetitions) but not the confirmatory requirements for two model families or independent human reviewers.
+This study ran the same pinned model with and without UADI on all three benchmark tasks. It met the benchmark's exploratory pilot sample-size check (nine pairs: three tasks × three repetitions), and was later re-reviewed with the standard two-reviewer machine panel. It does not meet the two-model-family confirmatory minimum.
 
 More importantly, a swapped-label control found a strong candidate-position effect. The condition deltas below are therefore **confounded and should not be read as a UADI effect**. The pilot's main value is methodological: it exercised the full protocol, preserved the evidence, and exposed a judging bias that a confirmatory study must control.
 
@@ -22,8 +22,8 @@ More importantly, a swapped-label control found a strong candidate-position effe
 | Run order | Randomized and recorded per pair; conditions ran concurrently in waves (a deviation) |
 | Duration | Recorded from each run's own `.run-start` and `.run-end` timestamps |
 | Rendered evidence | 1280×900 desktop and 390×844 mobile full-page screenshots, plus axe and DOM checks |
-| Review | 3 blinded LLM judge passes per pair (27 total), randomized candidate mapping |
-| Human review | None. This is the main confirmatory gap. |
+| Review | 3 blinded LLM judge passes per pair (27 total), randomized candidate mapping; later re-reviewed by the two-reviewer machine panel |
+| Human review | None. Human review is optional under the current protocol; the machine panel is the standard. |
 
 The treatment prompt named the installed skill; the baseline prompt stated that no design skill was installed. Both prompts told the agent to work only in its project directory, use no network, deliver `index.html`, `styles.css`, `app.js` and `analysis.md`, and not claim unrun checks.
 
@@ -84,6 +84,22 @@ These are descriptive counts across the nine runs per condition, not a quality s
 
 The UADI runs had fewer axe violations and fewer mobile overflows, but more unnamed controls. Axe covers only the rules it ran; this is not a WCAG conformance claim.
 
+## Two-reviewer machine review
+
+The pilot was later re-reviewed with the repository's standard machine protocol. Two blinded LLM reviewers graded all nine pairs in separate sessions, captured 110 evidence crops, froze their round-1 scores, exchanged evidence and finalized before the condition mapping was revealed.
+
+| Measure | Baseline | UADI | Change |
+|---|---:|---:|---:|
+| Machine-panel mean | 87.64 | 88.40 | **+0.76** |
+| Pairs won / lost | — | 4 / 5 | — |
+| Split dimension judgments | — | 11 of 126 | — |
+
+By task: subscription **+0.83**, onboarding **+5.83**, operations **−4.38**. The panel agreed with the earlier panel on the task ordering but not on magnitude, and it put subscription slightly positive.
+
+The randomized mapping created an order interaction: when UADI was Candidate A the mean delta was **−3.44**; when it was Candidate B it was **+4.13**. That is the opposite direction from the earlier panel's Candidate-A preference, so it is a composition or order effect, not a clean condition effect.
+
+The panel is a machine review, not human review, and both reviewers share the builder's model family. Full method, scores and artifacts: [machine-review/README.md](machine-review/README.md).
+
 ## The position-control finding
 
 After the main panel was locked, each pair was run through one additional fresh judge with the two candidate packets **swapped**: the original Candidate B became Candidate A, and vice versa. The judge used the same prompt and rubric and did not know about the swap.
@@ -126,7 +142,7 @@ The safest reading is that the LLM panel has a substantial Candidate-A preferenc
 
 ## Protocol deviations and limitations
 
-1. **No independent human reviewers.** All 27 main passes and 9 control passes were LLM judges. They are repeated measurements, not independent reviewers, and do not count toward the confirmatory human minimum.
+1. **No independent human reviewers.** All 27 main passes, 9 control passes and the later two-reviewer panel were LLM sessions. They are repeated measurements, not independent people, and do not establish human-perceived quality.
 2. **Same model family for builders and judges.** `deepseek-v4.1-flash` produced every candidate and scored every candidate. Self-preference and shared stylistic bias are possible.
 3. **One model family.** The confirmatory minimum requires two distinct pinned model families.
 4. **Strong position effect.** The swapped-label control is described above.
@@ -168,7 +184,7 @@ node scripts/capture-benchmark-evidence.mjs --project <project-dir> --out <evide
 
 Tracking issue: [#48](https://github.com/nv-hoai/uadi/issues/48).
 
-1. Recruit at least two independent human reviewers per condition who did not produce either candidate. Freeze their scores before revealing the mapping.
+1. Run the standard two-reviewer machine review in `docs/MACHINE-REVIEW.md`. Human review is optional and not required by this repository.
 2. Add a second pinned model family, with three repetitions per task for each family.
 3. Balance candidate order across pairs and passes; keep the swapped-label control as a standard sensitivity check.
 4. Capture and judge non-default states: dialogs, validation, loading, error, role-restricted and partial-data views.

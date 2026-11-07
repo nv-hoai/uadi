@@ -4,7 +4,8 @@
     "agent": "EXAMPLE_ONLY",
     "model": "EXAMPLE_ONLY",
     "date": "2000-01-01",
-    "project_snapshot": "SYNTHETIC_FIXTURE_NOT_EMPIRICAL"
+    "project_snapshot": "SYNTHETIC_FIXTURE_NOT_EMPIRICAL",
+    "review_protocol": "two-reviewer-machine"
   },
   "pairs": [
     {
@@ -18,8 +19,9 @@
         "reviewers": [
           {
             "id": "R1",
-            "type": "human",
+            "type": "llm",
             "independent": true,
+            "provenance": "blinded machine reviewer, separate session",
             "scores": {
               "product_understanding": 2,
               "ux_reasoning": 2,
@@ -32,8 +34,9 @@
           },
           {
             "id": "R2",
-            "type": "human",
+            "type": "llm",
             "independent": true,
+            "provenance": "blinded machine reviewer, separate session",
             "scores": {
               "product_understanding": 2,
               "ux_reasoning": 2,
@@ -51,8 +54,9 @@
         "reviewers": [
           {
             "id": "R1",
-            "type": "human",
+            "type": "llm",
             "independent": true,
+            "provenance": "blinded machine reviewer, separate session",
             "scores": {
               "product_understanding": 3,
               "ux_reasoning": 3,
@@ -65,8 +69,9 @@
           },
           {
             "id": "R2",
-            "type": "human",
+            "type": "llm",
             "independent": true,
+            "provenance": "blinded machine reviewer, separate session",
             "scores": {
               "product_understanding": 3,
               "ux_reasoning": 3,

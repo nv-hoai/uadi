@@ -1,0 +1,102 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "operations-dashboard-r1",
+  "blind": true,
+  "reviewed_at": "2026-11-07T04:51:21Z",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md section 2 (lines 25-32) defines orders by promised-window date, the rate denominator as all orders including late and failed, and failed attempts as events; the KPI cards repeat those definitions (evidence/operations-dashboard-r1/a/desktop-signal-kpis.png). The 15-minute lag and the absence of revenue, forecast and cause data are stated in the header and methodology.",
+      "ux_reasoning": "openOrders and orderContextChips (app.js 1419-1430, 1534-1552) open a scoped drawer whose chips restate period, day, region, status and outcome, so a region or day drill does not overwrite the dashboard filters. The signal -> KPI -> trend -> region -> orders sequence in the rendered page matches the five-question funnel in analysis.md section 1.",
+      "design_judgment": "analysis.md section 4 (lines 81-103) justifies a full 0-100% rate chart plus a symmetric percentage-point change chart instead of a truncated axis, and rejects a dual axis; desktop.png shows both. The regional table keeps rate, rate change and failed-attempt counts separate and sorts by the largest decline.",
+      "visual_hierarchy": "The attention band, three KPI cards and dominant trend panel give the page a clear scan path, and spacing and type scale are coherent. The 0-100% rate axis leaves most of the plot empty (the same compression is visible in mobile-kpis.png), which costs scanability.",
+      "interaction_completeness": "render() branches for loading, error, no-data, partial and empty result (app.js 1324-1351), and the drawer adds search, sort, pagination and expandable timelines (1477-1510, 1534). The empty result is computed from a real filter combination in findEmptyCombination (1620-1631) rather than mocked.",
+      "accessibility_responsiveness": "checks.json reports 10 serious colour-contrast nodes and two target-size failures in both viewports, and the mobile document is 602 px wide against a 390 px client, so the page pans horizontally. Keyboard chart points and a native dialog exist (app.js 890, 1550), but the dialog close handler only clears state (1832-1835) and does not return focus to the opener.",
+      "implementation_quality": "The page runs without console or page errors (checks.json) and the 1,962-line app.js is sectioned and deterministic. The regional table escapes its scroll container and widens the mobile document to 602 px, and the drawer's close handler omits focus restoration, so the CSS and focus lifecycle are not fully correct."
+    },
+    "evidence": [
+      {
+        "file": "evidence/operations-dashboard-r1/a/desktop-signal-kpis.png",
+        "caption": "Attention strip, period context and three KPI cards with explicit definitions and comparison deltas",
+        "dimension": "product_understanding"
+      },
+      {
+        "file": "evidence/operations-dashboard-r1/a/mobile-kpis.png",
+        "caption": "Mobile KPI column rendered inside a 602 px-wide document against a 390 px viewport, with the right strip empty",
+        "dimension": "accessibility_responsiveness"
+      },
+      {
+        "file": "evidence/operations-dashboard-r1/a/mobile-left-390.png",
+        "caption": "Left 390 px of the mobile capture: the visible product column fits, so the overflow is page-level rather than clipped content",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "Mobile document is 602 px wide at a 390 px client, producing page-level horizontal scrolling (checks.json).",
+      "10 serious colour-contrast nodes plus two target-size failures in both viewports (checks.json).",
+      "Closing the order drawer does not restore focus to the opener (app.js 1832-1835)."
+    ],
+    "strengths": [
+      "Detailed metric contracts, including the rate denominator and the attempt-versus-order distinction.",
+      "Two complementary charts avoid both axis truncation and a dual axis.",
+      "Order drawer with priority sort, search, pagination, context chips and event timelines."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md lines 19-35 separate delivered-orders, attempt and orders-placed populations, refuse an invented SLA and state the 15-minute lag; the cards repeat the excluded-population note (evidence/operations-dashboard-r1/b/desktop-kpis-worthchecking.png). Using 'orders placed' as volume and declaring that it does not reconcile with delivery metrics is an explicit, defensible population choice.",
+      "ux_reasoning": "The investigation path is rendered rather than described: region rows filter the dashboard and order list (app.js 1061-1078), chart days set an explicit one-day custom range (drillToDay 1160-1168), and the orders section carries scope chips. The region table caption nevertheless promises a sort by largest on-time-rate drop while rows are emitted in fixed REGIONS order (regionTableHTML, app.js 740-771), so only North happens to sit first and the remaining scan order is arbitrary.",
+      "design_judgment": "analysis.md sections 4.2-4.7 justify deviation-from-baseline instead of a truncated rate axis, zero-based bars, a status filter scoped to orders to avoid a meaningless 100%/0% rate, and thresholds described as review aids. The rendered chart, region table and order list follow those choices without inventing a target or cause.",
+      "visual_hierarchy": "Header, filters, KPI row, chart plus Worth checking, region table and inline orders are coherent, and the mobile capture reflows to one column without page overflow (mobile-top.png). Density is high, body text is small, and the Worth checking card leaves a large empty lower half, so the composition falls short of excellent.",
+      "interaction_completeness": "All seven data states plus the empty order result are wired (index.html state buttons; renderDashboard 949-990), refresh resolves automatically (1108-1125), and the order dialog restores focus to its opener (1376-1382). Order rows are a clearly labelled sample with 'Show 10 more'.",
+      "accessibility_responsiveness": "checks.json shows one serious contrast node, no page-level horizontal overflow at 390 px, 53 named controls and a single h1. Tables sit in labelled scroll regions and chart days are focusable buttons (app.js 561), though the dense small text and the one contrast finding keep it from excellent.",
+      "implementation_quality": "No console or page errors; the 1,402-line app.js is organised into small render and aggregate functions, and the CSS handles the 390 px layout cleanly. The only automated accessibility finding is one contrast node, and drill and focus behaviour are implemented rather than only described."
+    },
+    "evidence": [
+      {
+        "file": "evidence/operations-dashboard-r1/b/desktop-kpis-worthchecking.png",
+        "caption": "KPI cards with excluded populations, change-from-baseline chart and the thresholded Worth checking panel",
+        "dimension": "design_judgment"
+      },
+      {
+        "file": "evidence/operations-dashboard-r1/b/desktop-regions-orders.png",
+        "caption": "Region table sorted by on-time drop, followed by the inline order list with status chips",
+        "dimension": "ux_reasoning"
+      },
+      {
+        "file": "evidence/operations-dashboard-r1/b/mobile-top.png",
+        "caption": "Mobile single-column layout with no page-level horizontal overflow",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "Region table is captioned 'sorted by largest on-time rate drop' but rows follow fixed REGIONS order (app.js 740-771); only North, the worst region, lands first by coincidence.",
+      "High information density with small body text reduces scan comfort at 1280 px.",
+      "The status filter deliberately does not affect headline metrics, which may surprise managers despite the inline note."
+    ],
+    "strengths": [
+      "Partial coverage recomputes totals from reporting regions and retains missing rows rather than dropping them.",
+      "Change-from-baseline chart and thresholded 'Worth checking' panel that never asserts a cause.",
+      "Inline order list with context chips, focus return and a scoped daily drill."
+    ]
+  },
+  "comparison": "Both candidates are level on the weighted total. Candidate A has the cleaner single-finding band, a correctly sorted regional table and a complete order drawer, but pays with 10 contrast failures and a 602 px mobile document; Candidate B has no page overflow, one contrast node and an inline order list, but its region table caption promises a sort it does not apply. The pair is effectively a tie, with Candidate B stronger on measured accessibility and implementation and Candidate A stronger on presentation accuracy.",
+  "limitations": "Only the supplied screenshots, one desktop and one mobile automated check run, and the source were available; I could not exercise hover, focus traps, keyboard traversal, live state switching, or intermediate breakpoints, and the axe results cover only the rules that ran. Fixed prototype overlays appear at their capture positions in full-page screenshots, and no screen reader or cross-browser testing was possible."
+}

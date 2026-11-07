@@ -1,0 +1,78 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "operations-dashboard-r3",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:47:42+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 1,
+      "implementation_quality": 2
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:24–46 defines volume, rate and attempts with denominators, states that a failed attempt counts as not on time, and discloses that the demo cannot show multiple attempts per order (:37–39, risk 1). The open questions in §10 distinguish supplied facts from assumptions.",
+      "ux_reasoning": "The funnel in §3–4 is implemented: computed insight strip, three KPI cards, metric-switch trend, outcome mix, sortable region table and a drawer that repeats period/regions/statuses and its origin surface. Changing a filter closes a stale drawer rather than leaving mismatched rows.",
+      "design_judgment": "analysis.md:101–105 argues for a fixed 0–100% rate axis with direct labels and rejects a target gap, which is defensible, but the declared primary metric is on-time rate while the trend defaults to Order volume, and there is no change-from-baseline view. The result is a sound but less decision-focused chart set.",
+      "visual_hierarchy": "Desktop grouping and typography are clean, but the floating prototype control covers the 'Delivered on time' outcome row (crop desktop-outcomes-overlay.png) and on mobile the fixed pill obscures the insight sentence (crop mobile-insight-overlap.png). The page still scans well above the fold.",
+      "interaction_completeness": "Nine conditions are rendered in app.js:449–524 and :1123–1309, including partial reporting, no data, error, comparison unavailable, invalid custom range, status subset and no-region selection, plus a drawer empty state. Implementation matches the analysis table.",
+      "accessibility_responsiveness": "axe reports 22 contrast violations on desktop and 15 on mobile, plus a label-content-name mismatch and 2 target-size violations (test-output/checks.json); mobile document_width is 604 at a 390px client. Semantics are otherwise deliberate (inert background, aria-live, focus return), but measured failures dominate.",
+      "implementation_quality": "The code is organised and handles focus/inert correctly, yet two defects are visible in the shipped render: page-level mobile overflow with a region table clipped mid-column and no visible scroll hint (crop mobile-regions-clipped.png), and a persistent control overlay covering content."
+    },
+    "evidence": [
+      { "file": "evidence/operations-dashboard-r3/a/desktop-outcomes-overlay.png", "caption": "Floating prototype control covers the 'Delivered on time' row in the outcomes panel", "dimension": "visual_hierarchy" },
+      { "file": "evidence/operations-dashboard-r3/a/mobile-insight-overlap.png", "caption": "Mobile insight text obscured by the floating control; cards end at 375px inside a 604px document", "dimension": "accessibility_responsiveness" },
+      { "file": "evidence/operations-dashboard-r3/a/mobile-regions-clipped.png", "caption": "Region table clipped at 'FAILED AT' with the page wider than the viewport", "dimension": "implementation_quality" }
+    ],
+    "critical_defects": [
+      "Mobile page is 604px wide at a 390px viewport and the region table is clipped mid-column without a visible scroll hint.",
+      "axe reports 22 desktop / 15 mobile colour-contrast violations, 2 target-size violations and a label-content-name mismatch (test-output/checks.json).",
+      "The trend defaults to Order volume even though on-time rate is declared the primary metric."
+    ],
+    "strengths": [
+      "Computed insight strip that names the region and magnitude without claiming a cause.",
+      "Broad state coverage including status-subset, comparison-unavailable and no-region states.",
+      "Drawer states its origin surface and sample size, and preserves full filter context."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:18–27 defines a single population, the rate denominator, and exposes the exclusion count in the UI ('34 excluded: 3 in transit, 31 failed-only', screenshot). §2 also separates assumptions and unknowns, and no target is invented.",
+      "ux_reasoning": "The page follows scan → compare → locate → investigate: headline sentence, rate-first cards, metric-switch trend, status rows, region table and ranked declines all lead to the same orders view with chips and Back (:56–62, :106–115). A day becomes a removable chip rather than replacing the period.",
+      "design_judgment": "analysis.md:66–90 combines a 0–100% line with per-point labels, grouped count bars with hatch instead of colour-only comparison, and a table-plus-bars region view; the equal-length-but-not-equal-weekday caveat is stated where it matters. Choices are justified against alternatives.",
+      "visual_hierarchy": "Type scale and alignment are strong, but the performance chart occupies only two-thirds of its row, leaving a large empty panel to the right (crop desktop-chart-gap.png), and on mobile the floating control overlaps the rate card (crop mobile-kpi-overlap.png).",
+      "interaction_completeness": "Loading, ready, stale, partial, error, no-data, empty result, no-denominator and in-progress variants are rendered in app.js:466–516 and :1272–1341; the no-denominator state replaces the rate with '—' rather than 0%, and search/filter focus is retained.",
+      "accessibility_responsiveness": "No horizontal page overflow at either viewport and the chart sits in a labelled scroll region. axe still reports two contrast violations and four label-content-name mismatches, so it is good but not clean.",
+      "implementation_quality": "No console or page errors and a disciplined 1,981-line vanilla build, but the empty grid column and the fixed prototype control overlapping a KPI card are visible, avoidable defects."
+    },
+    "evidence": [
+      { "file": "evidence/operations-dashboard-r3/b/desktop-chart-gap.png", "caption": "Rate chart uses two-thirds of the row and leaves a large empty area to its right", "dimension": "visual_hierarchy" },
+      { "file": "evidence/operations-dashboard-r3/b/mobile-kpi-overlap.png", "caption": "Mobile rate card partly covered by the floating prototype control", "dimension": "visual_hierarchy" }
+    ],
+    "critical_defects": [
+      "The performance chart leaves an unexplained empty third of its row, weakening the composition.",
+      "The fixed prototype control overlaps the on-time rate card on mobile.",
+      "axe reports two colour-contrast and four label-content-name-mismatch violations (test-output/checks.json)."
+    ],
+    "strengths": [
+      "Rate-first hierarchy with per-point labels and a dashed equal-length comparison.",
+      "Explicit denominator exclusions and a '—' no-denominator state instead of an invented rate.",
+      "Region and decline panels that both lead to a context-preserving orders view.",
+      "No page-level horizontal overflow on desktop or mobile."
+    ]
+  },
+  "comparison": "Both candidates are complete, well-argued dashboards; Candidate A has the denser full-width table and broader state surface, while Candidate B has the more consistent rate-first hierarchy, per-point chart labels and a contained mobile layout. Candidate A's 22 contrast violations, 604px mobile document and clipped region table outweigh its layout strengths against Candidate B's smaller defects.",
+  "limitations": "Screenshots cover only the default state, so partial, error and empty states were assessed from code and self-reported checks, not from rendered evidence. Full-page captures place fixed controls at the first viewport's bottom, which can shift apparent overlaps. axe coverage is partial and no independent contrast or screen-reader testing was possible."
+}

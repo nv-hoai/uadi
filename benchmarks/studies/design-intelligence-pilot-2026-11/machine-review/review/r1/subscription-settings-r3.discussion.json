@@ -1,0 +1,92 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "subscription-settings-r3",
+  "round": 2,
+  "counterpart": "R2",
+  "responses": [
+    {
+      "candidate": "a",
+      "dimension": "visual_hierarchy",
+      "round1_score": 3,
+      "counterpart_round1_score": 2,
+      "final_score": 2,
+      "position": "revise",
+      "reason": "R2's mobile crop shows a real defect I missed: on mobile the cancellation copy and its action are separated by roughly 290px of empty space because the cancel-copy flex-basis becomes a height in the column layout. Combined with the desktop prototype pill covering the right half of the Update payment method button, the page has two visible composition failures, so adequate is the right score.",
+      "evidence": "out/r2/evidence/subscription-settings-r3/a/mobile-cancel-gap.png; evidence/subscription-settings-r3/a/payment-overlay-desktop.png; R2 cites styles.css:697 and 1240 for the flex-basis behaviour"
+    },
+    {
+      "candidate": "b",
+      "dimension": "product_understanding",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 4,
+      "position": "revise",
+      "reason": "I had penalised B for making card details and invoices owner-only, but the explicit role grant is 'view plan details', and B shows plan, price, cadence, renewal and usage while locking only payment and invoice data with a named owner and explanation. The restriction is documented as a deliberate, conservative policy rather than presented as enforced fact, so the model is correct enough for excellent.",
+      "evidence": "analysis.md:19 and 137-139 (member visibility assumption and its stated risk); condition-b/implementation/app.js:433-447, 491-502 (locked states with explanation); out/r2/evidence/subscription-settings-r3/b/summary.png"
+    },
+    {
+      "candidate": "b",
+      "dimension": "design_judgment",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 4,
+      "position": "revise",
+      "reason": "On re-reading, the decisions are internally consistent and well argued: Free routes to the cancellation flow rather than a competing plan path, changes are reversible, and the acknowledgement-versus-typed-phrase trade-off is stated. The member privacy call I had counted here belongs in product understanding, and the green savings chip is a factual amount, not urgency.",
+      "evidence": "analysis.md:77-91 (key decisions and trade-offs); condition-b/implementation/app.js:352-354 ('Move to Free' routed to cancel); out/r2/evidence/subscription-settings-r3/b/plans.png"
+    },
+    {
+      "candidate": "b",
+      "dimension": "visual_hierarchy",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "The composition is strong, but R2 calls the mobile overlap 'prototype chrome rather than product content' when the pill actually sits across the product's member meter and permission line. The separate Monthly billing card also repeats the renewal facts already in the summary. Removing the overlap and merging that card would justify 4.",
+      "evidence": "evidence/subscription-settings-r3/b/toolbar-mobile.png (pill across the 12-of-20 meter and owner-only line); out/r2/evidence/subscription-settings-r3/b/mobile-controls-row.png; evidence/subscription-settings-r3/b/summary-desktop.png (duplicated renewal facts)"
+    },
+    {
+      "candidate": "b",
+      "dimension": "interaction_completeness",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 3,
+      "position": "revise",
+      "reason": "R2 is right that B has no failed-payment or dunning state at all; the states table covers loading, load error, empty payment/invoices, success, disabled, scheduled, validation, busy and cancellation gating, while the analysis explicitly excludes payment failure. Candidate A implements a payment-failed banner and recovery path, so B is one relevant billing condition short of excellent.",
+      "evidence": "analysis.md:95-107 (states table) and analysis.md:142 ('does not cover failed payment recovery'); condition-a/analysis.md:130 (A's payment-failure state)"
+    },
+    {
+      "candidate": "b",
+      "dimension": "accessibility_responsiveness",
+      "round1_score": 2,
+      "counterpart_round1_score": 3,
+      "final_score": 3,
+      "position": "revise",
+      "reason": "I had scored this like the six-contrast-node case in another pair, but B's automated result is much lighter: one contrast failure on desktop and one prohibited ARIA attribute plus one contrast failure on mobile, with every control named and the section navigator correctly wrapping to include Cancellation. That is strong with fixable issues, not merely adequate.",
+      "evidence": "test-output/checks.json (1 contrast node desktop; aria-prohibited-attr + 1 contrast mobile); evidence/subscription-settings-r3/b/nav-mobile.png (wrapped navigator); app.js:267 (named progressbar)"
+    }
+  ],
+  "final_scores": {
+    "candidate_a": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "candidate_b": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    }
+  },
+  "differences_remaining": [
+    "b/visual_hierarchy: R2 scores 4, I keep 3 — the mobile demo pill still covers the member meter and the Monthly billing card duplicates summary facts."
+  ],
+  "summary": "The decisive new evidence was R2's mobile cancellation-gap crop, which drops Candidate A's visual hierarchy to 2, while B's member restriction and design decisions read as deliberate policy rather than misunderstanding. I raised B on product, design and accessibility and lowered its interaction completeness for the missing failed-payment state; the final weighted totals are A 3.40 and B 3.50, with only B's visual hierarchy still contested."
+}

@@ -1,0 +1,101 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "product-onboarding-r2",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:56:00+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:22-42 separates facts, design assumptions and unknowns (seat-on-send, Admin copy, activation event), and app.js:14-26 keeps Admin and Member copy to the brief's rules. Framing the batch-role model as a product assumption as well as a trade-off would strengthen it.",
+      "ux_reasoning": "analysis.md:46-58 and 92-105 make the project form the hero, put role capabilities in the rail from step one and keep Skip for now persistent; app.js:365-410 makes Go to workspace primary. Adding a direct Open project action on success would remove the last extra hop.",
+      "design_judgment": "analysis.md:162-172 gives nine explicit decisions with costs, including deliberately omitting a wizard and explaining roles twice. The one-role-per-batch invite is justified at line 131, but costing the mixed-role case would complete the reasoning.",
+      "visual_hierarchy": "desktop-rail-roles.png and desktop-form.png show a strong dark-rail plus serif-heading composition with clear grouping. mobile-controls-overlap.png shows the floating Prototype controls bar covering the Description label and its Optional marker; collapsing the demo controls on narrow screens would raise this.",
+      "interaction_completeness": "app.js:413-550 renders validation, loading and failure states, while app.js:794-857 handles submission, failure and retry; a seat-limit state and guarded localStorage persistence cover resume. The failure path is all-or-nothing and retries the whole list, with no per-address partial-success state; adding that would raise this.",
+      "accessibility_responsiveness": "checks.json reports 0 axe violations, 0 unnamed controls and no horizontal overflow at both viewports, and analysis.md:186-193 documents labels, aria-invalid, focus movement and live regions. Fixing the mobile demo-bar overlap would remove the remaining viewport concern.",
+      "implementation_quality": "app.js is dependency-free and organised by view with escaping and guarded localStorage; checks.json shows no console or page errors. The batch-only invite model and all-or-nothing failure are deliberate but limit future extension."
+    },
+    "evidence": [
+      {
+        "file": "evidence/product-onboarding-r2/a/desktop-rail-roles.png",
+        "caption": "Desktop: dark context rail with workspace facts and the full role guide before assignment",
+        "dimension": "product_understanding"
+      },
+      {
+        "file": "evidence/product-onboarding-r2/a/desktop-form.png",
+        "caption": "Desktop: serif heading, one required name field and the After-this panel",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/product-onboarding-r2/a/mobile-controls-overlap.png",
+        "caption": "Mobile: floating Prototype controls bar covers the Description label and Optional marker",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "Floating Prototype controls bar covers the Description label and Optional marker in the mobile screenshot.",
+      "Invitation failure is all-or-nothing; no partial-success state or per-address retry exists."
+    ],
+    "strengths": [
+      "Role guide and Starter 1-of-5 context are visible from the first step.",
+      "Lean, project-first flow with no welcome step and persistent Skip for now.",
+      "Validation, loading, failure, seat-limit and paused/resume states with a clean axe result."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:20-40 separates facts, assumptions and unknowns, but app.js:177-180 and analysis.md:78 assert 'Admin ... Manages workspace settings' without listing it as an assumption. Flagging that inference would raise this.",
+      "ux_reasoning": "welcomeView (app.js:204-222) adds a screen before the only required field, and mobile-welcome-duplication.png shows the step strip immediately repeating the same three-step list. Removing the welcome screen or merging its content into the rail would raise this.",
+      "design_judgment": "analysis.md:69-75 offers sensible trade-offs about role-card height and the invite step feeling like a gate, but the welcome screen and the three-invite batch cap are not weighed as costs. Explicitly costing those choices would raise this.",
+      "visual_hierarchy": "desktop-welcome.png and desktop-step-rail.png show a coherent, well-spaced editorial layout, and the mobile controls collapse to a dot so nothing is obscured. The duplicated step list is a hierarchy issue on the welcome screen, not a rendering defect.",
+      "interaction_completeness": "app.js:286-475 renders per-row sending, partial failure and seat use, and app.js:656-735 handles send, retry and finish-without-inviting; checks.json reports no console or page errors. Screenshots of the invite and failure states would make the coverage verifiable from the packet.",
+      "accessibility_responsiveness": "checks.json reports 0 axe violations and 0 unnamed controls at both viewports, and analysis.md:96-102 documents focus, live regions and responsive stacking. The duplicated welcome list is a comprehension cost rather than an accessibility defect.",
+      "implementation_quality": "app.js is templated, escaped and dependency-free; index.html is minimal with a skip link and live regions. The arbitrary MAX_INVITE_ROWS=3 (app.js:11,335-336) and duplicated welcome content are quality blemishes but not breakage."
+    },
+    "evidence": [
+      {
+        "file": "evidence/product-onboarding-r2/b/desktop-welcome.png",
+        "caption": "Desktop: welcome screen restating the three steps already shown in the rail",
+        "dimension": "ux_reasoning"
+      },
+      {
+        "file": "evidence/product-onboarding-r2/b/desktop-step-rail.png",
+        "caption": "Desktop: setup rail and Starter seat summary",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/product-onboarding-r2/b/mobile-welcome-duplication.png",
+        "caption": "Mobile: step strip repeats the same three-step list immediately below it",
+        "dimension": "ux_reasoning"
+      }
+    ],
+    "critical_defects": [
+      "Welcome screen duplicates the three-step list already shown in the rail (mobile-welcome-duplication.png).",
+      "Invite rows are capped at 3 per batch although Starter leaves 4 seats (app.js:11,335-336).",
+      "Role card claims Admin 'Manages workspace settings' without flagging the inference (app.js:179; analysis.md:78)."
+    ],
+    "strengths": [
+      "Per-row roles and per-row partial-failure recovery.",
+      "Clean rendered output with zero accessibility violations at both viewports.",
+      "Explicit assumptions and risks, including the pending-invite seat rule."
+    ]
+  },
+  "comparison": "Candidate A is leaner: role education and plan context sit beside the only required field, with no extra welcome screen, and its trade-off write-up is the stronger of the two. Candidate B renders more cleanly on mobile and recovers partial invitation failures per row, but its welcome screen repeats the rail, its 3-invite batch cap adds friction the brief does not require, and its Admin role copy is not grounded.",
+  "limitations": "Only initial screenshots were available, so invite, success, failure, limit and paused renders could not be inspected. The in-page check harnesses and transcripts claimed by Candidate A were not supplied, and backend, email-delivery and screen-reader behavior could not be verified."
+}

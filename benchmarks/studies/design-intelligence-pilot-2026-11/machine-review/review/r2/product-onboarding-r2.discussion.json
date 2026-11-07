@@ -1,0 +1,48 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "product-onboarding-r2",
+  "round": 2,
+  "counterpart": "R1",
+  "responses": [
+    {
+      "candidate": "a",
+      "dimension": "interaction_completeness",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 3,
+      "position": "revise",
+      "reason": "R1 correctly notes that Candidate A's simulated delivery failure fails the entire batch (handleInvite branches once on state.delivery === 'failure') and retries the whole list, with no per-address partial-success state. My 4 credited breadth - validation, loading, failure, retry, seat limit, paused/resume - but 'excellent' completeness should include partial failure when several addresses are invited in one action, which Candidate B does implement. That is a real gap, so I revise to 3.",
+      "evidence": "Round-1 input condition-a/implementation/app.js handleInvite (single delivery === 'failure' branch) and index.html prototype select 'Invitation delivery: Succeeds/Fails'; R1 product-onboarding-r2.json candidate_a interaction_completeness rationale"
+    },
+    {
+      "candidate": "a",
+      "dimension": "accessibility_responsiveness",
+      "round1_score": 3,
+      "counterpart_round1_score": 4,
+      "final_score": 3,
+      "position": "maintain",
+      "reason": "Axe is clean and every control is named, which R1's 4 rests on. But axe cannot detect demo chrome covering content: at 390px the floating prototype panel sits over the Description field's hint and 'Optional' tag (my mobile-overlap.png). An obscured form label is viewport behaviour and is part of this dimension, so an automated-clean result does not cancel it. R1 acknowledges the overlap but files it only under visual hierarchy; I keep 3.",
+      "evidence": "evidence/product-onboarding-r2/a/mobile-overlap.png; R1 evidence/product-onboarding-r2/a/mobile-controls-overlap.png"
+    },
+    {
+      "candidate": "b",
+      "dimension": "design_judgment",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 4,
+      "position": "maintain",
+      "reason": "Candidate B's analysis explains why project precedes invitations and explicitly treats the invite step as a gate risk with mitigations (analysis.md lines 55 and 106), and it states costs for role-card height and the one-role-per-screen choice. R1's objection is the unexamined welcome screen and the 3-row invite cap; the welcome cost is a flow problem already priced into ux_reasoning (3), and the 3-row cap is a prototype control rather than evidence that the trade-off reasoning is weak. I keep 4 instead of double-counting the same choice.",
+      "evidence": "R1 product-onboarding-r2.json candidate_b design_judgment; round-1 analysis.md sections 2 and 6; my evidence/product-onboarding-r2/b/desktop-welcome.png"
+    }
+  ],
+  "final_scores": {
+    "candidate_a": { "product_understanding": 4, "ux_reasoning": 4, "design_judgment": 4, "visual_hierarchy": 3, "interaction_completeness": 3, "accessibility_responsiveness": 3, "implementation_quality": 4 },
+    "candidate_b": { "product_understanding": 3, "ux_reasoning": 3, "design_judgment": 4, "visual_hierarchy": 4, "interaction_completeness": 4, "accessibility_responsiveness": 4, "implementation_quality": 4 }
+  },
+  "differences_remaining": [
+    "candidate_a.accessibility_responsiveness: R2 keeps 3 (mobile demo panel obscures the Description hint/label) vs R1 4 (clean axe and named controls).",
+    "candidate_b.design_judgment: R2 keeps 4 (welcome cost already counted in ux; documented trade-offs) vs R1 3 (unexamined welcome and 3-row cap).",
+    "candidate_a.interaction_completeness was revised from 4 to 3 and is no longer contested."
+  ],
+  "summary": "Three dimensions were disputed. I revised Candidate A's interaction completeness to 3 because its invite failure is all-or-nothing with whole-list retry, which R1 correctly identified as a completeness gap; I maintained the A accessibility score because the mobile overlay covers a form hint even though axe is clean, and maintained B's design judgment because the welcome-screen cost is already reflected in the UX score rather than being a separate reasoning failure."
+}

@@ -1,0 +1,77 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "product-onboarding-r2",
+  "blind": true,
+  "reviewed_at": "2026-11-07T11:49:16+07:00",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md §1 separates facts, assumptions and unknowns (lines 10-43), keeps Admin copy within the brief (line 30) and flags the pending-seat and Admin-settings questions (lines 35, 40).",
+      "ux_reasoning": "The project form is the landing surface with a persistent 'Skip for now' (analysis.md line 101); success makes 'Go to workspace' primary and the invite prompt is deferred to home with a dismiss action (implementation/app.js renderHome), so the solo path is one field long.",
+      "design_judgment": "analysis.md §5 lists nine decisions with explicit costs, including one role for the whole batch (line 131) and the choice not to use a progress wizard (line 105).",
+      "visual_hierarchy": "desktop-form.png makes the form the hero with a supporting 'After this' card, but at 390px the dark workspace and role block (mobile-top.png) consumes most of the first viewport and the Create project CTA sits below the 844px fold, while the floating prototype bar covers the Description hint (mobile-overlap.png). Collapsing the mobile workspace block and removing the overlay would raise this to 4.",
+      "interaction_completeness": "Validation, loading, invitation success/failure with retry and continue-without, seat-limit seeding, skipped/resume with a named draft, a dismissible invite prompt and a full-plan warning are implemented (implementation/app.js handleInvite, renderHome; index.html prototype selects).",
+      "accessibility_responsiveness": "checks.json reports 0 unnamed controls, one h1, axe 0 violations and a progressbar meter, but at 390px the floating prototype panel obscures the Description label's 'Optional' tag and hint (mobile-overlap.png). A non-obstructive mobile panel would raise this.",
+      "implementation_quality": "A 1,031-line state-machine-style IIFE with esc() on interpolated values, guarded localStorage, seeded demo members and explicit focus handling; no console or page errors in checks.json."
+    },
+    "evidence": [
+      { "file": "evidence/product-onboarding-r2/a/desktop-form.png", "caption": "Desktop setup puts the project form first with a supporting 'After this' card", "dimension": "visual_hierarchy" },
+      { "file": "evidence/product-onboarding-r2/a/desktop-rail.png", "caption": "Dark rail states workspace facts and all role capabilities before action", "dimension": "product_understanding" },
+      { "file": "evidence/product-onboarding-r2/a/mobile-top.png", "caption": "Mobile first viewport is consumed by workspace context before the form", "dimension": "visual_hierarchy" },
+      { "file": "evidence/product-onboarding-r2/a/mobile-overlap.png", "caption": "Floating prototype controls cover the Description hint and Optional tag at 390px", "dimension": "accessibility_responsiveness" }
+    ],
+    "critical_defects": [
+      "At 390px the floating prototype panel obscures the Description field's hint and 'Optional' label.",
+      "The first mobile viewport is dominated by workspace and role context; the primary Create project action is below the fold."
+    ],
+    "strengths": [
+      "No welcome detour: the required field is on the first screen.",
+      "Role copy stays within the supplied capabilities instead of inventing Admin settings rights.",
+      "Broad state coverage including invitation failure, retry, seat limit and skipped-draft resume."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md §1 cleanly separates facts, assumptions and unknowns (lines 8-40), but the role card asserts Admins 'Manage workspace settings' (implementation/app.js:179), an inference the brief does not state and the assumption list does not declare; labelling it as an assumption would raise this to 4.",
+      "ux_reasoning": "Project-first with per-row roles and a 'Skip invitations' peer action (implementation/app.js:331-360), but a dedicated welcome screen (implementation/app.js:204) adds a click before the only required field and its body repeats the same three steps as the rail (desktop-welcome.png). Starting on the form or trimming the duplicated preview would raise this.",
+      "design_judgment": "analysis.md §2 explains why project precedes invitations and §6 acknowledges the invite step's gate risk (line 106) with concrete mitigations, showing alternatives and costs.",
+      "visual_hierarchy": "mobile-welcome.png fits the step rail, headline, preview and both CTAs into a single 844px viewport, and desktop-welcome.png has one clear focal column with the rail secondary; the only redundancy is the repeated step list.",
+      "interaction_completeness": "Per-row invitation failure with retry of only unsent rows (implementation/app.js:656-737), an at-limit form replacement (implementation/app.js:306-370), member-role gating, paused/restored sessions and full validation are implemented.",
+      "accessibility_responsiveness": "checks.json shows one h1, zero unnamed controls and axe 0 violations on both viewports; aria-current steps, aria-busy, live announcements and focus-to-heading are present (implementation/app.js:107-160, 564).",
+      "implementation_quality": "Template-string rendering with escapeHtml, asyncEpoch guards, localStorage snapshots and a reset path; the 1,036-line app is consistently organised."
+    },
+    "evidence": [
+      { "file": "evidence/product-onboarding-r2/b/desktop-welcome.png", "caption": "Desktop welcome repeats the three-step rail inside the body before the form", "dimension": "ux_reasoning" },
+      { "file": "evidence/product-onboarding-r2/b/desktop-rail.png", "caption": "Rail labels required, optional and next-step states with the Starter seat count", "dimension": "visual_hierarchy" },
+      { "file": "evidence/product-onboarding-r2/b/mobile-welcome.png", "caption": "Mobile welcome fits the whole path and both actions in one viewport", "dimension": "accessibility_responsiveness" }
+    ],
+    "critical_defects": [
+      "Welcome screen adds a click before the only required field and duplicates the rail's three steps in the body.",
+      "Role card claims Admins manage workspace settings, an undeclared inference beyond the brief."
+    ],
+    "strengths": [
+      "Best mobile first viewport: the whole path and CTA are visible without scrolling.",
+      "Per-row invitation failure and retry of unsent addresses only.",
+      "At-limit state replaces the form with an explanation and a finish action."
+    ]
+  },
+  "comparison": "Candidate A starts on the task and is more disciplined about not asserting Admin settings rights, while Candidate B is visually stronger on mobile and has a cleaner first viewport. Candidate A's floating controls obscure a form label at 390px, which keeps the overall result close; A edges ahead on product discipline and shorter time-to-task.",
+  "limitations": "Only the first screen was captured, so invite, success and workspace states were judged from source and checks.json. Mobile obstruction by demo chrome, touch-target sizing and screen-reader output were not measured; duplicate-name and time-estimate rules are prototype choices that cannot be validated against the brief."
+}

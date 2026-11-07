@@ -1,0 +1,119 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "subscription-settings-r1",
+  "blind": true,
+  "reviewed_at": "2026-11-07T04:51:10Z",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:17-27 separates the supplied facts (roles, plan names, member limits) from assumed demo prices, account data and dates in an explicit table, and states that all plan/period changes apply at renewal so no proration is invented. The five owner questions and the member boundary are mapped directly; only illustrative data is invented and it is labelled as such.",
+      "ux_reasoning": "The information architecture runs summary -> plans -> payment -> invoices -> isolated cancellation (analysis.md:43-57), and the change review enumerates current/new plan, effective date, $0 today, next payment and limit delta while blocking an over-limit downgrade with the exact excess (app.js:470-483). Cadence preview is explicitly non-committal (index.html:171-174) and cancellation requires both a checkbox and the typed workspace name (index.html:299-321), so the risky flows are separated and gated.",
+      "design_judgment": "Renewal-date-only changes, blocked over-limit downgrades and the neutral 'Schedule change' label are defended with real trade-offs (analysis.md:91-109), and red is reserved for cancellation and errors. The one soft spot is the cramped right-aligned 'Preview prices' cluster in the Plans header, which reads as an afterthought.",
+      "visual_hierarchy": "The summary leads with plan identity, then price, next payment and an unlabelled-visible member meter, and the plan cards make all three seat limits scannable (evidence plans-desktop.png, summary-desktop.png). Density slips in the six-row invoice table and the narrow preview-prices note; a calmer section header and less invoice depth would raise this to 4.",
+      "interaction_completeness": "Loading, load error, empty invoices, near/at-limit, blocked downgrade, scheduled-change with undo, submitting/aria-busy, simulated save failure and cancelled states are implemented in code, not just described (app.js:137-181, 448-560, 690-740). The cancellation dialog stays disabled until both the acknowledgement and the exact workspace name are provided.",
+      "accessibility_responsiveness": "checks.json reports a serious aria-progressbar-name violation and four controls without accessible names at both viewports; index.html:151 gives the meter role/values but no accessible name. The responsive layout itself holds (no horizontal overflow at 1280/390, labelled stacked invoice rows in evidence invoices-mobile.png); fixing the meter/control names would move this to 3-4.",
+      "implementation_quality": "A compact 33KB app.js with a single state object, render functions and native <dialog> handles the whole prototype, and checks.json shows no console or page errors. The structure is easy to follow and fits the framework-neutral brief."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r1/a/summary-desktop.png",
+        "caption": "Owner summary: plan, price, next payment, member meter and remaining-seat copy",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r1/a/plans-desktop.png",
+        "caption": "Plans section: non-committal preview control and per-plan member limits with CTAs",
+        "dimension": "ux_reasoning"
+      },
+      {
+        "file": "evidence/subscription-settings-r1/a/cancel-desktop.png",
+        "caption": "Cancellation district isolated at the page end with plain-language consequences",
+        "dimension": "interaction_completeness"
+      },
+      {
+        "file": "evidence/subscription-settings-r1/a/summary-mobile.png",
+        "caption": "Mobile summary keeps plan, price, renewal date and usage above the fold",
+        "dimension": "accessibility_responsiveness"
+      },
+      {
+        "file": "evidence/subscription-settings-r1/a/invoices-mobile.png",
+        "caption": "Mobile invoice table reflows to labelled stacked rows without overflow",
+        "dimension": "accessibility_responsiveness"
+      }
+    ],
+    "critical_defects": [
+      "Accessible-name gaps: the seat meter and four controls lack accessible names (checks.json axe aria-progressbar-name, serious; index.html:151)."
+    ],
+    "strengths": [
+      "Explicit separation of supplied facts from demo assumptions and open product policy",
+      "Cancellation separated and double-gated (checkbox plus typed workspace name)",
+      "Cadence preview cannot change the subscription, avoiding the display-vs-commit trap",
+      "Honest simulated payment copy with no fabricated success"
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "analysis.md:9-17 catalogues the synthetic prices, 18/20 seat workspace, fixed Nov/Dec 2026 dates and the estimate/proration caveat, and analysis.md:65-76 gives a clear owner/member capability matrix. Over-limit and cancellation policies are presented as assumptions, not research findings.",
+      "ux_reasoning": "The owner journey and dialog model are coherent (analysis.md:38-52): the change-plan dialog carries billing period, current-plan marker, seat-fit blocker, effective date, amount today and next payment, and cancellation is last behind an acknowledgement. It is weaker than A on at-a-glance comparison because the three plans and their limits exist only inside the 'Change plan' dialog, so the page itself shows only Pro and 18/20.",
+      "design_judgment": "The trade-offs are sound (immediate upgrades vs scheduled downgrades, no fake invoice download, disabled-vs-hidden owner controls) at analysis.md:56-63, but showing an estimated proration and leaving a fixed prototype bar over the product surface are avoidable risks (evidence overlay-desktop.png).",
+      "visual_hierarchy": "The summary card is calm and clear (evidence summary-desktop.png), but the fixed prototype toolbar visibly covers the Billing period card and the Invoices heading in the desktop capture (evidence overlay-desktop.png) and the payment card on mobile (evidence toolbar-mobile.png). Relocating that bar would make this a 4.",
+      "interaction_completeness": "Loading, error, empty, failed-payment, validation, busy, scheduled/undo, canceled and disabled states are implemented (analysis.md:77-88; app.js:322-370, 880-930). Cancellation confirmation stays disabled until the acknowledgement checkbox is ticked (app.js:922-926).",
+      "accessibility_responsiveness": "checks.json shows zero axe violations and zero controls without accessible names at both viewports, and the seat meter has an explicit aria-label (app.js:430). Focus trapping and focus return are implemented (app.js:1354-1375); the toolbar overlap is scored under visual hierarchy.",
+      "implementation_quality": "A single 60KB app.js with IIFE-scoped render functions and hand-built dialogs passes syntax and interaction checks with no console errors, but it is noticeably heavier and less browsable than A's 33KB file."
+    },
+    "evidence": [
+      {
+        "file": "evidence/subscription-settings-r1/b/summary-desktop.png",
+        "caption": "Summary card with price, renewal, seat usage and approaching-limit consequence copy",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r1/b/overlay-desktop.png",
+        "caption": "Fixed prototype toolbar covering the billing-period control and the Invoices heading",
+        "dimension": "visual_hierarchy"
+      },
+      {
+        "file": "evidence/subscription-settings-r1/b/toolbar-mobile.png",
+        "caption": "Collapsed toolbar obscuring the payment-method description on mobile",
+        "dimension": "accessibility_responsiveness"
+      },
+      {
+        "file": "evidence/subscription-settings-r1/b/invoices-desktop.png",
+        "caption": "Invoice history with a View action that opens a detail instead of faking a download",
+        "dimension": "interaction_completeness"
+      },
+      {
+        "file": "evidence/subscription-settings-r1/b/cancel-mobile.png",
+        "caption": "Mobile cancellation section naming the 15 members affected and the Free limit",
+        "dimension": "ux_reasoning"
+      }
+    ],
+    "critical_defects": [
+      "The fixed prototype toolbar obscures product content in both supplied screenshots (desktop billing/invoices; mobile payment card), contradicting the claim that the page clears it."
+    ],
+    "strengths": [
+      "Zero axe violations and fully named controls",
+      "Honest payment, cancellation and no-charge copy",
+      "Seat-fit blocker and consequence review inside the change dialog"
+    ]
+  },
+  "comparison": "Candidate A has the stronger architecture and rationale: all three plan limits are visible on the page, cadence preview is explicitly non-committal, and cancellation is double-gated. Candidate B is the more accessible build (zero axe violations) but keeps plan comparison in a dialog and lets its fixed prototype toolbar cover product content, so A edges it on UX and design while B wins accessibility.",
+  "limitations": "Only default desktop and mobile screenshots were supplied; dialogs and non-default states could not be inspected visually and were judged from source and checks.json. No live interaction, screen-reader, zoom or cross-browser testing was possible, and the plausibility of invented prices/policies cannot be verified against the brief."
+}

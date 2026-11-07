@@ -1,0 +1,52 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "operations-dashboard-r1",
+  "round": 2,
+  "counterpart": "R2",
+  "responses": [
+    {
+      "candidate": "a",
+      "dimension": "visual_hierarchy",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 4,
+      "position": "maintain",
+      "reason": "R2's point that the 0-100% rate plot leaves most of its area empty is accurate, but it describes a deliberate honest-axis choice that is offset by the adjacent symmetric pp-change chart, and the panel still reads as a paired evidence block. The attention band, three KPI cards and two-chart row give a clearer scan path than any other candidate in this pair, so the empty plot area does not cost the top score.",
+      "evidence": "out/r1/evidence/operations-dashboard-r1/a/desktop-signal-kpis.png (attention band and KPI row); full desktop capture reviewed in round 1"
+    },
+    {
+      "candidate": "b",
+      "dimension": "ux_reasoning",
+      "round1_score": 4,
+      "counterpart_round1_score": 3,
+      "final_score": 3,
+      "position": "revise",
+      "reason": "R2's crop shows the region table under the caption 'sorted by largest on-time rate drop' actually rendering South (-0.2 pp) above East (-0.7 pp) and West (-0.4 pp), i.e. a fixed region order rather than the promised ranking. I missed that in round 1, and it undermines the primary 'where is the problem' scan, so 3 is the correct score.",
+      "evidence": "out/r2/evidence/operations-dashboard-r1/b/desktop-regions-orders.png"
+    }
+  ],
+  "final_scores": {
+    "candidate_a": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "candidate_b": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 4
+    }
+  },
+  "differences_remaining": [
+    "visual_hierarchy, candidate A: I keep 4 against R2's 3 because the empty 0-100% plot area is a disclosed axis trade-off balanced by the pp-change chart, and the overall scan path is the strongest in the pair."
+  ],
+  "summary": "Only two positions were in dispute. I revised Candidate B's ux_reasoning to 3 after the counterpart's crop showed the regional table is not actually ranked as captioned, which changes the pair winner to Candidate A; I kept Candidate A's visual_hierarchy at 4 because the composition and scan path remain excellent despite the honest-but-empty rate plot."
+}
