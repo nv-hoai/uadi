@@ -84,8 +84,21 @@ The direction is the opposite of the earlier pilot's Candidate-A preference. Wit
 
 - [`results.json`](results.json) — scorer input with R1/R2 final scores and run durations.
 - [`scorer-output.json`](scorer-output.json) — full scorer output; `evidence_tier` is `machine-reviewed-pilot`.
+- [`dashboard.html`](dashboard.html) — permanent, dependency-free review dashboard with filters, dimension and position charts, and a per-pair evidence drawer.
 - [`review/`](review/) — reviewer round-1 results, discussion files, evidence crops, freeze and discussion summary.
 - [`../../../../docs/MACHINE-REVIEW.md`](../../../../docs/MACHINE-REVIEW.md) — the standing protocol.
+
+Regenerate the dashboard from the committed artifacts:
+
+```bash
+node scripts/build-review-dashboard.mjs \
+  --review benchmarks/studies/design-intelligence-pilot-2026-11/machine-review/review \
+  --out benchmarks/studies/design-intelligence-pilot-2026-11/machine-review/dashboard.html \
+  --title "Design Intelligence Pilot — Review dashboard" \
+  --status "Machine-reviewed pilot" \
+  --back-link ../README.md \
+  --back-label "Study record"
+```
 
 Reproduce the panel summary:
 

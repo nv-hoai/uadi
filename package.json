@@ -12,6 +12,7 @@
     "benchmark:score": "node scripts/score-benchmark.mjs",
     "benchmark:prepare": "node scripts/prepare-benchmark-pair.mjs",
     "review:validate": "node scripts/validate-peer-review.mjs",
+    "review:dashboard": "node scripts/build-review-dashboard.mjs",
     "review:crop": "node scripts/crop-evidence.mjs"
   },
   "devDependencies": {
