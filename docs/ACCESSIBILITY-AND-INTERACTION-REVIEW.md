@@ -169,8 +169,8 @@ Use a review record with the same fields for each check:
 ## Related guidance
 
 - [Design quality checklist](QUALITY-GATES.md)
-- [UX Reasoning Playbook](../intelligence/UX-REASONING-PLAYBOOK.md) — validation planning and state design
-- [Visual Design Playbook](../intelligence/VISUAL-DESIGN-PLAYBOOK.md) — visual states and rendered review
+- [Flow and States](../intelligence/modules/flow-and-states.md) — validation planning and state design
+- [Visual Composition](../intelligence/modules/visual-composition.md) — visual states and rendered review
 - [Status, empty states and recovery](../intelligence/patterns/status-and-recovery.md)
 - [Forms and validation](../intelligence/patterns/forms-and-validation.md)
 - [Destructive actions](../intelligence/patterns/destructive-actions.md)

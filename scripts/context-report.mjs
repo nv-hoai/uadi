@@ -11,7 +11,7 @@
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { SKILL_FILES } from "./install-skill.mjs";
+import { SKILL_FILES, SKILL_PROFILES } from "./install-skill.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -115,7 +115,8 @@ function sumProfile(entries, files) {
 export async function buildContextReport(root = ROOT) {
   const entries = [];
   const missing = [];
-  for (const file of [...new Set(SKILL_FILES)].sort()) {
+  const allFiles = [...new Set([...SKILL_FILES, ...Object.values(SKILL_PROFILES).flat()])].sort();
+  for (const file of allFiles) {
     try {
       entries.push(await readEntry(root, file));
     } catch (error) {
@@ -153,6 +154,11 @@ export async function buildContextReport(root = ROOT) {
     over_budget: (core?.tokens_est ?? 0) > CONTEXT_BUDGETS.core
   };
 
+  const installProfiles = {};
+  for (const [name, files] of Object.entries(SKILL_PROFILES)) {
+    installProfiles[name] = sumProfile(entries, files);
+  }
+
   return {
     root,
     estimate_method: TOKEN_ESTIMATE_METHOD,
@@ -169,6 +175,7 @@ export async function buildContextReport(root = ROOT) {
     core,
     modules,
     profiles,
+    install_profiles: installProfiles,
     budgets,
     largest: [...entries].sort((a, b) => b.tokens_est - a.tokens_est).slice(0, 12)
   };
@@ -196,6 +203,11 @@ export function formatContextReport(report) {
   const riskRows = report.inventory.filter((entry) => entry.layer === "risk").map((entry) => ({
     path: entry.path.replace("intelligence/", ""),
     tokens: entry.tokens_est.toLocaleString("en-US")
+  }));
+  const installRows = Object.entries(report.install_profiles ?? {}).map(([name, profile]) => ({
+    name,
+    files: profile.count,
+    tokens: profile.tokens_est.toLocaleString("en-US")
   }));
   const largestRows = report.largest.map((entry) => ({
     path: entry.path,
@@ -249,7 +261,15 @@ export function formatContextReport(report) {
       { label: "Est. tokens", value: (row) => row.tokens }
     ]),
     "",
-    "## Installation footprint",
+    "## Installation profiles",
+    "",
+    table(installRows, [
+      { label: "Profile", value: (row) => row.name },
+      { label: "Files", value: (row) => row.files },
+      { label: "Shipped est. tokens", value: (row) => row.tokens }
+    ]),
+    "",
+    "## Installation footprint (all profile files)",
     "",
     "- Files: " + report.totals.files,
     "- Bytes: " + report.totals.bytes.toLocaleString("en-US"),

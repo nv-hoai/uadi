@@ -1,6 +1,6 @@
 # Install UADI into an AI agent
 
-UADI is agent-agnostic. The installer copies the same portable skill, reasoning playbooks, contextual UX pattern library and referenced worked examples into the native project skill directory for the selected host.
+UADI is agent-agnostic. The installer copies the selected installation profile into the native project skill directory for the host. `standard` is the default; `compact` is runtime-only and `extended` adds the design-memory example.
 
 Run one command from the UADI repository root:
 
@@ -16,6 +16,8 @@ To install for all supported hosts:
 node scripts/install-skill.mjs --agent all
 ```
 
+Choose a profile with `--profile compact|standard|extended` when installing. The profile changes what is shipped, not what the kernel loads at task time.
+
 ## Destinations
 
 | Host | Project skill directory |
@@ -24,7 +26,7 @@ node scripts/install-skill.mjs --agent all
 | Claude Code | `.claude/skills/uadi/` |
 | Cursor | `.cursor/skills/uadi/` |
 
-The installer copies `SKILL.md`, the core design guidance, every reasoning playbook, the UX pattern library and the worked examples those patterns reference. It does not change host settings, install dependencies or contact a server.
+The `standard` profile copies `SKILL.md`, runtime modules, risk cards, pattern library, reference playbooks, schemas and worked examples. It does not change host settings, install dependencies or contact a server.
 
 Existing files are preserved by default. Use `--force` only when you intend to replace the installed UADI skill files. To update UADI, pull the latest repository changes and rerun the installer.
 
