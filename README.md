@@ -54,10 +54,10 @@ UADI adapts the depth of this workflow to the task. A small UI change should sta
 ## What is inside
 
 - `SKILL.md` — the entry point for an AI agent.
-- `intelligence/` — product understanding, UX reasoning and visual design playbooks plus contextual patterns.
+- `intelligence/` — six runtime reasoning modules, trigger-only risk cards, contextual patterns and reference playbooks.
 - `docs/` — product vision, architecture, integration and quality guidance.
 - `workflows/` — practical design workflows.
-- `schemas/` and `templates/` — portable design artifacts and UDS contracts.
+- `schemas/` and `templates/` — portable design artifacts, UDS contracts and project-level design memory.
 - `component-catalog/` and `renderers/` — reusable component concepts and the first React renderer.
 - `examples/` — examples to learn from and adapt.
 - `scripts/` — optional local validation and installation tools.
@@ -71,7 +71,7 @@ node scripts/install-skill.mjs --agent codex
 # or: --agent claude | cursor | all
 ```
 
-The installer uses Node.js built-ins only and copies the complete portable skill, including its playbooks and pattern library, into the host's project skill directory. It preserves existing files unless `--force` is supplied. See [supported agent installation](adapters/README.md).
+The installer uses Node.js built-ins only and copies the complete portable skill, including its runtime modules, risk cards, pattern library and design-memory contract, into the host's project skill directory. It preserves existing files unless `--force` is supplied. See [supported agent installation](adapters/README.md).
 
 ## Optional local validation
 
@@ -99,10 +99,13 @@ Human owners remain in control of product decisions. Use the host project's norm
 - [Agent instructions](docs/AGENT-INSTRUCTIONS.md)
 - [Five-layer design intelligence architecture](docs/DESIGN-INTELLIGENCE-ARCHITECTURE.md) — responsibilities, source of truth, evidence traceability and the learning loop
 - [Design Intelligence](docs/DESIGN-INTELLIGENCE.md)
-- [Product Understanding](intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md)
-- [UX Reasoning](intelligence/UX-REASONING-PLAYBOOK.md)
-- [Design Decisions](intelligence/DESIGN-DECISIONS-PLAYBOOK.md)
-- [Visual Design](intelligence/VISUAL-DESIGN-PLAYBOOK.md)
+- [Runtime reasoning modules](intelligence/README.md)
+- [Project design memory](workflows/design-memory.md) — approved decisions, rejected directions and a compact brief
+- [Design memory example](examples/design-memory/README.md) — source JSON, generated brief and proposed-vs-approved behavior
+- [Product Understanding](intelligence/PRODUCT-UNDERSTANDING-PLAYBOOK.md) (reference)
+- [UX Reasoning](intelligence/UX-REASONING-PLAYBOOK.md) (reference)
+- [Design Decisions](intelligence/DESIGN-DECISIONS-PLAYBOOK.md) (reference)
+- [Visual Design](intelligence/VISUAL-DESIGN-PLAYBOOK.md) (reference)
 - [UX Pattern Library](intelligence/patterns/README.md)
 - [Worked onboarding example](examples/product-onboarding/README.md) — evidence synthesis, ranked critique and runnable prototype
 - [Worked operations dashboard example](examples/operations-dashboard/README.md) — comparison, drill-down, data states and accessibility validation

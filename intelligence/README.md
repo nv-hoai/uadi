@@ -1,33 +1,49 @@
 # UADI Design Intelligence Library
 
-This directory contains practical reasoning methods and reusable UX patterns for AI agents. Read selectively; the goal is better decisions, not more documents.
+This directory contains the runtime reasoning modules, trigger-only risk cards and reference material. Read selectively; the goal is better decisions, not more documents.
 
-## Start with the problem
+## Runtime modules
 
-- [Product Understanding Playbook](PRODUCT-UNDERSTANDING-PLAYBOOK.md) — build a grounded model of users, product value, domain rules and constraints before choosing UI.
-- [UX Reasoning Playbook](UX-REASONING-PLAYBOOK.md) — map task flows, handoffs, friction, edge cases, content, information architecture and interaction states.
-- [Design Decisions Playbook](DESIGN-DECISIONS-PLAYBOOK.md) — explore materially different directions, compare them fairly and explain rationale and trade-offs.
-- [Visual Design Playbook](VISUAL-DESIGN-PLAYBOOK.md) — turn task priority and product character into hierarchy, composition and a coherent visual system.
+Load only the module that answers the unresolved design question.
 
-For a small local change, inspect the relevant code and existing conventions; do not run every playbook end to end.
+- [Product Context](modules/product-context.md) — users, goals, roles, rules, constraints and unknowns.
+- [Flow and States](modules/flow-and-states.md) — journeys, branches, handoffs, edge cases, recovery and states.
+- [Content and Consequences](modules/content-and-consequences.md) — labels, consequences, state messages and realistic data.
+- [Visual Composition](modules/visual-composition.md) — direction, hierarchy, Principles of Art, responsive composition and visual states.
+- [Alternatives and Trade-offs](modules/alternatives-and-tradeoffs.md) — when to explore, how to compare and how to record a decision.
+- [Accessibility Review](modules/accessibility-review.md) — keyboard, semantics, visual access, states and honest reporting.
+
+## Risk cards
+
+Load one only when the task triggers it.
+
+- [Billing changes](risks/billing-changes.md)
+- [Permissions and destructive actions](risks/permissions-and-destructive.md)
+- [Data freshness and comparison](risks/data-freshness.md)
+- [Health and persuasive claims](risks/health-and-claims.md)
+- [Ownership handover](risks/ownership-handover.md)
 
 ## Pattern library
 
-Patterns are decision aids, not templates to apply blindly. Each pattern explains when it fits, the user problem it addresses, interaction details, common failure modes and a runnable implementation example.
+Patterns are decision aids, not templates to apply blindly. Each explains when it fits, the user problem, interaction details, failure modes and a runnable example.
 
-- [Settings information architecture](patterns/settings-information-architecture.md)
-- [Permission-aware actions](patterns/permission-aware-actions.md)
-- [Destructive actions](patterns/destructive-actions.md)
-- [Status, empty states and recovery](patterns/status-and-recovery.md)
-- [Data tables and filtering](patterns/data-tables-and-filtering.md)
-- [Forms and validation](patterns/forms-and-validation.md)
+- [Pattern index](patterns/README.md)
+
+## Reference playbooks
+
+These preserve deeper rationale, worked traces and examples. They are **reference**, not the default runtime path. Load a section only when a module is not enough; do not read a full playbook by default.
+
+- [Product Understanding](PRODUCT-UNDERSTANDING-PLAYBOOK.md)
+- [UX Reasoning](UX-REASONING-PLAYBOOK.md)
+- [Design Decisions](DESIGN-DECISIONS-PLAYBOOK.md)
+- [Visual Design](VISUAL-DESIGN-PLAYBOOK.md)
 
 ## How to use the library
 
-1. Identify the user goal and product context.
-2. Read only the playbook or pattern relevant to the design risk.
-3. Check applicability and trade-offs; do not copy a pattern mechanically.
-4. Adapt it to product language, real data, constraints and the existing design system.
-5. Review the complete flow, including failure, recovery and responsive behavior.
+1. Identify the user goal, product context and unresolved design question.
+2. Load one runtime module, plus one risk card when triggered.
+3. Consult one pattern only if it addresses a diagnosed need.
+4. Inspect the product and adapt to its language, data and conventions.
+5. Review the complete flow, including failure, recovery, accessibility and responsive behavior.
 
 A justified deviation is better than a familiar but mismatched interface.

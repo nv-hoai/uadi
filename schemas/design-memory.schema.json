@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uadi.dev/schemas/design-memory.schema.json",
+  "title": "UADI Design Memory",
+  "type": "object",
+  "required": ["schema_version", "project_id", "updated_at", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "project_id": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "required": ["id", "kind", "scope", "statement", "status", "provenance"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "enum": ["CONSTRAINT", "DECISION", "REJECTED_DIRECTION", "OPEN_QUESTION", "PREFERENCE", "EVIDENCE"]
+        },
+        "scope": {
+          "type": "object",
+          "required": ["level"],
+          "additionalProperties": false,
+          "properties": {
+            "level": { "type": "string", "enum": ["PROJECT", "FEATURE", "COMPONENT"] },
+            "ref": { "type": "string", "minLength": 1 }
+          }
+        },
+        "statement": { "type": "string", "minLength": 1 },
+        "rationale": { "type": "string" },
+        "status": { "type": "string", "enum": ["PROPOSED", "APPROVED", "SUPERSEDED", "EXPIRED"] },
+        "provenance": {
+          "type": "object",
+          "required": ["source"],
+          "additionalProperties": false,
+          "properties": {
+            "source": { "type": "string", "enum": ["OWNER", "REPO", "EXTERNAL", "INFERRED"] },
+            "ref": { "type": "string" },
+            "observed_at": { "type": "string", "format": "date-time" },
+            "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "approved_by": { "type": "string", "minLength": 1 },
+        "approved_at": { "type": "string", "format": "date-time" },
+        "effective_at": { "type": "string", "format": "date-time" },
+        "review_after": { "type": "string", "format": "date-time" },
+        "supersedes": { "type": "array", "items": { "type": "string" } },
+        "related": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "APPROVED" } }, "required": ["status"] },
+          "then": {
+            "properties": {
+              "approved_by": { "type": "string", "minLength": 1 },
+              "approved_at": { "type": "string", "format": "date-time" }
+            },
+            "required": ["approved_by", "approved_at"]
+          }
+        }
+      ]
+    }
+  }
+}

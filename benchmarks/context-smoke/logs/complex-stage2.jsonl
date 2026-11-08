@@ -1,0 +1,4 @@
+{"ts":"2026-11-08T04:49:35.430Z","turn":1,"tool":"read","path":"SKILL.md","bytes":2794,"tokens_est":697,"source":"wrapper"}
+{"ts":"2026-11-08T04:49:44.204Z","turn":2,"tool":"read","path":"intelligence/modules/flow-and-states.md","bytes":1707,"tokens_est":424,"source":"wrapper"}
+{"ts":"2026-11-08T04:49:50.591Z","turn":3,"tool":"read","path":"intelligence/patterns/onboarding-and-activation.md","bytes":5371,"tokens_est":1343,"source":"wrapper"}
+{"ts":"2026-11-08T04:49:55.466Z","turn":4,"tool":"read","path":"intelligence/risks/permissions-and-destructive.md","bytes":1418,"tokens_est":355,"source":"wrapper"}

@@ -1,5 +1,7 @@
 # Design Decisions Playbook
 
+> **Reference:** The runtime operational rules live in `intelligence/modules/`. This playbook preserves deeper rationale and examples; do not load it by default.
+
 A method for exploring meaningfully different directions, comparing them on the same evidence and explaining why one is recommended. Use it when a decision is consequential or ambiguous; a small local change usually needs only a focused rationale.
 
 ## 1. Decide whether alternatives are warranted

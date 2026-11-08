@@ -1,5 +1,7 @@
 # Product Understanding Playbook
 
+> **Reference:** The runtime operational rules live in `intelligence/modules/`. This playbook preserves deeper rationale and examples; do not load it by default.
+
 Understand the product before deciding what its interface should do. The goal is a useful working model of the product—not a long discovery report.
 
 Use this playbook for new features, unfamiliar codebases, complex journeys or changes whose UX depends on business rules. For a small visual adjustment with clear context, inspect the relevant area and keep moving.

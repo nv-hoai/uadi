@@ -27,7 +27,9 @@ test("token estimates are chars/4 and classified by runtime layer", () => {
   assert.equal(estimateTokens("abcde"), 2);
   assert.equal(classifyPath("SKILL.md"), "kernel");
   assert.equal(classifyPath("docs/DESIGN-INTELLIGENCE.md"), "core");
-  assert.equal(classifyPath("intelligence/UX-REASONING-PLAYBOOK.md"), "module");
+  assert.equal(classifyPath("intelligence/UX-REASONING-PLAYBOOK.md"), "reference");
+  assert.equal(classifyPath("intelligence/modules/flow-and-states.md"), "module");
+  assert.equal(classifyPath("intelligence/risks/billing-changes.md"), "risk");
   assert.equal(classifyPath("intelligence/patterns/forms-and-validation.md"), "pattern");
   assert.equal(classifyPath("examples/minimal/design-specification.json"), "example");
   assert.equal(classifyPath("schemas/project-context.schema.json"), "contract");
@@ -42,6 +44,8 @@ test("static report separates installed footprint from load profiles", async () 
   assert.ok(report.profiles.typical.tokens_est >= report.profiles.always.tokens_est);
   assert.ok(report.profiles.deep.tokens_est >= report.profiles.typical.tokens_est);
   assert.ok(report.profiles.installed.tokens_est >= report.profiles.example.tokens_est);
+  assert.ok(report.profiles.runtime.tokens_est >= report.profiles.kernel.tokens_est);
+  assert.ok(report.profiles.runtime_risk.tokens_est >= report.profiles.runtime.tokens_est);
   assert.equal(report.profiles.always.count, 2);
   assert.equal(report.missing.length, 0);
   const markdown = formatContextReport(report);
@@ -119,4 +123,14 @@ test("mixed sources are labelled mixed, host events are instrumented", () => {
   const base = { ts: new Date().toISOString(), turn: 1, tool: "read", path: "SKILL.md", bytes: 4, tokens_est: 1 };
   assert.equal(validateContextLog([{ ...base, source: "host_event" }]).evidence_tier, "instrumented");
   assert.equal(validateContextLog([{ ...base, source: "host_event" }, { ...base, source: "wrapper" }]).evidence_tier, "mixed");
+});
+
+test("kernel meets budget and every runtime route exists", async () => {
+  const report = await buildContextReport(ROOT);
+  assert.ok(report.kernel.tokens_est <= 700, "kernel must stay within 700 estimated tokens");
+  const modules = ["product-context", "flow-and-states", "content-and-consequences", "visual-composition", "alternatives-and-tradeoffs", "accessibility-review"];
+  const risks = ["billing-changes", "permissions-and-destructive", "data-freshness", "health-and-claims", "ownership-handover"];
+  const { stat } = await import("node:fs/promises");
+  for (const name of modules) await assert.doesNotReject(stat(path.join(ROOT, "intelligence/modules", name + ".md")));
+  for (const name of risks) await assert.doesNotReject(stat(path.join(ROOT, "intelligence/risks", name + ".md")));
 });

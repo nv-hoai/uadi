@@ -28,4 +28,4 @@ The examples use synthetic data and state their limitations. Inspect the decisio
 
 Start with the user's task and the information they need to make progress. Use a pattern only when it addresses a real problem in the current context. Patterns can be combined when a flow crosses concerns—for example, a permission-aware form or a filterable table with destructive bulk actions.
 
-For the reasoning method behind selecting and adapting patterns, see [UX Reasoning Playbook](../UX-REASONING-PLAYBOOK.md).
+For the reasoning method behind selecting and adapting patterns, see [Flow and States](../modules/flow-and-states.md) and [Content and Consequences](../modules/content-and-consequences.md).

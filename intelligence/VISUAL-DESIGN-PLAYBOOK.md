@@ -1,5 +1,7 @@
 # Visual Design Playbook
 
+> **Reference:** The runtime operational rules live in `intelligence/modules/`. This playbook preserves deeper rationale and examples; do not load it by default.
+
 Create an interface whose visual language makes the product easier to understand and use. Visual quality is not a layer of decoration added after UX decisions; it is how information, priority, relationships and feedback become perceptible.
 
 Use this playbook when creating a new screen, establishing a visual direction or improving a visually weak experience. For a small component change, follow the existing system and review the local result.
