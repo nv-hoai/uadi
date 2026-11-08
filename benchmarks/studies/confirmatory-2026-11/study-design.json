@@ -233,8 +233,8 @@
         "model_version": "crouton-alpha-free"
       },
       {
-        "model_family": "beam",
-        "model_version": "beam-free"
+        "model_family": "mimo",
+        "model_version": "mimo-v2.6-flash"
       }
     ],
     "reviewers_per_condition": 2,

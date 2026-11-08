@@ -117,7 +117,9 @@ async function main() {
       const reviewerId = reviewerIds[design.review.reviewer_families.indexOf(reviewer)];
       const passDir = path.join(PASSES, pair.pair_id, reviewerId);
       const inputs = path.join(passDir, "inputs");
-      await rm(passDir, { recursive: true, force: true });
+      // Preserve completed judge work: only reset inputs/ and instructions.md.
+      // result.json (judge output) is never deleted by re-packing.
+      await rm(inputs, { recursive: true, force: true });
       await mkdir(inputs, { recursive: true });
       await cp(path.join(ROOT, "benchmarks/tasks/" + pair.task_id + ".md"), path.join(inputs, "task.md"));
       for (const letter of ["a", "b"]) {
@@ -140,7 +142,8 @@ async function main() {
       const reviewerId = reviewerIds[design.review.reviewer_families.indexOf(reviewer)];
       const passDir = path.join(PASSES, "calibration", packet.id, reviewerId);
       const inputs = path.join(passDir, "inputs");
-      await rm(passDir, { recursive: true, force: true });
+      // Preserve completed judge work (see pair passes above).
+      await rm(inputs, { recursive: true, force: true });
       await mkdir(inputs, { recursive: true });
       await writeFile(path.join(inputs, "brief.md"), "# Review task\n\nGrade the single candidate in inputs/candidate/ on the seven rubric dimensions. There is no comparator. Report each dimension score (0–4), a short rationale with file citations, any critical defects found, and whether you found at least one critical defect. Blind: do not speculate about provenance.\n");
       await buildPacket(path.join(calibrationDir, packet.id), path.join(inputs, "candidate"));

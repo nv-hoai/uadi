@@ -1,0 +1,1119 @@
+{
+  "study": {
+    "agent": "OpenCode subagent",
+    "model": "deepseek-v4.1-flash + muse-spark-1.3-contributor",
+    "date": "2026-11-08",
+    "project_snapshot": "benchmarks/snapshot",
+    "design_type": "confirmatory"
+  },
+  "protocol_assessment": {
+    "exploratory_pilot_minimum_met": true,
+    "machine_review_minimum_met": true,
+    "confirmatory_minimum_met": true,
+    "human_review_minimum_met": false,
+    "order_balance_met": true,
+    "evidence_tier": "confirmatory-machine",
+    "independent_reviewer_ids": [
+      "R1",
+      "R2"
+    ],
+    "human_reviewer_ids": [],
+    "llm_reviewer_ids": [
+      "R1",
+      "R2"
+    ],
+    "llm_judge_passes": 2,
+    "model_families": [
+      "deepseek",
+      "muse-spark"
+    ],
+    "qualified_model_families": [
+      "deepseek",
+      "muse-spark"
+    ],
+    "task_coverage": [
+      "subscription-settings",
+      "product-onboarding",
+      "operations-dashboard"
+    ],
+    "pair_counts_by_model_and_task": {
+      "deepseek::subscription-settings": 3,
+      "deepseek::product-onboarding": 3,
+      "deepseek::operations-dashboard": 3,
+      "muse-spark::subscription-settings": 3,
+      "muse-spark::product-onboarding": 3,
+      "muse-spark::operations-dashboard": 3
+    },
+    "warnings": [
+      "human-review minimum not met (optional): a machine review cannot establish human-perceived quality.",
+      "All reviewers are LLM passes. Machine review is screening-grade and may share model-family blind spots with the builders."
+    ]
+  },
+  "pair_count": 18,
+  "task_count": 3,
+  "baseline_weighted_score": 80.625,
+  "uadi_weighted_score": 86.42361111111111,
+  "mean_score_delta": 5.798611111111114,
+  "pairs_won_by_uadi": 13,
+  "pairs_tied": 0,
+  "pairs_lost_by_uadi": 5,
+  "baseline_mean_duration_seconds": 1260,
+  "uadi_mean_duration_seconds": 2011.0555555555557,
+  "baseline_median_duration_seconds": 562,
+  "uadi_median_duration_seconds": 944,
+  "time_change_percent": 59.60758377425045,
+  "tokens": {
+    "pairs": 18,
+    "baseline_mean": 19093.5,
+    "uadi_mean": 20382.833333333332,
+    "baseline_median": 17610.5,
+    "uadi_median": 19063,
+    "change_percent": 6.752734351131704,
+    "method": "estimated tokens (run transcript + deliverables, chars/4); use API token counts where available"
+  },
+  "paired_delta": {
+    "n": 18,
+    "mean": 5.798611111111111,
+    "sd": 19.451114198054356,
+    "se": 4.584671583692724,
+    "df": 17,
+    "ci95": [
+      -3.8750459304805354,
+      15.472268152702757
+    ],
+    "method": "paired 95% t interval"
+  },
+  "position_sensitivity": {
+    "uadi_as_a": {
+      "pairs": 9,
+      "mean_delta": 12.98611111111111
+    },
+    "uadi_as_b": {
+      "pairs": 9,
+      "mean_delta": -1.3888888888888888
+    },
+    "unknown_pairs": 0,
+    "difference_a_minus_b": 14.375
+  },
+  "order_balance": {
+    "status": "balanced",
+    "balanced": true,
+    "unknown_pairs": 0,
+    "uadi_a": 9,
+    "uadi_b": 9,
+    "by_task": {
+      "subscription-settings": {
+        "uadi_a": 3,
+        "uadi_b": 3,
+        "unknown": 0,
+        "balanced": true
+      },
+      "product-onboarding": {
+        "uadi_a": 3,
+        "uadi_b": 3,
+        "unknown": 0,
+        "balanced": true
+      },
+      "operations-dashboard": {
+        "uadi_a": 3,
+        "uadi_b": 3,
+        "unknown": 0,
+        "balanced": true
+      }
+    }
+  },
+  "dimensions": {
+    "product_understanding": {
+      "baseline": 3.611111111111111,
+      "uadi": 3.9444444444444446,
+      "delta": 0.3333333333333333
+    },
+    "ux_reasoning": {
+      "baseline": 3.5555555555555554,
+      "uadi": 3.7222222222222223,
+      "delta": 0.16666666666666666
+    },
+    "design_judgment": {
+      "baseline": 2.7777777777777777,
+      "uadi": 3.361111111111111,
+      "delta": 0.5833333333333334
+    },
+    "visual_hierarchy": {
+      "baseline": 2.9444444444444446,
+      "uadi": 3.1944444444444446,
+      "delta": 0.25
+    },
+    "interaction_completeness": {
+      "baseline": 3.2777777777777777,
+      "uadi": 3.25,
+      "delta": -0.027777777777777776
+    },
+    "accessibility_responsiveness": {
+      "baseline": 3.2222222222222223,
+      "uadi": 3.3333333333333335,
+      "delta": 0.1111111111111111
+    },
+    "implementation_quality": {
+      "baseline": 3,
+      "uadi": 3.1666666666666665,
+      "delta": 0.16666666666666666
+    }
+  },
+  "pairs": [
+    {
+      "pair_id": "deepseek-subscription-settings-r1",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline_score": 98.125,
+      "uadi_score": 88.75,
+      "delta": -9.375,
+      "baseline_duration_seconds": 11860,
+      "uadi_duration_seconds": 11860,
+      "baseline_tokens": 25502,
+      "uadi_tokens": 21847,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "design_judgment": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "visual_hierarchy": {
+          "baseline": 3.5,
+          "uadi": 4,
+          "delta": 0.5
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "accessibility_responsiveness": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "implementation_quality": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        }
+      }
+    },
+    {
+      "pair_id": "deepseek-subscription-settings-r2",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline_score": 96.25,
+      "uadi_score": 87.5,
+      "delta": -8.75,
+      "baseline_duration_seconds": 1458,
+      "uadi_duration_seconds": 1147,
+      "baseline_tokens": 29169,
+      "uadi_tokens": 23958,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "implementation_quality": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        }
+      }
+    },
+    {
+      "pair_id": "deepseek-subscription-settings-r3",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline_score": 87.5,
+      "uadi_score": 96.25,
+      "delta": 8.75,
+      "baseline_duration_seconds": 906,
+      "uadi_duration_seconds": 2451,
+      "baseline_tokens": 29194,
+      "uadi_tokens": 28706,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "accessibility_responsiveness": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "implementation_quality": {
+          "baseline": 4,
+          "uadi": 3.5,
+          "delta": -0.5
+        }
+      }
+    },
+    {
+      "pair_id": "deepseek-product-onboarding-r1",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline_score": 91.25,
+      "uadi_score": 98.125,
+      "delta": 6.875,
+      "baseline_duration_seconds": 972,
+      "uadi_duration_seconds": 1196,
+      "baseline_tokens": 22048,
+      "uadi_tokens": 28151,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 4,
+          "uadi": 3.5,
+          "delta": -0.5
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "accessibility_responsiveness": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "implementation_quality": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        }
+      }
+    },
+    {
+      "pair_id": "deepseek-product-onboarding-r2",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline_score": 94.375,
+      "uadi_score": 95,
+      "delta": 0.625,
+      "baseline_duration_seconds": 969,
+      "uadi_duration_seconds": 1279,
+      "baseline_tokens": 26025,
+      "uadi_tokens": 30004,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "design_judgment": {
+          "baseline": 3.5,
+          "uadi": 4,
+          "delta": 0.5
+        },
+        "visual_hierarchy": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "interaction_completeness": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 4,
+          "uadi": 3.5,
+          "delta": -0.5
+        },
+        "implementation_quality": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        }
+      }
+    },
+    {
+      "pair_id": "deepseek-product-onboarding-r3",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline_score": 88.125,
+      "uadi_score": 100,
+      "delta": 11.875,
+      "baseline_duration_seconds": 1536,
+      "uadi_duration_seconds": 1069,
+      "baseline_tokens": 26132,
+      "uadi_tokens": 23957,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 3.5,
+          "uadi": 4,
+          "delta": 0.5
+        },
+        "interaction_completeness": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "implementation_quality": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        }
+      }
+    },
+    {
+      "pair_id": "deepseek-operations-dashboard-r1",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline_score": 82.5,
+      "uadi_score": 96.25,
+      "delta": 13.75,
+      "baseline_duration_seconds": 1037,
+      "uadi_duration_seconds": 1647,
+      "baseline_tokens": 26094,
+      "uadi_tokens": 30581,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "implementation_quality": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        }
+      }
+    },
+    {
+      "pair_id": "deepseek-operations-dashboard-r2",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline_score": 85,
+      "uadi_score": 100,
+      "delta": 15,
+      "baseline_duration_seconds": 1487,
+      "uadi_duration_seconds": 1844,
+      "baseline_tokens": 26872,
+      "uadi_tokens": 35141,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "interaction_completeness": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 3.5,
+          "uadi": 4,
+          "delta": 0.5
+        },
+        "implementation_quality": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        }
+      }
+    },
+    {
+      "pair_id": "deepseek-operations-dashboard-r3",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline_score": 78.75,
+      "uadi_score": 86.25,
+      "delta": 7.5,
+      "baseline_duration_seconds": 1361,
+      "uadi_duration_seconds": 819,
+      "baseline_tokens": 31581,
+      "uadi_tokens": 26011,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 2,
+          "uadi": 4,
+          "delta": 2
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "design_judgment": {
+          "baseline": 2,
+          "uadi": 4,
+          "delta": 2
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 3,
+          "uadi": 3,
+          "delta": 0
+        },
+        "implementation_quality": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        }
+      }
+    },
+    {
+      "pair_id": "muse-spark-subscription-settings-r1",
+      "task_id": "subscription-settings",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 1,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline_score": 96.25,
+      "uadi_score": 58.75,
+      "delta": -37.5,
+      "baseline_duration_seconds": 139,
+      "uadi_duration_seconds": 121,
+      "baseline_tokens": 11745,
+      "uadi_tokens": 11573,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 2,
+          "delta": -1
+        },
+        "visual_hierarchy": {
+          "baseline": 4,
+          "uadi": 1,
+          "delta": -3
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 2,
+          "delta": -2
+        },
+        "accessibility_responsiveness": {
+          "baseline": 4,
+          "uadi": 2,
+          "delta": -2
+        },
+        "implementation_quality": {
+          "baseline": 4,
+          "uadi": 2,
+          "delta": -2
+        }
+      }
+    },
+    {
+      "pair_id": "muse-spark-subscription-settings-r2",
+      "task_id": "subscription-settings",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 2,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline_score": 60.625,
+      "uadi_score": 85.625,
+      "delta": 25,
+      "baseline_duration_seconds": 118,
+      "uadi_duration_seconds": 11858,
+      "baseline_tokens": 11217,
+      "uadi_tokens": 16279,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "ux_reasoning": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "design_judgment": {
+          "baseline": 2.5,
+          "uadi": 3.5,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        },
+        "interaction_completeness": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        },
+        "implementation_quality": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        }
+      }
+    },
+    {
+      "pair_id": "muse-spark-subscription-settings-r3",
+      "task_id": "subscription-settings",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline_score": 66.875,
+      "uadi_score": 89.375,
+      "delta": 22.5,
+      "baseline_duration_seconds": 90,
+      "uadi_duration_seconds": 66,
+      "baseline_tokens": 9957,
+      "uadi_tokens": 9993,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 1.5,
+          "uadi": 3.5,
+          "delta": 2
+        },
+        "interaction_completeness": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        },
+        "implementation_quality": {
+          "baseline": 1,
+          "uadi": 3,
+          "delta": 2
+        }
+      }
+    },
+    {
+      "pair_id": "muse-spark-product-onboarding-r1",
+      "task_id": "product-onboarding",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 1,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline_score": 87.5,
+      "uadi_score": 63.75,
+      "delta": -23.75,
+      "baseline_duration_seconds": 88,
+      "uadi_duration_seconds": 66,
+      "baseline_tokens": 11281,
+      "uadi_tokens": 13319,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 4,
+          "delta": 0
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 2,
+          "delta": -1
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 1,
+          "delta": -2
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 2,
+          "delta": -2
+        },
+        "accessibility_responsiveness": {
+          "baseline": 3,
+          "uadi": 2,
+          "delta": -1
+        },
+        "implementation_quality": {
+          "baseline": 3,
+          "uadi": 2,
+          "delta": -1
+        }
+      }
+    },
+    {
+      "pair_id": "muse-spark-product-onboarding-r2",
+      "task_id": "product-onboarding",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 2,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline_score": 61.25,
+      "uadi_score": 93.75,
+      "delta": 32.5,
+      "baseline_duration_seconds": 103,
+      "uadi_duration_seconds": 89,
+      "baseline_tokens": 12260,
+      "uadi_tokens": 11987,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "ux_reasoning": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "design_judgment": {
+          "baseline": 2,
+          "uadi": 4,
+          "delta": 2
+        },
+        "visual_hierarchy": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        },
+        "interaction_completeness": {
+          "baseline": 2,
+          "uadi": 4,
+          "delta": 2
+        },
+        "accessibility_responsiveness": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "implementation_quality": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        }
+      }
+    },
+    {
+      "pair_id": "muse-spark-product-onboarding-r3",
+      "task_id": "product-onboarding",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline_score": 64.375,
+      "uadi_score": 90,
+      "delta": 25.625,
+      "baseline_duration_seconds": 64,
+      "uadi_duration_seconds": 179,
+      "baseline_tokens": 9881,
+      "uadi_tokens": 15808,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "ux_reasoning": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "design_judgment": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 2,
+          "uadi": 3.5,
+          "delta": 1.5
+        },
+        "interaction_completeness": {
+          "baseline": 2.5,
+          "uadi": 3.5,
+          "delta": 1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 3,
+          "uadi": 3.5,
+          "delta": 0.5
+        },
+        "implementation_quality": {
+          "baseline": 2.5,
+          "uadi": 3.5,
+          "delta": 1
+        }
+      }
+    },
+    {
+      "pair_id": "muse-spark-operations-dashboard-r1",
+      "task_id": "operations-dashboard",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 1,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline_score": 87.5,
+      "uadi_score": 63.125,
+      "delta": -24.375,
+      "baseline_duration_seconds": 218,
+      "uadi_duration_seconds": 79,
+      "baseline_tokens": 13173,
+      "uadi_tokens": 11027,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "ux_reasoning": {
+          "baseline": 4,
+          "uadi": 3,
+          "delta": -1
+        },
+        "design_judgment": {
+          "baseline": 3,
+          "uadi": 2,
+          "delta": -1
+        },
+        "visual_hierarchy": {
+          "baseline": 3,
+          "uadi": 2.5,
+          "delta": -0.5
+        },
+        "interaction_completeness": {
+          "baseline": 4,
+          "uadi": 2,
+          "delta": -2
+        },
+        "accessibility_responsiveness": {
+          "baseline": 3,
+          "uadi": 3,
+          "delta": 0
+        },
+        "implementation_quality": {
+          "baseline": 3,
+          "uadi": 2,
+          "delta": -1
+        }
+      }
+    },
+    {
+      "pair_id": "muse-spark-operations-dashboard-r2",
+      "task_id": "operations-dashboard",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 2,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline_score": 60,
+      "uadi_score": 80,
+      "delta": 20,
+      "baseline_duration_seconds": 147,
+      "uadi_duration_seconds": 290,
+      "baseline_tokens": 10488,
+      "uadi_tokens": 14447,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "ux_reasoning": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        },
+        "design_judgment": {
+          "baseline": 2,
+          "uadi": 2,
+          "delta": 0
+        },
+        "visual_hierarchy": {
+          "baseline": 2.5,
+          "uadi": 3,
+          "delta": 0.5
+        },
+        "interaction_completeness": {
+          "baseline": 2.5,
+          "uadi": 4,
+          "delta": 1.5
+        },
+        "accessibility_responsiveness": {
+          "baseline": 3,
+          "uadi": 3.5,
+          "delta": 0.5
+        },
+        "implementation_quality": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        }
+      }
+    },
+    {
+      "pair_id": "muse-spark-operations-dashboard-r3",
+      "task_id": "operations-dashboard",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline_score": 65,
+      "uadi_score": 83.125,
+      "delta": 18.125,
+      "baseline_duration_seconds": 127,
+      "uadi_duration_seconds": 139,
+      "baseline_tokens": 11064,
+      "uadi_tokens": 14102,
+      "dimensions": {
+        "product_understanding": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "ux_reasoning": {
+          "baseline": 3,
+          "uadi": 4,
+          "delta": 1
+        },
+        "design_judgment": {
+          "baseline": 2,
+          "uadi": 3,
+          "delta": 1
+        },
+        "visual_hierarchy": {
+          "baseline": 2,
+          "uadi": 3.5,
+          "delta": 1.5
+        },
+        "interaction_completeness": {
+          "baseline": 3,
+          "uadi": 2,
+          "delta": -1
+        },
+        "accessibility_responsiveness": {
+          "baseline": 2.5,
+          "uadi": 3.5,
+          "delta": 1
+        },
+        "implementation_quality": {
+          "baseline": 2.5,
+          "uadi": 3,
+          "delta": 0.5
+        }
+      }
+    }
+  ],
+  "interpretation_note": "Descriptive results with a paired 95% t interval. The interval is not a substitute for the study design: report sample size, reviewer agreement, position sensitivity, raw outputs and limitations, and do not claim superiority when the interval includes zero."
+}
