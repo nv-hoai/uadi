@@ -38,6 +38,7 @@ Avoid maintaining multiple competing versions of the same guidance.
 | Worked design decisions and implementations | Each example's own README and implementation | The matching benchmark task supplies a comparable scenario where available. |
 | Accessibility and interaction review | [ACCESSIBILITY-AND-INTERACTION-REVIEW.md](ACCESSIBILITY-AND-INTERACTION-REVIEW.md) | [Quality gates](QUALITY-GATES.md), the state and form patterns, and the renderer browser tests. |
 | Evaluation protocol and claims about effectiveness | [BENCHMARKING.md](BENCHMARKING.md) and [benchmarks/README.md](../benchmarks/README.md) | Raw results, reviewer evidence and analysis support conclusions. |
+| Context consumption and progressive-loading evidence | [CONTEXT-EFFICIENCY.md](CONTEXT-EFFICIENCY.md) | `npm run context:report`, context logs and the Stage 0 smoke test. |
 
 When guidance overlaps, keep the durable principle in Core and link to the method that operationalizes it. Keep task-specific procedures in workflows. Do not copy long sections between documents merely to make every file self-contained.
 

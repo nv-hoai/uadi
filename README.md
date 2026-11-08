@@ -81,7 +81,10 @@ The design capability itself does not require installation. If you want to valid
 npm ci
 npm test
 npm run validate -- examples/minimal/project-context.json examples/minimal/discovery-result.json examples/minimal/design-specification.json
+npm run context:report
 ```
+
+The context report is a static `chars/4` audit, not a measured token count. See [Context efficiency](docs/CONTEXT-EFFICIENCY.md) for the measurement contract.
 
 The React renderer and browser tests are optional development tooling. See [the renderer guide](renderers/react/README.md).
 
@@ -108,6 +111,7 @@ Human owners remain in control of product decisions. Use the host project's norm
 - [UDS and architecture](docs/ARCHITECTURE.md)
 - [Design quality checklist](docs/QUALITY-GATES.md)
 - [Accessibility and interaction review](docs/ACCESSIBILITY-AND-INTERACTION-REVIEW.md)
+- [Context efficiency baseline](docs/CONTEXT-EFFICIENCY.md) — Minimum Sufficient Context, measurement definitions and the Stage 0 audit
 - [Benchmarking Design Intelligence](docs/BENCHMARKING.md)
 - [Two-reviewer machine review](docs/MACHINE-REVIEW.md) — the standing benchmark review workflow
 - [Confirmatory study design](benchmarks/CONFIRMATORY-STUDY.md) — balanced order, independent judge families, held-out tasks and paired uncertainty

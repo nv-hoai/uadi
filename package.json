@@ -17,7 +17,10 @@
     "evidence:capture": "node scripts/capture-evidence.mjs",
     "review:validate": "node scripts/validate-peer-review.mjs",
     "review:dashboard": "node scripts/build-review-dashboard.mjs",
-    "review:crop": "node scripts/crop-evidence.mjs"
+    "review:crop": "node scripts/crop-evidence.mjs",
+    "context:report": "node scripts/context-report.mjs",
+    "context:read": "node scripts/context-read.mjs",
+    "context:validate": "node scripts/validate-context-log.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
