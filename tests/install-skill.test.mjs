@@ -176,3 +176,60 @@ test("all relative Markdown links in the installed skill resolve", async () => {
     }
   });
 });
+
+test("compact profile installs the runtime and omits reference material", async () => {
+  await withTempDir(async (cwd) => {
+    const result = spawnSync(process.execPath, [INSTALLER, "--agent", "codex", "--profile", "compact", "--cwd", cwd], { encoding: "utf8" });
+    assert.equal(result.status, 0, result.stderr);
+    const destination = path.join(cwd, ".agents/skills/uadi");
+    for (const file of ["SKILL.md", "intelligence/modules/flow-and-states.md", "intelligence/risks/billing-changes.md", "intelligence/patterns/README.md", "schemas/design-memory.schema.json", "schemas/design-specification.schema.json", "component-catalog/catalog.json", "workflows/design-memory.md"]) {
+      await assert.doesNotReject(stat(path.join(destination, file)), `compact must include ${file}`);
+    }
+    for (const file of ["docs/DESIGN-INTELLIGENCE.md", "intelligence/UX-REASONING-PLAYBOOK.md", "schemas/project-context.schema.json", "examples/product-onboarding/index.html"]) {
+      await assert.rejects(stat(path.join(destination, file)), `compact must omit ${file}`);
+    }
+    assert.match(result.stdout, /compact profile/);
+  });
+});
+
+test("compact profile keeps router and non-example links resolvable", async () => {
+  await withTempDir(async (cwd) => {
+    const result = spawnSync(process.execPath, [INSTALLER, "--agent", "codex", "--profile", "compact", "--cwd", cwd], { encoding: "utf8" });
+    assert.equal(result.status, 0, result.stderr);
+    const destination = path.join(cwd, ".agents/skills/uadi");
+    const files = [
+      "SKILL.md",
+      "docs/QUALITY-GATES.md",
+      "docs/ACCESSIBILITY-AND-INTERACTION-REVIEW.md",
+      "workflows/design-memory.md",
+      "intelligence/patterns/README.md"
+    ];
+    for (const file of files) {
+      const markdown = await readFile(path.join(destination, file), "utf8");
+      for (const link of relativeMarkdownLinks(markdown)) {
+        if (link.includes("examples/")) continue; // optional reference implementations
+        const target = path.resolve(path.dirname(path.join(destination, file)), link);
+        await assert.doesNotReject(stat(target), `${file} links to missing compact file: ${link}`);
+      }
+    }
+  });
+});
+
+test("extended profile includes the design-memory worked example", async () => {
+  await withTempDir(async (cwd) => {
+    const result = spawnSync(process.execPath, [INSTALLER, "--agent", "codex", "--profile", "extended", "--cwd", cwd], { encoding: "utf8" });
+    assert.equal(result.status, 0, result.stderr);
+    const destination = path.join(cwd, ".agents/skills/uadi");
+    for (const file of ["examples/design-memory/README.md", "examples/design-memory/design-memory.json", "examples/design-memory/DESIGN-MEMORY.md"]) {
+      await assert.doesNotReject(stat(path.join(destination, file)), `extended must include ${file}`);
+    }
+  });
+});
+
+test("rejects unknown installation profiles", async () => {
+  await withTempDir(async (cwd) => {
+    const result = spawnSync(process.execPath, [INSTALLER, "--agent", "codex", "--profile", "tiny", "--cwd", cwd], { encoding: "utf8" });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /Unsupported profile/);
+  });
+});

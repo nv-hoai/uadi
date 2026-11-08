@@ -69,9 +69,10 @@ From this repository root:
 ```bash
 node scripts/install-skill.mjs --agent codex
 # or: --agent claude | cursor | all
+# profiles: --profile compact | standard (default) | extended
 ```
 
-The installer uses Node.js built-ins only and copies the complete portable skill, including its runtime modules, risk cards, pattern library and design-memory contract, into the host's project skill directory. It preserves existing files unless `--force` is supplied. See [supported agent installation](adapters/README.md).
+The installer uses Node.js built-ins only. `standard` copies the full portable skill (runtime modules, risk cards, pattern library, reference playbooks, schemas and examples); `compact` copies the runtime, patterns, UDS contract and memory contract; `extended` adds the design-memory worked example. It preserves existing files unless `--force` is supplied. See [supported agent installation](adapters/README.md).
 
 ## Optional local validation
 

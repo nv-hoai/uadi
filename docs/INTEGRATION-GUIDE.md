@@ -18,7 +18,22 @@ Or install for all supported hosts:
 node scripts/install-skill.mjs --agent all
 ```
 
-The installer copies the core skill and its referenced design-quality documents into the current project's native skill directory. It uses Node.js built-ins only; no `npm install` is needed. Existing files are preserved unless you explicitly pass `--force`.
+The installer uses Node.js built-ins only; no `npm install` is needed. Existing files are preserved unless you explicitly pass `--force`.
+
+### Installation profiles
+
+| Profile | Contents |
+|---|---|
+| `compact` | Kernel, six reasoning modules, risk cards, patterns, UDS contract, quality/accessibility brief and the design-memory contract. Best for constrained hosts. |
+| `standard` (default) | Compact plus reference playbooks, UDS schemas, component catalog and worked examples. |
+| `extended` | Standard plus the design-memory worked example. |
+
+```bash
+node scripts/install-skill.mjs --agent codex --profile compact
+node scripts/install-skill.mjs --agent codex --profile extended
+```
+
+The profile changes what is installed, not what an agent loads. The kernel still routes to one module at a time.
 
 ## Use
 
