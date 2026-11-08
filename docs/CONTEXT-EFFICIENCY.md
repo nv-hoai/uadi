@@ -73,7 +73,7 @@ Largest installed files are example implementations (`examples/operations-dashbo
 
 ## 5. What the baseline does not show
 
-- It does not show which files a real agent read. The historical confirmatory `transcript.md` files are placeholders ("Record the complete transcript here"), and `tokens.json` records only an output-size estimate. Historical read events cannot be reconstructed.
+- It does not show which files a real agent read in the confirmatory study. The historical `transcript.md` files are placeholders ("Record the complete transcript here"), and `tokens.json` records only an output-size estimate. Historical read events cannot be reconstructed.
 - It does not show peak context occupancy, cached tokens or billed cost.
 - It does not show whether a loaded module changed a design decision.
 - It does not establish that any profile is better; it establishes the starting point.

@@ -117,7 +117,6 @@ export async function buildContextReport(root = ROOT) {
   const kernel = entries.find((entry) => entry.path === "SKILL.md") ?? null;
   const core = entries.find((entry) => entry.path === "docs/DESIGN-INTELLIGENCE.md") ?? null;
   const modules = entries.filter((entry) => entry.layer === "module").sort((a, b) => b.tokens_est - a.tokens_est);
-  const installed = profiles.installed;
 
   budgets.kernel = {
     budget: CONTEXT_BUDGETS.kernel,
