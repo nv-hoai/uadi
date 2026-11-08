@@ -9,6 +9,7 @@ UADI keeps validation proportional to the work. Use the checks that fit the arti
 - Prototype contract: `npm run prototype:check -- <uds.json>`
 - Context audit: `npm run context:report` (static `chars/4` estimate, not provider tokens)
 - Context log validation: `npm run context:validate -- --log <events.jsonl>`
+- Design memory: `npm run memory:validate -- --file .uadi/design-memory.json`; generate the brief with `npm run memory:brief`
 - React renderer types/build: `npm run typecheck && npm run build` in `renderers/react`
 
 ## Host-required checks

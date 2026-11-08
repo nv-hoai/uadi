@@ -5,6 +5,7 @@ UADI uses lightweight, portable data shapes when they help an agent preserve des
 ## Core artifacts
 
 - **ProjectContext:** product purpose, users, goals, platforms, constraints, preferences and provenance.
+- **DesignMemory:** approved project constraints, decisions, rejected directions, open questions and evidence, with provenance, status and review dates.
 - **FeatureContext:** feature scope, user tasks, constraints and optional parent-project reference.
 - **DiscoveryResult:** known facts, unknowns, assumptions, questions and readiness.
 - **DesignAnalysis:** user needs, requirements, UX opportunities, risks and constraints.
@@ -19,7 +20,7 @@ Use only the artifacts that provide value for the task. A small interface change
 
 ## Relationships
 
-A project may contain feature context and reusable design configuration. A substantial design task may move from discovery to analysis, one or more proposals, a UDS specification and a prototype. Feedback can inform a later revision.
+A project may contain feature context, reusable design configuration and project design memory. A substantial design task may move from discovery to analysis, one or more proposals, a UDS specification and a prototype. Feedback can inform a later revision.
 
 These relationships describe useful information, not a prescribed state machine. Agents should adapt the sequence to the work instead of manufacturing sessions, status transitions or approval records.
 

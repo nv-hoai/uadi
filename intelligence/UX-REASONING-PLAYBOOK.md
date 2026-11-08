@@ -1,5 +1,7 @@
 # UX Reasoning Playbook
 
+> **Reference:** The runtime operational rules live in `intelligence/modules/`. This playbook preserves deeper rationale and examples; do not load it by default.
+
 A practical method for turning a product request into a coherent user experience. It covers the task flow, the edge cases that change the experience, the information model, the content and the states. Use the depth that the task deserves; this is not a mandatory document-generation process.
 
 ## 1. Frame the problem before drawing the screen

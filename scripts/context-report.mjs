@@ -20,13 +20,15 @@ export const TOKEN_ESTIMATE_METHOD = "chars/4 (estimate, not tokenizer output)";
 // Budgets are audit tripwires, not release gates yet. They describe the
 // current baseline and the direction of travel for the v0.2 runtime.
 export const CONTEXT_BUDGETS = {
-  kernel: 1200,
+  kernel: 700,
+  runtime: 6500,
+  runtime_risk: 8500,
   core: 1000,
   always: 2300,
   typical: 16000,
   deep: 22000,
   example: 25000,
-  installed: 90000
+  installed: 100000
 };
 
 const PLAYBOOKS = [
@@ -34,6 +36,23 @@ const PLAYBOOKS = [
   "intelligence/UX-REASONING-PLAYBOOK.md",
   "intelligence/DESIGN-DECISIONS-PLAYBOOK.md",
   "intelligence/VISUAL-DESIGN-PLAYBOOK.md"
+];
+
+const MODULES = [
+  "intelligence/modules/product-context.md",
+  "intelligence/modules/flow-and-states.md",
+  "intelligence/modules/content-and-consequences.md",
+  "intelligence/modules/visual-composition.md",
+  "intelligence/modules/alternatives-and-tradeoffs.md",
+  "intelligence/modules/accessibility-review.md"
+];
+
+const RISK_CARDS = [
+  "intelligence/risks/billing-changes.md",
+  "intelligence/risks/permissions-and-destructive.md",
+  "intelligence/risks/data-freshness.md",
+  "intelligence/risks/health-and-claims.md",
+  "intelligence/risks/ownership-handover.md"
 ];
 
 const ALWAYS = ["SKILL.md", "docs/DESIGN-INTELLIGENCE.md"];
@@ -44,6 +63,9 @@ const DEEP_EXTRAS = [
 ];
 
 export const LOAD_PROFILES = {
+  kernel: ["SKILL.md"],
+  runtime: ["SKILL.md", ...MODULES],
+  runtime_risk: ["SKILL.md", ...MODULES, ...RISK_CARDS],
   always: ALWAYS,
   typical: [...ALWAYS, ...PLAYBOOKS],
   deep: [...ALWAYS, ...PLAYBOOKS, ...DEEP_EXTRAS],
@@ -59,7 +81,9 @@ export function classifyPath(file) {
   if (file === "SKILL.md") return "kernel";
   if (file === "docs/DESIGN-INTELLIGENCE.md") return "core";
   if (file.startsWith("intelligence/patterns/")) return "pattern";
-  if (file.startsWith("intelligence/") && file.endsWith("PLAYBOOK.md")) return "module";
+  if (file.startsWith("intelligence/modules/")) return "module";
+  if (file.startsWith("intelligence/risks/")) return "risk";
+  if (file.startsWith("intelligence/") && file.endsWith("PLAYBOOK.md")) return "reference";
   if (file.startsWith("examples/")) return "example";
   if (file.startsWith("schemas/") || file.startsWith("component-catalog/")) return "contract";
   if (file.startsWith("docs/")) return "reference";
@@ -169,6 +193,10 @@ export function formatContextReport(report) {
     path: entry.path.replace("intelligence/", ""),
     tokens: entry.tokens_est.toLocaleString("en-US")
   }));
+  const riskRows = report.inventory.filter((entry) => entry.layer === "risk").map((entry) => ({
+    path: entry.path.replace("intelligence/", ""),
+    tokens: entry.tokens_est.toLocaleString("en-US")
+  }));
   const largestRows = report.largest.map((entry) => ({
     path: entry.path,
     layer: entry.layer,
@@ -196,11 +224,19 @@ export function formatContextReport(report) {
     "",
     "- Kernel (`SKILL.md`): " + (report.kernel?.tokens_est ?? 0).toLocaleString("en-US") + " est. tokens",
     "- Core (`docs/DESIGN-INTELLIGENCE.md`): " + (report.core?.tokens_est ?? 0).toLocaleString("en-US") + " est. tokens",
-    "- Always profile: " + report.profiles.always.tokens_est.toLocaleString("en-US") + " est. tokens",
+    "- Always profile (kernel + core): " + report.profiles.always.tokens_est.toLocaleString("en-US") + " est. tokens",
+    "- Runtime profile (kernel + six modules): " + (report.profiles.runtime?.tokens_est ?? 0).toLocaleString("en-US") + " est. tokens",
     "",
-    "## Reasoning playbooks (current modules)",
+    "## Runtime modules",
     "",
     table(moduleRows, [
+      { label: "File", value: (row) => row.path },
+      { label: "Est. tokens", value: (row) => row.tokens }
+    ]),
+    "",
+    "## Risk cards",
+    "",
+    table(riskRows, [
       { label: "File", value: (row) => row.path },
       { label: "Est. tokens", value: (row) => row.tokens }
     ]),
@@ -224,7 +260,8 @@ export function formatContextReport(report) {
     "## Limits",
     "",
     "- These are file-size estimates, not measured context consumption.",
-    "- `typical` models the current instruction path (kernel + core + four playbooks).",
+    "- `kernel`, `runtime` and `runtime_risk` model the progressive runtime.",
+    "- `typical` models the legacy instruction path (kernel + core + four playbooks).",
     "- `deep` adds accessibility, quality gates and one representative pattern.",
     "- `example` adds one worked-example README; it does not include example source files.",
     "- Actual reads, repeated reads, provider tokens and cost are measured by the context log.",

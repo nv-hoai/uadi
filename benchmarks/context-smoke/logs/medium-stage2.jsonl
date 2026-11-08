@@ -1,0 +1,5 @@
+{"ts":"2026-11-08T04:49:38.542Z","turn":1,"tool":"read","path":"SKILL.md","bytes":2794,"tokens_est":697,"source":"wrapper"}
+{"ts":"2026-11-08T04:49:50.630Z","turn":2,"tool":"read","path":"intelligence/modules/flow-and-states.md","bytes":1707,"tokens_est":424,"source":"wrapper"}
+{"ts":"2026-11-08T04:49:53.985Z","turn":3,"tool":"read","path":"intelligence/patterns/settings-information-architecture.md","bytes":2892,"tokens_est":722,"source":"wrapper"}
+{"ts":"2026-11-08T04:49:53.986Z","turn":4,"tool":"read","path":"intelligence/modules/content-and-consequences.md","bytes":1588,"tokens_est":397,"source":"wrapper"}
+{"ts":"2026-11-08T04:49:56.960Z","turn":5,"tool":"read","path":"intelligence/risks/billing-changes.md","bytes":1487,"tokens_est":372,"source":"wrapper"}

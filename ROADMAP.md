@@ -38,7 +38,7 @@ UADI is successful when it measurably improves the design quality of the AI agen
 **Goal:** Help agents carry good design decisions across features and projects without adding mandatory infrastructure.
 
 - [ ] Curate reusable product and UX patterns with context and applicability notes.
-- [ ] Improve project-level design memory through simple repository artifacts.
+- [x] Improve project-level design memory through simple repository artifacts. See the [schema](schemas/design-memory.schema.json), [workflow](workflows/design-memory.md) and [example](examples/design-memory/README.md).
 - [ ] Detect inconsistencies with existing project conventions when relevant.
 - [x] Build a repeatable evaluation set for design quality and regression: deterministic gates for the inner loop plus the held-out suite for agent-change acceptance. First cycle recorded: [cycle 0](benchmarks/studies/agent-loop/cycle-0/README.md).
 

@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "harbor-studio",
+  "updated_at": "2026-11-08T00:00:00.000Z",
+  "entries": [
+    {
+      "id": "DM-001",
+      "kind": "CONSTRAINT",
+      "scope": { "level": "PROJECT" },
+      "statement": "Only workspace owners can change billing or cancel the subscription.",
+      "rationale": "Role model in the product brief; members may view plan details only.",
+      "status": "APPROVED",
+      "provenance": { "source": "OWNER", "ref": "product-brief.md#roles", "confidence": 0.95 },
+      "approved_by": "owner",
+      "approved_at": "2026-11-01T00:00:00.000Z"
+    },
+    {
+      "id": "DM-002",
+      "kind": "DECISION",
+      "scope": { "level": "FEATURE", "ref": "subscription-settings" },
+      "statement": "Cancellation lives in its own section with a consequence review, separate from routine settings.",
+      "rationale": "Prevents accidental cancellation and makes the end-of-access date explicit.",
+      "status": "APPROVED",
+      "provenance": { "source": "OWNER", "ref": "design-review-2026-11-04", "confidence": 0.9 },
+      "approved_by": "owner",
+      "approved_at": "2026-11-04T00:00:00.000Z",
+      "review_after": "2027-05-04T00:00:00.000Z"
+    },
+    {
+      "id": "DM-003",
+      "kind": "REJECTED_DIRECTION",
+      "scope": { "level": "FEATURE", "ref": "subscription-settings" },
+      "statement": "Do not use a monthly/annual price toggle as the commitment control.",
+      "rationale": "The toggle looks like it changes billing before the user confirms; use a review step instead.",
+      "status": "APPROVED",
+      "provenance": { "source": "OWNER", "ref": "design-review-2026-11-04", "confidence": 0.95 },
+      "approved_by": "owner",
+      "approved_at": "2026-11-04T00:00:00.000Z"
+    },
+    {
+      "id": "DM-004",
+      "kind": "OPEN_QUESTION",
+      "scope": { "level": "FEATURE", "ref": "subscription-settings" },
+      "statement": "What happens when a workspace above the Free seat limit cancels?",
+      "rationale": "The product rule is unknown; do not invent a downgrade path or data-retention behavior.",
+      "status": "APPROVED",
+      "provenance": { "source": "REPO", "ref": "product-brief.md#limits", "confidence": 0.6 },
+      "approved_by": "owner",
+      "approved_at": "2026-11-04T00:00:00.000Z",
+      "review_after": "2026-12-01T00:00:00.000Z"
+    },
+    {
+      "id": "DM-005",
+      "kind": "PREFERENCE",
+      "scope": { "level": "PROJECT" },
+      "statement": "Consider annual billing for the Pro plan later; no decision has been made.",
+      "status": "PROPOSED",
+      "provenance": { "source": "INFERRED", "ref": "plan-comparison-notes", "confidence": 0.4 }
+    }
+  ]
+}

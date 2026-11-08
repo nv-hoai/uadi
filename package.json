@@ -20,7 +20,10 @@
     "review:crop": "node scripts/crop-evidence.mjs",
     "context:report": "node scripts/context-report.mjs",
     "context:read": "node scripts/context-read.mjs",
-    "context:validate": "node scripts/validate-context-log.mjs"
+    "context:validate": "node scripts/validate-context-log.mjs",
+    "memory:init": "node scripts/design-memory.mjs init",
+    "memory:validate": "node scripts/design-memory.mjs validate",
+    "memory:brief": "node scripts/design-memory.mjs brief"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
