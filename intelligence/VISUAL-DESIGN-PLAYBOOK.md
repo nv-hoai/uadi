@@ -47,7 +47,71 @@ Then create a clear composition:
 - Use cards only when separation or independent grouping adds meaning.
 - Avoid repeated containers, dividers and badges that flatten hierarchy.
 
-## 4. Build a small, coherent visual system
+## 4. Compose with the Principles of Art
+
+An interface is functional art: composition in service of a task. The seven Principles
+of Art are the working vocabulary for the composition decision in §3 and for the hierarchy
+check in §6. They operationalize "purposeful craft" in `DESIGN-INTELLIGENCE.md` Principle 6;
+they never override the `Resolve trade-offs` order. A screen that satisfies every principle
+below still fails if it hides a consequence, invents a fact, or blocks the user's task.
+Use the smallest subset that resolves the composition risk in front of you.
+
+Apply them in this order: settle the focal point first, then the eye's path, then the
+supporting relationships. If conflict arises, later principles yield to earlier ones, and
+the whole set yields to usability, accessibility, and trust.
+
+### The seven principles, in UI terms
+
+1. **Balance** — distribute visual weight so the page feels stable.
+   - *Symmetrical* (centered, equal columns) suits comparison and containment: billing summaries, metric cards, recovery dialogs.
+   - *Asymmetrical* (one dominant block, supporting content offset) suits a single-task flow: form then review, prompt then preview, table then drill-down. Most UADI work should be asymmetrical here.
+   - *Radial / concentric* is rarely appropriate in product UI; reserve it for focus management or a progress readout, never for primary navigation.
+   - Decision question: *when the user glances for two seconds, does the page feel balanced, or does one panel pull them away from the consequence?*
+   - Failure mode: equal-weight cards, a large metrics column dwarfing the action it explains.
+
+2. **Contrast** — place opposing elements so the important one wins.
+   - Use contrast across type size/weight, surface tone, and color together — never one channel alone. Reserve the strongest contrast for the consequence and the single primary action.
+   - Decision question: *what is the highest-contrast element on screen, and is it the thing the user must act on?*
+   - Failure mode: four filled buttons at the same weight; a warning and a decorative hero image at the same luminance.
+
+3. **Emphasis** — create one focal point (the landing eye).
+   - One element per viewport carries the most emphasis. Secondary actions stay visible but quiet. Destructive actions stay distinguishable without inheriting primary emphasis.
+   - Decision question: *if the user sees nothing else, what do they see?*
+   - Failure mode: multiple bright banners, a hero image and a hero heading competing; or every heading bold.
+
+4. **Movement** — design the eye's path explicitly.
+   - Move the eye with position, size, spacing, and alignment: browser chrome → page title → primary fact → consequence → primary action → supporting detail. Use progressive disclosure to order it; rely on alignment before decoration.
+   - On mobile, allow the path to reorder — the primary action and any deadline or consequence must remain within the first screens after stacking, not buried below it.
+   - Decision question: *can you trace the intended path in the initial viewport with your eyes, without backtracking?*
+   - Failure mode: a notice/banner/loading panel leaking into every screenshot and restacking the order; the action placed below the fold behind secondary detail.
+
+5. **Pattern / Repetition** — repeat an element to create grammar.
+   - Repeat spacing, radius, type roles, and status colors so users learn the visual language once and reuse it. Repetition is a recognition aid, not decoration.
+   - Decision question: *does the same kind of thing always look the same way?*
+   - Failure mode: same intent as three different button/card treatments; a loading skeleton that looks unrelated to the content it replaces.
+
+6. **Rhythm** — vary repetition with purpose, so the page has cadence.
+   - Rhythm is the alternation of dense and quiet areas on a consistent scale (4/8/16/32, a deliberate type scale): scan-heavy regions, then a pause, then a single primary action, then a quiet confirmation.
+   - Rhythm is also temporal: default → loading → result → success/error must read as one beat each, with no state borrowing another state's skeleton.
+   - Decision question: *where does the user pause to decide, and is that pause protected from competing detail?*
+   - Failure mode: uniform cards at uniform size producing a flat score with no decision point; or every state stacking banners so default, empty, and error all look identical.
+
+7. **Unity / Harmony** — all parts belong to one product.
+   - One radius language, one elevation language, one status palette across default, loading, empty, error, success, restricted, and focus states. Unity across viewports is part of the system, not a luxury.
+   - Decision question: *could this state have come from the same product as the previous state?*
+   - Failure mode: a mobile layout that invents new components; state banners that appear in states where the state does not apply.
+
+### Composition check (before polishing)
+
+1. Name the focal point (one element) and the eye's path to the primary action.
+2. Name the balance type (symmetric vs asymmetrical) and why it fits the task.
+3. Confirm the accent budget: only the focal point and the consequence use the strongest contrast.
+4. Walk the rhythm: scan → pause → act → confirm; no repeated cards at equal weight flattening the decision point.
+5. View every state with the same grammar: same radii, same status color, same spacing scale.
+
+If the answer to any question is "there are several," simplify until there is one.
+
+## 5. Build a small, coherent visual system
 
 Define or reuse semantic roles rather than styling each element independently.
 
@@ -63,7 +127,7 @@ Define or reuse semantic roles rather than styling each element independently.
 
 Prefer existing tokens. If a new token is needed, name it by role (for example, `surface-subtle` or `text-muted`), not by one-off appearance.
 
-## 5. Make hierarchy visible
+## 6. Make hierarchy visible
 
 A quick scan should reveal:
 - Where the user is.
@@ -76,7 +140,7 @@ Use size, position, weight, spacing and contrast together. Do not make every tit
 
 Primary actions should be visually clear but should not overpower the information needed to act safely. Secondary and destructive actions should be distinguishable without being hidden.
 
-## 6. Design responsive composition—not a shrunken desktop
+## 7. Design responsive composition—not a shrunken desktop
 
 Choose layout behavior based on the task and content:
 
@@ -88,7 +152,7 @@ Choose layout behavior based on the task and content:
 - Keep forms single-column where that improves completion.
 - Test actual narrow and wide viewports instead of assuming a CSS breakpoint is sufficient.
 
-## 7. Design visual states as part of the system
+## 8. Design visual states as part of the system
 
 Check how the visual language handles:
 - Loading and skeletons without implying false content.
@@ -101,7 +165,7 @@ Check how the visual language handles:
 
 Do not rely on color alone for status, validation or selection.
 
-## 8. Inspect the rendered result
+## 9. Inspect the rendered result
 
 When browser or preview tools are available:
 
@@ -117,14 +181,18 @@ A source-code review cannot prove that spacing, alignment, clipping or responsiv
 ## Visual review checklist
 
 - Can the user identify the page purpose and primary action quickly?
+- Is there one focal point, and can the eye trace a single path to the primary action?
+- Does the balance (symmetric vs asymmetrical) fit the task, and does the rhythm protect a pause where the user decides?
 - Does the composition reflect the real task and content?
 - Is the visual style appropriate for this product rather than a generic template?
 - Are typography, spacing, alignment and color roles consistent?
 - Are important information and consequences visually clear?
 - Are responsive layouts intentionally composed?
-- Are loading, empty, error, success, disabled and focus states coherent?
+- Are loading, empty, error, success, disabled and focus states coherent and recognizably from the same product?
 - Was the rendered result actually inspected, and are untested areas disclosed?
 
 ## Trade-offs
 
 Dense layouts can support expert scanning but increase cognitive load. Large type and generous spacing can improve approachability but reduce visible information. Strong color can clarify priority but becomes noise when overused. Motion can explain change but distract or exclude. Choose based on user tasks, context and evidence—not aesthetic fashion.
+
+Artistic balance, contrast, and rhythm strengthen trust only when they serve the task. A symmetrical page that hides a consequence, or a strong focal point on a decorative hero instead of the action, is a failure of design, not a success of art. If a principle would make the next decision harder to find, drop the principle.

@@ -12,6 +12,8 @@ Use all three tasks for a representative evaluation:
 
 The [subscription settings reference implementation](../examples/subscription-settings/README.md), [worked onboarding example](../examples/product-onboarding/README.md) and [worked operations dashboard example](../examples/operations-dashboard/README.md) are reference implementations, not the expected visual answers. Do not show them to the agent during a benchmark run.
 
+[Task Suite v2](TASK-SUITE-V2.md) extends coverage beyond B2B SaaS administration to consumer marketing, streaming, creator, health, commerce fintech, mobile utility, and collaboration handover. It maps each new task to the current archetype set (settings / onboarding / dashboard) so a study can reference it today; it also defines the held-out selection criteria for promoting future held-out tasks. Suite v2 is repository-side evidence infrastructure and is not carried by the installed skill.
+
 ## Paired study protocol
 
 A pair is one baseline run and one UADI run for the same task, model/version, agent settings, tool access, project snapshot and time budget. Never compare different models inside a pair.
