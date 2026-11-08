@@ -1,0 +1,1470 @@
+{
+  "schema_version": 2,
+  "study": {
+    "agent": "OpenCode subagent",
+    "model": "deepseek-v4.1-flash + muse-spark-1.3-contributor",
+    "date": "2026-11-08",
+    "project_snapshot": "benchmarks/snapshot",
+    "design_type": "confirmatory"
+  },
+  "pairs": [
+    {
+      "pair_id": "deepseek-subscription-settings-r1",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 11860,
+        "tokens": 25502,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 11860,
+        "tokens": 21847,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "deepseek-subscription-settings-r2",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline": {
+        "duration_seconds": 1458,
+        "tokens": 29169,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1147,
+        "tokens": 23958,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "deepseek-subscription-settings-r3",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 906,
+        "tokens": 29194,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 2451,
+        "tokens": 28706,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "deepseek-product-onboarding-r1",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 972,
+        "tokens": 22048,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1196,
+        "tokens": 28151,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "deepseek-product-onboarding-r2",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline": {
+        "duration_seconds": 969,
+        "tokens": 26025,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1279,
+        "tokens": 30004,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "deepseek-product-onboarding-r3",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 1536,
+        "tokens": 26132,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1069,
+        "tokens": 23957,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "deepseek-operations-dashboard-r1",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 1037,
+        "tokens": 26094,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1647,
+        "tokens": 30581,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "deepseek-operations-dashboard-r2",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline": {
+        "duration_seconds": 1487,
+        "tokens": 26872,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1844,
+        "tokens": 35141,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "deepseek-operations-dashboard-r3",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 3,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 1361,
+        "tokens": 31581,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 2,
+              "ux_reasoning": 4,
+              "design_judgment": 2,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 2,
+              "ux_reasoning": 4,
+              "design_judgment": 2,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 819,
+        "tokens": 26011,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "muse-spark-subscription-settings-r1",
+      "task_id": "subscription-settings",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 1,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline": {
+        "duration_seconds": 139,
+        "tokens": 11745,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 121,
+        "tokens": 11573,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 1,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 1,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "muse-spark-subscription-settings-r2",
+      "task_id": "subscription-settings",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 2,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 118,
+        "tokens": 11217,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 2
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 11858,
+        "tokens": 16279,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "muse-spark-subscription-settings-r3",
+      "task_id": "subscription-settings",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline": {
+        "duration_seconds": 90,
+        "tokens": 9957,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 1,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 1
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 1
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 66,
+        "tokens": 9993,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "muse-spark-product-onboarding-r1",
+      "task_id": "product-onboarding",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 1,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline": {
+        "duration_seconds": 88,
+        "tokens": 11281,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 66,
+        "tokens": 13319,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 2,
+              "visual_hierarchy": 1,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 2,
+              "visual_hierarchy": 1,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "muse-spark-product-onboarding-r2",
+      "task_id": "product-onboarding",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 2,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 103,
+        "tokens": 12260,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 2
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 89,
+        "tokens": 11987,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "muse-spark-product-onboarding-r3",
+      "task_id": "product-onboarding",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline": {
+        "duration_seconds": 64,
+        "tokens": 9881,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 179,
+        "tokens": 15808,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "muse-spark-operations-dashboard-r1",
+      "task_id": "operations-dashboard",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 1,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline": {
+        "duration_seconds": 218,
+        "tokens": 13173,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 79,
+        "tokens": 11027,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "muse-spark-operations-dashboard-r2",
+      "task_id": "operations-dashboard",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 2,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 147,
+        "tokens": 10488,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 2,
+              "design_judgment": 2,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 2
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 2,
+              "design_judgment": 2,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 2
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 290,
+        "tokens": 14447,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "muse-spark-operations-dashboard-r3",
+      "task_id": "operations-dashboard",
+      "model_family": "muse-spark",
+      "model_version": "muse-spark-1.3-contributor",
+      "repetition": 3,
+      "uadi_position": "B",
+      "baseline_run_position": 2,
+      "baseline": {
+        "duration_seconds": 127,
+        "tokens": 11064,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 2,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 2
+            }
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 139,
+        "tokens": 14102,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "crouton-alpha-free blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            }
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "mimo-v2.6-flash blinded machine-review pass",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

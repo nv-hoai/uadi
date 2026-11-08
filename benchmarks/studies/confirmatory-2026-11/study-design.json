@@ -233,8 +233,8 @@
         "model_version": "crouton-alpha-free"
       },
       {
-        "model_family": "beam",
-        "model_version": "beam-free"
+        "model_family": "mimo",
+        "model_version": "mimo-v2.6-flash"
       }
     ],
     "reviewers_per_condition": 2,
@@ -278,7 +278,7 @@
   },
   "execution": {
     "mode": "concurrent-recorded",
-    "concurrency": "3 pair-worker subprocesses; each worker takes one pair at a time and runs its two conditions in the preregistered order. Recorded as a protocol deviation from the preregistered sequential mode (outcome-blind; scoring unaffected). Timing is descriptive only under concurrency.",
+    "concurrency": "6 parallel build workers; each takes one pair at a time and runs its two conditions in the preregistered order (verify per-pair baseline_run_position in mapping.json). Recorded as a protocol deviation from the preregistered sequential mode (outcome-blind; scoring unaffected). Timing is descriptive only under concurrency.",
     "time_budget_minutes": 20,
     "record_tokens": true,
     "record_cost": true

@@ -28,10 +28,10 @@ UADI is successful when it measurably improves the design quality of the AI agen
 - [x] Run an exploratory paired benchmark pilot with and without UADI across representative tasks. See the [pilot record](benchmarks/studies/design-intelligence-pilot-2026-11/README.md); it is not confirmatory and its condition scores are confounded by a candidate-position effect.
 - [x] Re-review the pilot with the standard two-reviewer machine panel: blinded independent sessions, evidence crops, frozen round-1 scores, evidence exchange and a final decision. See the [machine review](benchmarks/studies/design-intelligence-pilot-2026-11/machine-review/README.md).
 - [x] Redesign the confirmatory study with balanced candidate order, independent reviewer families, calibration seeds, held-out tasks, state capture and paired uncertainty. See the [preregistered design](benchmarks/CONFIRMATORY-STUDY.md).
-- [ ] Run the preregistered two-model-family confirmatory study and resolve candidate-order bias ([#48](https://github.com/nv-hoai/uadi/issues/48), [#52](https://github.com/nv-hoai/uadi/issues/52)).
+- [x] Run the preregistered two-model-family confirmatory study and quantify candidate-order bias ([#48](https://github.com/nv-hoai/uadi/issues/48), [#52](https://github.com/nv-hoai/uadi/issues/52)). Outcome: [confirmatory study record](benchmarks/studies/confirmatory-2026-11/README.md) — UADI +5.8 mean (13/18 pairs), paired 95% interval −3.9 to +15.5: superiority rule not met (inconclusive), position sensitivity remains large (A +13.0, B −1.4).
 - [x] Improve accessibility and interaction review guidance.
 
-**Success signal:** Blind or structured reviews show more useful, coherent and usable results than the same agent working without UADI. Partly addressed: a machine-reviewed result is recorded, but it is not human review and the two-model-family confirmatory study is still open.
+**Success signal:** Blind or structured reviews show more useful, coherent and usable results than the same agent working without UADI. A confirmatory machine-reviewed study now records +5.8 mean (13/18 pairs won) but the paired 95% interval includes zero, so superiority is not established; position effects remain large and human review is optional (not required).
 
 ## Phase 3 — Reusable design intelligence
 
