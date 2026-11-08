@@ -61,7 +61,7 @@ run ledger) are in the study commit history and `benchmarks/runs/confirmatory-20
 - Model families are **selected** (`selection_status: "selected"`):
   - Builder A: `deepseek` (`deepseek-v4.1-flash` via `opencode-go`)
   - Builder B: `muse-spark` (`muse-spark-1.3-contributor` via `opencode-go`)
-  - Reviewers: `crouton-alpha` (`crouton-alpha-free`) and `beam` (`beam-free`), both disjoint from the builders
+  - Reviewers: `crouton-alpha` (`crouton-alpha-free`, R1) and `mimo` (`mimo-v2.6-flash`, R2), both disjoint from the builders
   - Agent for all runs: OpenCode subagent, identical tools and time budget in both conditions (same as the pilot)
 - The three public task files and the three held-out task files live in `benchmarks/tasks/`, each declaring its task version and carrying the canonical seven sections. The validator checks them and fails on a missing file, a missing section, a version mismatch, or a held-out identifier appearing in guidance or prompt content.
 
@@ -81,9 +81,16 @@ any score was computed and without regard to any result.
 
 ### Protocol deviation 2 — reviewer R2 replaced (recorded before any score used)
 
-`beam-free` (initial R2) reported in its round-1 passes that its model has **no image input** and therefore scored `visual_hierarchy` from layout code only, flagged `UNVERIFIED`. Rubric rule 4 requires rendered-screenshot viewing for that dimension, so R2 was replaced by `claude-haiku-5-5` (family `claude`) before the calibration and scoring steps. All beam round-1 outputs were discarded (never used in any score) and the replacement R2 passed the calibration packets under the same procedure as R1. The preregistered reviewer slots and the disjoint-from-builder rule are unchanged.
+`beam-free` (initial R2) reported in its round-1 passes that its model has **no image input** and therefore scored `visual_hierarchy` from layout code only, flagged `UNVERIFIED`. Rubric rule 4 requires rendered-screenshot viewing for that dimension. Both discards happened before any score was used:
 
-Recorded calibration outcome: both reviewer sessions that judged the round-1 packets caught all three seeded critical defects (`accessible-name`, `claim-behavior-mismatch`, `sort-order-mismatch`). One caveat: the "clean" calibration packet was too thin to test over-flagging — judges flagged legitimate issues in a minimal stub — so over-flagging is evaluated from round-1 reviewer splits instead.
+1. `beam-free` (initial R2) was replaced by `claude-haiku-5-5`, then withdrawn per user instruction (don’t spend on paid reviewer models).
+2. The final R2 is `mimo-v2.6-flash` — a probe-verified image viewer (all 24 screenshots inspected, OCR cross-checks when the image channel dropped frames), at a fraction of the cost (per-M pricing recorded in the model inventory). It passed calibration and all 18 round-1 passes.
+
+The preregistered reviewer slots and the disjoint-from-builder rule are unchanged.
+
+Recorded calibration outcome: with the final reviewer pair, both sessions caught all three seeded critical defects (`accessible-name`, `claim-behavior-mismatch`, `sort-order-mismatch`) before each could judge real packets, and mimo passed an explicit image-viewing probe on real evidence packets. One caveat: the "clean" calibration packet was too thin to test over-flagging — judges flagged legitimate issues in a minimal stub — so over-flagging is evaluated from round-1 reviewer splits instead.
+
+Note on process incidents: the packet preparation script initially deleted entire pass directories on re-run, wiping 8 completed judge results mid-session; the script was fixed to preserve judge outputs and the 8 passes were honestly re-judged to the same call. The full duplicate packet's README disclosed the source candidate; re-grades were done on project+evidence merits and matched the original Candidate A grades.
 
 ## Reviewer calibration (must pass before the real packets)
 
@@ -91,7 +98,7 @@ Recorded calibration outcome: both reviewer sessions that judged the round-1 pac
 three seeded with known critical defects (`accessible-name`, `claim-behavior-mismatch`,
 `sort-order-mismatch`) and one clean packet.
 
-1. Each reviewer (crouton-alpha-free and, after deviation 2, claude-haiku-5-5) grades all four packets with the same
+1. Each reviewer (crouton-alpha-free and, after deviation 2, mimo-v2.6-flash) grades all four packets with the same
    blind judge prompt, in its own session, without seeing the manifest.
 2. The coordinator then compares the graded rationales against the manifest:
    - **Calibrated**: the reviewer caught each seeded defect they were judging for.
@@ -105,13 +112,22 @@ three seeded with known critical defects (`accessible-name`, `claim-behavior-mis
 
 Calibration results are recorded in the study record before any score is frozen.
 
-## How to make it runnable
-
-Already validated: `npm run study:validate -- benchmarks/studies/confirmatory-2026-11/study-design.json`
-prints `run status: ready to run`. (If any hashed file changes before the first run,
-re-freeze the hashes and re-validate.)
-
 ## Tracking
 
 - Design: issue #52 (closed by PR #53).
-- Execution: issue #48.
+- Execution: issue #48 (closed with this outcome).
+
+## How it was executed
+
+1. Preregistered design validated to `ready to run` (families selected, hashes frozen).
+2. 18 pairs prepared with `--study-design` (balanced schedule enforced, prompts composed
+   and hashed, skill installed for the UADI condition, `mapping.json` written).
+3. 36 builds run (3 workers, later 6) at the 20-minute budget — each build captured evidence
+   with `evidence:capture` and passed all six deterministic gates.
+4. Reviewer calibration (2 sessions × 4 calibration packets; see deviation 2).
+5. Blinded review: round-1 scores frozen (SHA-256 manifest in the run dir), evidence
+   exchange (maintain/revise per dimension — 25 one-point splits averaged; no ≥2-point
+   splits, so no chair round needed), duplicate-packet test-retest.
+6. Scores composed with the preregistered per-dimension resolution rule and scored with
+   `benchmark:score`; the preregistered decision rule was applied to the outcome table.
+
