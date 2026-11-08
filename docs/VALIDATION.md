@@ -7,6 +7,8 @@ UADI keeps validation proportional to the work. Use the checks that fit the arti
 - JSON Schema validation: `npm run validate -- <artifact.json>`
 - Unit and fixture tests: `npm test`
 - Prototype contract: `npm run prototype:check -- <uds.json>`
+- Context audit: `npm run context:report` (static `chars/4` estimate, not provider tokens)
+- Context log validation: `npm run context:validate -- --log <events.jsonl>`
 - React renderer types/build: `npm run typecheck && npm run build` in `renderers/react`
 
 ## Host-required checks
