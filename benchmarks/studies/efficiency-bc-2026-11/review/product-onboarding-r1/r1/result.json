@@ -1,0 +1,66 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "product-onboarding-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "Facts, assumptions and unknowns are separated: Starter up to 5, Team up to 25, Owner billing/deletion, Admin project/member management, Member limits, optional invites and skippable setup, with pending-seat and cross-device unknowns listed (condition-a/project/analysis.md) and Starter plus solo path visible in condition-a/evidence/screenshots/1280x900-default.png.",
+      "ux_reasoning": "Activation is defined as project exists and is openable, not checklist completion; included, deferred and skippable sets and seven trade-offs keep project creation the only required input and make 'Continue without inviting' primary in the empty state (condition-a/project/analysis.md).",
+      "design_judgment": "Single required project name with 'Why we ask' purpose copy, role guide before selection defaulting to Member, visible Starter seat meter with no invented upgrade, and honest empty project/members views without fabricated tasks (condition-a/project/analysis.md; condition-a/project/app.js renderProject()).",
+      "visual_hierarchy": "One focal heading, one primary Create action, quiet secondary escape, left setup rail and 'Good to know' facts keep the path manageable on desktop and stacked on mobile (condition-a/evidence/screenshots/1280x900-default.png; condition-a/evidence/screenshots/390x844-default.png).",
+      "interaction_completeness": "Code implements name validation, create loading, empty invites, per-row email errors, send loading, failure with preserved addresses and retry, paused/resume and restricted preview (condition-a/project/app.js), but capture-report shows only 2 of 12 states activated with loading/empty/error/success/restricted duplicates of the default step (condition-a/evidence/capture-report.json).",
+      "accessibility_responsiveness": "Skip link, labelled fields, aria-invalid with focus return, aria-busy loading and progressbar seats are implemented and axe reports zero critical/serious violations with no mobile overflow (condition-a/evidence/quality-gates.json; condition-a/evidence/checks.json), but accessible-names flags two prototype radios without labels.",
+      "implementation_quality": "Browser storage uses a probe fallback with 'keep this tab open' copy, no console errors and zero overflow pixels in deterministic checks (condition-a/project/app.js; condition-a/evidence/checks.json); verification is manual-only per condition-a/project/analysis.md and rendered state coverage is limited by condition-a/evidence/capture-report.json."
+    },
+    "critical_defects": [
+      "No rendered evidence of loading, empty, error, success or restricted states: capture-report activated 2 of 12 and condition-a/evidence/screenshots/1280x900-loading.png, condition-a/evidence/screenshots/1280x900-error.png, condition-a/evidence/screenshots/1280x900-success.png show the unchanged Step 1 default.",
+      "Two accessible-names violations for prototype invite-outcome radios (condition-a/evidence/quality-gates.json).",
+      "Invitation failure is modeled as all-or-nothing while per-address outcomes remain a stated unknown (condition-a/project/analysis.md)."
+    ],
+    "strengths": [
+      "Project-first shortest path with solo continuation primary and skipped invitations labeled skipped rather than complete (condition-a/project/analysis.md; condition-a/evidence/screenshots/1280x900-default.png).",
+      "Role capabilities and Starter limit explained before invitation assignment with seat meter and least-privileged default (condition-a/project/app.js renderInvite()).",
+      "Honest browser-only persistence wording and no invented integrations, pricing or upgrade behavior (condition-a/project/app.js; condition-a/project/analysis.md)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "Confirmed-facts table, prototype assumptions and explicit unknowns preserve Starter 5 and role boundaries without invented pricing, upgrade or import behavior (condition-b/project/analysis.md); Step 1 shows project-required, optional invites and Starter limit in condition-b/project/index.html.",
+      "ux_reasoning": "Two-form journey is justified by differing prerequisites, with a prominent Continue on the optional step, dynamic role summary plus collapsed comparison, and paused versus solo-completion distinction (condition-b/project/analysis.md).",
+      "design_judgment": "Calm workbench intent and a single dark next-step band are undermined by a washed-out default render, one-at-a-time invites, and an unsent-input warning that blocks Continue until the draft is sent or explicitly deferred (condition-b/project/analysis.md; condition-b/project/app.js).",
+      "visual_hierarchy": "Settled markup aims for strong rail-plus-form hierarchy, but default evidence at both viewports renders the heading, lede, field and buttons in faded low contrast that is hard to read (condition-b/evidence/screenshots/1280x900-default.png; condition-b/evidence/screenshots/390x844-default.png), and the toast overlaps controls in condition-b/evidence/screenshots/1280x900-success.png.",
+      "interaction_completeness": "Code covers name/email validation, loading with aria-busy, success/failure with focus return, plan-full error, Member blocking, pause/reload persistence and unsent protection (condition-b/project/app.js), but capture-report shows only 4 of 12 activated and loading/empty/error/restricted duplicates of Step 1 (condition-b/evidence/capture-report.json).",
+      "accessibility_responsiveness": "Controls are labelled with no names violations and no mobile overflow, but quality-gates reports 12 serious axe color-contrast failures and checks reports four h1 headings in the DOM (condition-b/evidence/quality-gates.json; condition-b/evidence/checks.json).",
+      "implementation_quality": "Structured view state with simulated latency, draft preservation and reset is implemented with zero console errors (condition-b/project/app.js; condition-b/evidence/checks.json); the 70-assertion verification claim in condition-b/project/analysis.md has no assertion log in the delivered file list."
+    },
+    "critical_defects": [
+      "Default rendered path is illegible due to faded low-contrast styling at both viewports, consistent with 12 serious axe contrast failures (condition-b/evidence/screenshots/1280x900-default.png; condition-b/evidence/screenshots/390x844-default.png; condition-b/evidence/quality-gates.json).",
+      "No rendered validation, loading, empty, error or restricted states; capture-report activated 4 of 12 and success capture shows Step 1 with a delivery toast rather than a completion state (condition-b/evidence/capture-report.json; condition-b/evidence/screenshots/1280x900-success.png).",
+      "Four h1 headings present in the page structure (condition-b/evidence/checks.json); verification assertions are not provided as evidence."
+    ],
+    "strengths": [
+      "Why-the-input-is-needed helper text, 0/60 counter, Starter line beside the primary action and top-level Continue keep the solo path obvious (condition-b/project/index.html; condition-b/evidence/screenshots/1280x900-success.png).",
+      "Role explanation and full comparison state Owner-only billing/deletion boundaries before assignment with Member blocking (condition-b/project/index.html; condition-b/project/analysis.md).",
+      "Paused state preserves draft name, role and email with truthful browser-storage wording and resume/start-over paths (condition-b/project/app.js; condition-b/project/index.html)."
+    ]
+  },
+  "verdict": "Candidate A and Candidate B both define activation as a created, openable project with optional invitations, honest browser-only persistence and no fabricated pricing, integrations or backend behavior. Candidate A delivers consistent high-contrast rendered hierarchy and zero axe serious violations, while Candidate B pairs a comparable journey with faded default renders and 12 serious contrast failures. From code, both cover validation, loading, invitation failure, skip/resume and role previews, but rendered evidence for those states is largely missing (2 of 12 and 4 of 12 activated), so state completeness rests on implementation rather than screenshots.",
+  "limitations": "One blinded judge pass over the supplied prototypes and screenshots; scores reflect delivered evidence only and are not proof of activation lift, real email delivery, cross-device persistence, or assistive-technology compatibility."
+}

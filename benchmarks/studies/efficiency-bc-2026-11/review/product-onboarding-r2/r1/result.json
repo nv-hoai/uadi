@@ -1,0 +1,67 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "product-onboarding-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "Supplied roles, Starter 5 and optional invites are separated from assumptions, but activation is extended to project plus a first task and pending invites are assumed to reserve seats (condition-a/project/analysis.md); the rendered welcome explains solo use and the limit in condition-a/evidence/screenshots/1280x900-default.png.",
+      "ux_reasoning": "Journey is orient, create, optional invite, confirm and first task with included/deferred/skippable sets and trade-offs that keep a solo path via 'Continue without inviting' and 'Finish later' (condition-a/project/analysis.md).",
+      "design_judgment": "One required name with rename reassurance, role guide before selectors defaulting to Member, and limit shown without upgrade are sound (condition-a/project/analysis.md), while the welcome orientation plus immediate task prompt add weight beyond a single-field first project.",
+      "visual_hierarchy": "Rail and three-step structure are present but default evidence at both viewports renders the heading, lede, facts and actions in faded low contrast that is hard to scan (condition-a/evidence/screenshots/1280x900-default.png; condition-a/evidence/screenshots/390x844-default.png); quality-gates reports 10 serious contrast failures (condition-a/evidence/quality-gates.json).",
+      "interaction_completeness": "Code covers validation, loading with aria-busy, per-row invite failure with retry/remove, success summaries, paused/restored, empty project and restricted views (condition-a/project/app.js), but capture-report shows only 2 of 12 states activated with non-default screenshots duplicating the welcome view (condition-a/evidence/capture-report.json).",
+      "accessibility_responsiveness": "Responsive no-overflow checks pass (condition-a/evidence/checks.json), but accessible-names fails on five prototype radios, axe reports 10 serious failures, and checks reports seven h1 headings in the DOM (condition-a/evidence/quality-gates.json; condition-a/evidence/checks.json).",
+      "implementation_quality": "Local storage with try/catch, double-submit guards and aria-busy are implemented with no console errors (condition-a/project/app.js; condition-a/evidence/checks.json); rendered state coverage is limited by condition-a/evidence/capture-report.json and heading duplication remains."
+    },
+    "critical_defects": [
+      "Default path is rendered in faded low-contrast styling at both viewports, matching 10 serious axe failures (condition-a/evidence/screenshots/1280x900-default.png; condition-a/evidence/screenshots/390x844-default.png; condition-a/evidence/quality-gates.json).",
+      "Five accessible-names failures on prototype radios and seven h1 headings (condition-a/evidence/quality-gates.json; condition-a/evidence/checks.json).",
+      "No rendered evidence of project, invite, success, error or restricted states; capture-report activated 2 of 12 (condition-a/evidence/capture-report.json).",
+      "First-task concept is introduced although product facts only establish projects and members, expanding onboarding beyond the brief (condition-a/project/analysis.md)."
+    ],
+    "strengths": [
+      "Welcome facts (about a minute, solo works, Starter limit) with visible skip make the smallest path explicit (condition-a/evidence/screenshots/1280x900-default.png; condition-a/project/analysis.md).",
+      "Role capabilities appear before invite selectors and seats including pending invitations are stated without invented pricing or upgrade behavior (condition-a/project/analysis.md; condition-a/project/app.js).",
+      "Paused view with per-item status, draft retention and dismissible Welcome back banner supports return-later without claiming server persistence (condition-a/project/analysis.md)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "Facts, assumptions and unknowns separate Starter 5, role boundaries and pending-seat uncertainty; project home stops at a shell without inventing tasks, files or imports (condition-b/project/analysis.md); Step 1 confirms one-field creation without requiring invites (condition-b/evidence/screenshots/1280x900-default.png).",
+      "ux_reasoning": "Create, ready confirmation with Open project primary, optional invite, then project home keeps invitations secondary and skippable with bounded recovery and reviewer questions answered (condition-b/project/analysis.md).",
+      "design_judgment": "Single name with visible-to-team and renameable copy, roles explained before assignment, Starter limit shown at use with no upgrade invention, and skip treated as legitimate (condition-b/project/analysis.md; condition-b/project/app.js inviteView()).",
+      "visual_hierarchy": "Single-card form with clear Create versus Skip hierarchy plus Workspace at a glance and role primer is crisp at desktop and mobile (condition-b/evidence/screenshots/1280x900-default.png; condition-b/evidence/screenshots/390x844-default.png), though the mobile prototype-controls chip partially covers the seat meter in the latter.",
+      "interaction_completeness": "Code implements name/email validation, loading, creation and invite success, partial delivery failure with per-address and retry-all, seat-limit block, empty invite list, paused/resume and Member restriction (condition-b/project/app.js), but capture-report shows only 2 of 12 states activated (condition-b/evidence/capture-report.json).",
+      "accessibility_responsiveness": "All deterministic gates pass with zero accessible-name violations, zero axe critical/serious violations, one h1 and no mobile overflow (condition-b/evidence/quality-gates.json; condition-b/evidence/checks.json); focus, live regions and reduced motion are described (condition-b/project/analysis.md).",
+      "implementation_quality": "Node syntax check, manual exercise of validation, creation failure/retry, partial delivery, limit block, skip/reload/resume and role views, plus DOM, console and overflow checks with no errors are documented (condition-b/project/analysis.md) and corroborated by condition-b/evidence/checks.json."
+    },
+    "critical_defects": [
+      "No rendered evidence of loading, empty, error, success or restricted states; capture-report activated 2 of 12 and non-default screenshots do not show those states (condition-b/evidence/capture-report.json).",
+      "Mobile prototype-controls chip overlaps the Workspace at a glance seat meter in condition-b/evidence/screenshots/390x844-default.png.",
+      "Invite screen density and pending-seat accounting remain open product risks acknowledged in the analysis (condition-b/project/analysis.md)."
+    ],
+    "strengths": [
+      "One-field project creation with team visibility and rename explanation, explicit solo note, and immediate Open project confirmation (condition-b/evidence/screenshots/1280x900-default.png; condition-b/project/analysis.md).",
+      "Role primer and Starter seat context precede invite assignment; partial failure preserves addresses with per-address retry while solo continuation stays available (condition-b/project/app.js inviteResultView()).",
+      "Deterministic gates fully pass with strong contrast and single-h1 structure, and checks show no console errors or overflow (condition-b/evidence/quality-gates.json; condition-b/evidence/checks.json)."
+    ]
+  },
+  "verdict": "Candidate A and Candidate B both keep project creation to one required field, make invitations optional and skippable, explain roles and the Starter limit before assignment, and support pause/resume without fabricating pricing, integrations or backend behavior. Candidate B is stronger in delivered evidence: crisp high-contrast hierarchy, full deterministic gate pass, and a project-shell endpoint that avoids inventing tasks. Candidate A offers a lighter welcome orientation but renders default screens in faded contrast with 10 axe failures, five prototype-label failures and seven h1s, and extends activation to a first task not established by the brief. Neither provides rendered post-default state evidence (both 2 of 12 activated), so state completeness rests on code inspection.",
+  "limitations": "One blinded judge pass over the supplied prototypes and screenshots; scores reflect delivered evidence only and are not proof of activation lift, real email delivery, cross-device persistence, or assistive-technology compatibility."
+}

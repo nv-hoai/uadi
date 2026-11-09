@@ -23,7 +23,10 @@
     "context:validate": "node scripts/validate-context-log.mjs",
     "memory:init": "node scripts/design-memory.mjs init",
     "memory:validate": "node scripts/design-memory.mjs validate",
-    "memory:brief": "node scripts/design-memory.mjs brief"
+    "memory:brief": "node scripts/design-memory.mjs brief",
+    "efficiency:prepare-pair": "node scripts/prepare-efficiency-pair.mjs",
+    "efficiency:prepare-review": "node scripts/prepare-efficiency-review.mjs",
+    "efficiency:results": "node scripts/build-efficiency-results.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1",

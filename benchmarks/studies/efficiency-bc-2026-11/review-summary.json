@@ -1,0 +1,127 @@
+{
+  "study": "efficiency-bc-2026-11",
+  "pairs": [
+    {
+      "pair": "operations-dashboard-r1",
+      "task": "operations-dashboard",
+      "repetition": 1,
+      "optimized_position": "A",
+      "legacy": {
+        "r1": 70,
+        "r2": 91.25,
+        "mean": 80.625
+      },
+      "optimized": {
+        "r1": 91.25,
+        "r2": 96.25,
+        "mean": 93.75
+      },
+      "delta": 13.125
+    },
+    {
+      "pair": "operations-dashboard-r2",
+      "task": "operations-dashboard",
+      "repetition": 2,
+      "optimized_position": "B",
+      "legacy": {
+        "r1": 80,
+        "r2": 92.5,
+        "mean": 86.25
+      },
+      "optimized": {
+        "r1": 76.25,
+        "r2": 91.25,
+        "mean": 83.75
+      },
+      "delta": -2.5
+    },
+    {
+      "pair": "product-onboarding-r1",
+      "task": "product-onboarding",
+      "repetition": 1,
+      "optimized_position": "A",
+      "legacy": {
+        "r1": 77.5,
+        "r2": 81.25,
+        "mean": 79.375
+      },
+      "optimized": {
+        "r1": 91.25,
+        "r2": 93.75,
+        "mean": 92.5
+      },
+      "delta": 13.125
+    },
+    {
+      "pair": "product-onboarding-r2",
+      "task": "product-onboarding",
+      "repetition": 2,
+      "optimized_position": "B",
+      "legacy": {
+        "r1": 73.75,
+        "r2": 83.75,
+        "mean": 78.75
+      },
+      "optimized": {
+        "r1": 92.5,
+        "r2": 96.25,
+        "mean": 94.375
+      },
+      "delta": 15.625
+    },
+    {
+      "pair": "subscription-settings-r1",
+      "task": "subscription-settings",
+      "repetition": 1,
+      "optimized_position": "A",
+      "legacy": {
+        "r1": 65,
+        "r2": 87.5,
+        "mean": 76.25
+      },
+      "optimized": {
+        "r1": 83.75,
+        "r2": 87.5,
+        "mean": 85.625
+      },
+      "delta": 9.375
+    },
+    {
+      "pair": "subscription-settings-r2",
+      "task": "subscription-settings",
+      "repetition": 2,
+      "optimized_position": "B",
+      "legacy": {
+        "r1": 83.75,
+        "r2": 83.75,
+        "mean": 83.75
+      },
+      "optimized": {
+        "r1": 95,
+        "r2": 88.75,
+        "mean": 91.875
+      },
+      "delta": 8.125
+    }
+  ],
+  "summary": {
+    "n": 6,
+    "mean_delta": 9.479166666666666,
+    "sd": 6.476117985851298,
+    "se": 2.6438640965660682,
+    "ci95": [
+      2.681792074395304,
+      16.27654125893803
+    ],
+    "non_inferiority_margin": -2,
+    "lower_bound_above_margin": true
+  },
+  "agreement": {
+    "dimensions": 42,
+    "exact": 30,
+    "within_one": 40,
+    "exact_rate": 0.7142857142857143,
+    "within_one_rate": 0.9523809523809523,
+    "mean_absolute_difference": 0.3333333333333333
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "operations-dashboard-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 4,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "condition-a/project/analysis.md distinguishes share of orders on time (86.4%) from the on-time rate among delivered orders (93.5%), defines attempts vs affected orders, and states the equal-length baseline and 15-minute lag; condition-a/evidence/screenshots/1280x900-default.png shows 93.5%, 1,507 orders and 97 attempts with 2.4 pp and 34.7% deltas and no invented metrics.",
+      "ux_reasoning": "condition-a/project/index.html sequences At a glance, KPIs, daily trend, status mix, regions and orders and routes KPI/status/region clicks to a preserved orders panel with chips; condition-a/project/app.js labels Order status as orders list only, which is reasoned but narrower than task.md literal global delivery-status filtering.",
+      "design_judgment": "condition-a/evidence/screenshots/1280x900-default.png uses a 0-100% line, zero-based order/attempt logic, no dual axes or target line, and absolute attempt changes in the regional table; condition-a/project/analysis.md explicitly rejects truncated axes and percent change on tiny counts.",
+      "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png and condition-a/evidence/screenshots/390x844-default.png are comparable with Candidate B at the same viewports, but Orders precedes the rate KPI, the 0-100% line sits compressed at the top of its panel, and the always-visible Orders table dominates the page; mobile stacks the cards in order.",
+      "interaction_completeness": "condition-a/project/app.js plus condition-a/evidence/screenshots/1280x900-default.png, condition-a/evidence/screenshots/1280x900-loading.png, condition-a/evidence/screenshots/1280x900-empty.png and condition-a/evidence/screenshots/1280x900-error.png cover chips/clear investigation, status mix, regional drills, comparison toggle, stale/partial banners, no-data and empty-result states; condition-a/evidence/capture-report.json shows success/restricted were not activated.",
+      "accessibility_responsiveness": "condition-a/evidence/checks.json reports no overflow and no unnamed controls but 7 serious color-contrast nodes plus a mobile scrollable-region-focusable failure, and condition-a/evidence/quality-gates.json fails axe on those contrast targets; layout itself reflows without horizontal overflow.",
+      "implementation_quality": "condition-a/project/app.js builds order-level deterministic data, measured-width SVG, data tables, focus/scroll to orders and reduced-motion handling in condition-a/project/styles.css, but condition-a/evidence/quality-gates.json ok:false with 7 serious contrast failures caps the implementation claim."
+    },
+    "critical_defects": [
+      "Seven serious color-contrast axe violations in condition-a/evidence/checks.json / condition-a/evidence/quality-gates.json and a mobile scrollable-region-focusable failure.",
+      "Default desktop hierarchy buries health in a long always-visible orders table in condition-a/evidence/screenshots/1280x900-default.png.",
+      "condition-a/evidence/capture-report.json: success/restricted screenshots not activated; stale/partial states have no screenshots."
+    ],
+    "strengths": [
+      "Exemplary anti-misleading choices (no truncated axis, no invented target, attempts vs orders kept distinct).",
+      "At-a-glance summary names West's 5.5 pp drop and the failure trend before charts.",
+      "Distinct empty/error/loading panels and context chips in condition-a/evidence/screenshots/1280x900-empty.png and condition-a/evidence/screenshots/1280x900-error.png."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 2,
+      "accessibility_responsiveness": 1,
+      "implementation_quality": 2
+    },
+    "rationale": {
+      "product_understanding": "condition-b/project/analysis.md and condition-b/project/index.html state delivered-only denominators, attempt-level counting, no target/forecast/cause inventing, and the 15-minute lag; condition-b/evidence/screenshots/1280x900-default.png shows 94.6% vs 95.0% previous, 4,975 orders and 166 attempts consistent with that contract.",
+      "ux_reasoning": "condition-b/project/analysis.md and condition-b/project/app.js implement hero->insight->dual charts->regions->orders with single-day removal, status tabs, Escape and focus return; chart points/bars open single-day late/failed orders while keeping period and region, as shown in condition-b/project/index.html and condition-b/project/analysis.md.",
+      "design_judgment": "condition-b/evidence/screenshots/1280x900-default.png keeps 0-100% and zero-based axes with exact point/bar labels and previous-period ticks, but full-width region bars for 91.4-97.0% look nearly identical and rely almost entirely on numerals and small ticks for discrimination.",
+      "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png and condition-b/evidence/screenshots/390x844-default.png have comparable desktop and mobile views; the 94.6% hero, insight block naming East, and balanced dual charts give a clear scan path, with mobile preserving hero->charts->regions order in 390x844-default.png.",
+      "interaction_completeness": "condition-b/project/app.js and condition-b/project/index.html provide insight, rail, chart-day and region drills plus loading/error/no-data states distinct in condition-b/evidence/screenshots/1280x900-loading.png and condition-b/evidence/screenshots/1280x900-error.png, but condition-b/evidence/capture-report.json marks empty activated:false at both viewports and condition-b/evidence/screenshots/1280x900-empty.png duplicates the default view, so the empty-result state is not demonstrated.",
+      "accessibility_responsiveness": "condition-b/evidence/checks.json and condition-b/evidence/quality-gates.json report 11 serious label-content-name-mismatch violations on chart bars and region buttons plus 2 accessible-names failures (empty insight-action button and compare-toggle), a functional barrier beyond contrast.",
+      "implementation_quality": "condition-b/project/app.js handles measured-width charts, partial-day exclusion from both periods and order tabs coherently, but the label/name mismatch cluster, empty initial insight button in condition-b/project/index.html and unactivated empty capture show unfinished polish."
+    },
+    "critical_defects": [
+      "Empty-state screenshots were not activated: condition-b/evidence/capture-report.json empty activated:false and condition-b/evidence/screenshots/1280x900-empty.png is identical to default, so empty result is unproven.",
+      "11 serious label-content-name-mismatch violations and 2 accessible-names failures in condition-b/evidence/checks.json / condition-b/evidence/quality-gates.json.",
+      "Region bars in condition-b/evidence/screenshots/1280x900-default.png are visually indistinguishable across 91.4-97.0%."
+    ],
+    "strengths": [
+      "Dominant 94.6% hero with explicit previous value and insight-to-drill path in condition-b/evidence/screenshots/1280x900-default.png.",
+      "Deepest single-day drill model (rate points for late, bars for failed) with removable day chip in condition-b/project/analysis.md.",
+      "Balanced dual-chart layout and clean mobile hero-to-definitions order in condition-b/evidence/screenshots/390x844-default.png."
+    ]
+  },
+  "verdict": "Candidate B wins visual hierarchy and investigation depth, while Candidate A wins chart honesty and state demonstration. Visual-hierarchy scoring is possible because both provide default views at 1280x900 and 390x844 (condition-a/evidence/screenshots/1280x900-default.png vs condition-b/evidence/screenshots/1280x900-default.png); Candidate B is nonetheless penalized elsewhere because its empty screenshot was not activated and its interactive names fail axe.",
+  "limitations": "One blinded judge pass on the listed screenshots, code and evidence files only; stale/partial screenshots were absent from FILES.txt for both candidates and this is not a statistical test or proof of causation."
+}

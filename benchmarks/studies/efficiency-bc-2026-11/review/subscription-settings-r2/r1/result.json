@@ -1,0 +1,68 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "subscription-settings-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "Analysis states Free up to 3, Pro up to 20, Business up to 100 and owner/member roles from task.md with illustrative prices labelled as sample data and proration/tax deferred to provider (condition-a/project/analysis.md); summary shows Pro $32.00/month, December 1, 2026 and 7 of 20 members in condition-a/evidence/screenshots/1280x900-default.png.",
+      "ux_reasoning": "IA ordered by consequence: summary, price comparison, payment, invoices, separated cancel with divergent compare-vs-change copy and persistent billing note (condition-a/project/analysis.md; condition-a/project/app.js renderCompare() and renderSummary()).",
+      "design_judgment": "Cancel is separated below a divider, requires checkbox acknowledgement and keeps 'Keep my plan' primary with no urgency framing (condition-a/project/app.js openCancelDialog()); downgrade to Free reuses the cancel dialog (renderPlans() data-open-cancel), conflating downgrade with cancellation (condition-a/project/app.js).",
+      "visual_hierarchy": "Summary price and seat meter dominate the desktop view with clear section order (condition-a/evidence/screenshots/1280x900-default.png); mobile prototype-controls strip sits mid-page between summary and plans, interrupting hierarchy (condition-a/evidence/screenshots/390x844-default.png).",
+      "interaction_completeness": "Code covers plan/cadence review, payment validation, invoice loading/empty/error/retry and cancel/resume (condition-a/project/app.js), but capture-report shows success and restricted not activated at both viewports (condition-a/evidence/capture-report.json), so rendered member/success evidence is missing.",
+      "accessibility_responsiveness": "Semantic headings, skip link, progressbar, aria-busy skeletons and prefers-reduced-motion are implemented (condition-a/project/app.js; condition-a/project/index.html), but quality-gates reports 2 serious axe color-contrast failures on muted nav and mobile hides invoice ID/status columns (condition-a/evidence/quality-gates.json; condition-a/project/styles.css).",
+      "implementation_quality": "Vanilla HTML/CSS/JS with labelled estimates, 'demo' confirm copy and honest download toast (condition-a/project/app.js confirmCancel() and data-invoice handler); quality-gates shows no console errors or mobile overflow (condition-a/evidence/quality-gates.json) but only 8 of 12 captures were activated (condition-a/evidence/capture-report.json)."
+    },
+    "critical_defects": [
+      "Rendered success and restricted states were not activated; condition-a/evidence/screenshots/1280x900-success.png and condition-a/evidence/screenshots/1280x900-restricted.png show the default owner view, per condition-a/evidence/capture-report.json.",
+      "Two serious axe color-contrast violations on navigation text (condition-a/evidence/quality-gates.json).",
+      "Mobile prototype-controls strip overlays the page flow in condition-a/evidence/screenshots/390x844-default.png; invoice table hides identifying columns on narrow screens.",
+      "No simulated mutation failure paths for plan, cadence or payment confirms; annual-to-monthly switching is not offered."
+    ],
+    "strengths": [
+      "Summary-first answer to plan, price, renewal and seats with compare-vs-change separation and repeated active-billing note (condition-a/project/app.js; condition-a/evidence/screenshots/1280x900-default.png).",
+      "Invoice loading skeleton with aria-busy, empty state and error retry that restores loaded data (condition-a/project/app.js renderInvoices(); condition-a/evidence/screenshots/1280x900-loading.png; condition-a/evidence/screenshots/1280x900-error.png).",
+      "Estimates labelled with provider disclaimer and no claim of payment success (condition-a/project/app.js estimateNote(); condition-a/project/analysis.md)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "Assumptions keep plan differences to member limits, set Pro $49.00 monthly with 17 of 20 members and Dec 1, 2026, and define immediate upgrades versus end-of-period downgrades without invented entitlements (condition-b/project/analysis.md); summary confirms Pro, $49.00/month and 17 of 20 in condition-b/evidence/screenshots/1280x900-default.png.",
+      "ux_reasoning": "Highest-risk problems enumerated including toggle-as-commitment trap and cancellation extremes; display-only monthly/annual toggle states it does not change the subscription and real cadence changes use a separate dialog (condition-b/project/analysis.md; condition-b/project/app.js compareSection(); condition-b/evidence/screenshots/1280x900-default.png).",
+      "design_judgment": "Cancellation keeps 'Keep my subscription' primary behind a consent checkbox with no retention maze, and seat-blocked downgrades are disabled with exact shortfall before commitment (condition-b/project/app.js cancelDialog() and planCard()); warnings state Free supports 3 members without dark-pattern urgency (condition-b/project/app.js cancelSection()).",
+      "visual_hierarchy": "Plan, price, next payment, billing period and payment method appear in a scannable fact grid above a prominent usage bar and near-limit warning at both viewports (condition-b/evidence/screenshots/1280x900-default.png; condition-b/evidence/screenshots/390x844-default.png).",
+      "interaction_completeness": "Full state coverage includes loading skeleton, load error with retry, empty invoices, plan/cadence/payment/cancel pending and failure paths, scheduled changes with undo and reactivation (condition-b/project/app.js submitPlan(), submitCadence(), submitPayment(), submitCancel(), reactivate()); success was activated at both viewports (condition-b/evidence/capture-report.json).",
+      "accessibility_responsiveness": "Dialog focus management, progressbar values, labelled invoices and responsive stacking are implemented (condition-b/project/app.js renderModal(); condition-b/project/styles.css), but quality-gates reports 11 serious axe color-contrast failures including fact labels, section headings and table headers (condition-b/evidence/quality-gates.json).",
+      "implementation_quality": "Structured single-file state machine with failure simulation, draft preservation, duplicate-submit guards and focus return (condition-b/project/app.js); checks show zero console errors and no mobile overflow (condition-b/evidence/checks.json), though restricted-state capture was not activated (condition-b/evidence/capture-report.json)."
+    },
+    "critical_defects": [
+      "Restricted (member) state was not activated at either viewport; condition-b/evidence/screenshots/1280x900-restricted.png shows the owner default, per condition-b/evidence/capture-report.json.",
+      "Eleven serious axe color-contrast violations on labels and headings (condition-b/evidence/quality-gates.json; condition-b/evidence/checks.json).",
+      "Open prototype-controls panel overlaps page content in desktop screenshots (condition-b/evidence/screenshots/1280x900-success.png; condition-b/evidence/screenshots/1280x900-empty.png).",
+      "Loading and load-error replace all billing content rather than preserving plan context (condition-b/evidence/screenshots/1280x900-loading.png; condition-b/evidence/screenshots/1280x900-error.png); downloadable invoice PDFs are absent, though honestly disclosed."
+    ],
+    "strengths": [
+      "Near-limit scenario (17 of 20) with explicit warning, blocked downgrade reasons and scheduled-change undo (condition-b/evidence/screenshots/1280x900-default.png; condition-b/project/app.js planCard() and undoScheduledChange()).",
+      "Distinct pending, success and failure handling that preserves entered values and states no charge was made (condition-b/project/app.js submitPlan() and submitPayment()).",
+      "Mobile invoice table converts to labelled rows preserving invoice, date, period and amount (condition-b/project/styles.css; condition-b/evidence/screenshots/390x844-default.png)."
+    ]
+  },
+  "verdict": "Both candidates answer plan, price, renewal, seat pressure, role restrictions and separated cancellation with trustworthy copy and honest demo scoping. Candidate B is stronger on interaction depth (failure simulation, scheduled undo, blocked downgrade reasons) and scannable summary hierarchy, while Candidate A is cleaner on automated contrast (2 versus 11 serious violations) and preserves billing context during invoice load errors. Neither provides rendered restricted-state evidence (both activated=false in capture-report), so member-view scoring rests on code rather than screenshots.",
+  "limitations": "One blinded judge pass over the supplied prototypes and screenshots; scores describe delivered evidence only and are not proof of live billing behavior, screen-reader compatibility, or causal product effects."
+}

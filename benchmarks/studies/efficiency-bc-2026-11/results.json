@@ -1,0 +1,837 @@
+{
+  "schema_version": 2,
+  "study": {
+    "agent": "OpenCode subagent",
+    "model": "deepseek-v4.1-flash",
+    "date": "2026-11-08",
+    "project_snapshot": "benchmarks/runs/design-intelligence-pilot-2026-11/snapshot",
+    "review_protocol": "two-reviewer-machine",
+    "design_type": "efficiency-pilot",
+    "conditions": "B (legacy skill) vs C (optimized runtime)"
+  },
+  "pairs": [
+    {
+      "pair_id": "operations-dashboard-r1",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 1086,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 2
+            },
+            "rationale": {
+              "product_understanding": "condition-b/project/analysis.md and condition-b/project/index.html define the three metrics, 15-minute lag and preceding-period comparison without invented KPIs, but condition-b/project/app.js adds At risk/Watch/On track thresholds and condition-b/evidence/screenshots/1280x900-default.png shows that judgement with no supplied target.",
+              "ux_reasoning": "condition-b/project/analysis.md and condition-b/project/index.html provide scan->compare->locate->investigate with global date/region/status filters, custom ranges and Needs attention; applying status globally makes the on-time rate tautological in the Failed-only case, which the code has to explain with an undefined-rate treatment.",
+              "design_judgment": "condition-b/evidence/screenshots/1280x900-default.png keeps a 0-100% rate axis and zero-based count logic, but the default line around 91.8% is visually flat; only the daily-change strip carries the variation, and worst/best ranking depends on threshold tiers rather than plain sorted values.",
+              "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png and condition-b/evidence/screenshots/390x844-default.png are comparable, but the desktop trend panel wastes space on near-overlapping lines and the Needs attention panel is sparse, while the equal-weight KPI strip lacks one dominant health signal; mobile reflow is usable.",
+              "interaction_completeness": "condition-b/project/index.html and condition-b/project/app.js support KPI, region, attention and keyboard-accessible chart-day drill-downs, custom-range validation, loading/error recovery and empty-result actions; condition-b/evidence/screenshots/1280x900-loading.png, condition-b/evidence/screenshots/1280x900-error.png and condition-b/evidence/screenshots/1280x900-empty.png show distinct states, though condition-b/evidence/capture-report.json shows success/restricted were not activated.",
+              "accessibility_responsiveness": "condition-b/evidence/checks.json reports serious color-contrast in the footer and, on mobile, a non-focusable scrollable region with no overflow; condition-b/evidence/quality-gates.json fails axe for the same contrast issue, weakening colour/text pairs despite labelled controls.",
+              "implementation_quality": "condition-b/project/app.js is modular vanilla JS with deterministic data, tables and live regions, but condition-b/evidence/checks.json axe violations and condition-b/evidence/quality-gates.json ok:false, plus an always-visible floating Prototype controls element in 1280x900-default.png, show less polish than Candidate A."
+            },
+            "critical_defects": [
+              "Serious axe color-contrast failure in condition-b/evidence/checks.json / condition-b/evidence/quality-gates.json and mobile scrollable-region-focusable failure.",
+              "Invented At risk/Watch/On track judgements without a supplied target in condition-b/evidence/screenshots/1280x900-default.png.",
+              "condition-b/evidence/capture-report.json: success/restricted screenshots not activated; stale/partial states lack screenshots."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-b/project/analysis.md section 2 defines each metric with its denominator and notes (attempt-level counting, order-date assignment), states the 15-minute lag and avoids the word live, and section 8 reviews the ways the numbers could be misread.",
+              "ux_reasoning": "condition-b/project/analysis.md sections 1 and 3 build a scan, compare, locate, investigate path, the 'Needs attention' list answers 'what changed most' directly, and section 5 explains showing an em dash instead of a misleading 100 percent when a status filter makes the rate undefined.",
+              "design_judgment": "Fixed 0-100 rate axis with a separate percentage-point change strip, no gauges or pies, status always paired with words, tabular figures and 'descriptive, not significance tests' copy (condition-b/project/analysis.md sections 4 and 8); the delivered default includes a trend metric toggle (condition-b/evidence/screenshots/1280x900-default.png).",
+              "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png reads cleanly from KPI strip to trend and attention to regions and definitions, but the floating 'Prototype controls' pill overlaps product text in condition-b/evidence/screenshots/1280x900-error.png and condition-b/evidence/screenshots/1280x900-empty.png, the 'Needs attention' card leaves a large empty block, and condition-b/evidence/screenshots/390x844-default.png compresses trend axis labels to near-illegibility.",
+              "interaction_completeness": "condition-b/project/app.js adds custom-range validation with start before end and a nine-week cap, five drill entry points and keyboard-focusable chart days; ready, loading, stale, partial, empty and error states are selectable (condition-b/project/index.html) and condition-b/evidence/capture-report.json activates default, loading, empty and error at both viewports (8 of 12).",
+              "accessibility_responsiveness": "condition-b/evidence/quality-gates.json ok:false - axe flags 1 serious color-contrast violation on footer text, and condition-b/evidence/checks.json mobile adds scrollable-region-focusable 1 because the horizontally scrolling table container in condition-b/project/styles.css has no keyboard access; mitigating evidence is 0 unnamed controls, one h1 and no page overflow in checks.json.",
+              "implementation_quality": "condition-b/project/app.js has deterministic aggregation, state-machine rendering, delegated events and polite live-region announcements with no console or page errors (condition-b/evidence/checks.json), but the keyboard-inaccessible scroll container and the footer contrast failure are code-level defects that were not caught before delivery."
+            },
+            "critical_defects": [
+              "condition-b/evidence/quality-gates.json ok:false - axe serious color-contrast on footer text, and condition-b/evidence/checks.json at 390 px additionally reports scrollable-region-focusable, a real keyboard barrier to the scrolling table (condition-b/project/styles.css).",
+              "The floating prototype control obscures definition text in condition-b/evidence/screenshots/1280x900-error.png, covering content in a delivered state screenshot.",
+              "The main trend line is visually flat on a 0-100 axis with very small axis labels at 390 px (condition-b/evidence/screenshots/390x844-default.png); mitigated by the percentage-point strip and the table equivalent, but weak on a phone."
+            ]
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1178,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-a/project/analysis.md defines on-time rate, failed attempts and orders with units, denominators (failed excluded) and equal-length previous-period baselines; condition-a/evidence/screenshots/1280x900-default.png shows 95.0%, 178 and 4,827 with +1.9 pts / +31.9% / +7.1% and the 15-minute lag snapshot. No invented revenue, forecast or cause metrics.",
+              "ux_reasoning": "condition-a/project/analysis.md orders signal->explanation->investigation and condition-a/project/app.js + condition-a/project/index.html implement insight action, metric links and region View actions preserving range/region into the orders panel; delivery status is deliberately kept in the orders panel because filtering the rate by status would make the denominator meaningless.",
+              "design_judgment": "condition-a/evidence/screenshots/1280x900-default.png shows zero-based failed-attempt bars with previous-period bars and a 0-100% region track; condition-a/project/analysis.md rejects truncated axes and dual encoding, uses pts for rates and paired arrow/signed-value/screen-reader meaning.",
+              "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png and condition-a/evidence/screenshots/390x844-default.png are comparable with Candidate B: dominant on-time card, insight banner naming East first, chart+region table below, and mobile stacks tables to cards without page overflow in 390x844-default.png.",
+              "interaction_completeness": "condition-a/project/index.html, condition-a/project/app.js and condition-a/evidence/screenshots/1280x900-loading.png, condition-a/evidence/screenshots/1280x900-empty.png, condition-a/evidence/screenshots/1280x900-error.png cover loading skeleton, no-data recovery, error retry+focus return and comparison-off; condition-a/evidence/capture-report.json shows success/restricted screenshots were not activated (activated:false) so those states are not screenshot-proven, and summary-level delivery-status filtering is not offered.",
+              "accessibility_responsiveness": "condition-a/evidence/checks.json reports no horizontal overflow, 24 named controls and 0 axe violations at desktop/mobile, while condition-a/evidence/quality-gates.json still fails accessible-names for the compare checkbox; semantic landmarks, skip link, disclosures and data-table equivalents are visible in condition-a/project/index.html and proven in 390x844-default.png.",
+              "implementation_quality": "condition-a/project/app.js and condition-a/project/styles.css implement deterministic aggregation, partial-data exclusion from both periods, reversible comparison and focus/live-region handling without external assets; condition-a/evidence/quality-gates.json ok:false (1 accessible-name violation) and condition-a/evidence/capture-report.json 8/12 activated limit a stronger claim."
+            },
+            "critical_defects": [
+              "condition-a/evidence/quality-gates.json accessible-names failure for the compare checkbox (1 violation).",
+              "condition-a/evidence/capture-report.json: success and restricted screenshots list files but activated:false; no screenshot proves stale/partial states, which rely on prose/code only.",
+              "Orders list is a disclosed sample without pagination/export (condition-a/project/analysis.md); summary cannot be filtered by delivery status."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            },
+            "rationale": {
+              "product_understanding": "condition-a/project/analysis.md section 2 gives a metric contract for all three metrics with meaning, unit, calculation, scope, comparison and limitation, defines UTC Monday to Sunday ranges and names the exact comparison baselines, and the freshness card in condition-a/evidence/screenshots/1280x900-default.png states the snapshot and the 15-minute lag without ever implying live data.",
+              "ux_reasoning": "condition-a/project/analysis.md section 3 orders the page as signal then explanation then investigation, section 5 justifies keeping delivery status inside the orders panel so rate denominators stay meaningful, and section 5 documents five drill paths that all preserve range and region while returning focus on close.",
+              "design_judgment": "Zero-based bars, no truncated rate axis, metric-specific direction semantics with screen-reader text and absolute plus relative change shown together (condition-a/project/analysis.md section 4) are sound, but the dashboard never plots on-time rate over time: condition-a/evidence/screenshots/1280x900-default.png shows only failed-attempt bars, so 'is performance improving' rests on deltas alone even though section 4's own honesty rationale permits a full 0-100 percent trend; quality-gates also fails one accessible-names check (condition-a/evidence/quality-gates.json).",
+              "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png sequences exception banner, dominant on-time card, supporting cards, chart and regional table, then the orders panel; condition-a/evidence/screenshots/390x844-default.png stacks region cards instead of a clipped table, and condition-a/evidence/screenshots/1280x900-loading.png keeps the same layout skeleton so nothing jumps.",
+              "interaction_completeness": "condition-a/evidence/capture-report.json activates default, loading, empty and error at both viewports (8 of 12); condition-a/project/index.html exposes ready, loading, stale, partial, error and empty in the data-state control, and the orders panel preserves context on drill-down (condition-a/project/analysis.md section 5). Success and restricted captures were not activated, and stale and partial have no screenshots listed in FILES.txt.",
+              "accessibility_responsiveness": "condition-a/evidence/checks.json reports axe violations [] and 0 unnamed controls at both 1280 and 390, mobile-overflow 0 and one h1; the single accessible-names gate failure is on a checkbox whose label text wraps the input (condition-a/project/index.html), which axe and checks.json both treat as named, so it appears to be a checker false positive; keyboard flows are documented in condition-a/project/analysis.md section 7.",
+              "implementation_quality": "condition-a/project/app.js separates aggregation, series construction, markup and state handling, restores focus on drill close and re-renders on breakpoint change, and checks.json shows no console or page errors; the only failed gate is the checkbox heuristic noted above."
+            },
+            "critical_defects": [
+              "condition-a/evidence/quality-gates.json ok:false - the accessible-names gate reports 1 violation on the compare checkbox; even if the wrapping label makes it a false positive, the deterministic gate did not pass.",
+              "No on-time trend over time despite task.md asking whether performance is improving: only failed-attempt bars are charted (condition-a/evidence/screenshots/1280x900-default.png).",
+              "Stale and partial states exist as control options (condition-a/project/index.html) but no screenshot for them is listed in FILES.txt, so those states rest on prose alone."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "operations-dashboard-r2",
+      "task_id": "operations-dashboard",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "uadi_position": "B",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 1357,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 4,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-a/project/analysis.md distinguishes share of orders on time (86.4%) from the on-time rate among delivered orders (93.5%), defines attempts vs affected orders, and states the equal-length baseline and 15-minute lag; condition-a/evidence/screenshots/1280x900-default.png shows 93.5%, 1,507 orders and 97 attempts with 2.4 pp and 34.7% deltas and no invented metrics.",
+              "ux_reasoning": "condition-a/project/index.html sequences At a glance, KPIs, daily trend, status mix, regions and orders and routes KPI/status/region clicks to a preserved orders panel with chips; condition-a/project/app.js labels Order status as orders list only, which is reasoned but narrower than task.md literal global delivery-status filtering.",
+              "design_judgment": "condition-a/evidence/screenshots/1280x900-default.png uses a 0-100% line, zero-based order/attempt logic, no dual axes or target line, and absolute attempt changes in the regional table; condition-a/project/analysis.md explicitly rejects truncated axes and percent change on tiny counts.",
+              "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png and condition-a/evidence/screenshots/390x844-default.png are comparable with Candidate B at the same viewports, but Orders precedes the rate KPI, the 0-100% line sits compressed at the top of its panel, and the always-visible Orders table dominates the page; mobile stacks the cards in order.",
+              "interaction_completeness": "condition-a/project/app.js plus condition-a/evidence/screenshots/1280x900-default.png, condition-a/evidence/screenshots/1280x900-loading.png, condition-a/evidence/screenshots/1280x900-empty.png and condition-a/evidence/screenshots/1280x900-error.png cover chips/clear investigation, status mix, regional drills, comparison toggle, stale/partial banners, no-data and empty-result states; condition-a/evidence/capture-report.json shows success/restricted were not activated.",
+              "accessibility_responsiveness": "condition-a/evidence/checks.json reports no overflow and no unnamed controls but 7 serious color-contrast nodes plus a mobile scrollable-region-focusable failure, and condition-a/evidence/quality-gates.json fails axe on those contrast targets; layout itself reflows without horizontal overflow.",
+              "implementation_quality": "condition-a/project/app.js builds order-level deterministic data, measured-width SVG, data tables, focus/scroll to orders and reduced-motion handling in condition-a/project/styles.css, but condition-a/evidence/quality-gates.json ok:false with 7 serious contrast failures caps the implementation claim."
+            },
+            "critical_defects": [
+              "Seven serious color-contrast axe violations in condition-a/evidence/checks.json / condition-a/evidence/quality-gates.json and a mobile scrollable-region-focusable failure.",
+              "Default desktop hierarchy buries health in a long always-visible orders table in condition-a/evidence/screenshots/1280x900-default.png.",
+              "condition-a/evidence/capture-report.json: success/restricted screenshots not activated; stale/partial states have no screenshots."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-a/project/analysis.md section 2 distinguishes share of all orders from the on-time rate among delivered orders wherever both appear, defines units, denominators and the exact comparison baseline, and section 9 lists unresolved risks including late-arrival policy, attempt model and synthetic data.",
+              "ux_reasoning": "condition-a/project/analysis.md section 3 orders the journey as glance, spot the regional drop, then investigate, and section 5 documents chip-based context preservation with individual chip removal, focus movement to the orders panel, and clearing a conflicting status filter instead of silently intersecting to zero.",
+              "design_judgment": "Section 4 commits to a 0-100 percent line with a dashed prior series, zero-based counts, no dual axes, absolute attempt change instead of noisy percentages and comparison as a first-class state; the delivered default (condition-a/evidence/screenshots/1280x900-default.png) shows generated 'At a glance' sentences, trend metric tabs, a labelled status mix and a regional table sorted worst-first.",
+              "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png sequences summary sentences, KPI row, trend and status mix, regional table, orders, then a visually separate prototype panel at the bottom; condition-a/evidence/screenshots/390x844-default.png preserves that order in a single column with no overlap, and mobile-overflow passes at 0 px (condition-a/evidence/quality-gates.json).",
+              "interaction_completeness": "condition-a/evidence/capture-report.json activates default, loading, empty and error at both viewports (8 of 12); condition-a/project/index.html exposes seven data states (fresh, loading, stale, partial, no-data, error, empty result) and the captured empty render distinguishes 'filters too narrow' from a missing source (condition-a/evidence/screenshots/1280x900-empty.png). The no-data, stale and partial states have no screenshots listed in FILES.txt.",
+              "accessibility_responsiveness": "condition-a/evidence/quality-gates.json ok:false - axe reports 7 serious color-contrast violations on delta tails and prototype-panel labels and help text, and condition-a/evidence/checks.json at 390 px adds scrollable-region-focusable for the horizontally scrolling orders table; mitigating evidence is accessible-names passing, one h1, 0 unnamed controls, no page overflow and the focus and live-region patterns described in condition-a/project/analysis.md section 7.",
+              "implementation_quality": "condition-a/project/app.js separates aggregation, series construction, markup and state handling, re-renders the chart at measured width on resize and reports no console or page errors (condition-a/evidence/checks.json); the seven contrast failures and the keyboard-inaccessible mobile scroll region keep this below the top band."
+            },
+            "critical_defects": [
+              "condition-a/evidence/quality-gates.json ok:false - 7 serious axe color-contrast violations affecting KPI delta text and prototype-panel copy; condition-a/evidence/checks.json at 390 px additionally reports scrollable-region-focusable on the scrolling orders table.",
+              "No screenshot listed in FILES.txt shows the no-data, stale or partial states: condition-a/evidence/capture-report.json activates only default, loading, empty and error, and the captured 'empty' file shows the empty-result state (condition-a/evidence/screenshots/1280x900-empty.png)."
+            ]
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 988,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 1,
+              "implementation_quality": 2
+            },
+            "rationale": {
+              "product_understanding": "condition-b/project/analysis.md and condition-b/project/index.html state delivered-only denominators, attempt-level counting, no target/forecast/cause inventing, and the 15-minute lag; condition-b/evidence/screenshots/1280x900-default.png shows 94.6% vs 95.0% previous, 4,975 orders and 166 attempts consistent with that contract.",
+              "ux_reasoning": "condition-b/project/analysis.md and condition-b/project/app.js implement hero->insight->dual charts->regions->orders with single-day removal, status tabs, Escape and focus return; chart points/bars open single-day late/failed orders while keeping period and region, as shown in condition-b/project/index.html and condition-b/project/analysis.md.",
+              "design_judgment": "condition-b/evidence/screenshots/1280x900-default.png keeps 0-100% and zero-based axes with exact point/bar labels and previous-period ticks, but full-width region bars for 91.4-97.0% look nearly identical and rely almost entirely on numerals and small ticks for discrimination.",
+              "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png and condition-b/evidence/screenshots/390x844-default.png have comparable desktop and mobile views; the 94.6% hero, insight block naming East, and balanced dual charts give a clear scan path, with mobile preserving hero->charts->regions order in 390x844-default.png.",
+              "interaction_completeness": "condition-b/project/app.js and condition-b/project/index.html provide insight, rail, chart-day and region drills plus loading/error/no-data states distinct in condition-b/evidence/screenshots/1280x900-loading.png and condition-b/evidence/screenshots/1280x900-error.png, but condition-b/evidence/capture-report.json marks empty activated:false at both viewports and condition-b/evidence/screenshots/1280x900-empty.png duplicates the default view, so the empty-result state is not demonstrated.",
+              "accessibility_responsiveness": "condition-b/evidence/checks.json and condition-b/evidence/quality-gates.json report 11 serious label-content-name-mismatch violations on chart bars and region buttons plus 2 accessible-names failures (empty insight-action button and compare-toggle), a functional barrier beyond contrast.",
+              "implementation_quality": "condition-b/project/app.js handles measured-width charts, partial-day exclusion from both periods and order tabs coherently, but the label/name mismatch cluster, empty initial insight button in condition-b/project/index.html and unactivated empty capture show unfinished polish."
+            },
+            "critical_defects": [
+              "Empty-state screenshots were not activated: condition-b/evidence/capture-report.json empty activated:false and condition-b/evidence/screenshots/1280x900-empty.png is identical to default, so empty result is unproven.",
+              "11 serious label-content-name-mismatch violations and 2 accessible-names failures in condition-b/evidence/checks.json / condition-b/evidence/quality-gates.json.",
+              "Region bars in condition-b/evidence/screenshots/1280x900-default.png are visually indistinguishable across 91.4-97.0%."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-b/project/analysis.md section 1 marks each product fact as Confirmed or Not available with the design consequence that follows, section 2 gives unit, calculation, scope and comparison for every metric, and section 10 lists open risks including the missing service-level target, late-arrival policy and the attempt model.",
+              "ux_reasoning": "condition-b/project/analysis.md section 3 defines a reversible primary journey with focus returning to the triggering control on close, section 7 tabulates exactly what each of five drill entry points passes to the orders panel (period, region, day, status) and how period or region changes keep the open panel consistent.",
+              "design_judgment": "Sections 4 and 5 justify the 0-100 percent rate line, zero-based bars with a previous-period tick instead of a competing second series, region bars sorted lowest-first with a text LOWEST tag, and the deliberate non-choices (no pies, maps, dual axes, forecasts or causal notes); condition-b/evidence/screenshots/1280x900-default.png delivers the hero rate, plain-language insight and labelled charts described there.",
+              "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png leads with a large hero rate, insight sentence and single action, then charts, region list and inline definitions, with prototype controls in a separate strip at the end; condition-b/evidence/screenshots/390x844-default.png keeps the same reading order with no overlap, and mobile-overflow passes at 0 px in condition-b/evidence/quality-gates.json.",
+              "interaction_completeness": "condition-b/project/app.js implements five drill entry points, removable chips, Escape-to-close with focus restoration and seven data states (condition-b/project/index.html), but condition-b/evidence/capture-report.json activates only 6 of 12: condition-b/evidence/screenshots/1280x900-empty.png and condition-b/evidence/screenshots/390x844-empty.png show the default dashboard because the state control has no empty option, so the empty-result state has no rendered evidence; stale and partial have no screenshots listed in FILES.txt.",
+              "accessibility_responsiveness": "condition-b/evidence/checks.json reports 11 serious label-content-name-mismatch violations at both viewports on chart points, bars and region buttons whose aria-labels omit their visible text, and condition-b/evidence/quality-gates.json adds 2 accessible-names failures: #insight-action captured with an empty name (condition-b/project/app.js fills it only when an action exists) and #compare-toggle, whose wrapping label in condition-b/project/index.html suggests a false positive; mitigating evidence is no contrast violations, 0 unnamed controls, one h1 and no overflow.",
+              "implementation_quality": "condition-b/project/app.js builds inline SVG at the container's measured width, uses a single delegated event path with Escape handling, focus restoration and polite live regions, and reports no console or page errors (condition-b/evidence/checks.json); the accessible-name mismatches, the unfilled insight button at gate time and the transcript.md referenced by condition-b/project/analysis.md but absent from FILES.txt are QA gaps."
+            },
+            "critical_defects": [
+              "condition-b/evidence/quality-gates.json ok:false - accessible-names reports 2 violations (#insight-action empty at check time, #compare-toggle) and axe reports 11 serious label-content-name-mismatch findings, confirmed at both viewports in condition-b/evidence/checks.json.",
+              "No rendered empty or no-data evidence: condition-b/evidence/capture-report.json activates only 6 of 12, and condition-b/evidence/screenshots/1280x900-empty.png shows the default dashboard because the state control in condition-b/project/index.html has no empty option.",
+              "condition-b/project/analysis.md section 11 cites a transcript.md listing the checks actually run, but that file is not in FILES.txt, so the referenced evidence is missing."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "product-onboarding-r1",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 1473,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "Confirmed-facts table, prototype assumptions and explicit unknowns preserve Starter 5 and role boundaries without invented pricing, upgrade or import behavior (condition-b/project/analysis.md); Step 1 shows project-required, optional invites and Starter limit in condition-b/project/index.html.",
+              "ux_reasoning": "Two-form journey is justified by differing prerequisites, with a prominent Continue on the optional step, dynamic role summary plus collapsed comparison, and paused versus solo-completion distinction (condition-b/project/analysis.md).",
+              "design_judgment": "Calm workbench intent and a single dark next-step band are undermined by a washed-out default render, one-at-a-time invites, and an unsent-input warning that blocks Continue until the draft is sent or explicitly deferred (condition-b/project/analysis.md; condition-b/project/app.js).",
+              "visual_hierarchy": "Settled markup aims for strong rail-plus-form hierarchy, but default evidence at both viewports renders the heading, lede, field and buttons in faded low contrast that is hard to read (condition-b/evidence/screenshots/1280x900-default.png; condition-b/evidence/screenshots/390x844-default.png), and the toast overlaps controls in condition-b/evidence/screenshots/1280x900-success.png.",
+              "interaction_completeness": "Code covers name/email validation, loading with aria-busy, success/failure with focus return, plan-full error, Member blocking, pause/reload persistence and unsent protection (condition-b/project/app.js), but capture-report shows only 4 of 12 activated and loading/empty/error/restricted duplicates of Step 1 (condition-b/evidence/capture-report.json).",
+              "accessibility_responsiveness": "Controls are labelled with no names violations and no mobile overflow, but quality-gates reports 12 serious axe color-contrast failures and checks reports four h1 headings in the DOM (condition-b/evidence/quality-gates.json; condition-b/evidence/checks.json).",
+              "implementation_quality": "Structured view state with simulated latency, draft preservation and reset is implemented with zero console errors (condition-b/project/app.js; condition-b/evidence/checks.json); the 70-assertion verification claim in condition-b/project/analysis.md has no assertion log in the delivered file list."
+            },
+            "critical_defects": [
+              "Default rendered path is illegible due to faded low-contrast styling at both viewports, consistent with 12 serious axe contrast failures (condition-b/evidence/screenshots/1280x900-default.png; condition-b/evidence/screenshots/390x844-default.png; condition-b/evidence/quality-gates.json).",
+              "No rendered validation, loading, empty, error or restricted states; capture-report activated 4 of 12 and success capture shows Step 1 with a delivery toast rather than a completion state (condition-b/evidence/capture-report.json; condition-b/evidence/screenshots/1280x900-success.png).",
+              "Four h1 headings present in the page structure (condition-b/evidence/checks.json); verification assertions are not provided as evidence."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-b/project/analysis.md maps every brief fact to a design consequence (table, lines 7-19), separates assumptions (21-30) from seven unknowns (32-40), treats activation as an explicit hypothesis (line 44), and deliberately withholds Team-plan, upgrade and pricing behavior (lines 16, 40, 136) while stating role boundaries (lines 13-15).",
+              "ux_reasoning": "condition-b/project/analysis.md defines a two-form journey where the project precedes the genuinely optional invitation (lines 46-52), sorts decisions into included/deferred/skipped with reasons (54-67), and records trade-offs (130-137); the implementation mirrors them — the Starter limit sits beside the primary action and 'Skip for now' is visible in condition-b/evidence/screenshots/1280x900-empty.png, and unsent invitation text is guarded instead of silently discarded (condition-b/project/app.js lines 742-752).",
+              "design_judgment": "condition-b/evidence/screenshots/1280x900-empty.png shows a persistent workspace rail (workspace, owner, plan, counts), the Starter limit at the decision point, one filled primary with a quiet skip, and an honest prototype footer; judgment is docked for heavy prototype chrome — the fixed .controls bar spans the content width on every screen (condition-b/project/styles.css lines 1615-1629), and in condition-b/evidence/screenshots/1280x900-success.png and 390x844-success.png the toast overlaps UI (covering the 'VIEW AS Owner' select on desktop and the 'What happens next' note on mobile).",
+              "visual_hierarchy": "Rendered evidence is equivalent to Candidate A (condition-b/evidence/screenshots/1280x900-default.png, 390x844-default.png) and stable captures such as 1280x900-empty.png read clearly with the dark rail secondary; but the flagship default captures render the whole main column faint at both viewports — the .screen entrance animation (condition-b/project/styles.css lines 1750-1763) appears caught mid-flight — muted small text (REQUIRED, 0/60, skip, footer) stays light at rest, and condition-b/evidence/quality-gates.json flags hierarchy-critical elements (#project-lede, #create-project, #skip-project) for contrast.",
+              "interaction_completeness": "condition-b/project/app.js implements aria-busy loading with live announcements (lines 610-626, 699-712), an invitation failure that keeps the address and explains recovery (condition-b/project/analysis.md line 112), a Member-blocked project step (lines 246-248), a seat-limit path, pause/resume with localStorage drafts (analysis lines 99-101) and an honest prototype-endpoint toast (line 95). Evidence is thin: condition-b/evidence/capture-report.json activates only 4 of 12 states, and the activated success captures (condition-b/evidence/screenshots/1280x900-success.png, 390x844-success.png) show only a prototype-settings toast over an unchanged step-1 form, while loading, empty, error and restricted are activated:false and render the default screen (1280x900-loading.png, 1280x900-error.png, 1280x900-restricted.png).",
+              "accessibility_responsiveness": "condition-b/evidence/quality-gates.json fails the axe gate with 12 serious color-contrast violations (targets include #topbar-step, #screen-project > .eyebrow, #project-lede, .req, #project-name-hint, #name-count, #create-project, #skip-project) and condition-b/evidence/checks.json independently reports 5 serious nodes at 1280 and 5 at 390. Mitigations are real: 0 missing accessible names, no horizontal overflow, clean console, hidden-screen management (condition-b/project/app.js line 227), :focus-visible and prefers-reduced-motion (condition-b/project/styles.css lines 561-565, 2123), but the contrast failure spans primary form content at both viewports.",
+              "implementation_quality": "condition-b/project/app.js is a tidy state machine with a live-region announcer (line 474), aria-busy toggling, hidden-screen switching and localStorage restore, and condition-b/evidence/checks.json shows a clean console with no overflow. Offsets: condition-b/evidence/quality-gates.json has ok:false (axe), condition-b/evidence/checks.json reports h1_count 4 in the static DOM (mitigated by hidden screens), the toast overlaps the fixed controls bar in 1280x900-success.png, condition-b/project/styles.css carries a duplicated .toast base block (lines 1705-1722 and 1724-1741), and condition-b/project/analysis.md section 8 claims '70 interaction assertions passed' and static checks with no test artifact in FILES.txt."
+            },
+            "critical_defects": [
+              "Accessibility gate failure: condition-b/evidence/quality-gates.json has ok:false with 12 serious color-contrast violations covering primary content (#project-lede, #create-project, #skip-project, .req, #project-name-hint), and condition-b/evidence/checks.json confirms 5 serious nodes at 1280 and 5 at 390.",
+              "The primary rendered evidence is washed out: condition-b/evidence/screenshots/1280x900-default.png and 390x844-default.png show the entire main column faint (the .screen entrance animation at condition-b/project/styles.css lines 1750-1763 appears captured mid-fade), so the flagship default state reads as low-contrast at both viewports.",
+              "No flow state is evidenced: condition-b/evidence/capture-report.json activates only 4 of 12 states; the 'success' captures show only the toast 'Invitation delivery will now succeed.' over an unchanged step-1 form (condition-b/evidence/screenshots/1280x900-success.png, 390x844-success.png), and loading, empty, error and restricted are activated:false with their files showing the default screen.",
+              "The toast overlaps interface elements in captured evidence: in condition-b/evidence/screenshots/1280x900-success.png it covers the 'VIEW AS Owner' select of the fixed controls bar, and in 390x844-success.png it covers the 'What happens next' note (condition-b/project/styles.css toast at bottom: 24px/82px, z-index 60 over .controls z-index 40).",
+              "condition-b/project/analysis.md section 8 claims '70 interaction assertions passed' plus duplicate-ID, label and ARIA static checks, but FILES.txt contains no test output or transcript, so those claims are unverifiable in this packet."
+            ]
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1202,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "Facts, assumptions and unknowns are separated: Starter up to 5, Team up to 25, Owner billing/deletion, Admin project/member management, Member limits, optional invites and skippable setup, with pending-seat and cross-device unknowns listed (condition-a/project/analysis.md) and Starter plus solo path visible in condition-a/evidence/screenshots/1280x900-default.png.",
+              "ux_reasoning": "Activation is defined as project exists and is openable, not checklist completion; included, deferred and skippable sets and seven trade-offs keep project creation the only required input and make 'Continue without inviting' primary in the empty state (condition-a/project/analysis.md).",
+              "design_judgment": "Single required project name with 'Why we ask' purpose copy, role guide before selection defaulting to Member, visible Starter seat meter with no invented upgrade, and honest empty project/members views without fabricated tasks (condition-a/project/analysis.md; condition-a/project/app.js renderProject()).",
+              "visual_hierarchy": "One focal heading, one primary Create action, quiet secondary escape, left setup rail and 'Good to know' facts keep the path manageable on desktop and stacked on mobile (condition-a/evidence/screenshots/1280x900-default.png; condition-a/evidence/screenshots/390x844-default.png).",
+              "interaction_completeness": "Code implements name validation, create loading, empty invites, per-row email errors, send loading, failure with preserved addresses and retry, paused/resume and restricted preview (condition-a/project/app.js), but capture-report shows only 2 of 12 states activated with loading/empty/error/success/restricted duplicates of the default step (condition-a/evidence/capture-report.json).",
+              "accessibility_responsiveness": "Skip link, labelled fields, aria-invalid with focus return, aria-busy loading and progressbar seats are implemented and axe reports zero critical/serious violations with no mobile overflow (condition-a/evidence/quality-gates.json; condition-a/evidence/checks.json), but accessible-names flags two prototype radios without labels.",
+              "implementation_quality": "Browser storage uses a probe fallback with 'keep this tab open' copy, no console errors and zero overflow pixels in deterministic checks (condition-a/project/app.js; condition-a/evidence/checks.json); verification is manual-only per condition-a/project/analysis.md and rendered state coverage is limited by condition-a/evidence/capture-report.json."
+            },
+            "critical_defects": [
+              "No rendered evidence of loading, empty, error, success or restricted states: capture-report activated 2 of 12 and condition-a/evidence/screenshots/1280x900-loading.png, condition-a/evidence/screenshots/1280x900-error.png, condition-a/evidence/screenshots/1280x900-success.png show the unchanged Step 1 default.",
+              "Two accessible-names violations for prototype invite-outcome radios (condition-a/evidence/quality-gates.json).",
+              "Invitation failure is modeled as all-or-nothing while per-address outcomes remain a stated unknown (condition-a/project/analysis.md)."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-a/project/analysis.md separates facts (lines 5-14), assumptions (16-22) and seven explicit unknowns (24-31), defines activation as a stated hypothesis rather than a claim (line 35), explains each role in decision terms (line 68), and deliberately shows the Starter limit without inventing pricing or upgrade behavior (lines 27, 100).",
+              "ux_reasoning": "condition-a/project/analysis.md argues the shortest trustworthy path (lines 37-44: project-first, invitations optional, solo continue), sorts decisions into included/deferred/skippable (46-63), and records seven explicit trade-offs (96-104); the build mirrors the reasoning — the 'WHY WE ASK' helper under the name field and the 'Good to know' card stating invitations are optional and Starter includes 5 members are visible in condition-a/evidence/screenshots/1280x900-default.png.",
+              "design_judgment": "condition-a/evidence/screenshots/1280x900-default.png shows one required field, one filled primary action, a quiet secondary, an honest prototype footer and 'Save and finish later' in the header, with the collapsed prototype pill over footer whitespace. Judgment is held back by a visible step-count inconsistency: the eyebrow reads 'Step 1 of 2' (condition-a/project/app.js line 359) while the rail numbers three steps (Create project, Invite teammates, Ready to work) in the same screenshot and in condition-a/evidence/screenshots/390x844-default.png.",
+              "visual_hierarchy": "Rendered evidence is equivalent to Candidate B (condition-a/evidence/screenshots/1280x900-default.png and 390x844-default.png): display heading, labeled field, primary/secondary actions and the 'Good to know' card read in order, the setup rail stays secondary at left, contrast is strong (condition-a/evidence/checks.json reports 0 axe violations at both viewports), and nothing occludes product content at either breakpoint.",
+              "interaction_completeness": "condition-a/project/app.js implements loading with spinner, aria-busy and live announcements (lines 376, 697-702), invitation failure with preserved addresses and retry (lines 394-397, 496, 939), pause/resume with a storage-unavailable fallback (lines 666-673, 529-530) and a Member role-preview workspace view (lines 551-577). Evidence, however, is the weakest part: condition-a/evidence/capture-report.json activates only 2 of 12 states (default only), and condition-a/evidence/screenshots/1280x900-loading.png, 1280x900-empty.png, 1280x900-error.png, 1280x900-success.png and 1280x900-restricted.png all render the default step-1 form, so no non-default state is evidenced at either viewport.",
+              "accessibility_responsiveness": "condition-a/evidence/checks.json reports 0 axe violations, 0 controls without accessible names, no horizontal overflow and no console or page errors at 1280 and 390; condition-a/project/styles.css has :focus-visible (line 84), prefers-reduced-motion (line 1215) and four breakpoints, and condition-a/project/index.html includes a noscript notice (lines 38-40). The contrary signal is condition-a/evidence/quality-gates.json failing accessible-names on the two invite-outcome radios, which are wrapped in <label> elements (condition-a/project/index.html lines 52-59) and pass both axe and checks' own name computation — recorded here as a probable harness limitation on implicit labels rather than assumed away.",
+              "implementation_quality": "condition-a/evidence/checks.json shows a clean console, no overflow and 0 axe violations, and condition-a/project/app.js guards persistence honestly ('Saved in this browser' / 'keep this tab open' fallback, lines 529-530, 673). Offsets: condition-a/evidence/quality-gates.json has ok:false (accessible-names), the 'Step 1 of 2' eyebrow against a three-step rail (condition-a/project/app.js line 359) shows copy drift in the flagship screen, and condition-a/project/analysis.md section 7 claims a syntax check and a manual exercise list with no test artifact in FILES.txt to verify them."
+            },
+            "critical_defects": [
+              "No non-default state is evidenced: condition-a/evidence/capture-report.json shows activated 2 of 12 (default only at both viewports), and condition-a/evidence/screenshots/1280x900-loading.png, 1280x900-empty.png, 1280x900-error.png, 1280x900-success.png, 1280x900-restricted.png (plus the 390x844 equivalents) all show the default step-1 form — loading, success and restricted are absent from rendered evidence even though the task requires empty, loading, success and recoverable error states.",
+              "condition-a/evidence/quality-gates.json has ok:false with accessible-names failing on the two invite-outcome radios; the radios do have wrapping labels (condition-a/project/index.html lines 52-59) and pass axe and checks, so the packet's own deterministic gate and its rendered checks disagree.",
+              "Step-count inconsistency visible in every screenshot: the eyebrow says 'Step 1 of 2' (condition-a/project/app.js line 359, 'Step 2 of 2' at line 445) while the progress rail numbers three steps (condition-a/evidence/screenshots/1280x900-default.png, 390x844-default.png).",
+              "condition-a/project/analysis.md section 7 claims verification ('node --check', manual exercise of 13 flows) but FILES.txt contains no test output or transcript, so those claims are unverifiable in this packet."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "product-onboarding-r2",
+      "task_id": "product-onboarding",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "uadi_position": "B",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 967,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "Supplied roles, Starter 5 and optional invites are separated from assumptions, but activation is extended to project plus a first task and pending invites are assumed to reserve seats (condition-a/project/analysis.md); the rendered welcome explains solo use and the limit in condition-a/evidence/screenshots/1280x900-default.png.",
+              "ux_reasoning": "Journey is orient, create, optional invite, confirm and first task with included/deferred/skippable sets and trade-offs that keep a solo path via 'Continue without inviting' and 'Finish later' (condition-a/project/analysis.md).",
+              "design_judgment": "One required name with rename reassurance, role guide before selectors defaulting to Member, and limit shown without upgrade are sound (condition-a/project/analysis.md), while the welcome orientation plus immediate task prompt add weight beyond a single-field first project.",
+              "visual_hierarchy": "Rail and three-step structure are present but default evidence at both viewports renders the heading, lede, facts and actions in faded low contrast that is hard to scan (condition-a/evidence/screenshots/1280x900-default.png; condition-a/evidence/screenshots/390x844-default.png); quality-gates reports 10 serious contrast failures (condition-a/evidence/quality-gates.json).",
+              "interaction_completeness": "Code covers validation, loading with aria-busy, per-row invite failure with retry/remove, success summaries, paused/restored, empty project and restricted views (condition-a/project/app.js), but capture-report shows only 2 of 12 states activated with non-default screenshots duplicating the welcome view (condition-a/evidence/capture-report.json).",
+              "accessibility_responsiveness": "Responsive no-overflow checks pass (condition-a/evidence/checks.json), but accessible-names fails on five prototype radios, axe reports 10 serious failures, and checks reports seven h1 headings in the DOM (condition-a/evidence/quality-gates.json; condition-a/evidence/checks.json).",
+              "implementation_quality": "Local storage with try/catch, double-submit guards and aria-busy are implemented with no console errors (condition-a/project/app.js; condition-a/evidence/checks.json); rendered state coverage is limited by condition-a/evidence/capture-report.json and heading duplication remains."
+            },
+            "critical_defects": [
+              "Default path is rendered in faded low-contrast styling at both viewports, matching 10 serious axe failures (condition-a/evidence/screenshots/1280x900-default.png; condition-a/evidence/screenshots/390x844-default.png; condition-a/evidence/quality-gates.json).",
+              "Five accessible-names failures on prototype radios and seven h1 headings (condition-a/evidence/quality-gates.json; condition-a/evidence/checks.json).",
+              "No rendered evidence of project, invite, success, error or restricted states; capture-report activated 2 of 12 (condition-a/evidence/capture-report.json).",
+              "First-task concept is introduced although product facts only establish projects and members, expanding onboarding beyond the brief (condition-a/project/analysis.md)."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-a/project/analysis.md separates supplied facts, explicitly labelled assumptions (pending invitations reserving seats) and unknowns (seat semantics, ownership transfer), and states an activation hypothesis of project plus first task without claiming analytics or research.",
+              "ux_reasoning": "condition-a/project/analysis.md gives an included/deferred/skippable decision matrix, explains why role capabilities appear before role selectors and why the limit is shown without an upgrade path; however the delivered default screen inserts an orientation screen before the single required field (condition-a/evidence/screenshots/1280x900-default.png), and analysis.md section 5 itself flags the success view's invitation nudge as an activation risk.",
+              "design_judgment": "Input-reasoning microcopy and role cards placed above the invite form are strong (condition-a/project/index.html), but the delivered palette fails condition-a/evidence/quality-gates.json axe with 10 serious color-contrast findings (fact copy, nav labels, skip button, plan note) and 5 accessible-name violations, and checks.json reports 7 h1 elements in one document.",
+              "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png shows a clear eyebrow to headline to fact-row sequence with one primary CTA and a quiet plan rail; condition-a/evidence/screenshots/390x844-default.png stacks the same content without overlap and the mobile-overflow gate passes at 0 px (condition-a/evidence/quality-gates.json). Only default-state renders are usable for either candidate.",
+              "interaction_completeness": "condition-a/project/app.js implements validation with focus move and aria-invalid, aria-busy loading with double-submit guards, invitation failure with per-row retry/remove, skip and resume via guarded localStorage, a restricted Member view and a Starter-limit block, all catalogued in condition-a/project/analysis.md section 4; but condition-a/evidence/capture-report.json activates only the default state (2 of 12), so none of these states has a usable render.",
+              "accessibility_responsiveness": "condition-a/evidence/quality-gates.json is ok:false - axe reports 10 serious color-contrast violations and accessible-names reports 5 unlabeled prototype radio inputs; mitigating evidence is checks.json showing 0 unnamed controls on the initial screen, no horizontal overflow at 1280 and 390, and a skip link plus polite live region in condition-a/project/index.html, which is why this is a failing rather than a absent score.",
+              "implementation_quality": "condition-a/project/app.js is a structured state machine (render, renderView, go, focusHeading) with guarded persistence and busy-state handling, and checks.json reports no console or page errors; the two failed gates and the 7-h1 document structure keep it below the top band."
+            },
+            "critical_defects": [
+              "condition-a/evidence/quality-gates.json ok:false - axe 10 serious color-contrast violations plus 5 accessible-name violations on prototype radio inputs.",
+              "No usable rendered evidence for any non-default state: condition-a/evidence/capture-report.json activates 2 of 12 and condition-a/evidence/screenshots/1280x900-error.png is visually identical to condition-a/evidence/screenshots/1280x900-default.png, so the loading, empty, error, success and restricted files do not show those states.",
+              "Seven h1 elements live in one document (condition-a/evidence/checks.json), even though only one view is visible at a time."
+            ]
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1139,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            },
+            "rationale": {
+              "product_understanding": "Facts, assumptions and unknowns separate Starter 5, role boundaries and pending-seat uncertainty; project home stops at a shell without inventing tasks, files or imports (condition-b/project/analysis.md); Step 1 confirms one-field creation without requiring invites (condition-b/evidence/screenshots/1280x900-default.png).",
+              "ux_reasoning": "Create, ready confirmation with Open project primary, optional invite, then project home keeps invitations secondary and skippable with bounded recovery and reviewer questions answered (condition-b/project/analysis.md).",
+              "design_judgment": "Single name with visible-to-team and renameable copy, roles explained before assignment, Starter limit shown at use with no upgrade invention, and skip treated as legitimate (condition-b/project/analysis.md; condition-b/project/app.js inviteView()).",
+              "visual_hierarchy": "Single-card form with clear Create versus Skip hierarchy plus Workspace at a glance and role primer is crisp at desktop and mobile (condition-b/evidence/screenshots/1280x900-default.png; condition-b/evidence/screenshots/390x844-default.png), though the mobile prototype-controls chip partially covers the seat meter in the latter.",
+              "interaction_completeness": "Code implements name/email validation, loading, creation and invite success, partial delivery failure with per-address and retry-all, seat-limit block, empty invite list, paused/resume and Member restriction (condition-b/project/app.js), but capture-report shows only 2 of 12 states activated (condition-b/evidence/capture-report.json).",
+              "accessibility_responsiveness": "All deterministic gates pass with zero accessible-name violations, zero axe critical/serious violations, one h1 and no mobile overflow (condition-b/evidence/quality-gates.json; condition-b/evidence/checks.json); focus, live regions and reduced motion are described (condition-b/project/analysis.md).",
+              "implementation_quality": "Node syntax check, manual exercise of validation, creation failure/retry, partial delivery, limit block, skip/reload/resume and role views, plus DOM, console and overflow checks with no errors are documented (condition-b/project/analysis.md) and corroborated by condition-b/evidence/checks.json."
+            },
+            "critical_defects": [
+              "No rendered evidence of loading, empty, error, success or restricted states; capture-report activated 2 of 12 and non-default screenshots do not show those states (condition-b/evidence/capture-report.json).",
+              "Mobile prototype-controls chip overlaps the Workspace at a glance seat meter in condition-b/evidence/screenshots/390x844-default.png.",
+              "Invite screen density and pending-seat accounting remain open product risks acknowledged in the analysis (condition-b/project/analysis.md)."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 4,
+              "implementation_quality": 4
+            },
+            "rationale": {
+              "product_understanding": "condition-b/project/analysis.md separates facts, assumptions and unknowns, answers each reviewer question in section 8, and states plainly that a project shell is not the whole activation outcome (section 7) instead of overstating value.",
+              "ux_reasoning": "condition-b/project/analysis.md orders the flow as project creation, unmistakable success, then optional invitation, with a per-step rationale and deferral table; condition-b/evidence/screenshots/1280x900-default.png implements exactly that - one required field, primary 'Create project', adjacent skip and the note 'Creating a project does not invite anyone or change your plan'.",
+              "design_judgment": "condition-b/project/analysis.md explains why roles precede selection, why the plan limit appears only where it affects the decision and why success precedes invitation; the delivered copy keeps claims honest and all deterministic gates pass in condition-b/evidence/quality-gates.json (ok:true, axe 0 serious, accessible-names 0, mobile-overflow 0).",
+              "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png has a clean single-card hierarchy with step marker and context rail, but condition-b/evidence/screenshots/390x844-default.png and condition-b/evidence/screenshots/mobile.png show the floating 'Prototype controls' pill overlapping and obscuring rows of the 'Workspace at a glance' card, which is a visible defect in delivered renders.",
+              "interaction_completeness": "condition-b/project/app.js implements project-creation failure that preserves the entered name, partial invitation failure distinguishing sent from failed with per-address retry, seat-limit blocking, skip and resume via localStorage, slow-connection loading and Member restrictions, catalogued in condition-b/project/analysis.md section 5; as with Candidate A, condition-b/evidence/capture-report.json activates only 2 of 12 so no state screenshot is usable.",
+              "accessibility_responsiveness": "condition-b/evidence/quality-gates.json is ok:true across every gate and checks.json shows axe violations [] with 0 unnamed controls and no overflow at 1280 and 390; condition-b/project/app.js adds aria-invalid, aria-describedby, role='alert', aria-busy and focus management, and condition-b/project/styles.css includes prefers-reduced-motion. Not tested with a screen reader (analysis.md section 6).",
+              "implementation_quality": "condition-b/project/app.js escapes interpolated values through esc(), guards stale asynchronous work with a busy token, uses delegated events and re-renders without losing typed input; condition-b/project/index.html provides a noscript fallback and checks.json reports no console or page errors."
+            },
+            "critical_defects": [
+              "No usable rendered evidence for any non-default state: condition-b/evidence/capture-report.json activates 2 of 12 and condition-b/evidence/screenshots/1280x900-error.png duplicates the default view.",
+              "Floating prototype control overlaps product content in condition-b/evidence/screenshots/390x844-default.png, covering rows of the workspace summary card.",
+              "The body is rendered entirely by JavaScript, so without scripts the page shows only the noscript notice (condition-b/project/index.html); acceptable for the prototype but a fragility in the delivered artifact."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "subscription-settings-r1",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 1,
+      "uadi_position": "A",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 757,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 3,
+              "ux_reasoning": 3,
+              "design_judgment": 3,
+              "visual_hierarchy": 2,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "analysis.md:24-33 lists sample Pro $29, 12 members, immediate proration as estimates; desktop.png shows Pro $29/month, Next payment $29 Dec 3 2026, 12 of 20. Extra support tiers and Save up to 17% in Other plans go beyond supplied limits.",
+              "ux_reasoning": "analysis.md:37-54 single page with side nav, compare-only toggle, review with price/effective/renewal/estimate; cancel ack gate with Keep my plan safe exit. Seat-blocked downgrade still requires dialog to discover limit.",
+              "design_judgment": "Danger section separate and last, side nav keeps Cancel visible, no dark pattern. Support-tier checklist and annual savings label add promotional content beyond scenario.",
+              "visual_hierarchy": "desktop.png (1280x2389) and mobile.png (390x3787) are comparable full-page views but 66% taller than Candidate A; summary duplicates Plan/Price/Next payment in Billing panel, plan cards with dense 11-12px notes dominate. Mobile nav wraps and stacks preserve order but require long scroll.",
+              "interaction_completeness": "capture-report.json 2/12 activated; all 1280x900 and 390x844 loading/empty/error/success/restricted are identical skeleton loading views, so non-default states are not visually verifiable. Code implements those states, seat block, failNext, resume, but evidence does not show them; no dialog screenshots.",
+              "accessibility_responsiveness": "checks.json no overflow, no console errors, axe 31 passes, skip-link and focus-visible. Meter in app.js uses role=img not progressbar; quality-gates accessible-names fail for demo checkboxes and cancel-ack; invoice table min-width 560px depends on inner scroll until 600px stacking.",
+              "implementation_quality": "Vanilla JS with setBusy, expired-card check, success banner focus management, Preview only language, no network/provider. Proration uses 30/365-day assumption and factual No refund copy; demo checkboxes caused harness activation failure."
+            },
+            "critical_defects": [
+              "Non-default rendered evidence missing: capture-report 2/12 activated; all state viewports show skeleton loading, so error/empty/success/restricted/member views cannot be verified visually.",
+              "Invented plan differentiators beyond scenario in desktop.png Other plans: Core/Community/Standard/Priority support and save claims.",
+              "Immediate proration estimate and No refund statement presented as product truth from sample assumptions rather than provider-confirmed rules."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 2,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-b/project/analysis.md groups the risks into comprehension, commitment, trust and permission risk, maps them to four sections and an owner journey, and clearly separates scenario-supplied facts (Free 3 / Pro 20 / Business 100) from sample data (12 members, $29, 25-day renewal) while flagging cancellation, refund and proration policies as assumptions to confirm against the contract.",
+              "ux_reasoning": "condition-b/project/analysis.md argues 'comparison is never commitment' with a persistent note that the subscription is unchanged (condition-b/project/app.js renderPlanSection compareNote), a review dialog showing current-to-new plan, cadence control, effective date and provider-qualified estimate (condition-b/project/app.js renderReview), a seat-blocked Free downgrade naming the exact shortfall, and cancellation gated by an acknowledgement with 'Keep my plan' as the primary exit (condition-b/project/index.html cancel-dialog).",
+              "design_judgment": "Trade-offs are explicit: proration shown but qualified as a provider-confirmed estimate, role restrictions shown as explanatory notes rather than dead-end disabled controls, and typed confirmation rejected as unnecessary friction (condition-b/project/analysis.md). The danger section is last and also reachable from the nav, and success copy is labelled 'Preview only - no payment was processed' (condition-b/project/app.js applyChange). Noted risk: the review dialog still computes an 'Estimated due today' figure from sample prices, a billing rule the product has not defined, mitigated by explicit labelling.",
+              "visual_hierarchy": "condition-b/evidence/screenshots/desktop.png (1280 wide, ready state) shows a sticky section nav, a summary panel answering plan, price, next payment and seat usage above the fold, then comparison, billing, invoices and a danger section last; condition-b/evidence/screenshots/mobile.png (390 wide) preserves that order with stacked plan cards and invoice records, and the prototype controls are collapsed in the footer without overlapping content. Caveat: all 12 viewport state captures show only the loading skeleton, so hierarchy evidence rests on desktop.png and mobile.png.",
+              "interaction_completeness": "condition-b/project/app.js implements role switching, a compare toggle, review dialog with in-dialog cadence switch, seat-blocked downgrade, confirm with busy state, cancellation with acknowledgement gate and resume, payment validation including expired-card detection, empty invoices, load error with retry and failNext failure simulation for three operations. However condition-b/evidence/capture-report.json activates only 2 of 12 captures (both default), and every non-default screenshot (condition-b/evidence/screenshots/1280x900-error.png, 1280x900-empty.png, 1280x900-success.png, 1280x900-restricted.png and the 390x844 equivalents) renders the loading skeleton, so no state beyond loading/default is visually verified.",
+              "accessibility_responsiveness": "condition-b/evidence/checks.json reports axe violations [] with 31 passes and 1 incomplete, controls_without_accessible_name 0, no horizontal overflow at 1280 or 390 and no console/page errors; condition-b/project/styles.css provides a skip link, :focus-visible, aria-busy skeletons, aria-pressed segmented controls, prefers-reduced-motion, a wrapping sticky nav and invoice rows stacked at 600px. Scored 3 because condition-b/evidence/quality-gates.json is ok:false (accessible-names on demo-error, demo-empty, demo-fail and cancel-ack, whose #cancel-ack-label is empty in the static DOM).",
+              "implementation_quality": "condition-b/project/app.js is organized into pure render functions with an IntersectionObserver scroll spy, consistent busy-state buttons, local-only validation (including expiry checks) and a failNext path that preserves prior state on failure; condition-b/evidence/checks.json shows no console or page errors. Scored 3 because condition-b/evidence/quality-gates.json is ok:false, and confirm operations are not aborted when the dialog is dismissed mid-flight - backdrop/Escape close does not cancel the pending setTimeout in the changeConfirm/cancelConfirm listeners, so a plan change or cancellation can still apply after the user closes the review."
+            },
+            "critical_defects": [
+              "condition-b/evidence/capture-report.json activates only 2 of 12 captures (both default); loading, empty, error, success and restricted were not activated, and their screenshots at both viewports (condition-b/evidence/screenshots/1280x900-error.png, 1280x900-empty.png, 1280x900-success.png, 1280x900-restricted.png, 390x844-error.png, 390x844-empty.png, 390x844-success.png, 390x844-restricted.png) all show the loading skeleton, so error, empty, success and restricted are unverified.",
+              "condition-b/evidence/quality-gates.json is ok:false - the accessible-names gate fails on demo-error, demo-empty, demo-fail and cancel-ack; #cancel-ack-label is empty in the static DOM (condition-b/project/index.html) until JavaScript fills it on dialog open.",
+              "Default state captures condition-b/evidence/screenshots/1280x900-default.png and 390x844-default.png show the loading skeleton rather than the default layout; ready-state evidence exists only in desktop.png and mobile.png.",
+              "condition-b/project/analysis.md reports 'a scripted browser pass covering 21 checks' and keyboard-verification results for the cancellation dialog, but the packet contains no test-output artifact to support them - condition-b/evidence/checks.json covers only rendered structure and axe.",
+              "Mid-flight dialog dismissal does not abort a pending confirmation: in condition-b/project/app.js the backdrop/Escape close handler does not cancel the pending setTimeout in els.changeConfirm or els.cancelConfirm, so state changes can complete after the user closes the review."
+            ]
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 782,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "inputs/condition-a/project/analysis.md:5,11-18 states sample prices/dates/tax explicitly, avoids inventing proration/refund; desktop.png shows Pro $49, Billed monthly Next payment Nov 28 2026, 17 of 20, matching task limits 3/20/100.",
+              "ux_reasoning": "analysis.md:49-62 single-page plus dialog rationale, Orient-Compare-Review-Commit-Recover journey; app.js compare-note, $0 today, blocked Free downgrade with exact removal count, two-step cancel with ack checkbox.",
+              "design_judgment": "index.html:157-166, styles.css danger-zone show cancel last and separate; no urgency/upsell; annual save labelled arithmetic. Prototype controls overlay overlapping content limits restraint.",
+              "visual_hierarchy": "desktop.png (1280x1436) and mobile.png (390x2578) give comparable loaded default views at equivalent widths; 1280x900 files show skeleton for both candidates on load. Plan price, usage meter and danger zone clearly ranked; mobile prototype pill obscures Payment method heading.",
+              "interaction_completeness": "capture-report.json 8/12 activated; 1280x900-error.png shows load error with Try again; code implements loading/empty/scheduled/undo/member-disabled/payment validation. 1280x900-empty/success/restricted show skeleton, not the states; no dialog screenshots in evidence.",
+              "accessibility_responsiveness": "checks.json no horizontal overflow, no console errors, axe 27 passes; index.html:93 meter role=progressbar with aria values, skip-link, focus-visible, prefers-reduced-motion. quality-gates.json accessible-names fail for 4 demo selects.",
+              "implementation_quality": "Dependency-free HTML/CSS/JS, native dialog with dialogBusy guard, focusHeading, load-token race guard, inline aria-invalid errors. Fixed demo panel covers content on mobile; invoice downloads intentionally disabled with toast."
+            },
+            "critical_defects": [
+              "Rendered state evidence incomplete: 1280x900-empty/success/restricted and 390x844-success/restricted show loading skeleton, not empty/success/member views (capture-report 8/12); no screenshots of plan review, cancel or payment dialogs.",
+              "Prototype controls overlay obscures content: mobile.png dark pill covers Payment method heading and desktop.png covers Invoices heading.",
+              "quality-gates.json accessible-names fail (4 demo selects) despite checks.json reporting 0 controls without name."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-a/project/analysis.md frames all six owner questions from task.md, ranks six risks (cancellation mixed into settings, ambiguous commitment, limits without consequence, role confusion, optimistic success, unhandled states) and labels every invented value (sample prices, Nov 28 2026 renewal, schedule-at-renewal rule) as prototype assumptions rather than product research.",
+              "ux_reasoning": "condition-a/project/analysis.md documents the IA, owner journey and explicit trade-offs (schedule at renewal instead of inventing proration, blocked downgrade with the exact 17-to-3 member removal count, two-step cancellation with acknowledgement and undo), implemented in condition-a/project/app.js (plan review dialog, cancel steps 1-2, undo handlers) and condition-a/project/index.html (danger-zone section, role sidebar).",
+              "design_judgment": "condition-a/project/analysis.md 'Key design decisions' rules out urgency devices, preselected upsells and invented features; cancellation sits last and apart (condition-a/project/index.html), plan changes are shown as scheduled with 'Payment today $0.00' and no provider claim (condition-a/project/app.js renderPlanReview), and downloads are honestly disabled instead of faked.",
+              "visual_hierarchy": "Ready-state hierarchy is strong in condition-a/evidence/screenshots/desktop.png (1280 wide) and mobile.png (390 wide): plan/price/usage dominate, then payment, invoices and a visually distinct danger zone, with roles in a sidebar. Scored 3 not 4 because the fixed 'Prototype controls' panel overlays card headers in both captures (Invoices on desktop, Payment method on mobile) and the named default captures 1280x900-default.png and 390x844-default.png show only the loading skeleton, so first-viewport evidence is misleading.",
+              "interaction_completeness": "condition-a/evidence/capture-report.json activates 8 of 12 captures (default, loading, empty, error at both viewports). Rendered proof exists for loading and error at both viewports (condition-a/evidence/screenshots/1280x900-error.png, 390x844-error.png, 1280x900-loading.png), but 1280x900-empty.png and 390x844-empty.png show the skeleton rather than the empty state, and success/restricted were never activated (capture-report activated:false) - their four screenshots are skeletons. Code covers all states, but three of five non-default states lack visual confirmation.",
+              "accessibility_responsiveness": "condition-a/evidence/checks.json reports axe violations [] with 27 passes, controls_without_accessible_name 0, no horizontal overflow at 1280 or 390 and no console/page errors; condition-a/project/styles.css provides a skip link, :focus-visible, an aria-valued progressbar meter, aria-live toasts, prefers-reduced-motion and stacked invoice rows at 760px. Scored 3 because condition-a/evidence/quality-gates.json is ok:false (accessible-names, 4 violations).",
+              "implementation_quality": "condition-a/project/app.js is a strict-mode IIFE with a loadToken guard against stale async results, dialogBusy guards that block close, backdrop and Escape while submitting, and field validation that focuses the first invalid input; condition-a/evidence/checks.json shows no console or page errors. Scored 3 rather than 4 because condition-a/evidence/quality-gates.json is ok:false and the empty-invoice demo change only re-renders once dataState is ready, which left the empty-state screenshots showing the skeleton."
+            },
+            "critical_defects": [
+              "condition-a/evidence/quality-gates.json is ok:false - the accessible-names gate fails with 4 violations (demo-role, demo-data, demo-invoices, demo-members), which conflicts with condition-a/evidence/checks.json reporting controls_without_accessible_name: 0.",
+              "Success and restricted states were never activated: condition-a/evidence/capture-report.json records activated:false for both, and condition-a/evidence/screenshots/1280x900-success.png, 1280x900-restricted.png, 390x844-success.png and 390x844-restricted.png all show the loading skeleton, so there is no rendered evidence for the member-restricted view or the success feedback.",
+              "condition-a/evidence/screenshots/1280x900-empty.png and 390x844-empty.png show the loading skeleton even though condition-a/evidence/capture-report.json marks empty activated:true - the empty-invoice state is not visually evidenced.",
+              "Default captures condition-a/evidence/screenshots/1280x900-default.png and 390x844-default.png show the loading skeleton instead of the default layout, and the fixed 'Prototype controls' panel overlays the Invoices (desktop.png) and Payment method (mobile.png) card headers in the ready-state captures.",
+              "condition-a/project/analysis.md claims rendered inspection of 'member-restricted, empty invoices, plan comparison, review, scheduled change, cancellation steps' states, but no screenshot in the packet shows them - an unsupported verification claim."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "subscription-settings-r2",
+      "task_id": "subscription-settings",
+      "model_family": "deepseek",
+      "model_version": "deepseek-v4.1-flash",
+      "repetition": 2,
+      "uadi_position": "B",
+      "baseline_run_position": 1,
+      "baseline": {
+        "duration_seconds": 830,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "Analysis states Free up to 3, Pro up to 20, Business up to 100 and owner/member roles from task.md with illustrative prices labelled as sample data and proration/tax deferred to provider (condition-a/project/analysis.md); summary shows Pro $32.00/month, December 1, 2026 and 7 of 20 members in condition-a/evidence/screenshots/1280x900-default.png.",
+              "ux_reasoning": "IA ordered by consequence: summary, price comparison, payment, invoices, separated cancel with divergent compare-vs-change copy and persistent billing note (condition-a/project/analysis.md; condition-a/project/app.js renderCompare() and renderSummary()).",
+              "design_judgment": "Cancel is separated below a divider, requires checkbox acknowledgement and keeps 'Keep my plan' primary with no urgency framing (condition-a/project/app.js openCancelDialog()); downgrade to Free reuses the cancel dialog (renderPlans() data-open-cancel), conflating downgrade with cancellation (condition-a/project/app.js).",
+              "visual_hierarchy": "Summary price and seat meter dominate the desktop view with clear section order (condition-a/evidence/screenshots/1280x900-default.png); mobile prototype-controls strip sits mid-page between summary and plans, interrupting hierarchy (condition-a/evidence/screenshots/390x844-default.png).",
+              "interaction_completeness": "Code covers plan/cadence review, payment validation, invoice loading/empty/error/retry and cancel/resume (condition-a/project/app.js), but capture-report shows success and restricted not activated at both viewports (condition-a/evidence/capture-report.json), so rendered member/success evidence is missing.",
+              "accessibility_responsiveness": "Semantic headings, skip link, progressbar, aria-busy skeletons and prefers-reduced-motion are implemented (condition-a/project/app.js; condition-a/project/index.html), but quality-gates reports 2 serious axe color-contrast failures on muted nav and mobile hides invoice ID/status columns (condition-a/evidence/quality-gates.json; condition-a/project/styles.css).",
+              "implementation_quality": "Vanilla HTML/CSS/JS with labelled estimates, 'demo' confirm copy and honest download toast (condition-a/project/app.js confirmCancel() and data-invoice handler); quality-gates shows no console errors or mobile overflow (condition-a/evidence/quality-gates.json) but only 8 of 12 captures were activated (condition-a/evidence/capture-report.json)."
+            },
+            "critical_defects": [
+              "Rendered success and restricted states were not activated; condition-a/evidence/screenshots/1280x900-success.png and condition-a/evidence/screenshots/1280x900-restricted.png show the default owner view, per condition-a/evidence/capture-report.json.",
+              "Two serious axe color-contrast violations on navigation text (condition-a/evidence/quality-gates.json).",
+              "Mobile prototype-controls strip overlays the page flow in condition-a/evidence/screenshots/390x844-default.png; invoice table hides identifying columns on narrow screens.",
+              "No simulated mutation failure paths for plan, cadence or payment confirms; annual-to-monthly switching is not offered."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 3,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 3,
+              "accessibility_responsiveness": 3,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-a/project/analysis.md names the four owner questions, the three high-risk failure modes of the current dense form, and every assumption it makes (Pro at $32/month, 7 of 20 members, end-of-period cancellation, no refund policy invented); task.md outcomes 1-6 and the owner/member split are all covered.",
+              "ux_reasoning": "condition-a/project/analysis.md orders the page by consequence (summary -> plans -> payment -> invoices -> cancel -> prototype controls), and condition-a/project/app.js renderCompare() keeps a persistent 'You're billed monthly ... nothing changes until you confirm' note so the price toggle can never be read as a billing change; every consequential change routes through a review dialog (openPlanReview, openCadenceReview).",
+              "design_judgment": "condition-a/project/app.js openCancelDialog() gates cancellation behind an acknowledgement checkbox while 'Keep my plan' is the primary-styled button, and estimateNote() says 'Estimate, not a charge'; against that, estimate()/openPlanReview() compute a concrete 'Due today' and a credit figure from an invented proration formula (app.js), paid downgrades are applied immediately with timing explicitly left unsettled (condition-a/project/analysis.md), and annual-to-monthly switching is simply not offered.",
+              "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png shows a clean summary-first hierarchy with the destructive action isolated below a divider under a red heading; on mobile condition-a/evidence/screenshots/390x844-default.png shows the invoice table reduced to DATE / AMOUNT / RECEIPT because condition-a/project/styles.css hides the invoice-id and status columns at <=760px, so invoice identity and Paid status vanish at 390px, and the fixed Prototype controls bar renders across the 'Plans & billing period' subtitle in that capture.",
+              "interaction_completeness": "condition-a/evidence/screenshots/1280x900-loading.png, 1280x900-empty.png and 1280x900-error.png show designed invoice states with a retry that restores data, and condition-a/project/app.js implements member restrictions, cancel/resume and payment validation; but condition-a/evidence/capture-report.json marks success and restricted as not activated at both viewports (1280x900-success.png and 1280x900-restricted.png show the default owner view), and loading/error/empty exist only for invoices - there is no page-level loading or error state.",
+              "accessibility_responsiveness": "condition-a/evidence/checks.json reports 0 controls without accessible names, no horizontal overflow at 1280 or 390, and a clean mobile axe run; condition-a/evidence/quality-gates.json still fails the axe gate with 2 serious color-contrast violations on the muted sidebar nav. condition-a/project/styles.css provides :focus-visible outlines and a prefers-reduced-motion block.",
+              "implementation_quality": "condition-a/project/app.js is factored into render functions with a single native <dialog>, aria-busy skeletons, aria-invalid field errors and focus moves to the first invalid field; condition-a/evidence/quality-gates.json is ok:false (axe) and the packet contains no automated test artifact for the project."
+            },
+            "critical_defects": [
+              "Missing state evidence: condition-a/evidence/capture-report.json records success and restricted as activated:false, and condition-a/evidence/screenshots/1280x900-success.png, 1280x900-restricted.png, 390x844-success.png and 390x844-restricted.png all show the default owner view, so the member/restricted view and the success confirmation are not visually evidenced.",
+              "condition-a/evidence/quality-gates.json fails the axe gate (2 serious color-contrast violations) so the overall gate is ok:false.",
+              "Loading, empty and error states are scoped to the invoice panel only (condition-a/project/app.js renderInvoices); no page-level loading or load-failure state is delivered despite task.md asking for loading and error states where relevant.",
+              "Mobile invoice rows lose the invoice id and Paid status (condition-a/project/styles.css media query <=760px; visible in condition-a/evidence/screenshots/390x844-default.png).",
+              "The review dialog displays a specific prorated credit/'Due today' amount produced by an internal formula (condition-a/project/app.js estimate()), which risks presenting an invented figure in a billing flow even though it is labelled an estimate."
+            ]
+          }
+        ]
+      },
+      "uadi": {
+        "duration_seconds": 1321,
+        "reviewers": [
+          {
+            "id": "R1",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 4,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 4
+            },
+            "rationale": {
+              "product_understanding": "Assumptions keep plan differences to member limits, set Pro $49.00 monthly with 17 of 20 members and Dec 1, 2026, and define immediate upgrades versus end-of-period downgrades without invented entitlements (condition-b/project/analysis.md); summary confirms Pro, $49.00/month and 17 of 20 in condition-b/evidence/screenshots/1280x900-default.png.",
+              "ux_reasoning": "Highest-risk problems enumerated including toggle-as-commitment trap and cancellation extremes; display-only monthly/annual toggle states it does not change the subscription and real cadence changes use a separate dialog (condition-b/project/analysis.md; condition-b/project/app.js compareSection(); condition-b/evidence/screenshots/1280x900-default.png).",
+              "design_judgment": "Cancellation keeps 'Keep my subscription' primary behind a consent checkbox with no retention maze, and seat-blocked downgrades are disabled with exact shortfall before commitment (condition-b/project/app.js cancelDialog() and planCard()); warnings state Free supports 3 members without dark-pattern urgency (condition-b/project/app.js cancelSection()).",
+              "visual_hierarchy": "Plan, price, next payment, billing period and payment method appear in a scannable fact grid above a prominent usage bar and near-limit warning at both viewports (condition-b/evidence/screenshots/1280x900-default.png; condition-b/evidence/screenshots/390x844-default.png).",
+              "interaction_completeness": "Full state coverage includes loading skeleton, load error with retry, empty invoices, plan/cadence/payment/cancel pending and failure paths, scheduled changes with undo and reactivation (condition-b/project/app.js submitPlan(), submitCadence(), submitPayment(), submitCancel(), reactivate()); success was activated at both viewports (condition-b/evidence/capture-report.json).",
+              "accessibility_responsiveness": "Dialog focus management, progressbar values, labelled invoices and responsive stacking are implemented (condition-b/project/app.js renderModal(); condition-b/project/styles.css), but quality-gates reports 11 serious axe color-contrast failures including fact labels, section headings and table headers (condition-b/evidence/quality-gates.json).",
+              "implementation_quality": "Structured single-file state machine with failure simulation, draft preservation, duplicate-submit guards and focus return (condition-b/project/app.js); checks show zero console errors and no mobile overflow (condition-b/evidence/checks.json), though restricted-state capture was not activated (condition-b/evidence/capture-report.json)."
+            },
+            "critical_defects": [
+              "Restricted (member) state was not activated at either viewport; condition-b/evidence/screenshots/1280x900-restricted.png shows the owner default, per condition-b/evidence/capture-report.json.",
+              "Eleven serious axe color-contrast violations on labels and headings (condition-b/evidence/quality-gates.json; condition-b/evidence/checks.json).",
+              "Open prototype-controls panel overlaps page content in desktop screenshots (condition-b/evidence/screenshots/1280x900-success.png; condition-b/evidence/screenshots/1280x900-empty.png).",
+              "Loading and load-error replace all billing content rather than preserving plan context (condition-b/evidence/screenshots/1280x900-loading.png; condition-b/evidence/screenshots/1280x900-error.png); downloadable invoice PDFs are absent, though honestly disclosed."
+            ]
+          },
+          {
+            "id": "R2",
+            "type": "llm",
+            "independent": true,
+            "provenance": "blinded machine reviewer, separate session; packet includes FILES.txt",
+            "scores": {
+              "product_understanding": 4,
+              "ux_reasoning": 4,
+              "design_judgment": 4,
+              "visual_hierarchy": 3,
+              "interaction_completeness": 4,
+              "accessibility_responsiveness": 2,
+              "implementation_quality": 3
+            },
+            "rationale": {
+              "product_understanding": "condition-b/project/analysis.md ranks six highest-risk UX problems, states its assumptions explicitly (Pro at $49/month, 17 of 20 seats, no refund, upgrades immediate / downgrades at period end, plans differ only by member limit) and includes an owner-versus-member responsibility matrix that maps to task.md's role requirement.",
+              "ux_reasoning": "condition-b/project/app.js compareSection() pairs the display toggle with 'Changing this display only changes the prices below - it does not change your subscription'; planDialog() previews effective date, new price and next payment before confirmation; planCard() disables an unworkable downgrade and states the exact seat shortfall; cancelDialog() keeps 'Keep my subscription' primary.",
+              "design_judgment": "condition-b/project/analysis.md deliberately refuses to fabricate a proration number ('described as an adjustment from the provider on the next invoice'), reasons the upgrade-now/downgrade-at-period-end asymmetry instead of assuming one, states the no-refund rule plainly, and warns that UI visibility is not authorization; no urgency, retention maze or pre-checked consent appears in condition-b/project/app.js.",
+              "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png gives a card-based summary with status pill, three-fact grid, usage warning and a visually separated cancellation card, and condition-b/evidence/screenshots/390x844-default.png preserves every invoice field as labelled rows; against that, condition-b/evidence/screenshots/390x844-success.png shows the expanded fixed Prototype controls panel (condition-b/project/styles.css .proto, position:fixed bottom-left) covering the plan card content on mobile.",
+              "interaction_completeness": "condition-b/evidence/screenshots/1280x900-loading.png and 1280x900-error.png show page-level loading and load failure with 'Nothing about your subscription has changed' plus retry, and condition-b/project/app.js adds pending, simulated mutation failure, undo-scheduled-change, reactivation and seat-blocked states switchable from the Prototype controls; but condition-b/evidence/capture-report.json marks restricted as not activated and condition-b/evidence/screenshots/1280x900-success.png shows no success confirmation (page still reads 'Active' with controls open), so two states remain visually unevidenced.",
+              "accessibility_responsiveness": "condition-b/evidence/checks.json reports 0 controls without accessible names and no horizontal overflow at either viewport, and condition-b/project/styles.css has :focus-visible plus prefers-reduced-motion; however axe reports 11 serious color-contrast nodes on desktop (fact labels, payment block headings, all four table headers) and 5 on mobile (condition-b/evidence/quality-gates.json, condition-b/evidence/checks.json), a systemic contrast problem in core content that keeps the gate failing.",
+              "implementation_quality": "condition-b/project/app.js implements a coherent state machine with focus return (returnFocus/focusAfterRender), duplicate-submit guards, cleared timers, an IntersectionObserver section nav and preserved form drafts; against that, condition-b/evidence/quality-gates.json is ok:false with 11 serious axe nodes, and condition-b/project/index.html renders the entire page from JavaScript with no <noscript> fallback (unlike condition-a/project/index.html)."
+            },
+            "critical_defects": [
+              "Missing state evidence: condition-b/evidence/capture-report.json records restricted as activated:false, and condition-b/evidence/screenshots/1280x900-restricted.png and 390x844-restricted.png show the default owner view; condition-b/evidence/screenshots/1280x900-success.png and 390x844-success.png show no success confirmation either, so member and success states are visually unevidenced.",
+              "condition-b/evidence/quality-gates.json fails the axe gate with 11 serious contrast violations (5 more on mobile in condition-b/evidence/checks.json), affecting table headers and fact labels rather than peripheral chrome.",
+              "The expanded Prototype controls panel overlays the plan card content at 390px (condition-b/evidence/screenshots/390x844-success.png), obscuring the very summary the state was captured to demonstrate.",
+              "condition-b/project/analysis.md says the checks actually run are listed in 'transcript.md', but no transcript file appears in the delivered evidence list, so that claim cannot be verified from this packet.",
+              "The whole UI is JavaScript-rendered (condition-b/project/index.html contains only <div id=\"app\">) with no noscript message, so the page is blank without scripting."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
