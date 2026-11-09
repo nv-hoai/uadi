@@ -1,0 +1,18 @@
+{
+  "frozen_at": "2026-11-09T01:47:49.669Z",
+  "algorithm": "sha256",
+  "hashes": {
+    "operations-dashboard-r1/r1": "3a68c8dc80e3736ff1925098435344b38ac0b2c072a725a9ab3022918e521b21",
+    "operations-dashboard-r1/r2": "1f737bb45209886e4bd52c197bb0ff51df3a14e59e77e9bdfa6931091d402efb",
+    "operations-dashboard-r2/r1": "3527e0128b4793084cfc174e8c75c2fa65b73b4c62de4d0958aa2c385dfd9579",
+    "operations-dashboard-r2/r2": "03f85171e5855b57b31913b63c8a3f0042ce5af3b6cf09a3528dfc2e7fe0d610",
+    "product-onboarding-r1/r1": "f684b664390260f8772a4da06871a3604ff377697c1d50407666459ce8ae6a2c",
+    "product-onboarding-r1/r2": "908f333daadab1e5dffabb0c98f3444bcdaa23cd77b32488c79b738365ec36e1",
+    "product-onboarding-r2/r1": "d669ba1f37bbd04c6cd3eea1fc604bf324ebed379f61cb75629618670c2805c1",
+    "product-onboarding-r2/r2": "a713aa63d8c892ca8f60525c4a4798fa201b3b9dd0937cbd0b520cc8bb0294c6",
+    "subscription-settings-r1/r1": "17fb8220f36d51ede143ae6c7459d6bdfcff23cc542a7ad1891367be542ca624",
+    "subscription-settings-r1/r2": "97bfb3e852a33096c15d8c3a59034e3698fbcc97e7d7194fbea3daa469c9e4ac",
+    "subscription-settings-r2/r1": "289ff026c54b3b8ed1f4e82b21aeb350943a076cadeb618d2f86627ca12de65f",
+    "subscription-settings-r2/r2": "332a40936e5d1f5611e5d2bac945284e0b0449023130f280408a1912990bf6a6"
+  }
+}

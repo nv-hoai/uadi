@@ -1,0 +1,66 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "operations-dashboard-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "condition-a/project/analysis.md defines on-time rate, failed attempts and orders with units, denominators (failed excluded) and equal-length previous-period baselines; condition-a/evidence/screenshots/1280x900-default.png shows 95.0%, 178 and 4,827 with +1.9 pts / +31.9% / +7.1% and the 15-minute lag snapshot. No invented revenue, forecast or cause metrics.",
+      "ux_reasoning": "condition-a/project/analysis.md orders signal->explanation->investigation and condition-a/project/app.js + condition-a/project/index.html implement insight action, metric links and region View actions preserving range/region into the orders panel; delivery status is deliberately kept in the orders panel because filtering the rate by status would make the denominator meaningless.",
+      "design_judgment": "condition-a/evidence/screenshots/1280x900-default.png shows zero-based failed-attempt bars with previous-period bars and a 0-100% region track; condition-a/project/analysis.md rejects truncated axes and dual encoding, uses pts for rates and paired arrow/signed-value/screen-reader meaning.",
+      "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png and condition-a/evidence/screenshots/390x844-default.png are comparable with Candidate B: dominant on-time card, insight banner naming East first, chart+region table below, and mobile stacks tables to cards without page overflow in 390x844-default.png.",
+      "interaction_completeness": "condition-a/project/index.html, condition-a/project/app.js and condition-a/evidence/screenshots/1280x900-loading.png, condition-a/evidence/screenshots/1280x900-empty.png, condition-a/evidence/screenshots/1280x900-error.png cover loading skeleton, no-data recovery, error retry+focus return and comparison-off; condition-a/evidence/capture-report.json shows success/restricted screenshots were not activated (activated:false) so those states are not screenshot-proven, and summary-level delivery-status filtering is not offered.",
+      "accessibility_responsiveness": "condition-a/evidence/checks.json reports no horizontal overflow, 24 named controls and 0 axe violations at desktop/mobile, while condition-a/evidence/quality-gates.json still fails accessible-names for the compare checkbox; semantic landmarks, skip link, disclosures and data-table equivalents are visible in condition-a/project/index.html and proven in 390x844-default.png.",
+      "implementation_quality": "condition-a/project/app.js and condition-a/project/styles.css implement deterministic aggregation, partial-data exclusion from both periods, reversible comparison and focus/live-region handling without external assets; condition-a/evidence/quality-gates.json ok:false (1 accessible-name violation) and condition-a/evidence/capture-report.json 8/12 activated limit a stronger claim."
+    },
+    "critical_defects": [
+      "condition-a/evidence/quality-gates.json accessible-names failure for the compare checkbox (1 violation).",
+      "condition-a/evidence/capture-report.json: success and restricted screenshots list files but activated:false; no screenshot proves stale/partial states, which rely on prose/code only.",
+      "Orders list is a disclosed sample without pagination/export (condition-a/project/analysis.md); summary cannot be filtered by delivery status."
+    ],
+    "strengths": [
+      "Precise metric contract and anti-misleading chart choices (zero-based counts, 0-100% tracks, no invented target).",
+      "Strong insight-first hierarchy and context-preserving drill-down; clear freshness communication in default view.",
+      "Clean rendered checks with no overflow and no axe violations in checks.json."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 3,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 2,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 2
+    },
+    "rationale": {
+      "product_understanding": "condition-b/project/analysis.md and condition-b/project/index.html define the three metrics, 15-minute lag and preceding-period comparison without invented KPIs, but condition-b/project/app.js adds At risk/Watch/On track thresholds and condition-b/evidence/screenshots/1280x900-default.png shows that judgement with no supplied target.",
+      "ux_reasoning": "condition-b/project/analysis.md and condition-b/project/index.html provide scan->compare->locate->investigate with global date/region/status filters, custom ranges and Needs attention; applying status globally makes the on-time rate tautological in the Failed-only case, which the code has to explain with an undefined-rate treatment.",
+      "design_judgment": "condition-b/evidence/screenshots/1280x900-default.png keeps a 0-100% rate axis and zero-based count logic, but the default line around 91.8% is visually flat; only the daily-change strip carries the variation, and worst/best ranking depends on threshold tiers rather than plain sorted values.",
+      "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png and condition-b/evidence/screenshots/390x844-default.png are comparable, but the desktop trend panel wastes space on near-overlapping lines and the Needs attention panel is sparse, while the equal-weight KPI strip lacks one dominant health signal; mobile reflow is usable.",
+      "interaction_completeness": "condition-b/project/index.html and condition-b/project/app.js support KPI, region, attention and keyboard-accessible chart-day drill-downs, custom-range validation, loading/error recovery and empty-result actions; condition-b/evidence/screenshots/1280x900-loading.png, condition-b/evidence/screenshots/1280x900-error.png and condition-b/evidence/screenshots/1280x900-empty.png show distinct states, though condition-b/evidence/capture-report.json shows success/restricted were not activated.",
+      "accessibility_responsiveness": "condition-b/evidence/checks.json reports serious color-contrast in the footer and, on mobile, a non-focusable scrollable region with no overflow; condition-b/evidence/quality-gates.json fails axe for the same contrast issue, weakening colour/text pairs despite labelled controls.",
+      "implementation_quality": "condition-b/project/app.js is modular vanilla JS with deterministic data, tables and live regions, but condition-b/evidence/checks.json axe violations and condition-b/evidence/quality-gates.json ok:false, plus an always-visible floating Prototype controls element in 1280x900-default.png, show less polish than Candidate A."
+    },
+    "critical_defects": [
+      "Serious axe color-contrast failure in condition-b/evidence/checks.json / condition-b/evidence/quality-gates.json and mobile scrollable-region-focusable failure.",
+      "Invented At risk/Watch/On track judgements without a supplied target in condition-b/evidence/screenshots/1280x900-default.png.",
+      "condition-b/evidence/capture-report.json: success/restricted screenshots not activated; stale/partial states lack screenshots."
+    ],
+    "strengths": [
+      "Broadest drill-down set (including chart-day keyboard activation and custom-range validation).",
+      "Explicit comparison note, definitions and distinct loading/error/empty panels in condition-b/evidence/screenshots/1280x900-loading.png and condition-b/evidence/screenshots/1280x900-error.png.",
+      "Clear Needs attention ranking naming South/East in the default desktop view."
+    ]
+  },
+  "verdict": "Candidate A wins on product precision, chart honesty, dominant hierarchy and accessibility evidence, while Candidate B wins on literal filter breadth and chart-day drill paths. Visual-hierarchy scoring is possible because both candidates provide default views at 1280x900 and 390x844 (condition-a/evidence/screenshots/1280x900-default.png vs condition-b/evidence/screenshots/1280x900-default.png); neither gains credit for non-activated success/restricted files.",
+  "limitations": "One blinded judge pass on the listed screenshots, code and evidence files only; stale/partial screenshots were absent from FILES.txt for both candidates and this is not a statistical test or proof of causation."
+}

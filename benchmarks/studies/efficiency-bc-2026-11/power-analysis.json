@@ -1,0 +1,39 @@
+{
+  "observed_sd": 6.476117985851298,
+  "margin": -2,
+  "method": "normal approximation, 4000 simulations per cell; lower bound mean - 1.96*sd/sqrt(n) > -2",
+  "rows": [
+    {
+      "true_delta": 0,
+      "min_n_80pct": 82,
+      "power_at_6": 0.11225,
+      "power_at_12": 0.18525,
+      "power_at_24": 0.32475,
+      "power_at_42": 0.52
+    },
+    {
+      "true_delta": 2,
+      "min_n_80pct": 21,
+      "power_at_6": 0.3335,
+      "power_at_12": 0.572,
+      "power_at_24": 0.86625,
+      "power_at_42": 0.9745
+    },
+    {
+      "true_delta": 3,
+      "min_n_80pct": 13,
+      "power_at_6": 0.46725,
+      "power_at_12": 0.75875,
+      "power_at_24": 0.96925,
+      "power_at_42": 0.99925
+    },
+    {
+      "true_delta": 5,
+      "min_n_80pct": 7,
+      "power_at_6": 0.7355,
+      "power_at_12": 0.96225,
+      "power_at_24": 0.99975,
+      "power_at_42": 1
+    }
+  ]
+}

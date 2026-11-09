@@ -1,0 +1,66 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "product-onboarding-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 3,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "condition-a/project/analysis.md separates supplied facts, explicitly labelled assumptions (pending invitations reserving seats) and unknowns (seat semantics, ownership transfer), and states an activation hypothesis of project plus first task without claiming analytics or research.",
+      "ux_reasoning": "condition-a/project/analysis.md gives an included/deferred/skippable decision matrix, explains why role capabilities appear before role selectors and why the limit is shown without an upgrade path; however the delivered default screen inserts an orientation screen before the single required field (condition-a/evidence/screenshots/1280x900-default.png), and analysis.md section 5 itself flags the success view's invitation nudge as an activation risk.",
+      "design_judgment": "Input-reasoning microcopy and role cards placed above the invite form are strong (condition-a/project/index.html), but the delivered palette fails condition-a/evidence/quality-gates.json axe with 10 serious color-contrast findings (fact copy, nav labels, skip button, plan note) and 5 accessible-name violations, and checks.json reports 7 h1 elements in one document.",
+      "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png shows a clear eyebrow to headline to fact-row sequence with one primary CTA and a quiet plan rail; condition-a/evidence/screenshots/390x844-default.png stacks the same content without overlap and the mobile-overflow gate passes at 0 px (condition-a/evidence/quality-gates.json). Only default-state renders are usable for either candidate.",
+      "interaction_completeness": "condition-a/project/app.js implements validation with focus move and aria-invalid, aria-busy loading with double-submit guards, invitation failure with per-row retry/remove, skip and resume via guarded localStorage, a restricted Member view and a Starter-limit block, all catalogued in condition-a/project/analysis.md section 4; but condition-a/evidence/capture-report.json activates only the default state (2 of 12), so none of these states has a usable render.",
+      "accessibility_responsiveness": "condition-a/evidence/quality-gates.json is ok:false - axe reports 10 serious color-contrast violations and accessible-names reports 5 unlabeled prototype radio inputs; mitigating evidence is checks.json showing 0 unnamed controls on the initial screen, no horizontal overflow at 1280 and 390, and a skip link plus polite live region in condition-a/project/index.html, which is why this is a failing rather than a absent score.",
+      "implementation_quality": "condition-a/project/app.js is a structured state machine (render, renderView, go, focusHeading) with guarded persistence and busy-state handling, and checks.json reports no console or page errors; the two failed gates and the 7-h1 document structure keep it below the top band."
+    },
+    "critical_defects": [
+      "condition-a/evidence/quality-gates.json ok:false - axe 10 serious color-contrast violations plus 5 accessible-name violations on prototype radio inputs.",
+      "No usable rendered evidence for any non-default state: condition-a/evidence/capture-report.json activates 2 of 12 and condition-a/evidence/screenshots/1280x900-error.png is visually identical to condition-a/evidence/screenshots/1280x900-default.png, so the loading, empty, error, success and restricted files do not show those states.",
+      "Seven h1 elements live in one document (condition-a/evidence/checks.json), even though only one view is visible at a time."
+    ],
+    "strengths": [
+      "condition-a/project/analysis.md separates facts, assumptions and unknowns and documents included/deferred/skippable decisions with reasons.",
+      "The solo path is explicit and permanent: 'Continue without inviting', visible skip and finish-later actions in condition-a/project/index.html, with the 5-seat Starter limit stated without inventing upgrades or pricing.",
+      "Recoverable invitation failure keeps addresses, offers retry and removal, and announces results through a live region (condition-a/project/app.js sendInvites and retryInvite)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "condition-b/project/analysis.md separates facts, assumptions and unknowns, answers each reviewer question in section 8, and states plainly that a project shell is not the whole activation outcome (section 7) instead of overstating value.",
+      "ux_reasoning": "condition-b/project/analysis.md orders the flow as project creation, unmistakable success, then optional invitation, with a per-step rationale and deferral table; condition-b/evidence/screenshots/1280x900-default.png implements exactly that - one required field, primary 'Create project', adjacent skip and the note 'Creating a project does not invite anyone or change your plan'.",
+      "design_judgment": "condition-b/project/analysis.md explains why roles precede selection, why the plan limit appears only where it affects the decision and why success precedes invitation; the delivered copy keeps claims honest and all deterministic gates pass in condition-b/evidence/quality-gates.json (ok:true, axe 0 serious, accessible-names 0, mobile-overflow 0).",
+      "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png has a clean single-card hierarchy with step marker and context rail, but condition-b/evidence/screenshots/390x844-default.png and condition-b/evidence/screenshots/mobile.png show the floating 'Prototype controls' pill overlapping and obscuring rows of the 'Workspace at a glance' card, which is a visible defect in delivered renders.",
+      "interaction_completeness": "condition-b/project/app.js implements project-creation failure that preserves the entered name, partial invitation failure distinguishing sent from failed with per-address retry, seat-limit blocking, skip and resume via localStorage, slow-connection loading and Member restrictions, catalogued in condition-b/project/analysis.md section 5; as with Candidate A, condition-b/evidence/capture-report.json activates only 2 of 12 so no state screenshot is usable.",
+      "accessibility_responsiveness": "condition-b/evidence/quality-gates.json is ok:true across every gate and checks.json shows axe violations [] with 0 unnamed controls and no overflow at 1280 and 390; condition-b/project/app.js adds aria-invalid, aria-describedby, role='alert', aria-busy and focus management, and condition-b/project/styles.css includes prefers-reduced-motion. Not tested with a screen reader (analysis.md section 6).",
+      "implementation_quality": "condition-b/project/app.js escapes interpolated values through esc(), guards stale asynchronous work with a busy token, uses delegated events and re-renders without losing typed input; condition-b/project/index.html provides a noscript fallback and checks.json reports no console or page errors."
+    },
+    "critical_defects": [
+      "No usable rendered evidence for any non-default state: condition-b/evidence/capture-report.json activates 2 of 12 and condition-b/evidence/screenshots/1280x900-error.png duplicates the default view.",
+      "Floating prototype control overlaps product content in condition-b/evidence/screenshots/390x844-default.png, covering rows of the workspace summary card.",
+      "The body is rendered entirely by JavaScript, so without scripts the page shows only the noscript notice (condition-b/project/index.html); acceptable for the prototype but a fragility in the delivered artifact."
+    ],
+    "strengths": [
+      "condition-b/evidence/quality-gates.json is the only packet in this pair with every deterministic gate passing.",
+      "Success before invitation keeps the activation definition honest (condition-b/project/analysis.md section 3) and the default screen delivers it.",
+      "Error recovery is granular: partial delivery failure separates sent from failed addresses and retries individually (condition-b/project/app.js submitInvites and retryInvites)."
+    ]
+  },
+  "verdict": "Candidate B delivers the shorter path to first value, keeps solo progress primary at every step and passes every deterministic gate; Candidate A compensates with a deeper product model, a richer state matrix and a clearer orientation screen, but fails two accessibility gates and inserts an extra step before the single required field. Because both packets activate only default-state captures (2 of 12 each), non-default behaviour was judged from source and prose only; on the available evidence Candidate B is ahead, chiefly on accessibility and path length, with Candidate A's analysis depth the main counterweight.",
+  "limitations": "This is one blinded judge pass over static artifacts, not a statistical test and not evidence of causation: only default-state screenshots were activated for either candidate, automated axe results cover only the rules they ran and are not a WCAG conformance audit, and no screen-reader, cross-browser or real-user testing is present in either packet."
+}

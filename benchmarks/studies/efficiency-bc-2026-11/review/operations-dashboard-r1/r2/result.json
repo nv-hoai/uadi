@@ -1,0 +1,66 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "operations-dashboard-r1",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 4,
+      "implementation_quality": 4
+    },
+    "rationale": {
+      "product_understanding": "condition-a/project/analysis.md section 2 gives a metric contract for all three metrics with meaning, unit, calculation, scope, comparison and limitation, defines UTC Monday to Sunday ranges and names the exact comparison baselines, and the freshness card in condition-a/evidence/screenshots/1280x900-default.png states the snapshot and the 15-minute lag without ever implying live data.",
+      "ux_reasoning": "condition-a/project/analysis.md section 3 orders the page as signal then explanation then investigation, section 5 justifies keeping delivery status inside the orders panel so rate denominators stay meaningful, and section 5 documents five drill paths that all preserve range and region while returning focus on close.",
+      "design_judgment": "Zero-based bars, no truncated rate axis, metric-specific direction semantics with screen-reader text and absolute plus relative change shown together (condition-a/project/analysis.md section 4) are sound, but the dashboard never plots on-time rate over time: condition-a/evidence/screenshots/1280x900-default.png shows only failed-attempt bars, so 'is performance improving' rests on deltas alone even though section 4's own honesty rationale permits a full 0-100 percent trend; quality-gates also fails one accessible-names check (condition-a/evidence/quality-gates.json).",
+      "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png sequences exception banner, dominant on-time card, supporting cards, chart and regional table, then the orders panel; condition-a/evidence/screenshots/390x844-default.png stacks region cards instead of a clipped table, and condition-a/evidence/screenshots/1280x900-loading.png keeps the same layout skeleton so nothing jumps.",
+      "interaction_completeness": "condition-a/evidence/capture-report.json activates default, loading, empty and error at both viewports (8 of 12); condition-a/project/index.html exposes ready, loading, stale, partial, error and empty in the data-state control, and the orders panel preserves context on drill-down (condition-a/project/analysis.md section 5). Success and restricted captures were not activated, and stale and partial have no screenshots listed in FILES.txt.",
+      "accessibility_responsiveness": "condition-a/evidence/checks.json reports axe violations [] and 0 unnamed controls at both 1280 and 390, mobile-overflow 0 and one h1; the single accessible-names gate failure is on a checkbox whose label text wraps the input (condition-a/project/index.html), which axe and checks.json both treat as named, so it appears to be a checker false positive; keyboard flows are documented in condition-a/project/analysis.md section 7.",
+      "implementation_quality": "condition-a/project/app.js separates aggregation, series construction, markup and state handling, restores focus on drill close and re-renders on breakpoint change, and checks.json shows no console or page errors; the only failed gate is the checkbox heuristic noted above."
+    },
+    "critical_defects": [
+      "condition-a/evidence/quality-gates.json ok:false - the accessible-names gate reports 1 violation on the compare checkbox; even if the wrapping label makes it a false positive, the deterministic gate did not pass.",
+      "No on-time trend over time despite task.md asking whether performance is improving: only failed-attempt bars are charted (condition-a/evidence/screenshots/1280x900-default.png).",
+      "Stale and partial states exist as control options (condition-a/project/index.html) but no screenshot for them is listed in FILES.txt, so those states rest on prose alone."
+    ],
+    "strengths": [
+      "Metric contract with denominators, units and limitations, repeated on the page (condition-a/project/analysis.md section 2).",
+      "Honest chart discipline: zero baseline, no truncated rate axis, percentage-point and absolute change shown side by side (condition-a/project/analysis.md section 4).",
+      "Activated loading, empty and error renders that keep stale totals off the screen (condition-a/evidence/screenshots/1280x900-error.png and condition-a/evidence/screenshots/1280x900-empty.png)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "condition-b/project/analysis.md section 2 defines each metric with its denominator and notes (attempt-level counting, order-date assignment), states the 15-minute lag and avoids the word live, and section 8 reviews the ways the numbers could be misread.",
+      "ux_reasoning": "condition-b/project/analysis.md sections 1 and 3 build a scan, compare, locate, investigate path, the 'Needs attention' list answers 'what changed most' directly, and section 5 explains showing an em dash instead of a misleading 100 percent when a status filter makes the rate undefined.",
+      "design_judgment": "Fixed 0-100 rate axis with a separate percentage-point change strip, no gauges or pies, status always paired with words, tabular figures and 'descriptive, not significance tests' copy (condition-b/project/analysis.md sections 4 and 8); the delivered default includes a trend metric toggle (condition-b/evidence/screenshots/1280x900-default.png).",
+      "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png reads cleanly from KPI strip to trend and attention to regions and definitions, but the floating 'Prototype controls' pill overlaps product text in condition-b/evidence/screenshots/1280x900-error.png and condition-b/evidence/screenshots/1280x900-empty.png, the 'Needs attention' card leaves a large empty block, and condition-b/evidence/screenshots/390x844-default.png compresses trend axis labels to near-illegibility.",
+      "interaction_completeness": "condition-b/project/app.js adds custom-range validation with start before end and a nine-week cap, five drill entry points and keyboard-focusable chart days; ready, loading, stale, partial, empty and error states are selectable (condition-b/project/index.html) and condition-b/evidence/capture-report.json activates default, loading, empty and error at both viewports (8 of 12).",
+      "accessibility_responsiveness": "condition-b/evidence/quality-gates.json ok:false - axe flags 1 serious color-contrast violation on footer text, and condition-b/evidence/checks.json mobile adds scrollable-region-focusable 1 because the horizontally scrolling table container in condition-b/project/styles.css has no keyboard access; mitigating evidence is 0 unnamed controls, one h1 and no page overflow in checks.json.",
+      "implementation_quality": "condition-b/project/app.js has deterministic aggregation, state-machine rendering, delegated events and polite live-region announcements with no console or page errors (condition-b/evidence/checks.json), but the keyboard-inaccessible scroll container and the footer contrast failure are code-level defects that were not caught before delivery."
+    },
+    "critical_defects": [
+      "condition-b/evidence/quality-gates.json ok:false - axe serious color-contrast on footer text, and condition-b/evidence/checks.json at 390 px additionally reports scrollable-region-focusable, a real keyboard barrier to the scrolling table (condition-b/project/styles.css).",
+      "The floating prototype control obscures definition text in condition-b/evidence/screenshots/1280x900-error.png, covering content in a delivered state screenshot.",
+      "The main trend line is visually flat on a 0-100 axis with very small axis labels at 390 px (condition-b/evidence/screenshots/390x844-default.png); mitigated by the percentage-point strip and the table equivalent, but weak on a phone."
+    ],
+    "strengths": [
+      "The 'Needs attention' ranking answers the brief's need to notice meaningful deterioration without inventing causes (condition-b/project/analysis.md section 3).",
+      "Undefined-rate handling prevents a tautological 100 percent when a status filter applies (condition-b/project/analysis.md section 5).",
+      "Activated loading, empty and error renders that show no stale totals (condition-b/evidence/screenshots/1280x900-loading.png, condition-b/evidence/screenshots/1280x900-error.png, condition-b/evidence/screenshots/1280x900-empty.png)."
+    ]
+  },
+  "verdict": "Both candidates deliver complete, honest dashboards with default, loading, empty and error renders activated at both viewports. Candidate A is cleaner on accessibility - axe is empty at both viewports, no control lacks a name and nothing overlaps content - and keeps drill-down context preservation explicit; Candidate B answers the brief's 'is performance improving' question more fully with a rate trend plus a percentage-point change strip and a needs-attention list, but ships two serious accessibility failures and a floating control that obscures text in its own screenshots. On balance Candidate A is ahead on evidence quality and access, while Candidate B is ahead on chart coverage.",
+  "limitations": "This is one blinded judge pass, not a statistical test and not proof of causation: stale and partial states have no screenshots listed in FILES.txt for either candidate and success and restricted captures were not activated, so those states rest on source and prose; axe results cover only the rules they ran and are not a WCAG conformance audit."
+}

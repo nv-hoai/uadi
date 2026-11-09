@@ -1,0 +1,50 @@
+{
+  "reviewer_id": "R1",
+  "pair_id": "subscription-settings-r1",
+  "candidate_a": {
+    "scores": {"product_understanding": 4, "ux_reasoning": 4, "design_judgment": 3, "visual_hierarchy": 3, "interaction_completeness": 3, "accessibility_responsiveness": 3, "implementation_quality": 3},
+    "rationale": {
+      "product_understanding": "inputs/condition-a/project/analysis.md:5,11-18 states sample prices/dates/tax explicitly, avoids inventing proration/refund; desktop.png shows Pro $49, Billed monthly Next payment Nov 28 2026, 17 of 20, matching task limits 3/20/100.",
+      "ux_reasoning": "analysis.md:49-62 single-page plus dialog rationale, Orient-Compare-Review-Commit-Recover journey; app.js compare-note, $0 today, blocked Free downgrade with exact removal count, two-step cancel with ack checkbox.",
+      "design_judgment": "index.html:157-166, styles.css danger-zone show cancel last and separate; no urgency/upsell; annual save labelled arithmetic. Prototype controls overlay overlapping content limits restraint.",
+      "visual_hierarchy": "desktop.png (1280x1436) and mobile.png (390x2578) give comparable loaded default views at equivalent widths; 1280x900 files show skeleton for both candidates on load. Plan price, usage meter and danger zone clearly ranked; mobile prototype pill obscures Payment method heading.",
+      "interaction_completeness": "capture-report.json 8/12 activated; 1280x900-error.png shows load error with Try again; code implements loading/empty/scheduled/undo/member-disabled/payment validation. 1280x900-empty/success/restricted show skeleton, not the states; no dialog screenshots in evidence.",
+      "accessibility_responsiveness": "checks.json no horizontal overflow, no console errors, axe 27 passes; index.html:93 meter role=progressbar with aria values, skip-link, focus-visible, prefers-reduced-motion. quality-gates.json accessible-names fail for 4 demo selects.",
+      "implementation_quality": "Dependency-free HTML/CSS/JS, native dialog with dialogBusy guard, focusHeading, load-token race guard, inline aria-invalid errors. Fixed demo panel covers content on mobile; invoice downloads intentionally disabled with toast."
+    },
+    "critical_defects": [
+      "Rendered state evidence incomplete: 1280x900-empty/success/restricted and 390x844-success/restricted show loading skeleton, not empty/success/member views (capture-report 8/12); no screenshots of plan review, cancel or payment dialogs.",
+      "Prototype controls overlay obscures content: mobile.png dark pill covers Payment method heading and desktop.png covers Invoices heading.",
+      "quality-gates.json accessible-names fail (4 demo selects) despite checks.json reporting 0 controls without name."
+    ],
+    "strengths": [
+      "Disciplined billing truth: scheduled at next renewal, $0 today, tax added at renewal, no provider/payment-success claims; exact impact copies (17 members, 14 to remove for Free).",
+      "Clear role model: View only note naming owner Maya Chen, disabled controls with reasons, Who can do what and How changes work panels.",
+      "Defensive flows: two-step cancellation with acknowledgement and undo, scheduled-change undo, conflict guard blocking cancel while a change is scheduled, styled error/loading/empty states."
+    ]
+  },
+  "candidate_b": {
+    "scores": {"product_understanding": 3, "ux_reasoning": 3, "design_judgment": 3, "visual_hierarchy": 2, "interaction_completeness": 2, "accessibility_responsiveness": 2, "implementation_quality": 3},
+    "rationale": {
+      "product_understanding": "analysis.md:24-33 lists sample Pro $29, 12 members, immediate proration as estimates; desktop.png shows Pro $29/month, Next payment $29 Dec 3 2026, 12 of 20. Extra support tiers and Save up to 17% in Other plans go beyond supplied limits.",
+      "ux_reasoning": "analysis.md:37-54 single page with side nav, compare-only toggle, review with price/effective/renewal/estimate; cancel ack gate with Keep my plan safe exit. Seat-blocked downgrade still requires dialog to discover limit.",
+      "design_judgment": "Danger section separate and last, side nav keeps Cancel visible, no dark pattern. Support-tier checklist and annual savings label add promotional content beyond scenario.",
+      "visual_hierarchy": "desktop.png (1280x2389) and mobile.png (390x3787) are comparable full-page views but 66% taller than Candidate A; summary duplicates Plan/Price/Next payment in Billing panel, plan cards with dense 11-12px notes dominate. Mobile nav wraps and stacks preserve order but require long scroll.",
+      "interaction_completeness": "capture-report.json 2/12 activated; all 1280x900 and 390x844 loading/empty/error/success/restricted are identical skeleton loading views, so non-default states are not visually verifiable. Code implements those states, seat block, failNext, resume, but evidence does not show them; no dialog screenshots.",
+      "accessibility_responsiveness": "checks.json no overflow, no console errors, axe 31 passes, skip-link and focus-visible. Meter in app.js uses role=img not progressbar; quality-gates accessible-names fail for demo checkboxes and cancel-ack; invoice table min-width 560px depends on inner scroll until 600px stacking.",
+      "implementation_quality": "Vanilla JS with setBusy, expired-card check, success banner focus management, Preview only language, no network/provider. Proration uses 30/365-day assumption and factual No refund copy; demo checkboxes caused harness activation failure."
+    },
+    "critical_defects": [
+      "Non-default rendered evidence missing: capture-report 2/12 activated; all state viewports show skeleton loading, so error/empty/success/restricted/member views cannot be verified visually.",
+      "Invented plan differentiators beyond scenario in desktop.png Other plans: Core/Community/Standard/Priority support and save claims.",
+      "Immediate proration estimate and No refund statement presented as product truth from sample assumptions rather than provider-confirmed rules."
+    ],
+    "strengths": [
+      "Decision-ordered IA: summary answers plan/price/renewal/usage, compare toggle explicitly comparison-only, review names recurring price, effective date and next renewal.",
+      "Cancellation is discoverable via nav and danger section, primary safe exit Keep my plan, acknowledgement gate, scheduled state with Resume and member explanations replacing dead controls.",
+      "Strong error simulation and honest preview language: failNext for change/cancel/payment, expired-card validation, success banner with Preview only, no payment-success claims; checks confirm no overflow or console errors."
+    ]
+  },
+  "verdict": "Candidate A is more disciplined on billing truth, tighter visual hierarchy and stronger verifiable states, with exact member-impact consequences and separate two-step cancellation. Candidate B has a clear decision-ordered IA, safe-exit cancellation and richer simulated failures, but its plan comparison adds unsupported feature content, its page duplicates billing facts into a much longer scroll, and its state evidence is almost entirely missing (only default skeletons). On comparable desktop and mobile full-page views, Candidate A better answers plan, price, renewal and limit at a glance in a trustworthy billing context.",
+  "limitations": "One blinded judge pass from evidence packets only: no dialog or member/success renders were available, state screenshots for Candidate B and several Candidate A states show loading skeletons, and no live interaction or assistive-technology testing was performed; this is not a statistical test or proof of causation."
+}

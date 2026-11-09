@@ -1,0 +1,65 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "operations-dashboard-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "condition-a/project/analysis.md section 2 distinguishes share of all orders from the on-time rate among delivered orders wherever both appear, defines units, denominators and the exact comparison baseline, and section 9 lists unresolved risks including late-arrival policy, attempt model and synthetic data.",
+      "ux_reasoning": "condition-a/project/analysis.md section 3 orders the journey as glance, spot the regional drop, then investigate, and section 5 documents chip-based context preservation with individual chip removal, focus movement to the orders panel, and clearing a conflicting status filter instead of silently intersecting to zero.",
+      "design_judgment": "Section 4 commits to a 0-100 percent line with a dashed prior series, zero-based counts, no dual axes, absolute attempt change instead of noisy percentages and comparison as a first-class state; the delivered default (condition-a/evidence/screenshots/1280x900-default.png) shows generated 'At a glance' sentences, trend metric tabs, a labelled status mix and a regional table sorted worst-first.",
+      "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png sequences summary sentences, KPI row, trend and status mix, regional table, orders, then a visually separate prototype panel at the bottom; condition-a/evidence/screenshots/390x844-default.png preserves that order in a single column with no overlap, and mobile-overflow passes at 0 px (condition-a/evidence/quality-gates.json).",
+      "interaction_completeness": "condition-a/evidence/capture-report.json activates default, loading, empty and error at both viewports (8 of 12); condition-a/project/index.html exposes seven data states (fresh, loading, stale, partial, no-data, error, empty result) and the captured empty render distinguishes 'filters too narrow' from a missing source (condition-a/evidence/screenshots/1280x900-empty.png). The no-data, stale and partial states have no screenshots listed in FILES.txt.",
+      "accessibility_responsiveness": "condition-a/evidence/quality-gates.json ok:false - axe reports 7 serious color-contrast violations on delta tails and prototype-panel labels and help text, and condition-a/evidence/checks.json at 390 px adds scrollable-region-focusable for the horizontally scrolling orders table; mitigating evidence is accessible-names passing, one h1, 0 unnamed controls, no page overflow and the focus and live-region patterns described in condition-a/project/analysis.md section 7.",
+      "implementation_quality": "condition-a/project/app.js separates aggregation, series construction, markup and state handling, re-renders the chart at measured width on resize and reports no console or page errors (condition-a/evidence/checks.json); the seven contrast failures and the keyboard-inaccessible mobile scroll region keep this below the top band."
+    },
+    "critical_defects": [
+      "condition-a/evidence/quality-gates.json ok:false - 7 serious axe color-contrast violations affecting KPI delta text and prototype-panel copy; condition-a/evidence/checks.json at 390 px additionally reports scrollable-region-focusable on the scrolling orders table.",
+      "No screenshot listed in FILES.txt shows the no-data, stale or partial states: condition-a/evidence/capture-report.json activates only default, loading, empty and error, and the captured 'empty' file shows the empty-result state (condition-a/evidence/screenshots/1280x900-empty.png)."
+    ],
+    "strengths": [
+      "Denominator discipline: the two on-time concepts are separated wherever both appear and the regional table prints rate change in points beside attempt change in absolute attempts (condition-a/project/analysis.md sections 2 and 4).",
+      "The empty-result copy explicitly separates 'filters are too narrow' from 'the data source has no orders', with distinct recovery actions (condition-a/evidence/screenshots/1280x900-empty.png).",
+      "Drill-down preserves context as removable chips, clears conflicting status filters deliberately and moves keyboard focus to the orders panel (condition-a/project/analysis.md section 5)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 4,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "condition-b/project/analysis.md section 1 marks each product fact as Confirmed or Not available with the design consequence that follows, section 2 gives unit, calculation, scope and comparison for every metric, and section 10 lists open risks including the missing service-level target, late-arrival policy and the attempt model.",
+      "ux_reasoning": "condition-b/project/analysis.md section 3 defines a reversible primary journey with focus returning to the triggering control on close, section 7 tabulates exactly what each of five drill entry points passes to the orders panel (period, region, day, status) and how period or region changes keep the open panel consistent.",
+      "design_judgment": "Sections 4 and 5 justify the 0-100 percent rate line, zero-based bars with a previous-period tick instead of a competing second series, region bars sorted lowest-first with a text LOWEST tag, and the deliberate non-choices (no pies, maps, dual axes, forecasts or causal notes); condition-b/evidence/screenshots/1280x900-default.png delivers the hero rate, plain-language insight and labelled charts described there.",
+      "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png leads with a large hero rate, insight sentence and single action, then charts, region list and inline definitions, with prototype controls in a separate strip at the end; condition-b/evidence/screenshots/390x844-default.png keeps the same reading order with no overlap, and mobile-overflow passes at 0 px in condition-b/evidence/quality-gates.json.",
+      "interaction_completeness": "condition-b/project/app.js implements five drill entry points, removable chips, Escape-to-close with focus restoration and seven data states (condition-b/project/index.html), but condition-b/evidence/capture-report.json activates only 6 of 12: condition-b/evidence/screenshots/1280x900-empty.png and condition-b/evidence/screenshots/390x844-empty.png show the default dashboard because the state control has no empty option, so the empty-result state has no rendered evidence; stale and partial have no screenshots listed in FILES.txt.",
+      "accessibility_responsiveness": "condition-b/evidence/checks.json reports 11 serious label-content-name-mismatch violations at both viewports on chart points, bars and region buttons whose aria-labels omit their visible text, and condition-b/evidence/quality-gates.json adds 2 accessible-names failures: #insight-action captured with an empty name (condition-b/project/app.js fills it only when an action exists) and #compare-toggle, whose wrapping label in condition-b/project/index.html suggests a false positive; mitigating evidence is no contrast violations, 0 unnamed controls, one h1 and no overflow.",
+      "implementation_quality": "condition-b/project/app.js builds inline SVG at the container's measured width, uses a single delegated event path with Escape handling, focus restoration and polite live regions, and reports no console or page errors (condition-b/evidence/checks.json); the accessible-name mismatches, the unfilled insight button at gate time and the transcript.md referenced by condition-b/project/analysis.md but absent from FILES.txt are QA gaps."
+    },
+    "critical_defects": [
+      "condition-b/evidence/quality-gates.json ok:false - accessible-names reports 2 violations (#insight-action empty at check time, #compare-toggle) and axe reports 11 serious label-content-name-mismatch findings, confirmed at both viewports in condition-b/evidence/checks.json.",
+      "No rendered empty or no-data evidence: condition-b/evidence/capture-report.json activates only 6 of 12, and condition-b/evidence/screenshots/1280x900-empty.png shows the default dashboard because the state control in condition-b/project/index.html has no empty option.",
+      "condition-b/project/analysis.md section 11 cites a transcript.md listing the checks actually run, but that file is not in FILES.txt, so the referenced evidence is missing."
+    ],
+    "strengths": [
+      "The Confirmed versus Not-available matrix ties every design consequence to a supplied product fact (condition-b/project/analysis.md section 1).",
+      "The comparison switch removes every previous-period element together and rewrites the insight sentence so no delta appears without its baseline (condition-b/project/analysis.md section 6).",
+      "The partial-data design marks the missing day on the chart, on the region row and in copy, excluding it from both compared periods (condition-b/project/analysis.md section 8)."
+    ]
+  },
+  "verdict": "The two candidates are close and fail in different places. Both deliver honest axes, explicit comparison baselines, distinguishable states and context-preserving drill-down; Candidate A fails accessibility on 7 serious contrast violations plus a keyboard-inaccessible mobile scroll region, while Candidate B fails on accessible names and 11 label-content-name mismatches but has no contrast problems. Candidate A has the stronger state evidence (default, loading, empty and error captured, including a distinct empty-result render) whereas Candidate B has the richer drill, comparison and partial-data design yet no rendered empty state and a missing transcript reference. Overall the pair is level on total quality, with Candidate A ahead on accessibility severity and state coverage and Candidate B ahead on interaction-design detail.",
+  "limitations": "This is one blinded judge pass over static artifacts, not a statistical test and not proof of causation: no screenshot listed in FILES.txt for either candidate shows the stale or partial states and Candidate B's empty capture did not activate, so those states were judged from source and prose; axe results cover only the rules they ran and are not a WCAG conformance audit, and no screen-reader or cross-browser testing is present in either packet."
+}

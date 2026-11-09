@@ -1,0 +1,75 @@
+{
+  "reviewer_id": "R2",
+  "pair_id": "subscription-settings-r2",
+  "candidate_a": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 3,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 3,
+      "accessibility_responsiveness": 3,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "condition-a/project/analysis.md names the four owner questions, the three high-risk failure modes of the current dense form, and every assumption it makes (Pro at $32/month, 7 of 20 members, end-of-period cancellation, no refund policy invented); task.md outcomes 1-6 and the owner/member split are all covered.",
+      "ux_reasoning": "condition-a/project/analysis.md orders the page by consequence (summary -> plans -> payment -> invoices -> cancel -> prototype controls), and condition-a/project/app.js renderCompare() keeps a persistent 'You're billed monthly ... nothing changes until you confirm' note so the price toggle can never be read as a billing change; every consequential change routes through a review dialog (openPlanReview, openCadenceReview).",
+      "design_judgment": "condition-a/project/app.js openCancelDialog() gates cancellation behind an acknowledgement checkbox while 'Keep my plan' is the primary-styled button, and estimateNote() says 'Estimate, not a charge'; against that, estimate()/openPlanReview() compute a concrete 'Due today' and a credit figure from an invented proration formula (app.js), paid downgrades are applied immediately with timing explicitly left unsettled (condition-a/project/analysis.md), and annual-to-monthly switching is simply not offered.",
+      "visual_hierarchy": "condition-a/evidence/screenshots/1280x900-default.png shows a clean summary-first hierarchy with the destructive action isolated below a divider under a red heading; on mobile condition-a/evidence/screenshots/390x844-default.png shows the invoice table reduced to DATE / AMOUNT / RECEIPT because condition-a/project/styles.css hides the invoice-id and status columns at <=760px, so invoice identity and Paid status vanish at 390px, and the fixed Prototype controls bar renders across the 'Plans & billing period' subtitle in that capture.",
+      "interaction_completeness": "condition-a/evidence/screenshots/1280x900-loading.png, 1280x900-empty.png and 1280x900-error.png show designed invoice states with a retry that restores data, and condition-a/project/app.js implements member restrictions, cancel/resume and payment validation; but condition-a/evidence/capture-report.json marks success and restricted as not activated at both viewports (1280x900-success.png and 1280x900-restricted.png show the default owner view), and loading/error/empty exist only for invoices - there is no page-level loading or error state.",
+      "accessibility_responsiveness": "condition-a/evidence/checks.json reports 0 controls without accessible names, no horizontal overflow at 1280 or 390, and a clean mobile axe run; condition-a/evidence/quality-gates.json still fails the axe gate with 2 serious color-contrast violations on the muted sidebar nav. condition-a/project/styles.css provides :focus-visible outlines and a prefers-reduced-motion block.",
+      "implementation_quality": "condition-a/project/app.js is factored into render functions with a single native <dialog>, aria-busy skeletons, aria-invalid field errors and focus moves to the first invalid field; condition-a/evidence/quality-gates.json is ok:false (axe) and the packet contains no automated test artifact for the project."
+    },
+    "critical_defects": [
+      "Missing state evidence: condition-a/evidence/capture-report.json records success and restricted as activated:false, and condition-a/evidence/screenshots/1280x900-success.png, 1280x900-restricted.png, 390x844-success.png and 390x844-restricted.png all show the default owner view, so the member/restricted view and the success confirmation are not visually evidenced.",
+      "condition-a/evidence/quality-gates.json fails the axe gate (2 serious color-contrast violations) so the overall gate is ok:false.",
+      "Loading, empty and error states are scoped to the invoice panel only (condition-a/project/app.js renderInvoices); no page-level loading or load-failure state is delivered despite task.md asking for loading and error states where relevant.",
+      "Mobile invoice rows lose the invoice id and Paid status (condition-a/project/styles.css media query <=760px; visible in condition-a/evidence/screenshots/390x844-default.png).",
+      "The review dialog displays a specific prorated credit/'Due today' amount produced by an internal formula (condition-a/project/app.js estimate()), which risks presenting an invented figure in a billing flow even though it is labelled an estimate."
+    ],
+    "strengths": [
+      "Answers plan, price, renewal and seat headroom in one glance at the top of the page (condition-a/evidence/screenshots/1280x900-default.png).",
+      "Cancellation is separated into its own danger section with consent checkbox, 'Keep my plan' as the primary action and a resume path (condition-a/project/app.js openCancelDialog; condition-a/evidence/screenshots/1280x900-default.png).",
+      "Price comparison is explicitly decoupled from billing changes, with the active cadence and renewal date repeated beside the toggle (condition-a/project/app.js renderCompare).",
+      "Honest prototype labelling throughout: '(demo)' buttons, 'do not enter real card details', and a page footer stating no payment is processed (condition-a/project/index.html; condition-a/project/app.js).",
+      "Invoice error state reassures that the subscription is unaffected and offers a working retry (condition-a/evidence/screenshots/1280x900-error.png)."
+    ]
+  },
+  "candidate_b": {
+    "scores": {
+      "product_understanding": 4,
+      "ux_reasoning": 4,
+      "design_judgment": 4,
+      "visual_hierarchy": 3,
+      "interaction_completeness": 4,
+      "accessibility_responsiveness": 2,
+      "implementation_quality": 3
+    },
+    "rationale": {
+      "product_understanding": "condition-b/project/analysis.md ranks six highest-risk UX problems, states its assumptions explicitly (Pro at $49/month, 17 of 20 seats, no refund, upgrades immediate / downgrades at period end, plans differ only by member limit) and includes an owner-versus-member responsibility matrix that maps to task.md's role requirement.",
+      "ux_reasoning": "condition-b/project/app.js compareSection() pairs the display toggle with 'Changing this display only changes the prices below - it does not change your subscription'; planDialog() previews effective date, new price and next payment before confirmation; planCard() disables an unworkable downgrade and states the exact seat shortfall; cancelDialog() keeps 'Keep my subscription' primary.",
+      "design_judgment": "condition-b/project/analysis.md deliberately refuses to fabricate a proration number ('described as an adjustment from the provider on the next invoice'), reasons the upgrade-now/downgrade-at-period-end asymmetry instead of assuming one, states the no-refund rule plainly, and warns that UI visibility is not authorization; no urgency, retention maze or pre-checked consent appears in condition-b/project/app.js.",
+      "visual_hierarchy": "condition-b/evidence/screenshots/1280x900-default.png gives a card-based summary with status pill, three-fact grid, usage warning and a visually separated cancellation card, and condition-b/evidence/screenshots/390x844-default.png preserves every invoice field as labelled rows; against that, condition-b/evidence/screenshots/390x844-success.png shows the expanded fixed Prototype controls panel (condition-b/project/styles.css .proto, position:fixed bottom-left) covering the plan card content on mobile.",
+      "interaction_completeness": "condition-b/evidence/screenshots/1280x900-loading.png and 1280x900-error.png show page-level loading and load failure with 'Nothing about your subscription has changed' plus retry, and condition-b/project/app.js adds pending, simulated mutation failure, undo-scheduled-change, reactivation and seat-blocked states switchable from the Prototype controls; but condition-b/evidence/capture-report.json marks restricted as not activated and condition-b/evidence/screenshots/1280x900-success.png shows no success confirmation (page still reads 'Active' with controls open), so two states remain visually unevidenced.",
+      "accessibility_responsiveness": "condition-b/evidence/checks.json reports 0 controls without accessible names and no horizontal overflow at either viewport, and condition-b/project/styles.css has :focus-visible plus prefers-reduced-motion; however axe reports 11 serious color-contrast nodes on desktop (fact labels, payment block headings, all four table headers) and 5 on mobile (condition-b/evidence/quality-gates.json, condition-b/evidence/checks.json), a systemic contrast problem in core content that keeps the gate failing.",
+      "implementation_quality": "condition-b/project/app.js implements a coherent state machine with focus return (returnFocus/focusAfterRender), duplicate-submit guards, cleared timers, an IntersectionObserver section nav and preserved form drafts; against that, condition-b/evidence/quality-gates.json is ok:false with 11 serious axe nodes, and condition-b/project/index.html renders the entire page from JavaScript with no <noscript> fallback (unlike condition-a/project/index.html)."
+    },
+    "critical_defects": [
+      "Missing state evidence: condition-b/evidence/capture-report.json records restricted as activated:false, and condition-b/evidence/screenshots/1280x900-restricted.png and 390x844-restricted.png show the default owner view; condition-b/evidence/screenshots/1280x900-success.png and 390x844-success.png show no success confirmation either, so member and success states are visually unevidenced.",
+      "condition-b/evidence/quality-gates.json fails the axe gate with 11 serious contrast violations (5 more on mobile in condition-b/evidence/checks.json), affecting table headers and fact labels rather than peripheral chrome.",
+      "The expanded Prototype controls panel overlays the plan card content at 390px (condition-b/evidence/screenshots/390x844-success.png), obscuring the very summary the state was captured to demonstrate.",
+      "condition-b/project/analysis.md says the checks actually run are listed in 'transcript.md', but no transcript file appears in the delivered evidence list, so that claim cannot be verified from this packet.",
+      "The whole UI is JavaScript-rendered (condition-b/project/index.html contains only <div id=\"app\">) with no noscript message, so the page is blank without scripting."
+    ],
+    "strengths": [
+      "The display-only price toggle states in plain language that the subscription is unchanged (condition-b/project/app.js compareSection; visible in condition-b/evidence/screenshots/1280x900-default.png).",
+      "Downgrades that cannot fit the team are blocked before commitment with the exact seat shortfall (condition-b/project/app.js planCard and planDialog).",
+      "No invented proration figures - the provider adjustment is described rather than computed (condition-b/project/analysis.md).",
+      "Page-level loading and error states with reassurance that nothing changed and a retry control (condition-b/evidence/screenshots/1280x900-loading.png, condition-b/evidence/screenshots/1280x900-error.png).",
+      "Mobile invoice table keeps invoice id, date, period, amount and status as labelled rows instead of dropping columns (condition-b/evidence/screenshots/390x844-default.png).",
+      "Cancellation flow pairs consent with a safe primary exit, then offers a genuine reactivation path with pending/success/failure handling (condition-b/project/app.js cancelDialog, reactivate)."
+    ]
+  },
+  "verdict": "Both candidates deliver a coherent, honest billing experience that separates cancellation from routine changes and prevents the price toggle from being mistaken for a commitment; Candidate A is slightly tighter in its desktop hierarchy and ships cleaner automated checks (2 serious axe nodes versus 11), while Candidate B reasons more carefully about billing policy - refusing to fabricate proration amounts, blocking unworkable downgrades with the exact seat shortfall - and delivers a broader state set including page-level loading/error, mutation failure, undo and reactivation. On evidence, both fail to capture a visible success confirmation and a restricted/member view (condition-a/evidence/capture-report.json activated 8/12; condition-b/evidence/capture-report.json activated 10/12 with the success capture showing no success UI), so neither can claim those states on screenshots alone; Candidate B's accessibility gap on core content labels is the clearest differentiator against it, and Candidate A's invoice-only states plus mobile loss of invoice id and status are the clearest against it. Overall the pair is closely matched, with Candidate B marginally ahead on product/UX reasoning and interaction breadth, and Candidate A ahead on accessibility evidence.",
+  "limitations": "This is one blinded judge pass over the supplied packets and screenshots, not a statistical test or evidence of causation; scores rest only on the files listed in FILES.txt, unactivated or non-revealing state captures were treated as missing rather than inferred, and no live interaction, screen-reader run or other reviewer pass was consulted."
+}
